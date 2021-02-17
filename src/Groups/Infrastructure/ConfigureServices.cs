@@ -7,10 +7,14 @@ namespace Infrastructure
 {
     public static class ConfigureServices
     {
-        public static void AddSales(this IServiceCollection serviceCollection, IConfiguration configuration)
+        public static void AddGroupInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
-            serviceCollection.AddDbContext<GroupsDbContext>(options =>
-                options.UseNpgsql(configuration.GetConnectionString("BloggingContext")));
+            services.AddDbContext<GroupsDbContext>(options =>
+                options.UseNpgsql(configuration.GetConnectionString("DefaultConnection"),
+                    x => x.MigrationsAssembly("DbMigrations")));
+
+
+            services.AddHostedService<DbMigrationHostedService>();
         }
     }
 }
