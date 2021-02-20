@@ -29,6 +29,8 @@ namespace Infrastructure.Persistence.Model
 
         public bool? IsFirstTime { get; set; }
 
+        public bool? IsNewConvert { get; set; }
+
         public string Note { get; set; }
 
         #region Navigation
