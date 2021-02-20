@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using Codeboss.Types;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -7,13 +8,15 @@ namespace ChurchManager.Api.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class TestController : ControllerBase
+    public class UtilityController : ControllerBase
     {
-        private readonly ILogger<TestController> _logger;
+        private readonly ILogger<UtilityController> _logger;
+        private readonly ICurrentUser _currentUser;
 
-        public TestController(ILogger<TestController> logger)
+        public UtilityController(ILogger<UtilityController> logger, ICurrentUser currentUser)
         {
             _logger = logger;
+            _currentUser = currentUser;
         }
 
         [HttpGet]

@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Security.Cryptography;
+using CodeBoss.AspNetCore;
 using Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -58,6 +58,7 @@ namespace ChurchManager.Api
                     };
                 });
 
+            services.AddAspNetCurrentUser<CognitoCurrentUser>();
         }
 
         public RsaSecurityKey SigningKey(string Key, string Expo)
