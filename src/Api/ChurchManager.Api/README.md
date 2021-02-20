@@ -8,8 +8,13 @@
 
 1. In `Package manager console` change to `DbMigrations` project
 
-2. Run `Add-Migration InitialGroupsDbMigration -Context GroupsDbContext`
+2.
+	- Run `Add-Migration InitialGroupsDbMigration -Context GroupsDbContext -o Migrations/Groups`
 
-3. `Update-Database -Context GroupsDbContext`
+    - `Add-Migration InitialPeopleDbMigration -Context PeopleDbContext -o Migrations/People`
+
+3. 
+	- `Update-Database -Context GroupsDbContext`
+	- `Update-Database -Context PeopleDbContext`
 
 
