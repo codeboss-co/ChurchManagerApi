@@ -12,6 +12,5 @@ namespace Infrastructure.Persistence
         public DbSet<GroupMember> GroupMember { get; set; }
         public DbSet<GroupMemberAttendance> GroupMemberAttendance { get; set; }
         public DbSet<GroupMemberRole> GroupMemberRole { get; set; }
-        public DbSet<GroupType> GroupType { get; set; }
     }
 }

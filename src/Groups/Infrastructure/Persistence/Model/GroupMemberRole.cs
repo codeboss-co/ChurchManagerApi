@@ -1,4 +1,5 @@
-﻿using Codeboss.Types;
+﻿using System.ComponentModel.DataAnnotations;
+using Codeboss.Types;
 
 namespace Infrastructure.Persistence.Model
 {
@@ -9,6 +10,7 @@ namespace Infrastructure.Persistence.Model
     /// </summary>
     public class GroupMemberRole : IEntity<int>
     {
+        [Key]
         public int Id { get; set; }
 
         public string Name { get; set; }

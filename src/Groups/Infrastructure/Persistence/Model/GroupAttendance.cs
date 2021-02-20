@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using Codeboss.Types;
 
@@ -8,6 +9,7 @@ namespace Infrastructure.Persistence.Model
 {
     public class GroupAttendance : IAggregateRoot<int>
     {
+        [Key]
         public int Id { get; set; }
         /// <summary>
         /// Gets or sets the Id of the <see cref="Group"/> that the attendance is for.

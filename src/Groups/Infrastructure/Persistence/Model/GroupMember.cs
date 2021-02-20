@@ -45,6 +45,7 @@ namespace Infrastructure.Persistence.Model
         /// </summary>
         public string CommunicationPreference { get; set; } = "Message";
 
+        public virtual Group Group { get; set; }
         public virtual GroupMemberRole GroupMemberRole { get; set; }
     }
 
