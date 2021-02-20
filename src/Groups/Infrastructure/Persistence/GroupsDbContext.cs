@@ -7,6 +7,11 @@ namespace Infrastructure.Persistence
     {
         public GroupsDbContext(DbContextOptions<GroupsDbContext> options) : base(options) { }
 
-        public DbSet<Group> Groups { get; set; }
+        public DbSet<Group> Group { get; set; }
+        public DbSet<GroupAttendance> GroupAttendance { get; set; }
+        public DbSet<GroupMember> GroupMember { get; set; }
+        public DbSet<GroupMemberAttendance> GroupMemberAttendance { get; set; }
+        public DbSet<GroupMemberRole> GroupMemberRole { get; set; }
+        public DbSet<GroupType> GroupType { get; set; }
     }
 }

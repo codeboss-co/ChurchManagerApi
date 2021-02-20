@@ -42,7 +42,6 @@ namespace Infrastructure.Persistence.Model
         /// </summary>
         public virtual ICollection<GroupMember> Members { get; set; } = new Collection<GroupMember>();
 
-
         #endregion
     }
 }

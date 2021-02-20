@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -29,7 +26,7 @@ namespace ChurchManager.Api.Controllers
         [Authorize]
         public IActionResult AuthTest()
         {
-            return Ok();
+            return Ok(User.Claims.Select( x => new { Name=x.Type, x.Value}));
         }
     }
 }
