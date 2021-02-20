@@ -1,3 +1,10 @@
+-- FAMILY --
+INSERT INTO "Family" ("RecordStatus", "Name") VALUES ('Active', 'Cagnetta Family');
+-- PERSON --
+INSERT INTO "Person" ("RecordStatus", "ConnectionStatus", "AgeClassification", "Gender", "IsDeceased", "Title", "FirstName", "NickName", "MiddleName", "LastName", "Suffix", "BirthDay", "BirthMonth", "BirthYear", "MaritalStatus", "AnniversaryDate", "Email", "IsEmailActive", "CommunicationPreference", "PhotoUrl", "ChurchId", "FamilyId")
+VALUES ('Active', 'Member', 'Adult', 'Male', false, 'Pastor', 'Dillan', NULL, 'Arthur', 'Cagnetta', NULL, 6, 11, 1981, 'Married', NULL, 'dillancagnetta@yahoo.com', true, 'EMail', NULL, 1, 1);
+
+-------------------------------------------------------------------------------------------------
 -- GROUP TYPE --
 INSERT INTO "GroupType" ("Name", "Description", "GroupTerm", "GroupMemberTerm", "TakesAttendance")
 VALUES ('Cell', 'Cell Group', 'Group', 'Member', true);

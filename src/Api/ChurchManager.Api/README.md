@@ -9,8 +9,7 @@
 1. In `Package manager console` change to `DbMigrations` project
 
 2.
-	- Run `Add-Migration InitialGroupsDbMigration -Context GroupsDbContext -o Migrations/Groups`
-
+	- `Add-Migration InitialGroupsDbMigration -Context GroupsDbContext -o Migrations/Groups`
     - `Add-Migration InitialPeopleDbMigration -Context PeopleDbContext -o Migrations/People`
 
 3. 

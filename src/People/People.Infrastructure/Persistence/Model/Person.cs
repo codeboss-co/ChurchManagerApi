@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Codeboss.Types;
 
 namespace People.Infrastructure.Persistence.Model
 {
+    [Table("Person", Schema = "People")]
     public class Person : IAggregateRoot<int>
     {
         [Key]

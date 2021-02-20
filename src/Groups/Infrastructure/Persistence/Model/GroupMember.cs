@@ -1,9 +1,12 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Codeboss.Types;
 
 namespace Infrastructure.Persistence.Model
 {
+    [Table("GroupMember", Schema = "Groups")]
+
     public class GroupMember : IEntity<int>
     {
         [Key]

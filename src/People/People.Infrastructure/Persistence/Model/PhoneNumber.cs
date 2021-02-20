@@ -4,6 +4,8 @@ using Codeboss.Types;
 
 namespace People.Infrastructure.Persistence.Model
 {
+    [Table("PhoneNumber", Schema = "People")]
+
     public class PhoneNumber : IEntity<int>
     {
         [Key]
