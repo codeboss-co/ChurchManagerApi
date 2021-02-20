@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace Infrastructure.Persistence
+namespace People.Infrastructure.Persistence
 {
     public class DbMigrationHostedService : IHostedService
     {
@@ -16,7 +16,7 @@ namespace Infrastructure.Persistence
         public async Task StartAsync(CancellationToken cancellationToken)
         {
             using var scope = _serviceProvider.CreateScope();
-            var db = scope.ServiceProvider.GetRequiredService<GroupsDbContext>();
+            var db = scope.ServiceProvider.GetRequiredService<PeopleDbContext>();
             await db.Database.MigrateAsync(cancellationToken);
         }
 

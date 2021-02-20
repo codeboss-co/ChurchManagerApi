@@ -11,17 +11,19 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Api", "Api", "{4BE9C423-5EF
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BoundedContexts", "BoundedContexts", "{CE00FDD2-EFD0-4576-9751-74328CB633EF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChurchManager.Api", "src\Api\ChurchManager.Api\ChurchManager.Api.csproj", "{3B261277-194B-403B-9F59-B50F695863D0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChurchManager.Api", "src\Api\ChurchManager.Api\ChurchManager.Api.csproj", "{3B261277-194B-403B-9F59-B50F695863D0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contracts", "src\Groups\Contracts\Contracts.csproj", "{0DDDDCE1-523D-49FB-B424-09B6A0A078A9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Contracts", "src\Groups\Contracts\Contracts.csproj", "{0DDDDCE1-523D-49FB-B424-09B6A0A078A9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "src\Groups\Domain\Domain.csproj", "{F16680D0-5668-4575-A82B-E39006BC0F0B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "src\Groups\Domain\Domain.csproj", "{F16680D0-5668-4575-A82B-E39006BC0F0B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "src\Groups\Infrastructure\Infrastructure.csproj", "{D518A07D-7CDA-4490-9D47-BF364E438B7C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "src\Groups\Infrastructure\Infrastructure.csproj", "{D518A07D-7CDA-4490-9D47-BF364E438B7C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "src\Groups\Application\Application.csproj", "{2E6BBCB3-AC99-4FBA-901E-472BDB34BA7A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "src\Groups\Application\Application.csproj", "{2E6BBCB3-AC99-4FBA-901E-472BDB34BA7A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DbMigrations", "src\DbMigrations\DbMigrations.csproj", "{80550711-B15B-476F-A6AB-D698C2D9CE1A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DbMigrations", "src\DbMigrations\DbMigrations.csproj", "{80550711-B15B-476F-A6AB-D698C2D9CE1A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "People.Infrastructure", "src\People\People.Infrastructure\People.Infrastructure.csproj", "{FED82CBB-74EA-4C42-979E-34BC0B8D0D85}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -105,6 +107,18 @@ Global
 		{80550711-B15B-476F-A6AB-D698C2D9CE1A}.Release|x64.Build.0 = Release|Any CPU
 		{80550711-B15B-476F-A6AB-D698C2D9CE1A}.Release|x86.ActiveCfg = Release|Any CPU
 		{80550711-B15B-476F-A6AB-D698C2D9CE1A}.Release|x86.Build.0 = Release|Any CPU
+		{FED82CBB-74EA-4C42-979E-34BC0B8D0D85}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FED82CBB-74EA-4C42-979E-34BC0B8D0D85}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FED82CBB-74EA-4C42-979E-34BC0B8D0D85}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{FED82CBB-74EA-4C42-979E-34BC0B8D0D85}.Debug|x64.Build.0 = Debug|Any CPU
+		{FED82CBB-74EA-4C42-979E-34BC0B8D0D85}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{FED82CBB-74EA-4C42-979E-34BC0B8D0D85}.Debug|x86.Build.0 = Debug|Any CPU
+		{FED82CBB-74EA-4C42-979E-34BC0B8D0D85}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FED82CBB-74EA-4C42-979E-34BC0B8D0D85}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FED82CBB-74EA-4C42-979E-34BC0B8D0D85}.Release|x64.ActiveCfg = Release|Any CPU
+		{FED82CBB-74EA-4C42-979E-34BC0B8D0D85}.Release|x64.Build.0 = Release|Any CPU
+		{FED82CBB-74EA-4C42-979E-34BC0B8D0D85}.Release|x86.ActiveCfg = Release|Any CPU
+		{FED82CBB-74EA-4C42-979E-34BC0B8D0D85}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -118,6 +132,7 @@ Global
 		{D518A07D-7CDA-4490-9D47-BF364E438B7C} = {F07C45E0-7D58-4149-904C-17077DDC6A35}
 		{2E6BBCB3-AC99-4FBA-901E-472BDB34BA7A} = {F07C45E0-7D58-4149-904C-17077DDC6A35}
 		{80550711-B15B-476F-A6AB-D698C2D9CE1A} = {CE00FDD2-EFD0-4576-9751-74328CB633EF}
+		{FED82CBB-74EA-4C42-979E-34BC0B8D0D85} = {8B8A8052-D0B4-481F-888E-7179EAE1A47E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {406A3BFC-FF28-49B8-87AA-17DF89BA5A8E}

@@ -1,10 +1,12 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using Codeboss.Types;
 
 namespace Infrastructure.Persistence.Model
 {
     public class GroupMember : IEntity<int>
     {
+        [Key]
         public int Id { get; set; }
 
         public int GroupId { get; set; }
