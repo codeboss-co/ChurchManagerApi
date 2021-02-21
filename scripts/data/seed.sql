@@ -1,3 +1,8 @@
+-- CHURCHES --
+INSERT INTO "ChurchGroup" ("Name", "Description", "IsActive", "InactiveDateTime")
+VALUES ()
+
+
 -- FAMILY --
 INSERT INTO "Family" ("RecordStatus", "Name") VALUES ('Active', 'Cagnetta Family');
 -- PERSON --

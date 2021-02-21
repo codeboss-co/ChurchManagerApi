@@ -20,8 +20,9 @@ namespace People.Infrastructure.Persistence.Model
         public string ConnectionStatus { get; set; }
         public string AgeClassification { get; set; }
         public string Gender { get; set; }
-        public bool IsDeceased { get; set; } = false;
+        public bool? IsDeceased { get; set; } = false;
         public DateTime? DeceasedDate { get; set; }
+        public DateTime? FirstVisitDate { get; set; }
 
         public string Title { get; set; }
         public string FirstName { get; set; }
