@@ -8,8 +8,8 @@ VALUES (1, 'Church 1', 'First Church', 'CHURCH', '+2756565565', NULL, true);
 -- FAMILY --
 INSERT INTO "Family" ("RecordStatus", "Name") VALUES ('Active', 'Cagnetta Family');
 -- PERSON --
-INSERT INTO "Person" ("RecordStatus", "ConnectionStatus", "AgeClassification", "Gender", "IsDeceased", "Title", "FirstName", "NickName", "MiddleName", "LastName", "Suffix", "BirthDay", "BirthMonth", "BirthYear", "MaritalStatus", "AnniversaryDate", "Email", "IsEmailActive", "CommunicationPreference", "PhotoUrl", "ChurchId", "FamilyId")
-VALUES ('Active', 'Member', 'Adult', 'Male', false, 'Pastor', 'Dillan', NULL, 'Arthur', 'Cagnetta', NULL, 6, 11, 1981, 'Married', NULL, 'dillancagnetta@yahoo.com', true, 'EMail', NULL, 1, 1);
+INSERT INTO "Person" ("RecordStatus", "ConnectionStatus", "AgeClassification", "Gender", "IsDeceased", "Title", "FirstName", "NickName", "MiddleName", "LastName", "Suffix", "BirthDay", "BirthMonth", "BirthYear", "MaritalStatus", "AnniversaryDate", "Email", "IsEmailActive", "CommunicationPreference", "PhotoUrl", "ChurchId", "FamilyId", "UserLoginId")
+VALUES ('Active', 'Member', 'Adult', 'Male', false, 'Pastor', 'Dillan', NULL, 'Arthur', 'Cagnetta', NULL, 6, 11, 1981, 'Married', NULL, 'dillancagnetta@yahoo.com', true, 'EMail', NULL, 1, 1, '08925ade-9249-476b-8787-b3dd8f5dbc13');
 
 -------------------------------------------------------------------------------------------------
 -- GROUP TYPE --
