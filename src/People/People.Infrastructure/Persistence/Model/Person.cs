@@ -14,7 +14,7 @@ namespace People.Infrastructure.Persistence.Model
         [Key]
         public int Id { get; set; }
 
-        public int ChurchId { get; set; }
+        public int? ChurchId { get; set; }
 
         public string RecordStatus { get; set; }
         public string ConnectionStatus { get; set; }
@@ -61,7 +61,6 @@ namespace People.Infrastructure.Persistence.Model
         #region Navigation
 
         public virtual Family Family { get; set; }
-        public virtual Church Church { get; set; }
 
         #endregion
     }
