@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Security.Cryptography;
+using Churches.Infrastructure;
 using CodeBoss.AspNetCore;
 using Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -38,6 +39,7 @@ namespace ChurchManager.Api
 
             services.AddPeopleInfrastructure(Configuration);
             services.AddGroupInfrastructure(Configuration);
+            services.AddChurchesInfrastructure(Configuration);
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>

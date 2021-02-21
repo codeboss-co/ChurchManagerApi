@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace People.Infrastructure.Persistence
+namespace ChurchManager.Shared
 {
-    public class DbMigrationHostedService : IHostedService
+    public class DbMigrationHostedService<TDbContext> : IHostedService where TDbContext : DbContext
     {
         private readonly IServiceProvider _serviceProvider;
 
@@ -16,7 +16,7 @@ namespace People.Infrastructure.Persistence
         public async Task StartAsync(CancellationToken cancellationToken)
         {
             using var scope = _serviceProvider.CreateScope();
-            var db = scope.ServiceProvider.GetRequiredService<PeopleDbContext>();
+            var db = scope.ServiceProvider.GetRequiredService<TDbContext>();
             await db.Database.MigrateAsync(cancellationToken);
         }
 

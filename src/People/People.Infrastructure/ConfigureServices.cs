@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using ChurchManager.Shared;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using People.Infrastructure.Persistence;
@@ -14,7 +15,7 @@ namespace People.Infrastructure
                     x => x.MigrationsAssembly("DbMigrations")));
 
 
-            services.AddHostedService<DbMigrationHostedService>();
+            services.AddHostedService<DbMigrationHostedService<PeopleDbContext>>();
         }
     }
 }
