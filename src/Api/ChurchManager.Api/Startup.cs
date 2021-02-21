@@ -14,6 +14,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
+using People.Application;
 using People.Infrastructure;
 
 namespace ChurchManager.Api
@@ -37,7 +38,7 @@ namespace ChurchManager.Api
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "ChurchManager.Api", Version = "v1" });
             });
 
-            services.AddPeopleInfrastructure(Configuration);
+            services.AddPeopleDomain(Configuration);
             services.AddGroupInfrastructure(Configuration);
             services.AddChurchesInfrastructure(Configuration);
 
