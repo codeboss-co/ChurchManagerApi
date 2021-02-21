@@ -9,4 +9,9 @@
     <ProjectReference Include="..\..\ChurchManager.Shared\ChurchManager.Shared.csproj" />
     <ProjectReference Include="..\People.Persistence.Models\People.Persistence.Models.csproj" />
   </ItemGroup>
+
+
+  <ItemGroup>
+    <Folder Include="Services\" />
+  </ItemGroup>
 </Project>

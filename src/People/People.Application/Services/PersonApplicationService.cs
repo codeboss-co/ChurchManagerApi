@@ -1,11 +1,14 @@
 ﻿using System.Threading.Tasks;
-using People.Domain;
 using People.Domain.Model;
 using People.Domain.Repositories;
-using People.Domain.Services;
 
 namespace People.Application.Services
 {
+    public interface IPersonApplicationService
+    {
+        Task<PersonDomain> PersonByUserLoginId(string userLoginId);
+    }
+
     public class PersonApplicationService : IPersonApplicationService
     {
         private readonly IPersonDbRepository _dbRepository;

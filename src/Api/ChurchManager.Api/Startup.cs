@@ -4,12 +4,16 @@ using System.Net;
 using System.Security.Cryptography;
 using Churches.Infrastructure;
 using CodeBoss.AspNetCore;
+using CodeBoss.AspNetCore.Security;
+using Codeboss.Types;
 using Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -61,7 +65,10 @@ namespace ChurchManager.Api
                     };
                 });
 
-            services.AddAspNetCurrentUser<CognitoCurrentUser>();
+            services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddSingleton<ICurrentPrincipalAccessor, HttpContextCurrentPrincipalAccessor>();
+            services.AddScoped<ICurrentUser, CognitoCurrentUser>();
+            //services.AddAspNetCurrentUser<CognitoCurrentUser>();
         }
 
         public RsaSecurityKey SigningKey(string Key, string Expo)
