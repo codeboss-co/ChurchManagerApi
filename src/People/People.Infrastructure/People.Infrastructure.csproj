@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Churches\Churches.Infrastructure\Churches.Infrastructure.csproj" />
     <ProjectReference Include="..\..\ChurchManager.Shared\ChurchManager.Shared.csproj" />
   </ItemGroup>
 

@@ -5,8 +5,12 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace ChurchManager.Shared
+namespace ChurchManager.Shared.Persistence
 {
+    /// <summary>
+    /// Migration Hosted service that will migrate the database DbContext <see cref="DbContext"/> specified
+    /// </summary>
+    /// <typeparam name="TDbContext"></typeparam>
     public class DbMigrationHostedService<TDbContext> : IHostedService where TDbContext : DbContext
     {
         private readonly IServiceProvider _serviceProvider;
