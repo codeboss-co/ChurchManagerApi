@@ -17,6 +17,12 @@ namespace Churches.Infrastructure.Persistence.Model
         [Required, MaxLength(50)]
         public string Name { get; set; }
         public string Description { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Id of the <see cref="Person"/> that is the leader of the campus.
+        /// </summary>
+        public int? LeaderPersonId { get; set; }
+
         public bool IsActive { get; set; } = true;
         public DateTime? InactiveDateTime { get; set; }
 

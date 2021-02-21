@@ -22,7 +22,7 @@ namespace Churches.Infrastructure.Persistence.Model
         public string Address { get; set; }
 
         /// <summary>
-        /// Gets or sets the Id of the <see cref="Person"/> that is the leader of the campus.
+        /// Gets or sets the Id of the <see cref="Person"/> that is the leader of the Church.
         /// </summary>
         public int? LeaderPersonId { get; set; }
 

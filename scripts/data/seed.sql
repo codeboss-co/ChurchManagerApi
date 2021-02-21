@@ -1,6 +1,8 @@
 -- CHURCHES --
-INSERT INTO "ChurchGroup" ("Name", "Description", "IsActive", "InactiveDateTime")
-VALUES ()
+INSERT INTO "ChurchGroup" ("Name", "Description", "IsActive")
+VALUES ('Church Group', 'First Church Group', true);
+INSERT INTO "Church" ("ChurchGroupId", "Name", "Description", "ShortCode", "PhoneNumber", "Address", "IsActive")
+VALUES (1, 'Church 1', 'First Church', 'CHURCH', '+2756565565', NULL, true);
 
 
 -- FAMILY --
