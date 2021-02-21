@@ -57,6 +57,11 @@ namespace People.Infrastructure.Persistence.Model
 
         public DateTime? LastModifiedDateTime { get; set; }
 
+        /// <summary>
+        /// Gets or sets the user login id from AWS Cognito
+        /// </summary>
+        public string UserLoginId { get; set; }
+
         public int? ViewedCount { get; set; }
 
         #region Navigation
