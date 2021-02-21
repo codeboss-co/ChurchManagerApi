@@ -13,6 +13,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\ChurchManager.Shared\ChurchManager.Shared.csproj" />
+    <ProjectReference Include="..\People.Domain\People.Domain.csproj" />
+    <ProjectReference Include="..\People.Persistence.Models\People.Persistence.Models.csproj" />
   </ItemGroup>
 
 </Project>

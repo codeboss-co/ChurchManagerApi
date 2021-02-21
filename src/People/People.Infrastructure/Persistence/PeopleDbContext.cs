@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using People.Infrastructure.Persistence.Model;
+using People.Persistence.Models;
 
 namespace People.Infrastructure.Persistence
 {

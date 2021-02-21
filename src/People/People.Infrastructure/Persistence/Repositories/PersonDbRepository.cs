@@ -1,8 +1,10 @@
 ﻿using System.Threading.Tasks;
 using ChurchManager.Shared.Persistence;
 using Microsoft.EntityFrameworkCore;
-using People.Infrastructure.Persistence.Model;
+using People.Domain;
+using People.Domain.Repositories;
 using People.Infrastructure.Persistence.Specifications;
+using People.Persistence.Models;
 
 namespace People.Infrastructure.Persistence.Repositories
 {

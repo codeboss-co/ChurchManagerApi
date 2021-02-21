@@ -1,4 +1,4 @@
-﻿using People.Infrastructure.Persistence.Model;
+﻿using People.Persistence.Models;
 
 namespace People.Domain.Model
 {

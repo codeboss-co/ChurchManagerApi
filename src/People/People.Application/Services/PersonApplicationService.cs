@@ -1,14 +1,16 @@
 ﻿using System.Threading.Tasks;
+using People.Domain;
 using People.Domain.Model;
-using People.Infrastructure.Persistence.Repositories;
+using People.Domain.Repositories;
+using People.Domain.Services;
 
-namespace People.Domain.Services
+namespace People.Application.Services
 {
-    public class PersonService
+    public class PersonApplicationService : IPersonApplicationService
     {
         private readonly IPersonDbRepository _dbRepository;
 
-        public PersonService(IPersonDbRepository dbRepository)
+        public PersonApplicationService(IPersonDbRepository dbRepository)
         {
             _dbRepository = dbRepository;
         }

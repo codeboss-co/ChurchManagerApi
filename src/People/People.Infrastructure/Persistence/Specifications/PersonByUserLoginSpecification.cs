@@ -1,5 +1,5 @@
 ﻿using ChurchManager.Shared.Persistence;
-using People.Infrastructure.Persistence.Model;
+using People.Persistence.Models;
 
 namespace People.Infrastructure.Persistence.Specifications
 {

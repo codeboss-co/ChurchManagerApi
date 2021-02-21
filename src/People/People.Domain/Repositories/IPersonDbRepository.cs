@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
 using ChurchManager.Shared.Persistence;
-using People.Infrastructure.Persistence.Model;
+using People.Persistence.Models;
 
-namespace People.Infrastructure.Persistence.Repositories
+namespace People.Domain.Repositories
 {
     public interface IPersonDbRepository : ICrudDatabaseRepository<Person>
     {

@@ -1,6 +1,6 @@
 ﻿using Codeboss.Types;
 
-namespace People.Infrastructure.Persistence.Model
+namespace People.Persistence.Models
 {
     #region Enumerations
 

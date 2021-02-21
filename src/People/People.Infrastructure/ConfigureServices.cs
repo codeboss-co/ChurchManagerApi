@@ -1,5 +1,4 @@
-﻿using ChurchManager.Shared;
-using ChurchManager.Shared.Persistence;
+﻿using ChurchManager.Shared.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

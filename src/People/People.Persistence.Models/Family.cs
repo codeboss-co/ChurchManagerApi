@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Codeboss.Types;
 
-namespace People.Infrastructure.Persistence.Model
+namespace People.Persistence.Models
 {
     [Table("Family", Schema = "People")]
 

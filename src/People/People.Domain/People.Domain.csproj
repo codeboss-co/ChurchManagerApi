@@ -7,6 +7,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\ChurchManager.Shared\ChurchManager.Shared.csproj" />
-    <ProjectReference Include="..\People.Infrastructure\People.Infrastructure.csproj" />
+    <ProjectReference Include="..\People.Persistence.Models\People.Persistence.Models.csproj" />
   </ItemGroup>
 </Project>
