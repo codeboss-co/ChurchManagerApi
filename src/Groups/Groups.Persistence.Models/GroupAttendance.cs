@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using Codeboss.Types;
 
-namespace Infrastructure.Persistence.Model
+namespace Groups.Persistence.Models
 {
     [Table("GroupAttendance", Schema = "Groups")]
 

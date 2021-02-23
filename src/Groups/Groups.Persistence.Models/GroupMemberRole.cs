@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using Codeboss.Types;
 
-namespace Infrastructure.Persistence.Model
+namespace Groups.Persistence.Models
 {
     /// <summary>
     /// Represents a role that a <see cref="GroupMember"/> can have in a <see cref="Group"/>.  In Rock each member of a group has one 

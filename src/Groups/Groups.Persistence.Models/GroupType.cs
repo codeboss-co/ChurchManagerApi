@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using Codeboss.Types;
 
-namespace Infrastructure.Persistence.Model
+namespace Groups.Persistence.Models
 {
     [Table("GroupType", Schema = "Groups")]
 

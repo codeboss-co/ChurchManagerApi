@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Codeboss.Types;
 
-namespace Infrastructure.Persistence.Model
+namespace Groups.Persistence.Models
 {
     /// <summary>
     /// Represents an instance where a <see cref="GroupMember"/> attended (or was scheduled to attend) a group/location/schedule.

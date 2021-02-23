@@ -1,4 +1,4 @@
-﻿using Infrastructure.Persistence.Model;
+﻿using Groups.Persistence.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Persistence

@@ -1,12 +1,11 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Codeboss.Types;
 
-namespace Infrastructure.Persistence.Model
+namespace Groups.Persistence.Models
 {
     [Table("Group", Schema = "Groups")]
 
