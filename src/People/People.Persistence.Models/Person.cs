@@ -4,9 +4,37 @@ using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Codeboss.Types;
+using Microsoft.EntityFrameworkCore;
+using Shared.Kernel;
 
 namespace People.Persistence.Models
 {
+    [Owned]
+    public class DeceasedStatus
+    {
+        public bool? IsDeceased { get; set; } = false;
+        public DateTime? DeceasedDate { get; set; }
+    }
+
+    [Owned]
+    public class FullName
+    {
+        public string Title { get; set; }
+        public string FirstName { get; set; }
+        public string NickName { get; set; }
+        public string MiddleName { get; set; }
+        public string LastName { get; set; }
+        public string Suffix { get; set; }
+    }
+
+    [Owned]
+    public class BirthDate
+    {
+        public int? BirthDay { get; set; }
+        public int? BirthMonth { get; set; }
+        public int? BirthYear { get; set; }
+    }
+
     [Table("Person", Schema = "People")]
     public class Person : IAggregateRoot<int>
     {
@@ -17,22 +45,13 @@ namespace People.Persistence.Models
 
         public string RecordStatus { get; set; }
         public string ConnectionStatus { get; set; }
+        public DeceasedStatus DeceasedStatus { get; set; }
         public string AgeClassification { get; set; }
         public string Gender { get; set; }
-        public bool? IsDeceased { get; set; } = false;
-        public DateTime? DeceasedDate { get; set; }
         public DateTime? FirstVisitDate { get; set; }
 
-        public string Title { get; set; }
-        public string FirstName { get; set; }
-        public string NickName { get; set; }
-        public string MiddleName { get; set; }
-        public string LastName { get; set; }
-        public string Suffix { get; set; }
-
-        public int? BirthDay { get; set; }
-        public int? BirthMonth { get; set; }
-        public int? BirthYear { get; set; }
+        public FullName FullName { get; set; }
+        public BirthDate BirthDate { get; set; }
 
         public string MaritalStatus { get; set; }
         public DateTime? AnniversaryDate { get; set; }

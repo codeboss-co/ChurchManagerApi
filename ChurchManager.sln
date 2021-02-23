@@ -39,6 +39,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "People.Persistence.Models",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Groups.Persistence.Models", "src\Groups\Groups.Persistence.Models\Groups.Persistence.Models.csproj", "{2D20A4ED-90C9-4F8A-A9A1-F5892D3E0E72}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared.Kernel", "src\Shared.Kernel\Shared.Kernel.csproj", "{98722F79-2485-4213-AC48-CFDAD21880AE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -205,6 +207,18 @@ Global
 		{2D20A4ED-90C9-4F8A-A9A1-F5892D3E0E72}.Release|x64.Build.0 = Release|Any CPU
 		{2D20A4ED-90C9-4F8A-A9A1-F5892D3E0E72}.Release|x86.ActiveCfg = Release|Any CPU
 		{2D20A4ED-90C9-4F8A-A9A1-F5892D3E0E72}.Release|x86.Build.0 = Release|Any CPU
+		{98722F79-2485-4213-AC48-CFDAD21880AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{98722F79-2485-4213-AC48-CFDAD21880AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{98722F79-2485-4213-AC48-CFDAD21880AE}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{98722F79-2485-4213-AC48-CFDAD21880AE}.Debug|x64.Build.0 = Debug|Any CPU
+		{98722F79-2485-4213-AC48-CFDAD21880AE}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{98722F79-2485-4213-AC48-CFDAD21880AE}.Debug|x86.Build.0 = Debug|Any CPU
+		{98722F79-2485-4213-AC48-CFDAD21880AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{98722F79-2485-4213-AC48-CFDAD21880AE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{98722F79-2485-4213-AC48-CFDAD21880AE}.Release|x64.ActiveCfg = Release|Any CPU
+		{98722F79-2485-4213-AC48-CFDAD21880AE}.Release|x64.Build.0 = Release|Any CPU
+		{98722F79-2485-4213-AC48-CFDAD21880AE}.Release|x86.ActiveCfg = Release|Any CPU
+		{98722F79-2485-4213-AC48-CFDAD21880AE}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -226,6 +240,7 @@ Global
 		{576681B5-7EE6-40F1-809F-E234B871D58B} = {8B8A8052-D0B4-481F-888E-7179EAE1A47E}
 		{8121658D-3B28-4ADC-8CA9-AFE8BB8755ED} = {8B8A8052-D0B4-481F-888E-7179EAE1A47E}
 		{2D20A4ED-90C9-4F8A-A9A1-F5892D3E0E72} = {F07C45E0-7D58-4149-904C-17077DDC6A35}
+		{98722F79-2485-4213-AC48-CFDAD21880AE} = {CE00FDD2-EFD0-4576-9751-74328CB633EF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {406A3BFC-FF28-49B8-87AA-17DF89BA5A8E}

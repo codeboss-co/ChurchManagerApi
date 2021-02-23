@@ -2,9 +2,9 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using Codeboss.Types;
 
-namespace People.Persistence.Models
+namespace Shared.Kernel
 {
-    [Table("PhoneNumber", Schema = "People")]
+    [Table("PhoneNumber", Schema = "Shared")]
 
     public class PhoneNumber : IEntity<int>
     {
