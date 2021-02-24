@@ -1,13 +1,19 @@
-﻿using System.Threading;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using CodeBoss.CQRS.Queries;
+using Domain.Model;
 using Domain.Repositories;
+using Microsoft.EntityFrameworkCore;
+using People.Domain.Model;
+using People.Domain.Repositories;
 
 namespace Application.Handlers
 {
-    public class GroupsForPerson
+    public record GroupsForPerson(dynamic Result)
     {
-        public int Groups { get; set; }
     }
 
     public record GroupsForPersonQuery(int PersonId) : IQuery<GroupsForPerson>
@@ -18,17 +24,41 @@ namespace Application.Handlers
     public class GroupsForPersonQueryHandler : IQueryHandler<GroupsForPersonQuery, GroupsForPerson>
     {
         private readonly IGroupDbRepository _groupDbRepository;
+        private readonly IPersonDbRepository _personDbRepository;
 
-        public GroupsForPersonQueryHandler(IGroupDbRepository groupDbRepository)
+        public GroupsForPersonQueryHandler(IGroupDbRepository groupDbRepository, IPersonDbRepository personDbRepository)
         {
             _groupDbRepository = groupDbRepository;
+            _personDbRepository = personDbRepository;
         }
 
         public async Task<GroupsForPerson> HandleAsync(GroupsForPersonQuery query, CancellationToken cancellationToken = default)
         {
             var groups = await _groupDbRepository.AllPersonsGroups(query.PersonId);
 
-            return new GroupsForPerson();
+            var groupsDomain = groups.Select(x => new GroupDomain(x));
+            var membersPersonId = groups.SelectMany(x => x.Members.Select(x => x.PersonId)).ToList();
+
+            var personDetails = await _personDbRepository.Queryable().Where(x => membersPersonId.Contains(x.Id)).ToListAsync(cancellationToken);
+            var personDomainList = personDetails.Select(x => new PersonDomain(x));
+
+            var studentList = groupsDomain.SelectMany(x => x.Members).ToList();
+
+            var membersJoined = studentList.Join(
+                personDomainList,
+                groupMember => groupMember.PersonId,
+                person => Int32.Parse(person["PersonId"]),
+                (g, p) => new { g.GroupId, Person = p})
+                .GroupBy(x => x.GroupId);
+
+            var results = groupsDomain.Join(
+                membersJoined,
+                group => group.GroupId,
+                member => member.Key,
+                (g, grouping) => new { g.Name, g.GroupType, g.Description, grouping }
+                );
+
+            return new GroupsForPerson(results);
         }
     }
 }
