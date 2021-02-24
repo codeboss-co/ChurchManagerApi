@@ -48,14 +48,14 @@ namespace Application.Handlers
                 personDomainList,
                 groupMember => groupMember.PersonId,
                 person => Int32.Parse(person["PersonId"]),
-                (g, p) => new { g.GroupId, Person = p})
+                (g, p) => new { g.GroupId, Person = p, Member = g})
                 .GroupBy(x => x.GroupId);
 
             var results = groupsDomain.Join(
                 membersJoined,
                 group => group.GroupId,
                 member => member.Key,
-                (g, grouping) => new { g.Name, g.GroupType, g.Description, grouping }
+                (g, grouping) => new { g.Name, g.GroupType, g.Description, Members = grouping }
                 );
 
             return new GroupsForPerson(results);

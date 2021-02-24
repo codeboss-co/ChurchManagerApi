@@ -7,16 +7,16 @@ namespace People.Domain.Model
     {
         public PersonDomain(Person entity) : base(capacity:10)
         {
-            Add("PersonId", entity.Id.ToString());
+            Add("personId", entity.Id.ToString());
 
-            Add("Title", entity.FullName.Title);
-            Add("FirstName", entity.FullName.FirstName);
-            Add("MiddleName", entity.FullName.MiddleName);
-            Add("LastName", entity.FullName.LastName);
-            Add("Suffix", entity.FullName.Suffix);
+            Add("title", entity.FullName.Title);
+            Add("firstName", entity.FullName.FirstName);
+            Add("middleName", entity.FullName.MiddleName);
+            Add("lastName", entity.FullName.LastName);
+            Add("suffix", entity.FullName.Suffix);
 
-            Add("BirthDay", entity.BirthDate.BirthDay.ToString());
-            Add("BirthMonth", entity.BirthDate.BirthMonth.ToString());
+            Add("birthDay", entity.BirthDate.BirthDay.ToString());
+            Add("birthMonth", entity.BirthDate.BirthMonth.ToString());
         }
     }
 }
