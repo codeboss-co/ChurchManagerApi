@@ -7,6 +7,11 @@ namespace People.Infrastructure.Persistence
     {
         public PeopleDbContext(DbContextOptions<PeopleDbContext> options) : base(options) { }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.HasDefaultSchema("People");
+        }
+
         public DbSet<Person> Person { get; set; }
     }
 }

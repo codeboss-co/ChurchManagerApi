@@ -26,9 +26,9 @@ namespace ChurchManager.Shared.Persistence
 
         #region Constructors
 
-        public CrudDatabaseRepository(DbContext dbDbContext)
+        public CrudDatabaseRepository(DbContext dbContext)
         {
-            DbContext = dbDbContext;
+            DbContext = dbContext;
             ObjectSet = DbContext.Set<T>();
         }
 

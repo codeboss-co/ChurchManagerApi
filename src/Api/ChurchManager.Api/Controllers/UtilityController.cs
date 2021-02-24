@@ -1,5 +1,8 @@
 ﻿using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
+using Application.Handlers;
+using CodeBoss.CQRS.Queries;
 using Codeboss.Types;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -12,18 +15,23 @@ namespace ChurchManager.Api.Controllers
     public class UtilityController : ControllerBase
     {
         private readonly ILogger<UtilityController> _logger;
+        private readonly IQueryDispatcher _queryDispatcher;
         private readonly ICurrentUser _currentUser;
 
-        public UtilityController(ILogger<UtilityController> logger, ICurrentUser currentUser)
+        public UtilityController(
+            ILogger<UtilityController> logger,
+            IQueryDispatcher queryDispatcher,
+            ICurrentUser currentUser)
         {
             _logger = logger;
+            _queryDispatcher = queryDispatcher;
             _currentUser = currentUser;
         }
 
         [HttpGet]
-        public IActionResult Get()
+        public async Task<IActionResult> Get()
         {
-            return Ok();
+            return Ok(await _queryDispatcher.QueryAsync(new GroupsForPersonQuery(1), CancellationToken.None));
         }
 
         [HttpGet("auth")]

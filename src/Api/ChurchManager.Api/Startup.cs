@@ -2,9 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Security.Cryptography;
+using Application;
+using Application.Handlers;
 using Churches.Infrastructure;
 using CodeBoss.AspNetCore;
-using CodeBoss.AspNetCore.Security;
+/*using CodeBoss.AspNetCore;
+using CodeBoss.AspNetCore.Security;*/
+using CodeBoss.CQRS.Commands;
+using CodeBoss.CQRS.Queries;
 using Codeboss.Types;
 using Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -43,7 +48,7 @@ namespace ChurchManager.Api
             });
 
             services.AddPeopleDomain(Configuration);
-            services.AddGroupInfrastructure(Configuration);
+            services.AddGroupsDomain(Configuration);
             services.AddChurchesInfrastructure(Configuration);
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -65,10 +70,10 @@ namespace ChurchManager.Api
                     };
                 });
 
-            services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            services.AddSingleton<ICurrentPrincipalAccessor, HttpContextCurrentPrincipalAccessor>();
-            services.AddScoped<ICurrentUser, CognitoCurrentUser>();
-            //services.AddAspNetCurrentUser<CognitoCurrentUser>();
+            services.AddAspNetCurrentUser<CognitoCurrentUser>();
+            services.AddQueryHandlers()
+                        .AddInMemoryCommandDispatcher()
+                        .AddInMemoryQueryDispatcher();
         }
 
         public RsaSecurityKey SigningKey(string Key, string Expo)

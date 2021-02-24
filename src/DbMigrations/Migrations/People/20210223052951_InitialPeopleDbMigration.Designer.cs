@@ -10,13 +10,14 @@ using People.Infrastructure.Persistence;
 namespace DbMigrations.Migrations.People
 {
     [DbContext(typeof(PeopleDbContext))]
-    [Migration("20210223051823_InitialPeopleDbMigration")]
+    [Migration("20210223052951_InitialPeopleDbMigration")]
     partial class InitialPeopleDbMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
+                .HasDefaultSchema("People")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63)
                 .HasAnnotation("ProductVersion", "5.0.3")
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
@@ -104,7 +105,7 @@ namespace DbMigrations.Migrations.People
                     b.ToTable("Person", "People");
                 });
 
-            modelBuilder.Entity("People.Persistence.Models.PhoneNumber", b =>
+            modelBuilder.Entity("Shared.Kernel.PhoneNumber", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -136,7 +137,7 @@ namespace DbMigrations.Migrations.People
 
                     b.HasIndex("PersonId");
 
-                    b.ToTable("PhoneNumber", "People");
+                    b.ToTable("PhoneNumber");
                 });
 
             modelBuilder.Entity("People.Persistence.Models.Person", b =>
@@ -232,7 +233,7 @@ namespace DbMigrations.Migrations.People
                     b.Navigation("FullName");
                 });
 
-            modelBuilder.Entity("People.Persistence.Models.PhoneNumber", b =>
+            modelBuilder.Entity("Shared.Kernel.PhoneNumber", b =>
                 {
                     b.HasOne("People.Persistence.Models.Person", null)
                         .WithMany("PhoneNumbers")

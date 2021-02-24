@@ -4,7 +4,7 @@ using Codeboss.Types;
 
 namespace Shared.Kernel
 {
-    [Table("PhoneNumber", Schema = "Shared")]
+    [Table("PhoneNumber")]
 
     public class PhoneNumber : IEntity<int>
     {

@@ -7,6 +7,11 @@ namespace Churches.Infrastructure.Persistence
     {
         public ChurchesDbContext(DbContextOptions<ChurchesDbContext> options) : base(options) { }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.HasDefaultSchema("Churches");
+        }
+
         public DbSet<Church> Church { get; set; }
     }
 }

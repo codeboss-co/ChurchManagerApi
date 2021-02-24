@@ -4,4 +4,9 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\ChurchManager.Shared\ChurchManager.Shared.csproj" />
+    <ProjectReference Include="..\Groups.Persistence.Models\Groups.Persistence.Models.csproj" />
+  </ItemGroup>
+
 </Project>

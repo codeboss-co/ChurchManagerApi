@@ -9,7 +9,7 @@ namespace People.Infrastructure.Persistence.Repositories
 {
     public class PersonDbRepository : CrudDatabaseRepository<Person>, IPersonDbRepository
     {
-        public PersonDbRepository(PeopleDbContext dbDbContext) : base(dbDbContext) { }
+        public PersonDbRepository(PeopleDbContext dbContext) : base(dbContext) { }
 
         public async Task<Person> PersonByUserLoginId(string userLoginId)
         {
