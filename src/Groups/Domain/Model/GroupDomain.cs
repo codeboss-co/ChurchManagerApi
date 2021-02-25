@@ -2,42 +2,32 @@
 using System.Collections.Generic;
 using System.Linq;
 using Groups.Persistence.Models;
+using People.Domain.Model;
 
 namespace Domain.Model
 {
-    public class GroupDomain
+    public class GroupDomain : Dictionary<string, object>
     {
-        public int GroupId { get; }
-        public string GroupType { get;}
-        public string Name { get; }
-        public string Description { get;  }
-        public IEnumerable<GroupMemberDomain> Members { get; }
-
-        public GroupDomain(Group entity)
+        public GroupDomain(Group entity) : base(5)
         {
-            GroupId = entity.Id;
-            GroupType = entity.GroupType.Name;
-            Name = entity.Name;
-            Description = entity.Description;
-            Members = entity.Members.Select(x => new GroupMemberDomain(x));
+            Add("groupId", entity.Id);
+            Add("groupType", entity.GroupType.Name);
+            Add("name", entity.GroupType.Name);
+            Add("description", entity.GroupType.Description);
+            Add("members", entity.Members.Select(x => new GroupMemberDomain(x)));
         }
     }
 
-    public class GroupMemberDomain
+    public class GroupMemberDomain : Dictionary<string, object>
     {
-        public int PersonId { get; }
-        public int GroupId { get; }
-        public string GroupMemberStatus { get; }
-        public bool IsLeader { get;}
-        public bool IsActive { get;}
-
-        public GroupMemberDomain(GroupMember entity)
+        public GroupMemberDomain(GroupMember entity) : base(5)
         {
-            PersonId = entity.PersonId;
-            GroupId = entity.GroupId;
-            GroupMemberStatus = entity.GroupMemberStatus;
-            IsLeader = entity.GroupMemberRole.IsLeader;
-            IsActive = entity.InactiveDateTime == null;
+            Add("groupId", entity.GroupId);
+            Add("groupMemberStatus", entity.GroupMemberStatus);
+            Add("isLeader", entity.GroupMemberRole.IsLeader);
+            Add("isActive", entity.InactiveDateTime == null);
+
+            Add("person", new PersonDomain(entity.Person));
         }
     }
 }

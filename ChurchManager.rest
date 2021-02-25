@@ -1,0 +1,48 @@
+@api = http://localhost:5000/api
+@accessToken = xxx.xxx.xxx
+@entityId = 1
+# Ensure this is in the Countries Table
+@countryId = 1 
+
+# ============== IDENTITY ==================== #
+POST {{api}}/authorization/login 
+Content-Type: application/json
+
+{
+    "username": "superuser", "password": "Password#1"
+}
+
+# ============== GROUPS ==================== #
+GET {{api}}/entity?type=(All)
+GET {{api}}/entity?type=(All Suppliers)
+GET {{api}}/entity?type=Customers
+GET {{api}}/entity?type=Suppliers: Stock
+
+GET {{api}}/entity/{{entityId}}
+
+POST {{api}}/entity 
+Content-type: application/json
+
+{
+    "displayName": "Entity Created 1",
+    "entityRoles": [
+       "Customer",
+       "Supplier: Stock",
+       "Supplier: Packing"     
+    ],
+    "physicalAddress": "Cape Town, South Africa",
+    "postalAddress": "P.O. Box 22435, Cape Town, South Africa",
+    "countryID": "{{countryId}}",
+    "email": "test@techgenius.co.za",
+    "telephone" : "+2755555555"
+}
+
+
+PUT {{api}}/entity/{{entityId}} 
+Content-Type: application/json
+
+{
+    "id": "{{entityId}}", "displayName": "Entity Updated 1"
+}
+
+DELETE {{api}}/entity/{{entityId}}

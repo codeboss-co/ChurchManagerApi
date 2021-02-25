@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Churches.Infrastructure.Persistence.Model;
 using Codeboss.Types;
 
 namespace Groups.Persistence.Models
@@ -32,6 +33,7 @@ namespace Groups.Persistence.Models
 
         public virtual Group ParentGroup { get; set; }
         public virtual GroupType GroupType { get; set; }
+        public virtual Church Church { get; set; }
 
         /// <summary>
         /// Gets or sets a collection the Groups that are children of this group.

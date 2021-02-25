@@ -25,6 +25,7 @@ using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
 using People.Application;
 using People.Infrastructure;
+using Shared.Kernel;
 
 namespace ChurchManager.Api
 {
@@ -49,7 +50,7 @@ namespace ChurchManager.Api
 
             services.AddPeopleDomain(Configuration);
             services.AddGroupsDomain(Configuration);
-            services.AddChurchesInfrastructure(Configuration);
+            services.AddChurchManagerDbContext(Configuration);
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>

@@ -14,6 +14,7 @@ namespace Infrastructure.Persistence.Specifications
             Includes.Add(x => x.GroupType);
             Includes.Add(x => x.Members);
             IncludeStrings.Add(("Members.GroupMemberRole"));
+            IncludeStrings.Add(("Members.Person"));
         }
     }
 }

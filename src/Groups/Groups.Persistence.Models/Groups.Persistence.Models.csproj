@@ -10,4 +10,9 @@
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="5.0.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\Churches\Churches.Infrastructure\Churches.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\People\People.Persistence.Models\People.Persistence.Models.csproj" />
+  </ItemGroup>
+
 </Project>

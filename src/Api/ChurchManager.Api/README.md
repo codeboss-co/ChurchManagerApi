@@ -19,3 +19,8 @@
 	- `Update-Database -Context ChurchesDbContext`
 
 
+	## Configurations
+
+	AWS Cognito IDP
+	> https://cognito-idp.us-east-1.amazonaws.com/us-east-1_i6pWJxu8q/.well-known/openid-configuration
+

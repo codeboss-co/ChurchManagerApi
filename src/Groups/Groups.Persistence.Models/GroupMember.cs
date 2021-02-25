@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Codeboss.Types;
+using People.Persistence.Models;
 
 namespace Groups.Persistence.Models
 {
@@ -52,6 +53,8 @@ namespace Groups.Persistence.Models
 
         public virtual Group Group { get; set; }
         public virtual GroupMemberRole GroupMemberRole { get; set; }
+        public virtual Person Person { get; set; }
+
     }
 
     #region Enumerations

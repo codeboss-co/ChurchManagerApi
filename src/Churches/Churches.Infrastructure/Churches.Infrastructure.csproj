@@ -15,4 +15,8 @@
     <ProjectReference Include="..\..\ChurchManager.Shared\ChurchManager.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Persistence\" />
+  </ItemGroup>
+
 </Project>

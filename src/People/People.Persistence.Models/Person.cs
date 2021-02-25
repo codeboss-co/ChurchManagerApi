@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Churches.Infrastructure.Persistence.Model;
 using Codeboss.Types;
 using Microsoft.EntityFrameworkCore;
-using Shared.Kernel;
 
 namespace People.Persistence.Models
 {
@@ -85,6 +85,7 @@ namespace People.Persistence.Models
         #region Navigation
 
         public virtual Family Family { get; set; }
+        public virtual Church Church { get; set; }
 
         #endregion
     }

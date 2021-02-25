@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using CodeBoss.CQRS.Queries;
 using Domain.Model;
 using Domain.Repositories;
-using Microsoft.EntityFrameworkCore;
-using People.Domain.Model;
 using People.Domain.Repositories;
 
 namespace Application.Handlers
@@ -36,29 +32,9 @@ namespace Application.Handlers
         {
             var groups = await _groupDbRepository.AllPersonsGroups(query.PersonId);
 
-            var groupsDomain = groups.Select(x => new GroupDomain(x));
-            var membersPersonId = groups.SelectMany(x => x.Members.Select(x => x.PersonId)).ToList();
-
-            var personDetails = await _personDbRepository.Queryable().Where(x => membersPersonId.Contains(x.Id)).ToListAsync(cancellationToken);
-            var personDomainList = personDetails.Select(x => new PersonDomain(x));
-
-            var studentList = groupsDomain.SelectMany(x => x.Members).ToList();
-
-            var membersJoined = studentList.Join(
-                personDomainList,
-                groupMember => groupMember.PersonId,
-                person => Int32.Parse(person["PersonId"]),
-                (g, p) => new { g.GroupId, Person = p, Member = g})
-                .GroupBy(x => x.GroupId);
-
-            var results = groupsDomain.Join(
-                membersJoined,
-                group => group.GroupId,
-                member => member.Key,
-                (g, grouping) => new { g.Name, g.GroupType, g.Description, Members = grouping }
-                );
-
-            return new GroupsForPerson(results);
+            var groupsDomain = groups.ToList();
+           
+            return new GroupsForPerson(groupsDomain.Select(x => new GroupDomain(x)));
         }
     }
 }

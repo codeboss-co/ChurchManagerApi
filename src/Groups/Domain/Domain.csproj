@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\ChurchManager.Shared\ChurchManager.Shared.csproj" />
+    <ProjectReference Include="..\..\People\People.Domain\People.Domain.csproj" />
     <ProjectReference Include="..\Groups.Persistence.Models\Groups.Persistence.Models.csproj" />
   </ItemGroup>
 

@@ -3,11 +3,11 @@ using People.Persistence.Models;
 
 namespace People.Domain.Model
 {
-    public class PersonDomain : Dictionary<string, string>
+    public class PersonDomain : Dictionary<string, object>
     {
         public PersonDomain(Person entity) : base(capacity:10)
         {
-            Add("personId", entity.Id.ToString());
+            Add("personId", entity.Id);
 
             Add("title", entity.FullName.Title);
             Add("firstName", entity.FullName.FirstName);
@@ -15,8 +15,8 @@ namespace People.Domain.Model
             Add("lastName", entity.FullName.LastName);
             Add("suffix", entity.FullName.Suffix);
 
-            Add("birthDay", entity.BirthDate.BirthDay.ToString());
-            Add("birthMonth", entity.BirthDate.BirthMonth.ToString());
+            Add("birthDay", entity.BirthDate.BirthDay);
+            Add("birthMonth", entity.BirthDate.BirthMonth);
         }
     }
 }
