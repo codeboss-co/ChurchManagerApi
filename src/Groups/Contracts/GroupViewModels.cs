@@ -1,34 +1,33 @@
-﻿
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Groups.Persistence.Models;
-using People.Domain.Model;
+using People.Contracts;
 
-namespace Domain.Model
+namespace Contracts
 {
-    public class GroupDomain : Dictionary<string, object>
+    public class GroupViewModel : Dictionary<string, object>
     {
-        public GroupDomain(Group entity) : base(6)
+        public GroupViewModel(Group entity) : base(6)
         {
             Add("groupId", entity.Id);
             Add("parentGroupId", entity.ParentGroupId);
             Add("groupType", entity.GroupType.Name);
             Add("name", entity.GroupType.Name);
             Add("description", entity.GroupType.Description);
-            Add("members", entity.Members.Select(x => new GroupMemberDomain(x)));
+            Add("members", entity.Members.Select(x => new GroupMemberViewModel(x)));
         }
     }
 
-    public class GroupMemberDomain : Dictionary<string, object>
+    public class GroupMemberViewModel : Dictionary<string, object>
     {
-        public GroupMemberDomain(GroupMember entity) : base(5)
+        public GroupMemberViewModel(GroupMember entity) : base(5)
         {
             Add("groupId", entity.GroupId);
             Add("groupMemberStatus", entity.GroupMemberStatus);
             Add("isLeader", entity.GroupMemberRole.IsLeader);
             Add("isActive", entity.InactiveDateTime == null);
 
-            Add("person", new PersonDomain(entity.Person));
+            Add("person", new PersonViewModel(entity.Person));
         }
     }
 }

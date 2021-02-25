@@ -9,14 +9,14 @@ VALUES (1, 'Church 1', 'First Church', 'CHURCH', '+2756565565', NULL, true);
 INSERT INTO "Family" ("RecordStatus", "Name") VALUES ('Active', 'Cagnetta Family');
 -- PERSON --
 -- person 1
-INSERT INTO "Person" ("RecordStatus", "ConnectionStatus", "AgeClassification", "Gender", "DeceasedStatus_IsDeceased", "FullName_Title", "FullName_FirstName", "FullName_NickName", "FullName_MiddleName", "FullName_LastName", "FullName_Suffix", "BirthDate_BirthDay", "BirthDate_BirthMonth", "BirthDate_BirthYear", "MaritalStatus", "AnniversaryDate", "Email", "IsEmailActive", "CommunicationPreference", "PhotoUrl", "ChurchId", "FamilyId", "UserLoginId")
-VALUES ('Active', 'Member', 'Adult', 'Male', false, 'Pastor', 'Dillan', NULL, 'Arthur', 'Cagnetta', NULL, 6, 11, 1981, 'Married', NULL, 'dillancagnetta@yahoo.com', true, 'EMail', NULL, 1, 1, '08925ade-9249-476b-8787-b3dd8f5dbc13');
+INSERT INTO "Person" ("RecordStatus", "ConnectionStatus", "AgeClassification", "Gender", "DeceasedStatus_IsDeceased", "FullName_Title", "FullName_FirstName", "FullName_NickName", "FullName_MiddleName", "FullName_LastName", "FullName_Suffix", "BirthDate_BirthDay", "BirthDate_BirthMonth", "BirthDate_BirthYear", "MaritalStatus", "AnniversaryDate", "Email", "IsEmailActive", "CommunicationPreference", "PhotoUrl", "ChurchId", "FamilyId", "UserLoginId", "PhotoUrl")
+VALUES ('Active', 'Member', 'Adult', 'Male', false, 'Pastor', 'Dillan', NULL, 'Arthur', 'Cagnetta', NULL, 6, 11, 1981, 'Married', NULL, 'dillancagnetta@yahoo.com', true, 'EMail', NULL, 1, 1, '08925ade-9249-476b-8787-b3dd8f5dbc13', 'https://secure.gravatar.com/avatar/6fdc48b6ec4d95f2fd682fc2982eb01b');
 -- person 2
 INSERT INTO "Person" ("RecordStatus", "ConnectionStatus", "AgeClassification", "Gender", "DeceasedStatus_IsDeceased", "FullName_Title", "FullName_FirstName", "FullName_NickName", "FullName_MiddleName", "FullName_LastName", "FullName_Suffix", "BirthDate_BirthDay", "BirthDate_BirthMonth", "BirthDate_BirthYear", "MaritalStatus", "AnniversaryDate", "Email", "IsEmailActive", "CommunicationPreference", "PhotoUrl", "ChurchId", "FamilyId", "UserLoginId")
-VALUES ('Active', 'Member', 'Adult', 'Female', false, 'Mrs', 'Danielle', NULL, 'Philippa', 'Cagnetta', NULL, 6, 11, 1980, 'Married', NULL, 'danielle@yahoo.com', true, 'EMail', NULL, 1, 1, '08925ade-9249-476b-8787-b3dd8f5dbc13');
+VALUES ('Active', 'Member', 'Adult', 'Female', false, 'Mrs', 'Danielle', NULL, 'Philippa', 'Cagnetta', NULL, 6, 11, 1980, 'Married', NULL, 'danielle@yahoo.com', true, 'EMail', NULL, 1, 1, NULL);
 -- person 3
 INSERT INTO "Person" ("RecordStatus", "ConnectionStatus", "AgeClassification", "Gender", "DeceasedStatus_IsDeceased", "FullName_Title", "FullName_FirstName", "FullName_NickName", "FullName_MiddleName", "FullName_LastName", "FullName_Suffix", "BirthDate_BirthDay", "BirthDate_BirthMonth", "BirthDate_BirthYear", "MaritalStatus", "AnniversaryDate", "Email", "IsEmailActive", "CommunicationPreference", "PhotoUrl", "ChurchId", "FamilyId", "UserLoginId")
-VALUES ('Active', 'Member', 'Child', 'Male', false, 'Mr', 'Daniel', NULL, 'Athanasios', 'Cagnetta', NULL, 6, 11, 1980, 'Single', NULL, 'daniel@yahoo.com', true, 'EMail', NULL, 1, 1, '08925ade-9249-476b-8787-b3dd8f5dbc13');
+VALUES ('Active', 'Member', 'Child', 'Male', false, 'Mr', 'Daniel', NULL, 'Athanasios', 'Cagnetta', NULL, 6, 11, 1980, 'Single', NULL, 'daniel@yahoo.com', true, 'EMail', NULL, 1, 1, NULL);
 
 -------------------------------------------------------------------------------------------------
 -- GROUP TYPE --

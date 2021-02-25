@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using People.Contracts;
 using People.Domain.Model;
 using People.Domain.Repositories;
 

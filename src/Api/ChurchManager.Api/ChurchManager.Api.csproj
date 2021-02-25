@@ -21,6 +21,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\DbMigrations\DbMigrations.csproj" />
+    <ProjectReference Include="..\..\People\People.Contracts\People.Contracts.csproj" />
     <ProjectReference Include="..\..\Shared.Kernel\Shared.Kernel.csproj" />
   </ItemGroup>
 

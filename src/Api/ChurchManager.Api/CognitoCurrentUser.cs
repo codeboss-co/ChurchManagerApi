@@ -1,12 +1,14 @@
-﻿using System.Security.Claims;
+﻿using System;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Codeboss.Types;
 using People.Application.Services;
 using People.Domain.Model;
+using Shared.Kernel.Security;
 
 namespace ChurchManager.Api
 {
-    public class CognitoCurrentUser : ICurrentUser
+    public class CognitoCurrentUser : ICognitoCurrentUser
     {
         private readonly ICurrentPrincipalAccessor _principalAccessor;
         private readonly IPersonApplicationService _applicationService;
@@ -21,6 +23,9 @@ namespace ChurchManager.Api
 
         public string Id => _principalAccessor.Principal.FindFirstValue(ClaimTypes.NameIdentifier);
 
-        public async Task<PersonDomain> CurrentPerson() => await _applicationService.PersonByUserLoginId(Id);
+        /// <summary>
+        /// Loads the Current User using the
+        /// </summary>
+        public Lazy<Task<PersonDomain>> CurrentPerson => new(async () => await _applicationService.PersonByUserLoginId(Id));
     }
 }

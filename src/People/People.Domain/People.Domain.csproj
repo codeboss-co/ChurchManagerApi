@@ -4,14 +4,15 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
-
   <ItemGroup>
-    <ProjectReference Include="..\..\ChurchManager.Shared\ChurchManager.Shared.csproj" />
-    <ProjectReference Include="..\People.Persistence.Models\People.Persistence.Models.csproj" />
+    <Compile Remove="Services\**" />
+    <EmbeddedResource Remove="Services\**" />
+    <None Remove="Services\**" />
   </ItemGroup>
 
 
   <ItemGroup>
-    <Folder Include="Services\" />
+    <ProjectReference Include="..\..\ChurchManager.Shared\ChurchManager.Shared.csproj" />
+    <ProjectReference Include="..\People.Persistence.Models\People.Persistence.Models.csproj" />
   </ItemGroup>
 </Project>

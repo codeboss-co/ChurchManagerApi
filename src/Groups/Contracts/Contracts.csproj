@@ -4,4 +4,9 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\People\People.Contracts\People.Contracts.csproj" />
+    <ProjectReference Include="..\Groups.Persistence.Models\Groups.Persistence.Models.csproj" />
+  </ItemGroup>
+
 </Project>

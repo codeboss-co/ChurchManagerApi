@@ -13,7 +13,7 @@ namespace People.Infrastructure.Persistence.Repositories
 
         public async Task<Person> PersonByUserLoginId(string userLoginId)
         {
-            return await Queryable(new PersonByUserLoginSpecification(userLoginId)).SingleAsync();
+            return await Queryable(new PersonByUserLoginSpecification(userLoginId)).FirstOrDefaultAsync();
         }
     }
 }

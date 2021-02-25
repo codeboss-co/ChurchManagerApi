@@ -5,6 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Codeboss\src\CodeBoss.CQRS\src\CodeBoss.CQRS\CodeBoss.CQRS.csproj" />
+    <ProjectReference Include="..\People.Contracts\People.Contracts.csproj" />
     <ProjectReference Include="..\People.Domain\People.Domain.csproj" />
     <ProjectReference Include="..\People.Infrastructure\People.Infrastructure.csproj" />
   </ItemGroup>

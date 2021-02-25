@@ -1,22 +1,26 @@
-﻿using System.Collections.Generic;
-using People.Persistence.Models;
+﻿using People.Persistence.Models;
 
 namespace People.Domain.Model
 {
-    public class PersonDomain : Dictionary<string, object>
+    public class PersonDomain
     {
-        public PersonDomain(Person entity) : base(capacity:10)
+        public int PersonId { get; }
+        public int? ChurchId { get; }
+        public ConnectionStatus ConnectionStatus { get; set; }
+        public RecordStatus RecordStatus { get; set; }
+        public AgeClassification AgeClassification { get; set; }
+        public FullName FullName { get; set; }
+        public BirthDate BirthDate { get; set; }
+
+        public PersonDomain(Person entity)
         {
-            Add("personId", entity.Id);
-
-            Add("title", entity.FullName.Title);
-            Add("firstName", entity.FullName.FirstName);
-            Add("middleName", entity.FullName.MiddleName);
-            Add("lastName", entity.FullName.LastName);
-            Add("suffix", entity.FullName.Suffix);
-
-            Add("birthDay", entity.BirthDate.BirthDay);
-            Add("birthMonth", entity.BirthDate.BirthMonth);
+            PersonId = entity.Id;
+            ChurchId = entity.ChurchId;
+            ConnectionStatus = entity.ConnectionStatus;
+            ConnectionStatus = entity.RecordStatus;
+            AgeClassification = entity.AgeClassification;
+            FullName = entity.FullName;
+            BirthDate = entity.BirthDate;
         }
     }
 }
