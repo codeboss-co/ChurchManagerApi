@@ -1,12 +1,11 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using Application.Handlers;
-using CodeBoss.CQRS.Commands;
+using ChurchManager.Core;
 using CodeBoss.CQRS.Queries;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Shared.Kernel.Security;
 
 namespace ChurchManager.Api.Controllers
 {
@@ -45,6 +44,14 @@ namespace ChurchManager.Api.Controllers
             var currentPerson = _currentUser.CurrentPerson.Value.Result;
             var groups = await _queryDispatcher.QueryAsync(new GroupsForPersonQuery(currentPerson.PersonId), token);
             return Ok(groups);
+        }
+
+        [HttpPost("browse-groups")]
+        [Authorize]
+        public async Task<IActionResult> BrowseGroups([FromBody] BrowseGroupsQuery query, CancellationToken token)
+        {
+            var result = await _queryDispatcher.QueryAsync(query, token);
+            return Ok(result);
         }
     }
 }

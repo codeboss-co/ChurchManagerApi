@@ -1,18 +1,13 @@
 ﻿using System;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using ChurchManager.Core;
 using Codeboss.Types;
 using People.Application.Services;
 using People.Domain.Model;
-using Shared.Kernel.Security;
 
 namespace ChurchManager.Api
 {
-    // Marker for easy reference
-    public interface ICognitoCurrentUser: ICognitoCurrentUser<PersonDomain>
-    {
-    }
-
     public class CognitoCurrentUser : ICognitoCurrentUser
     {
         private readonly ICurrentPrincipalAccessor _principalAccessor;

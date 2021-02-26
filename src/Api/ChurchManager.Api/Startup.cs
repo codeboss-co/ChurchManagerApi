@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Security.Cryptography;
 using Application;
+using ChurchManager.Shared;
 using CodeBoss.AspNetCore;
 using CodeBoss.CQRS.Commands;
 using CodeBoss.CQRS.Queries;

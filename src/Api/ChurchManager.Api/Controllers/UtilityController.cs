@@ -2,12 +2,11 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Application.Handlers;
+using ChurchManager.Core;
 using CodeBoss.CQRS.Queries;
-using Codeboss.Types;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Shared.Kernel.Security;
 
 namespace ChurchManager.Api.Controllers
 {
