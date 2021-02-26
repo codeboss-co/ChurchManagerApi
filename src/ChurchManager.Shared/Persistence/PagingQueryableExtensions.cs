@@ -59,21 +59,23 @@ namespace ChurchManager.Shared.Persistence
 
             var totalResults = await queryable.CountAsync();
             var totalPages = (int)Math.Ceiling((decimal)totalResults / resultsPerPage);
+            var skip = (page - 1) * resultsPerPage;
 
             List<T> data;
             if(string.IsNullOrWhiteSpace(orderBy))
             {
-                data = await queryable.PageBy(page, resultsPerPage).ToListAsync();
+                
+                data = await queryable.PageBy(skip, resultsPerPage).ToListAsync();
                 return PagedResult<T>.Create(data, page, resultsPerPage, totalPages, totalResults);
             }
 
             if(sortOrder?.ToLowerInvariant() == "asc")
             {
-                data = await queryable.OrderBy(ToLambda<T>(orderBy)).PageBy(page, resultsPerPage).ToListAsync();
+                data = await queryable.OrderBy(ToLambda<T>(orderBy)).PageBy(skip, resultsPerPage).ToListAsync();
             }
             else
             {
-                data = await queryable.OrderByDescending(ToLambda<T>(orderBy)).PageBy(page, resultsPerPage).ToListAsync();
+                data = await queryable.OrderByDescending(ToLambda<T>(orderBy)).PageBy(skip, resultsPerPage).ToListAsync();
             }
 
             return PagedResult<T>.Create(data, page, resultsPerPage, totalPages, totalResults);
