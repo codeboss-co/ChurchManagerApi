@@ -40,6 +40,11 @@ namespace ChurchManager.Shared.Persistence
 
         public virtual IQueryable<T> Queryable(ISpecification<T> specification)
         {
+            if (specification is null)
+            {
+                return ObjectSet;
+            }
+
             // fetch a Queryable that includes all expression-based includes
             var queryableResultWithIncludes = specification.Includes
                 .Aggregate(ObjectSet.AsQueryable(),
@@ -94,9 +99,12 @@ namespace ChurchManager.Shared.Persistence
         public virtual async Task<int> SaveChangesAsync() => await DbContext.SaveChangesAsync();
 
 
-        public async Task<PagedResult<T>> BrowseAsync<TQuery>(TQuery query, CancellationToken ct = default) where TQuery : IPagedQuery
+        public async Task<PagedResult<T>> BrowseAsync<TQuery>(
+            TQuery query,
+            ISpecification<T> specification = null,
+            CancellationToken ct = default) where TQuery : IPagedQuery
         {
-            var results =  await Queryable().PaginateAsync(query);
+            var results =  await Queryable(specification).PaginateAsync(query);
 
             return results;
         }

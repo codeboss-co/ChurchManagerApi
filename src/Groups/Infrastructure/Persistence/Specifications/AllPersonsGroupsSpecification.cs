@@ -8,8 +8,27 @@ namespace Infrastructure.Persistence.Specifications
     {
         public AllPersonsGroupsSpecification(int personId)
         {
-            Criteria = x => x.Members.Any(x => x.PersonId == personId
-                                               && x.GroupMemberRole.IsLeader);
+            Criteria = x =>
+                x.Members
+                    .Any(x => x.PersonId == personId &&
+                              x.GroupMemberRole.IsLeader);
+
+            Includes.Add(x => x.GroupType);
+            Includes.Add(x => x.Members);
+            IncludeStrings.Add(("Members.GroupMemberRole"));
+            IncludeStrings.Add(("Members.Person"));
+        }
+    }
+
+    public class BrowsePersonsGroupsSpecification : Specification<Group>
+    {
+        public BrowsePersonsGroupsSpecification(int personId, string searchTerm)
+        {
+            Criteria = x =>
+                x.Members
+                .Any(x => x.PersonId == personId &&
+                          x.GroupMemberRole.IsLeader) &&
+                (x.Name.Contains(searchTerm) || x.Description.Contains(searchTerm));
 
             Includes.Add(x => x.GroupType);
             Includes.Add(x => x.Members);

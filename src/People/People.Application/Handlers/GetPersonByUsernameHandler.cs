@@ -23,7 +23,7 @@ namespace People.Application.Handlers
             _personDbRepository = personDbRepository;
         }
 
-        public async Task<UserPerson> HandleAsync(PersonByUsernameQuery query, CancellationToken cancellationToken = default)
+        public async Task<UserPerson> HandleAsync(PersonByUsernameQuery query, CancellationToken ct = default)
         {
             var person = new PersonViewModel(await _personDbRepository.PersonByUserLoginId(query.UserLoginId));
 

@@ -22,6 +22,6 @@ namespace ChurchManager.Shared.Persistence
         Task<int> SaveChangesAsync();
 
         // Paging 
-        Task<PagedResult<T>> BrowseAsync<TQuery>(TQuery query, CancellationToken ct = default) where TQuery : IPagedQuery;
+        Task<PagedResult<T>> BrowseAsync<TQuery>(TQuery query, ISpecification<T> specification = null, CancellationToken ct = default) where TQuery : IPagedQuery;
     }
 }

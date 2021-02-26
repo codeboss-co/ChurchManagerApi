@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Convey.CQRS.Queries;
 using Groups.Persistence.Models;
 using People.Contracts;
 
@@ -15,6 +16,16 @@ namespace Contracts
             Add("name", entity.GroupType.Name);
             Add("description", entity.GroupType.Description);
             Add("members", entity.Members.Select(x => new GroupMemberViewModel(x)));
+        }
+
+        public GroupViewModel(PagedResult<Group> pagedResult) : base(6)
+        {
+            Add("currentPage", pagedResult.CurrentPage);
+            Add("resultsPerPage", pagedResult.ResultsPerPage);
+            Add("totalPages", pagedResult.TotalPages);
+            Add("totalResults", pagedResult.TotalResults);
+
+            Add("items", pagedResult.Items.Select(x => new GroupViewModel(x)));
         }
     }
 

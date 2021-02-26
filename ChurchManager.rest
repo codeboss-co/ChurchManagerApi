@@ -33,7 +33,7 @@ Content-Type: application/json
 Authorization: Bearer {{accessToken}}
 
 {
-    "searchTerm": "Entity Created 1",    
+    "searchTerm": "First",    
     "page": 1,
     "results": 20,
     "orderBy": "Name",

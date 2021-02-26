@@ -4,6 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Ardalis.GuardClauses;
+using Codeboss.Types;
 using Convey.CQRS.Queries;
 using Microsoft.EntityFrameworkCore;
 
@@ -85,7 +86,8 @@ namespace ChurchManager.Shared.Persistence
 
             if(sortOrder?.ToLowerInvariant() == "asc")
             {
-                data = await queryable.OrderBy(ToLambda<T>(orderBy)).PageBy(skip, resultsPerPage).ToListAsync();
+                data = await queryable.OrderBy(ToLambda<T>(orderBy)).PageBy(skip, resultsPerPage)
+                    .ToListAsync();
             }
             else
             {

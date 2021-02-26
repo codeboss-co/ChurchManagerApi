@@ -24,9 +24,9 @@ namespace Application.Handlers
             _groupDbRepository = groupDbRepository;
         }
 
-        public async Task<GroupsForPerson> HandleAsync(GroupsForPersonQuery query, CancellationToken cancellationToken = default)
+        public async Task<GroupsForPerson> HandleAsync(GroupsForPersonQuery query, CancellationToken ct = default)
         {
-            var groups = await _groupDbRepository.AllPersonsGroups(query.PersonId);
+            var groups = await _groupDbRepository.AllPersonsGroups(query.PersonId, ct);
 
             return new GroupsForPerson(groups.Select(x => new GroupViewModel(x)));
         }

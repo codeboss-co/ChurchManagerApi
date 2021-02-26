@@ -1,6 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using ChurchManager.Core;
+using Contracts;
 using Convey.CQRS.Queries;
 using Domain.Repositories;
 using CBQuery = CodeBoss.CQRS.Queries;
@@ -13,6 +14,7 @@ namespace Application.Handlers
 
     public record BrowseGroupsQuery(
         string SearchTerm,
+        int? PersonId,
         int Page,
         int Results,
         string OrderBy,
@@ -31,9 +33,11 @@ namespace Application.Handlers
 
         public async Task<BrowseGroups> HandleAsync(BrowseGroupsQuery query, CancellationToken ct = default)
         {
-            var results = await _groupDbRepository.BrowseAsync(query, ct);
+            // Allows searching for current Person or specific persons groups
+            var personId = query.PersonId ??_currentUser.CurrentPerson.Value.Result.PersonId;
+            var pagedResult = await _groupDbRepository.BrowsePersonsGroups(personId, query.SearchTerm, query, ct);
 
-            return new BrowseGroups(results);
+            return new BrowseGroups(new GroupViewModel(pagedResult));
         }
     }
 }
