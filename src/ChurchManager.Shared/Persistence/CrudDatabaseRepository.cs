@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Codeboss.Types;
+using Convey.CQRS.Queries;
 using Microsoft.EntityFrameworkCore;
 
 namespace ChurchManager.Shared.Persistence
@@ -90,6 +92,14 @@ namespace ChurchManager.Shared.Persistence
         }
 
         public virtual async Task<int> SaveChangesAsync() => await DbContext.SaveChangesAsync();
+
+
+        public async Task<PagedResult<T>> BrowseAsync<TQuery>(TQuery query, CancellationToken ct = default) where TQuery : IPagedQuery
+        {
+            var results =  await Queryable().PaginateAsync(query);
+
+            return results;
+        }
 
         #endregion
     }

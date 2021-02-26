@@ -1,6 +1,9 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using CodeBoss.CQRS.Queries;
+using ChurchManager.Core;
+using Convey.CQRS.Queries;
+using Domain.Repositories;
+using CBQuery = CodeBoss.CQRS.Queries;
 
 namespace Application.Handlers
 {
@@ -8,28 +11,29 @@ namespace Application.Handlers
     {
     }
 
-    public record BrowseGroupsQuery(int PersonId) : IQuery<BrowseGroups>
-    {
-        // Filtering
-        public string SearchTerm { get; set; }
+    public record BrowseGroupsQuery(
+        string SearchTerm,
+        int Page,
+        int Results,
+        string OrderBy,
+        string SortOrder) : CBQuery.IQuery<BrowseGroups>, IPagedQuery {}
 
-        // Paging
-        public int Page { get; set; }
-        public int Results { get; set; }
-        public string OrderBy { get; set; }
-        public string SortOrder { get; set; }
-    }
-
-    public class BrowseGroupsQueryHandler : IQueryHandler<BrowseGroupsQuery, BrowseGroups>
+    public class BrowseGroupsQueryHandler : CBQuery.IQueryHandler<BrowseGroupsQuery, BrowseGroups>
     {
-        public BrowseGroupsQueryHandler()
+        private readonly ICognitoCurrentUser _currentUser;
+        private readonly IGroupDbRepository _groupDbRepository;
+
+        public BrowseGroupsQueryHandler(ICognitoCurrentUser currentUser, IGroupDbRepository groupDbRepository)
         {
-            
+            _currentUser = currentUser;
+            _groupDbRepository = groupDbRepository;
         }
 
-        public Task<BrowseGroups> HandleAsync(BrowseGroupsQuery query, CancellationToken cancellationToken = default)
+        public async Task<BrowseGroups> HandleAsync(BrowseGroupsQuery query, CancellationToken ct = default)
         {
-            throw new System.NotImplementedException();
+            var results = await _groupDbRepository.BrowseAsync(query, ct);
+
+            return new BrowseGroups(results);
         }
     }
 }

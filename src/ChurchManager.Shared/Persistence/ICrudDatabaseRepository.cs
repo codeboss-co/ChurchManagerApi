@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Codeboss.Types;
+using Convey.CQRS.Queries;
 using Microsoft.EntityFrameworkCore;
 
 namespace ChurchManager.Shared.Persistence
@@ -18,5 +20,8 @@ namespace ChurchManager.Shared.Persistence
         Task UpdateAsync(int id, T sourceItem);
         Task Delete(int id);
         Task<int> SaveChangesAsync();
+
+        // Paging 
+        Task<PagedResult<T>> BrowseAsync<TQuery>(TQuery query, CancellationToken ct = default) where TQuery : IPagedQuery;
     }
 }
