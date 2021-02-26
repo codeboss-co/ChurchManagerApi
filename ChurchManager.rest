@@ -21,10 +21,24 @@ GET {{api}}/utility/auth
 # GetAllPersonsGroups
 @personId = 1 
 GET {{api}}/group/{{personId}}}
+
 # GetAllCurrentUsersGroups
 GET {{api}}/group/current-person
 Content-Type: application/json
 Authorization: Bearer {{accessToken}}
+
+# BrowseGroups
+POST {{api}}/group/browse
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
+{
+    "searchTerm": "Entity Created 1",    
+    "page": 1,
+    "results": 20,
+    "orderBy": "Name",
+    "sortOrder": "DESC"
+}
 
 POST {{api}}/group 
 Content-type: application/json

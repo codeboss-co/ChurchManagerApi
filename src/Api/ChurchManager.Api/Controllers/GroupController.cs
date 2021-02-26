@@ -46,7 +46,7 @@ namespace ChurchManager.Api.Controllers
             return Ok(groups);
         }
 
-        [HttpPost("browse-groups")]
+        [HttpPost("browse")]
         [Authorize]
         public async Task<IActionResult> BrowseGroups([FromBody] BrowseGroupsQuery query, CancellationToken token)
         {

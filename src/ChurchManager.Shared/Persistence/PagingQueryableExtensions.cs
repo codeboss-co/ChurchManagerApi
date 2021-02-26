@@ -18,7 +18,21 @@ namespace ChurchManager.Shared.Persistence
         {
             Guard.Against.Null(paging, nameof(paging));
 
-            return queryable.PageBy(paging.Page, paging.Results);
+            int page = 0, resultsPerPage = 0;
+
+            if(paging.Page <= 0)
+            {
+                page = 1;
+            }
+
+            if(paging.Results <= 0)
+            {
+                resultsPerPage = 10;
+            }
+
+            var skip = (page - 1) * resultsPerPage;
+
+            return queryable.PageBy(skip, paging.Results);
         }
 
         /// <summary>
