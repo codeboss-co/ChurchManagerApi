@@ -12,10 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\ChurchManager.Shared\ChurchManager.Shared.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Persistence\" />
+    <ProjectReference Include="..\Churches.Persistence.Models\Churches.Persistence.Models.csproj" />
   </ItemGroup>
 
 </Project>

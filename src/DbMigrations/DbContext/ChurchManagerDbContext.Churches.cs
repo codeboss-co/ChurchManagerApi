@@ -1,7 +1,7 @@
-﻿using Churches.Infrastructure.Persistence.Model;
+﻿using Churches.Persistence.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace Shared.Kernel
+namespace DbMigrations.DbContext
 {
     public partial class ChurchManagerDbContext
     {

@@ -1,6 +1,7 @@
 ﻿using Codeboss.Types;
+using People.Persistence.Models;
 
-namespace People.Persistence.Models
+namespace People.Domain
 {
     #region Enumerations
 

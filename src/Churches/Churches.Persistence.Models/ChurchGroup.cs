@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Codeboss.Types;
 
-namespace Churches.Infrastructure.Persistence.Model
+namespace Churches.Persistence.Models
 {
     [Table("ChurchGroup", Schema = "Churches")]
 

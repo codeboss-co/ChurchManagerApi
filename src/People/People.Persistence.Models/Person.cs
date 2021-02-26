@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Churches.Infrastructure.Persistence.Model;
+using Churches.Persistence.Models;
 using Codeboss.Types;
 using Microsoft.EntityFrameworkCore;
 

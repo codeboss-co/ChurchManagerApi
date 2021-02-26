@@ -1,6 +1,7 @@
 ﻿using Codeboss.Types;
+using Groups.Persistence.Models;
 
-namespace Groups.Persistence.Models
+namespace Domain
 {
     /// <summary>
     /// Represents the status of a <see cref="GroupMember"/> in a <see cref="Group"/>.

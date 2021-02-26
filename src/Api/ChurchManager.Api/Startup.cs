@@ -11,6 +11,7 @@ using CodeBoss.AspNetCore.Security;*/
 using CodeBoss.CQRS.Commands;
 using CodeBoss.CQRS.Queries;
 using Codeboss.Types;
+using DbMigrations;
 using Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
