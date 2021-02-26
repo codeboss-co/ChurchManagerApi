@@ -1,31 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Codeboss.Types;
+using ChurchManager.Shared.Persistence;
 
 namespace Churches.Persistence.Models
 {
     [Table("ChurchGroup", Schema = "Churches")]
 
-    public class ChurchGroup : IEntity<int>
+    public class ChurchGroup : Entity<int>
     {
-        [Key]
-        public int Id { get; set; }
-
         [Required, MaxLength(50)]
         public string Name { get; set; }
+        [MaxLength(100)]
         public string Description { get; set; }
 
         /// <summary>
         /// Gets or sets the Id of the <see cref="Person"/> that is the leader of the campus.
         /// </summary>
         public int? LeaderPersonId { get; set; }
-
-        public bool IsActive { get; set; } = true;
-        public DateTime? InactiveDateTime { get; set; }
-
 
         #region Navigation
 

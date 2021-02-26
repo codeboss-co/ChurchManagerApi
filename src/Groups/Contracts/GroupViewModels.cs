@@ -23,9 +23,8 @@ namespace Contracts
         public GroupMemberViewModel(GroupMember entity) : base(5)
         {
             Add("groupId", entity.GroupId);
-            Add("groupMemberStatus", entity.GroupMemberStatus);
+            Add("recordStatus", entity.RecordStatus);
             Add("isLeader", entity.GroupMemberRole.IsLeader);
-            Add("isActive", entity.InactiveDateTime == null);
 
             Add("person", new PersonViewModel(entity.Person));
         }

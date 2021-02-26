@@ -8,6 +8,11 @@ using Shared.Kernel.Security;
 
 namespace ChurchManager.Api
 {
+    // Marker for easy reference
+    public interface ICognitoCurrentUser: ICognitoCurrentUser<PersonDomain>
+    {
+    }
+
     public class CognitoCurrentUser : ICognitoCurrentUser
     {
         private readonly ICurrentPrincipalAccessor _principalAccessor;

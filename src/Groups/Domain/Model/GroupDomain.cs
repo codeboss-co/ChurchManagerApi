@@ -3,32 +3,44 @@ using System.Collections.Generic;
 using System.Linq;
 using Groups.Persistence.Models;
 using People.Domain.Model;
+using Shared.Kernel;
 
 namespace Domain.Model
 {
-    public class GroupDomain : Dictionary<string, object>
+    public class GroupDomain 
     {
-        public GroupDomain(Group entity) : base(6)
+        public int GroupId { get; }
+        public int? ChurchId { get; }
+        public string GroupType { get; }
+        public string Name { get; }
+        public string Description { get; }
+        public IReadOnlyList<GroupMemberDomain> Members { get; }
+
+        public GroupDomain(Group entity) 
         {
-            Add("groupId", entity.Id);
-            Add("parentGroupId", entity.ParentGroupId);
-            Add("groupType", entity.GroupType.Name);
-            Add("name", entity.GroupType.Name);
-            Add("description", entity.GroupType.Description);
-            Add("members", entity.Members.Select(x => new GroupMemberDomain(x)));
+            GroupId = entity.Id;
+            ChurchId = entity.ChurchId;
+            GroupType = entity.GroupType.Name;
+            Name = entity.Name;
+            Description = entity.Description;
+
+            Members = entity.Members.Select(x => new GroupMemberDomain(x)).ToList().AsReadOnly();
         }
     }
 
-    public class GroupMemberDomain : Dictionary<string, object>
+    public class GroupMemberDomain
     {
-        public GroupMemberDomain(GroupMember entity) : base(5)
-        {
-            Add("groupId", entity.GroupId);
-            Add("groupMemberStatus", entity.GroupMemberStatus);
-            Add("isLeader", entity.GroupMemberRole.IsLeader);
-            Add("isActive", entity.InactiveDateTime == null);
+        public int GroupId { get; }
+        public RecordStatus RecordStatus { get; }
+        public bool IsLeader { get; }
+        public PersonDomain Person { get; }
 
-            Add("person", new PersonDomain(entity.Person));
+        public GroupMemberDomain(GroupMember entity)
+        {
+            GroupId = entity.GroupId;
+            RecordStatus = entity.RecordStatus;
+            IsLeader = entity.GroupMemberRole.IsLeader;
+            Person = new PersonDomain(entity.Person);
         }
     }
 }

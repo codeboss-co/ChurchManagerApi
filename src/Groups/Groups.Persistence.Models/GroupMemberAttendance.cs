@@ -33,7 +33,7 @@ namespace Groups.Persistence.Models
         public bool? IsFirstTime { get; set; }
 
         public bool? IsNewConvert { get; set; }
-
+        [MaxLength(200)]
         public string Note { get; set; }
 
         #region Navigation

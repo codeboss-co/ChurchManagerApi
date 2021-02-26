@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\Codeboss\src\Codeboss\src\Codeboss\Codeboss.csproj" />
+    <ProjectReference Include="..\..\ChurchManager.Shared\ChurchManager.Shared.csproj" />
   </ItemGroup>
 
 

@@ -1,20 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Codeboss.Types;
+using ChurchManager.Shared.Persistence;
 
 namespace People.Persistence.Models
 {
     [Table("Family", Schema = "People")]
 
-    public class Family : IEntity<int>
+    public class Family : Entity<int>
     {
-        [Key]
-        public int Id { get; set; }
-
-        public string RecordStatus { get; set; }
-
         public string Name { get; set; }
 
         #region Navigation

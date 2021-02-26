@@ -23,6 +23,7 @@ namespace Groups.Persistence.Models
         public int? AttendanceCount { get; set; }
         public int? FirstTimerCount { get; set; }
         public int? NewConvertCount { get; set; }
+        [MaxLength(200)]
         public string Notes { get; set; }
 
         #region Navigation

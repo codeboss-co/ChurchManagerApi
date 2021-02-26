@@ -1,4 +1,5 @@
 ﻿using People.Persistence.Models;
+using Shared.Kernel;
 
 namespace People.Domain.Model
 {
@@ -17,7 +18,7 @@ namespace People.Domain.Model
             PersonId = entity.Id;
             ChurchId = entity.ChurchId;
             ConnectionStatus = entity.ConnectionStatus;
-            ConnectionStatus = entity.RecordStatus;
+            RecordStatus = entity.RecordStatus;
             AgeClassification = entity.AgeClassification;
             FullName = entity.FullName;
             BirthDate = entity.BirthDate;

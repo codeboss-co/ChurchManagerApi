@@ -4,30 +4,25 @@ using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Churches.Persistence.Models;
+using ChurchManager.Shared.Persistence;
 using Codeboss.Types;
 
 namespace Groups.Persistence.Models
 {
     [Table("Group", Schema = "Groups")]
 
-    public class Group : IAggregateRoot<int>
+    public class Group : Entity<int>, IAggregateRoot<int>
     {
-        [Key]
-        public int Id { get; set; }
         public int? ParentGroupId { get; set; }
         public int GroupTypeId { get; set; }
         public int? ChurchId { get; set; }
 
         [Required, MaxLength(50)]
         public string Name { get; set; }
-
+        [MaxLength(100)]
         public string Description { get; set; }
 
-        public bool IsActive { get; set; } = true;
-
         public int? GroupCapacity { get; set; }
-
-        public DateTime? InactiveDateTime { get; set; }
 
         #region Navigation
 

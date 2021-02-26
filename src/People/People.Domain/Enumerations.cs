@@ -6,19 +6,6 @@ namespace People.Domain
     #region Enumerations
 
     /// <summary>
-    /// Represents the communication preference of a <see cref="CommunicationType"/> in a <see cref="Person"/>.
-    /// </summary>
-    public class CommunicationType : Enumeration<CommunicationType, string>
-    {
-        public CommunicationType(string value) => Value = value;
-
-        public static CommunicationType WhatsApp = new("WhatsApp");
-        public static CommunicationType Signal = new("Signal");
-        public static CommunicationType Email = new("Email");
-        public static CommunicationType SMS = new("SMS");
-    }
-
-    /// <summary>
     /// Represents the age classification preference of a <see cref="AgeClassification"/> in a <see cref="Person"/>.
     /// </summary>
     public class AgeClassification : Enumeration<AgeClassification, string>
@@ -37,13 +24,13 @@ namespace People.Domain
     /// </summary>
     public class Gender : Enumeration<Gender, string>
     {
-        private Gender() { }
+        public Gender(string value) => Value = value;
 
-        public static Gender Male = new() { Value = "Male" };
-        public static Gender Female = new() { Value = "Female" };
-        public static Gender Unknown = new() { Value = "Unknown" };
+        public static Gender Male = new("Male");
+        public static Gender Female = new("Female");
+        public static Gender Unknown = new("Unknown");
         // Implicit conversion from string
-        public static implicit operator Gender(string value) => new() { Value = value};
+        public static implicit operator Gender(string value) => new(value);
     }
 
     /// <summary>
@@ -51,22 +38,26 @@ namespace People.Domain
     /// </summary>
     public class ConnectionStatus : Enumeration<ConnectionStatus, string>
     {
-        private ConnectionStatus() { }
+        public ConnectionStatus(string value) => Value = value;
 
-        public static ConnectionStatus FirstTimer = new() { Value = "First Timer" };
-        public static ConnectionStatus NewConvert = new() { Value = "New Convert" };
-        public static ConnectionStatus Member = new() { Value = "Member" };
+        public static ConnectionStatus FirstTimer = new("First Timer");
+        public static ConnectionStatus NewConvert = new("New Convert");
+        public static ConnectionStatus Member = new("Member");
         // Implicit conversion from string
-        public static implicit operator ConnectionStatus(string value) => new() { Value = value };
+        public static implicit operator ConnectionStatus(string value) => new(value);
     }
 
-    public class RecordStatus : Enumeration<RecordStatus, string>
+    public class MaritalStatus : Enumeration<MaritalStatus, string>
     {
-        public static RecordStatus Active = new() { Value = "Active" };
-        public static RecordStatus InActive = new() { Value = "InActive" };
-        public static RecordStatus Pending = new() { Value = "Pending" };
+        public MaritalStatus(string value) => Value = value;
+
+        public static MaritalStatus Single = new("Single");
+        public static MaritalStatus Married = new("Married");
+        public static MaritalStatus Widowed = new("Widowed");
+        public static MaritalStatus Divorced = new("Divorced");
+        public static MaritalStatus Unknown = new("Unknown");
         // Implicit conversion from string
-        public static implicit operator RecordStatus(string value) => new() { Value = value };
+        public static implicit operator MaritalStatus(string value) => new(value);
     }
 
     #endregion
