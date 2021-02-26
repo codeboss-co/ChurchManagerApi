@@ -23,7 +23,9 @@ namespace People.Persistence.Models
         public FullName FullName { get; set; }
         public BirthDate BirthDate { get; set; }
         public Baptism BaptismStatus { get; set; }
-        public MaritalStatus MaritalStatus { get; set; }
+
+        public string MaritalStatus { get; set; }
+        public DateTime? AnniversaryDate { get; set; }
 
         public Email Email { get; set; }
         public ICollection<PhoneNumber> PhoneNumbers { get; set; } = new Collection<PhoneNumber>();
@@ -86,13 +88,6 @@ namespace People.Persistence.Models
     {
         public bool? IsBaptised { get; set; }
         public DateTime? BaptismDate { get; set; }
-    }
-
-    [Owned]
-    public class MaritalStatus
-    {
-        public string Status { get; set; }
-        public DateTime? AnniversaryDate { get; set; }
     }
 
     [Owned]

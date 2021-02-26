@@ -36,7 +36,7 @@ namespace DbMigrations.Configurations
                     v => new Gender(v));
 
             builder
-                .Property(e => e.MaritalStatus.Status)
+                .Property(e => e.MaritalStatus)
                 .HasConversion(
                     v => v.ToString(),
                     v => new MaritalStatus(v));
