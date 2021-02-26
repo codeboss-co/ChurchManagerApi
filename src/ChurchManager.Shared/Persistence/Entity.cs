@@ -13,7 +13,7 @@ namespace ChurchManager.Shared.Persistence
 
         #region Auditing
 
-        public DateTime CreatedDate { get; set; } = DateTime.UtcNow;
+        public DateTime? CreatedDate { get; set; } = DateTime.UtcNow;
         public DateTime? ModifiedDate { get; set; }
         [MaxLength(50)]
         public string CreatedBy { get; set; }
