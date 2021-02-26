@@ -7,7 +7,7 @@ namespace ChurchManager.Shared.Persistence
     public class Entity<TPrimaryKey> : IEntity<TPrimaryKey>
     {
         [Key]
-        public TPrimaryKey Id { get; }
+        public TPrimaryKey Id { get; set; }
         public string RecordStatus { get; set; } = "Active";
         public DateTime? InactiveDateTime { get; set; }
 
