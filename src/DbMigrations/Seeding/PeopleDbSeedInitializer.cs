@@ -1,6 +1,5 @@
 ﻿using System.Threading.Tasks;
 using CodeBoss.AspNetCore.Startup;
-using DbMigrations.DbContext;
 
 namespace DbMigrations.Seeding
 {
@@ -10,12 +9,10 @@ namespace DbMigrations.Seeding
     public class PeopleDbSeedInitializer : IInitializer
     {
         public int OrderNumber { get; } = 1;
-
-        private readonly ChurchManagerDbContext _dbContext;
-
-        public PeopleDbSeedInitializer(ChurchManagerDbContext dbContext)
+        
+        public PeopleDbSeedInitializer()
         {
-            _dbContext = dbContext;
+        
         }
 
         public Task InitializeAsync()

@@ -1,9 +1,9 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Bogus;
 using Churches.Persistence.Models;
 using CodeBoss.AspNetCore.Startup;
 using DbMigrations.DbContext;
+using Microsoft.EntityFrameworkCore;
 
 namespace DbMigrations.Seeding
 {
@@ -16,9 +16,14 @@ namespace DbMigrations.Seeding
 
         private readonly ChurchManagerDbContext _dbContext;
 
-        public ChurchesDbSeedInitializer(ChurchManagerDbContext dbContext)
+        public ChurchesDbSeedInitializer()
         {
-            _dbContext = dbContext;
+            var connectionstring = "Server=localhost;Port=5432;Database=churchmanager_db;User Id=admin;password=P455word1;";
+
+            var optionsBuilder = new DbContextOptionsBuilder<ChurchManagerDbContext>();
+            optionsBuilder.UseNpgsql(connectionstring);
+
+            _dbContext = new ChurchManagerDbContext(optionsBuilder.Options);
         }
 
         public async Task InitializeAsync()

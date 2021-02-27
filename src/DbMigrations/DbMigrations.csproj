@@ -6,7 +6,6 @@
 
   <ItemGroup>
     <PackageReference Include="Bogus" Version="33.0.2" />
-    <PackageReference Include="CodeBoss.AspNetCore" Version="0.0.26" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.3" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="5.0.2" />
   </ItemGroup>
@@ -15,6 +14,7 @@
     <ProjectReference Include="..\Groups\Infrastructure\Infrastructure.csproj" />
     <ProjectReference Include="..\People\People.Infrastructure\People.Infrastructure.csproj" />
     <ProjectReference Include="..\Shared.Kernel\Shared.Kernel.csproj" />
+    <ProjectReference Include="D:\Development\Freelance\Codeboss\src\\CodeBoss.AspNetCore\src\\CodeBoss.AspNetCore\\CodeBoss.AspNetCore.csproj" />
   </ItemGroup>
 
 </Project>
