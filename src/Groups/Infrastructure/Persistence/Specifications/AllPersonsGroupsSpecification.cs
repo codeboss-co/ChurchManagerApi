@@ -24,11 +24,21 @@ namespace Infrastructure.Persistence.Specifications
     {
         public BrowsePersonsGroupsSpecification(int personId, string searchTerm)
         {
-            Criteria = x =>
-                x.Members
-                .Any(x => x.PersonId == personId &&
-                          x.GroupMemberRole.IsLeader) &&
-                (x.Name.Contains(searchTerm) || x.Description.Contains(searchTerm));
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                Criteria = x =>
+                    x.Members
+                        .Any(x => x.PersonId == personId &&
+                                  x.GroupMemberRole.IsLeader) &&
+                    (x.Name.Contains(searchTerm) || x.Description.Contains(searchTerm));
+            }
+            else
+            {
+                Criteria = x =>
+                    x.Members
+                        .Any(x => x.PersonId == personId &&
+                                  x.GroupMemberRole.IsLeader);
+            }
 
             Includes.Add(x => x.GroupType);
             Includes.Add(x => x.Members);

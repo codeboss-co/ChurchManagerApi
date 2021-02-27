@@ -47,7 +47,7 @@ namespace ChurchManager.Api.Controllers
         }
 
         [HttpPost("browse")]
-        [Authorize]
+        //[Authorize]
         public async Task<IActionResult> BrowseGroups([FromBody] BrowseGroupsQuery query, CancellationToken token)
         {
             var result = await _queryDispatcher.QueryAsync(query, token);

@@ -40,34 +40,6 @@ Authorization: Bearer {{accessToken}}
     "sortOrder": "DESC"
 }
 
-POST {{api}}/group 
-Content-type: application/json
-
-{
-    "displayName": "Entity Created 1",
-    "entityRoles": [
-       "Customer",
-       "Supplier: Stock",
-       "Supplier: Packing"     
-    ],
-    "physicalAddress": "Cape Town, South Africa",
-    "postalAddress": "P.O. Box 22435, Cape Town, South Africa",
-    "countryID": "{{countryId}}",
-    "email": "test@techgenius.co.za",
-    "telephone" : "+2755555555"
-}
-
-
-PUT {{api}}/entity/{{entityId}} 
-Content-Type: application/json
-
-{
-    "id": "{{entityId}}", "displayName": "Entity Updated 1"
-}
-
-DELETE {{api}}/entity/{{entityId}}
-
-
 # ============== PEOPLE ==================== #
 # GetPersonByUsername
 GET {{api}}/person/userlogin/{{userLoginId}}

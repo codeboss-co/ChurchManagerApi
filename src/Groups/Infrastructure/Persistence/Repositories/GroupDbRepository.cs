@@ -23,14 +23,9 @@ namespace Infrastructure.Persistence.Repositories
             return groups;
         }
 
-        public async Task<PagedResult<Group>> BrowsePersonsGroups(int personId, string search, IPagedQuery query, CancellationToken ct = default)
+        public Task<PagedResult<Group>> BrowsePersonsGroups(int personId, string search, IPagedQuery query, CancellationToken ct = default)
         {
-            if (!string.IsNullOrEmpty(search))
-            {
-                return await BrowseAsync(query, new BrowsePersonsGroupsSpecification(personId, search), ct);
-            }
-
-            return await BrowseAsync(query, ct: ct);
+            return BrowseAsync(query, new BrowsePersonsGroupsSpecification(personId, search), ct);
         }
     }
 }

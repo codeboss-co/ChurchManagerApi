@@ -8,19 +8,15 @@ using CBQuery = CodeBoss.CQRS.Queries;
 
 namespace Application.Handlers
 {
-    public record BrowseGroups(dynamic Result)
-    {
-    }
-
     public record BrowseGroupsQuery(
         string SearchTerm,
         int? PersonId,
         int Page,
         int Results,
         string OrderBy,
-        string SortOrder) : CBQuery.IQuery<BrowseGroups>, IPagedQuery {}
+        string SortOrder) : CBQuery.IQuery<GroupViewModel>, IPagedQuery {}
 
-    public class BrowseGroupsQueryHandler : CBQuery.IQueryHandler<BrowseGroupsQuery, BrowseGroups>
+    public class BrowseGroupsQueryHandler : CBQuery.IQueryHandler<BrowseGroupsQuery, GroupViewModel>
     {
         private readonly ICognitoCurrentUser _currentUser;
         private readonly IGroupDbRepository _groupDbRepository;
@@ -31,13 +27,13 @@ namespace Application.Handlers
             _groupDbRepository = groupDbRepository;
         }
 
-        public async Task<BrowseGroups> HandleAsync(BrowseGroupsQuery query, CancellationToken ct = default)
+        public async Task<GroupViewModel> HandleAsync(BrowseGroupsQuery query, CancellationToken ct = default)
         {
             // Allows searching for current Person or specific persons groups
             var personId = query.PersonId ??_currentUser.CurrentPerson.Value.Result.PersonId;
             var pagedResult = await _groupDbRepository.BrowsePersonsGroups(personId, query.SearchTerm, query, ct);
 
-            return new BrowseGroups(new GroupViewModel(pagedResult));
+            return new GroupViewModel(pagedResult);
         }
     }
 }
