@@ -36,6 +36,18 @@ namespace DbMigrations.Seeding
 
             if (!await _dbContext.Group.AnyAsync())
             {
+                var cellLeaderRole = new GroupMemberRole { Name = "Leader", Description = "Cell Leader", IsLeader = true };
+                var cellMemberRole = new GroupMemberRole { Name = "Member", Description = "Cell Member" };
+
+                await _dbContext.GroupMemberRole.AddAsync(cellLeaderRole);
+                await _dbContext.GroupMemberRole.AddAsync(cellMemberRole);
+
+                await _dbContext.SaveChangesAsync();
+            }
+               
+
+            if (!await _dbContext.Group.AnyAsync())
+            {
                 var faker = new Faker();
                 var random = new Random();
                 for (int i = 0; i < 20; i++)
@@ -58,16 +70,14 @@ namespace DbMigrations.Seeding
         {
             var random = new Random();
             int personId = 1;
-            var cellLeaderRole = new GroupMemberRole { Name = "Leader", Description = "Cell Leader", IsLeader = true };
-            var cellMemberRole = new GroupMemberRole { Name = "Member", Description = "Cell Member" };
 
             var cellLeader = new Faker<GroupMember>()
                 .RuleFor(u => u.PersonId, f => personId++)
-                .RuleFor(u => u.GroupMemberRole, f => cellLeaderRole);
+                .RuleFor(u => u.GroupMemberRoleId, f => 1);
 
             var cellMember = new Faker<GroupMember>()
                 .RuleFor(u => u.PersonId, f => personId++)
-                .RuleFor(u => u.GroupMemberRole, f => cellMemberRole);
+                .RuleFor(u => u.GroupMemberRoleId, f => 2);
 
             var cellGroupMembers = cellMember.Generate(random.Next(1, 30));
 
