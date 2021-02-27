@@ -25,6 +25,7 @@ namespace DbMigrations
             if(seedDatabaseEnabled)
             {
                 services.AddInitializer<ChurchesDbSeedInitializer>();
+                services.AddInitializer<PeopleDbSeedInitializer>();
             }
         }
     }
