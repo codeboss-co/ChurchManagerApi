@@ -6,7 +6,7 @@ namespace Groups.Persistence.Models
 {
     [Table("GroupType", Schema = "Groups")]
 
-    public class GroupType : IEntity<int>
+    public record GroupType : IEntity<int>
     {
         [Key]
         public int Id { get; set; }

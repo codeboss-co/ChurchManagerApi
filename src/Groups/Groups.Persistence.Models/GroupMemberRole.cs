@@ -11,7 +11,7 @@ namespace Groups.Persistence.Models
     /// </summary>
     [Table("GroupMemberRole", Schema = "Groups")]
 
-    public class GroupMemberRole : IEntity<int>
+    public record GroupMemberRole : IEntity<int>
     {
         [Key]
         public int Id { get; set; }
