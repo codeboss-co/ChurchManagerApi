@@ -17,9 +17,9 @@ namespace People.Contracts
 
             Add("photoUrl", entity.PhotoUrl);
 
-            Add("birthDay", entity.BirthDate.BirthDay);
-            Add("birthMonth", entity.BirthDate.BirthMonth);
-            Add("birthYear", entity.BirthDate.BirthYear);
+            Add("birthDay", entity.BirthDate?.BirthDay);
+            Add("birthMonth", entity.BirthDate?.BirthMonth);
+            Add("birthYear", entity.BirthDate?.BirthYear);
         }
     }
 }

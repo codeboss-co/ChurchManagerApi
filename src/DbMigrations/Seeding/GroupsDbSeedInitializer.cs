@@ -6,7 +6,6 @@ using CodeBoss.AspNetCore.Startup;
 using DbMigrations.DbContext;
 using Groups.Persistence.Models;
 using Microsoft.EntityFrameworkCore;
-using People.Domain;
 
 namespace DbMigrations.Seeding
 {
@@ -19,7 +18,11 @@ namespace DbMigrations.Seeding
 
         private readonly ChurchManagerDbContext _dbContext;
 
+        int personId = 2;
 
+        // Cell Group Type
+        private readonly GroupType _cellGroupType  = new() { Name = "Cell", Description = "Cell Ministry" };
+        
         public GroupsDbSeedInitializer()
         {
             var connectionString = "Server=localhost;Port=5432;Database=churchmanager_db;User Id=admin;password=P455word1;";
@@ -32,9 +35,7 @@ namespace DbMigrations.Seeding
 
         public async Task InitializeAsync()
         {
-            var groupType = new GroupType {Name = "Cell", Description = "Cell Ministry"};
-
-            if (!await _dbContext.Group.AnyAsync())
+            if (!await _dbContext.GroupMemberRole.AnyAsync())
             {
                 var cellLeaderRole = new GroupMemberRole { Name = "Leader", Description = "Cell Leader", IsLeader = true };
                 var cellMemberRole = new GroupMemberRole { Name = "Member", Description = "Cell Member" };
@@ -44,21 +45,61 @@ namespace DbMigrations.Seeding
 
                 await _dbContext.SaveChangesAsync();
             }
-               
 
             if (!await _dbContext.Group.AnyAsync())
+            { 
+                await SeedMyGroups();
+            }
+
+           /*if (!await _dbContext.Group.AnyAsync())
+           {
+               await SeedMyGroups();
+
+               var faker = new Faker();
+               var random = new Random();
+               for (int i = 0; i < 20; i++)
+               {
+                   _dbContext.Group.Add(new Group
+                   {
+                       Name = faker.Address.City() + " Cell Group",
+                       Description = faker.Address.City() + " Cell Group",
+                       GroupType = _cellGroupType,
+                       ChurchId = random.Next(1, 3),
+                       Members = GenerateGroupMembers()
+                   });
+               }
+
+               await _dbContext.SaveChangesAsync();
+           }*/
+        }
+
+        private async Task SeedMyGroups()
+        {
+            if(!await _dbContext.Group.AnyAsync())
             {
                 var faker = new Faker();
                 var random = new Random();
-                for (int i = 0; i < 20; i++)
+
+                var cellLeader = new Faker<GroupMember>()
+                    .RuleFor(u => u.PersonId, f => 1)
+                    .RuleFor(u => u.GroupMemberRoleId, f => 1);
+
+                var cellMember = new Faker<GroupMember>()
+                .RuleFor(u => u.PersonId, f => personId++)
+                .RuleFor(u => u.GroupMemberRoleId, f => 2);
+                
+                for(int i = 0; i < 20; i++)
                 {
+                    var cellGroupMembers = cellMember.Generate(random.Next(1, 30));
+                    cellGroupMembers.Add(cellLeader);
+
                     _dbContext.Group.Add(new Group
                     {
                         Name = faker.Address.City() + " Cell Group",
                         Description = faker.Address.City() + " Cell Group",
-                        GroupType = groupType,
-                        ChurchId = random.Next(1, 3),
-                        Members = GenerateGroupMembers()
+                        GroupType = _cellGroupType,
+                        ChurchId = 1,
+                        Members = cellGroupMembers
                     });
                 }
 
@@ -69,14 +110,13 @@ namespace DbMigrations.Seeding
         private IList<GroupMember> GenerateGroupMembers()
         {
             var random = new Random();
-            int personId = 1;
 
             var cellLeader = new Faker<GroupMember>()
-                .RuleFor(u => u.PersonId, f => personId++)
+                .RuleFor(u => u.PersonId, f => random.Next(2, 200)) // The personIds generated
                 .RuleFor(u => u.GroupMemberRoleId, f => 1);
 
             var cellMember = new Faker<GroupMember>()
-                .RuleFor(u => u.PersonId, f => personId++)
+                .RuleFor(u => u.PersonId, f => random.Next(201, 378))
                 .RuleFor(u => u.GroupMemberRoleId, f => 2);
 
             var cellGroupMembers = cellMember.Generate(random.Next(1, 30));
@@ -85,15 +125,5 @@ namespace DbMigrations.Seeding
 
             return cellGroupMembers;
         }
-
-
-        // Churches Ids
-        private int[] Churches => new[] { 1, 2 };
-
-        private Gender[] Genders => new[] { Gender.Male, Gender.Female, Gender.Unknown };
-
-        private string[] ConnectionStatuses => new[] { "Member", "Visitor", "New Convert" };
-
-        private AgeClassification[] AgeClassifications => new[] { AgeClassification.Adult, AgeClassification.Child, AgeClassification.Unknown };
     }
 }

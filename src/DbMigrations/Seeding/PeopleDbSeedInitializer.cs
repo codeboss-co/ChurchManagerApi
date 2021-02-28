@@ -9,6 +9,7 @@ using DbMigrations.DbContext;
 using Microsoft.EntityFrameworkCore;
 using People.Domain;
 using People.Persistence.Models;
+using Shared.Kernel;
 using Person = People.Persistence.Models.Person;
 
 namespace DbMigrations.Seeding
@@ -37,6 +38,8 @@ namespace DbMigrations.Seeding
         {
             if (!await _dbContext.Person.AnyAsync())
             {
+                await SeedMyDetails();
+
                 var tasks = new List<Task>();
                 // Seed 200 singles
                 foreach(var batch in GetData().Batch(100))
@@ -56,9 +59,34 @@ namespace DbMigrations.Seeding
 
                 // Will complete each first
                 await Task.WhenAll(tasks);
-                // Save th
+
+                // Save them
                 await _dbContext.SaveChangesAsync();
             }
+        }
+
+        private async Task SeedMyDetails()
+        {
+            // Add me as the first Person i.e. with Id 1
+            await _dbContext.Person.AddAsync(new Person
+            {
+                Family = new Family
+                {
+                    Name = "Cagnetta Family"
+                },
+                AgeClassification = AgeClassification.Adult,
+                RecordStatus = RecordStatus.Active,
+                PhotoUrl = "https://secure.gravatar.com/avatar/6fdc48b6ec4d95f2fd682fc2982eb01b",
+                ConnectionStatus = ConnectionStatus.Member,
+                BaptismStatus = new Baptism {IsBaptised = true},
+                ChurchId = 1,
+                Email = new Email {Address = "dillancagnetta@yahoo.com", IsActive = true},
+                FullName = new FullName {FirstName = "Dillan", LastName = "Cagnetta"},
+                UserLoginId = "08925ade-9249-476b-8787-b3dd8f5dbc13",
+                BirthDate = new BirthDate {BirthDay = 6, BirthMonth = 11, BirthYear = 1981}
+            });
+
+            await _dbContext.SaveChangesAsync();
         }
 
         private IEnumerable<Person> GetData()

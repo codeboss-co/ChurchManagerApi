@@ -13,8 +13,8 @@ namespace Contracts
             Add("groupId", entity.Id);
             Add("parentGroupId", entity.ParentGroupId);
             Add("groupType", entity.GroupType.Name);
-            Add("name", entity.GroupType.Name);
-            Add("description", entity.GroupType.Description);
+            Add("name", entity.Name);
+            Add("description", entity.Description);
             Add("members", entity.Members.Select(x => new GroupMemberViewModel(x)));
         }
 

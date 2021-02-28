@@ -15,9 +15,9 @@ namespace Churches.Persistence.Models
         public string Name { get; set; }
         [MaxLength(100)]
         public string Description { get; set; }
-        [MaxLength(20)]
+        [MaxLength(50)]
         public string ShortCode { get; set; }
-        [MaxLength(20)]
+        [MaxLength(50)]
         public string PhoneNumber { get; set; }
         [MaxLength(200)]
         public string Address { get; set; }

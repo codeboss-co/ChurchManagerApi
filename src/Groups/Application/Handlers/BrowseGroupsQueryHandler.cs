@@ -10,11 +10,13 @@ namespace Application.Handlers
 {
     public record BrowseGroupsQuery(
         string SearchTerm,
-        int? PersonId,
         int Page,
         int Results,
         string OrderBy,
-        string SortOrder) : CBQuery.IQuery<GroupViewModel>, IPagedQuery {}
+        string SortOrder) : CBQuery.IQuery<GroupViewModel>, IPagedQuery
+    {
+        public int PersonId { get; set; }
+    }
 
     public class BrowseGroupsQueryHandler : CBQuery.IQueryHandler<BrowseGroupsQuery, GroupViewModel>
     {
@@ -29,9 +31,7 @@ namespace Application.Handlers
 
         public async Task<GroupViewModel> HandleAsync(BrowseGroupsQuery query, CancellationToken ct = default)
         {
-            // Allows searching for current Person or specific persons groups
-            var personId = query.PersonId ??_currentUser.CurrentPerson.Value.Result.PersonId;
-            var pagedResult = await _groupDbRepository.BrowsePersonsGroups(personId, query.SearchTerm, query, ct);
+            var pagedResult = await _groupDbRepository.BrowsePersonsGroups(query.PersonId, query.SearchTerm, query, ct);
 
             return new GroupViewModel(pagedResult);
         }

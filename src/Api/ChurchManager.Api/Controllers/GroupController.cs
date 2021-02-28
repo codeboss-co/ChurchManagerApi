@@ -46,10 +46,12 @@ namespace ChurchManager.Api.Controllers
             return Ok(groups);
         }
 
-        [HttpPost("browse")]
+        [HttpPost("browse/{personId}")]
         //[Authorize]
-        public async Task<IActionResult> BrowseGroups([FromBody] BrowseGroupsQuery query, CancellationToken token)
+        public async Task<IActionResult> BrowseGroups(int? personId, [FromBody] BrowseGroupsQuery query, CancellationToken token)
         {
+            // Allows searching for current Person or specific persons groups
+            query.PersonId  = personId ?? _currentUser.CurrentPerson.Value.Result.PersonId;
             var result = await _queryDispatcher.QueryAsync(query, token);
             return Ok(result);
         }
