@@ -456,8 +456,14 @@ namespace DbMigrations.Migrations
                     b.Property<DateTime?>("ModifiedDate")
                         .HasColumnType("timestamp without time zone");
 
+                    b.Property<string>("Occupation")
+                        .HasColumnType("text");
+
                     b.Property<string>("PhotoUrl")
                         .HasColumnType("text");
+
+                    b.Property<bool?>("ReceivedHolySpirit")
+                        .HasColumnType("boolean");
 
                     b.Property<string>("RecordStatus")
                         .HasColumnType("text");

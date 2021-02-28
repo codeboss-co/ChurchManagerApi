@@ -11,9 +11,9 @@ namespace People.Infrastructure.Persistence.Repositories
     {
         public PersonDbRepository(PeopleDbContext dbContext) : base(dbContext) { }
 
-        public async Task<Person> PersonByUserLoginId(string userLoginId)
+        public async Task<Person> ProfileByUserLoginId(string userLoginId)
         {
-            return await Queryable(new PersonByUserLoginSpecification(userLoginId)).FirstOrDefaultAsync();
+            return await Queryable(new ProfileByUserLoginSpecification(userLoginId)).FirstOrDefaultAsync();
         }
     }
 }

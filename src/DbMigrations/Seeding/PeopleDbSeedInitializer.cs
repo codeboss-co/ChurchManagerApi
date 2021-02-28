@@ -23,7 +23,6 @@ namespace DbMigrations.Seeding
 
         private readonly ChurchManagerDbContext _dbContext;
 
-
         public PeopleDbSeedInitializer()
         {
             var connectionString = "Server=localhost;Port=5432;Database=churchmanager_db;User Id=admin;password=P455word1;";
@@ -67,15 +66,14 @@ namespace DbMigrations.Seeding
 
         private async Task SeedMyDetails()
         {
+            var faker = new Faker("en");
             // Add me as the first Person i.e. with Id 1
-            await _dbContext.Person.AddAsync(new Person
+            var dillan = new Person
             {
-                Family = new Family
-                {
-                    Name = "Cagnetta Family"
-                },
+                Family = new Family {Name = "Cagnetta Family"},
                 AgeClassification = AgeClassification.Adult,
                 RecordStatus = RecordStatus.Active,
+                Gender = Gender.Male,
                 PhotoUrl = "https://secure.gravatar.com/avatar/6fdc48b6ec4d95f2fd682fc2982eb01b",
                 ConnectionStatus = ConnectionStatus.Member,
                 BaptismStatus = new Baptism {IsBaptised = true},
@@ -83,8 +81,46 @@ namespace DbMigrations.Seeding
                 Email = new Email {Address = "dillancagnetta@yahoo.com", IsActive = true},
                 FullName = new FullName {FirstName = "Dillan", LastName = "Cagnetta"},
                 UserLoginId = "08925ade-9249-476b-8787-b3dd8f5dbc13",
-                BirthDate = new BirthDate {BirthDay = 6, BirthMonth = 11, BirthYear = 1981}
-            });
+                BirthDate = new BirthDate {BirthDay = 6, BirthMonth = 11, BirthYear = 1981},
+                ReceivedHolySpirit = true,
+                Occupation = "Software developer"
+            };
+
+            var danielle = new Person
+            {
+                FamilyId = dillan.FamilyId,
+                AgeClassification = AgeClassification.Adult,
+                RecordStatus = RecordStatus.Active,
+                Gender = Gender.Female,
+                PhotoUrl = faker.Person.Avatar,
+                ConnectionStatus = ConnectionStatus.Member,
+                BaptismStatus = new Baptism { IsBaptised = true },
+                ChurchId = 1,
+                Email = new Email { Address = "danielle@yahoo.com", IsActive = true },
+                FullName = new FullName { FirstName = "Danielle", LastName = "Cagnetta" },
+                BirthDate = new BirthDate { BirthDay = 13, BirthMonth = 03, BirthYear = 1980 },
+                ReceivedHolySpirit = true,
+                Occupation = "Church Right hand"
+            };
+
+            var david = new Person
+            {
+                FamilyId = dillan.FamilyId,
+                AgeClassification = AgeClassification.Child,
+                RecordStatus = RecordStatus.Active,
+                Gender = Gender.Male,
+                PhotoUrl = faker.Person.Avatar,
+                ConnectionStatus = ConnectionStatus.Member,
+                BaptismStatus = new Baptism { IsBaptised = true },
+                ChurchId = 1,
+                FullName = new FullName { FirstName = "David", LastName = "Cagnetta" },
+                BirthDate = new BirthDate { BirthDay = 06, BirthMonth = 07, BirthYear = 2017 },
+                ReceivedHolySpirit = false,
+            };
+
+            await _dbContext.Person.AddAsync(dillan);
+            await _dbContext.Person.AddAsync(danielle);
+            await _dbContext.Person.AddAsync(david);
 
             await _dbContext.SaveChangesAsync();
         }
@@ -104,6 +140,8 @@ namespace DbMigrations.Seeding
             var testPeople = new Faker<Person>()
                 .RuleFor(p => p.FullName, f => fullName)
                 .RuleFor(p => p.PhotoUrl, f => f.Internet.Avatar())
+                .RuleFor(p => p.Occupation, f => f.Commerce.Department())
+                .RuleFor(p => p.ReceivedHolySpirit, f => f.PickRandom(true, false))
                 .RuleFor(p => p.ConnectionStatus, f => f.PickRandom(ConnectionStatuses))
                 .RuleFor(p => p.Gender, f => f.PickRandom(Genders).Value)
                 .RuleFor(p => p.AgeClassification, f => f.PickRandom(AgeClassifications).Value)

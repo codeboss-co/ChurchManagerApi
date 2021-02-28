@@ -6,6 +6,6 @@ namespace People.Domain.Repositories
 {
     public interface IPersonDbRepository : ICrudDatabaseRepository<Person>
     {
-        Task<Person> PersonByUserLoginId(string userLoginId);
+        Task<Person> ProfileByUserLoginId(string userLoginId);
     }
 }

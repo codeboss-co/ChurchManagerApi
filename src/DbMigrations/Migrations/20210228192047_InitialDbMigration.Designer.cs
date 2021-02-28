@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DbMigrations.Migrations
 {
     [DbContext(typeof(ChurchManagerDbContext))]
-    [Migration("20210228104904_InitialDbMigration")]
+    [Migration("20210228192047_InitialDbMigration")]
     partial class InitialDbMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -458,8 +458,14 @@ namespace DbMigrations.Migrations
                     b.Property<DateTime?>("ModifiedDate")
                         .HasColumnType("timestamp without time zone");
 
+                    b.Property<string>("Occupation")
+                        .HasColumnType("text");
+
                     b.Property<string>("PhotoUrl")
                         .HasColumnType("text");
+
+                    b.Property<bool?>("ReceivedHolySpirit")
+                        .HasColumnType("boolean");
 
                     b.Property<string>("RecordStatus")
                         .HasColumnType("text");

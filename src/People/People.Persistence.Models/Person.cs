@@ -32,8 +32,10 @@ namespace People.Persistence.Models
         public string CommunicationPreference { get; set; }
 
         public string PhotoUrl { get; set; }
+        public string Occupation { get; set; }
 
         public int? FamilyId { get; set; }
+        public bool? ReceivedHolySpirit { get; set; } = false;
 
         /// <summary>
         /// Gets or sets the giving group id.  If an individual would like their giving to be grouped with the rest of their family,

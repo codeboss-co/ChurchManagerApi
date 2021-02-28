@@ -21,7 +21,7 @@ namespace People.Application.Services
 
         public async Task<PersonDomain> PersonByUserLoginId(string userLoginId)
         {
-            return new (await _dbRepository.PersonByUserLoginId(userLoginId));
+            return new (await _dbRepository.ProfileByUserLoginId(userLoginId));
         }
     }
 }

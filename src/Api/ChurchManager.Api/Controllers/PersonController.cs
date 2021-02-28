@@ -1,6 +1,5 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using Application.Handlers;
 using CodeBoss.CQRS.Queries;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -24,10 +23,10 @@ namespace ChurchManager.Api.Controllers
         }
 
         [HttpGet("userlogin/{userLoginId}")]
-        public async Task<IActionResult> GetPersonByUsername(string userLoginId, CancellationToken token)
+        public async Task<IActionResult> GetUserProfileByUserLogin(string userLoginId, CancellationToken token)
         {
-            var groups = await _queryDispatcher.QueryAsync(new PersonByUsernameQuery(userLoginId), token);
-            return Ok(groups);
+            var person = await _queryDispatcher.QueryAsync(new ProfileByUsernameQuery(userLoginId), token);
+            return Ok(person);
         }
     }
 }
