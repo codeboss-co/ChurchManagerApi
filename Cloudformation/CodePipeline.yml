@@ -5,6 +5,9 @@ Parameters:
   Stage:
     Type: String
     Default: dev
+  ProjectName:
+    Type: String
+    Default: <LOWER CASE PROJECT NAME>
   GithubUserName:
     Type: String
     Default: <USERNAME>
@@ -19,7 +22,7 @@ Parameters:
     Default: <GITHUB ACCESS TOKEN>
   ContainerPort:
     Type: Number
-    Default: 8080
+    Default: 80
 
 Resources:
 
@@ -27,13 +30,13 @@ Resources:
   ECRRepository:
     Type: AWS::ECR::Repository
     Properties:
-      RepositoryName: !Join ['-', [!Ref Stage, !Ref 'AWS::AccountId', 'ecr-repository']]
+      RepositoryName: !Join ['-', [!Ref Stage, !Ref ProjectName,!Ref 'AWS::AccountId', 'ecr-repository']]
 
   # Create an S3 Bucket to store build artifacts
   S3Bucket:
     Type: AWS::S3::Bucket
     Properties:
-      BucketName: !Join ['-', [!Ref Stage, !Ref 'AWS::AccountId', 's3bucket']]
+      BucketName: !Join ['-', [!Ref Stage, !Ref ProjectName,!Ref 'AWS::AccountId', 's3bucket']]
 
   # Create Access Role for CodePipeLine
   CodePipeLineExecutionRole:
@@ -89,7 +92,7 @@ Resources:
         EnvironmentVariables:
           - Name: ECR_REPOSITORY_URI
             Value: !Join [ ".", [ !Ref "AWS::AccountId", "dkr.ecr", !Ref "AWS::Region", !Join [ "/", [ "amazonaws.com", !Ref "ECRRepository" ] ] ] ]
-      Name: !Join ['-', [!Ref Stage, !Ref 'AWS::AccountId', 'BuildProject']]
+      Name: !Join ['-', [!Ref Stage, !Ref ProjectName, !Ref 'AWS::AccountId', 'BuildProject']]
       ServiceRole: !Ref CodeBuildExecutionRole
       Source:
         Type: CODEPIPELINE
@@ -102,9 +105,9 @@ Resources:
     DependsOn: S3Bucket
     Properties: 
       ArtifactStore: 
-        Location: !Join ['-', [!Ref Stage, !Ref 'AWS::AccountId', 's3bucket']]
+        Location: !Join ['-', [!Ref Stage, !Ref ProjectName, !Ref 'AWS::AccountId', 's3bucket']]
         Type: S3
-      Name: !Join ['-', [!Ref Stage, !Ref 'AWS::AccountId', 'CodePipeLine']]
+      Name: !Join ['-', [!Ref Stage, !Ref ProjectName, !Ref 'AWS::AccountId', 'CodePipeLine']]
       RestartExecutionOnUpdate: False
       RoleArn: 
         Fn::GetAtt: [ CodePipeLineExecutionRole, Arn ]
@@ -170,6 +173,6 @@ Resources:
                   }
                 RoleArn: 
                   Fn::GetAtt: [ CloudformationExecutionRole, Arn ]
-                StackName: !Join ['-', [!Ref Stage, !Ref 'AWS::AccountId', 'FargateECSCluster']]
+                StackName: !Join ['-', [!Ref Stage, !Ref ProjectName, !Ref 'AWS::AccountId', 'FargateECSCluster']]
                 TemplatePath: source-output-artifacts::Cloudformation/Fargate-Cluster.yml
             RunOrder: 1

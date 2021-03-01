@@ -4,6 +4,8 @@ Description: The CloudFormation template for the Fargate ECS Cluster.
 Parameters:
   Stage:
     Type: String
+  ProjectName:
+    Type: String        
   ContainerPort:
     Type: Number
   ImageURI:
@@ -95,6 +97,13 @@ Resources:
       ManagedPolicyArns:
         - 'arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy'
 
+  # Create CloudWatch Logs   
+  CloudwatchLogsGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:       
+      LogGroupName: !Join ['-', [!Ref Stage, !Ref ProjectName, !Ref 'AWS::AccountId', 'LogGroup']]
+      RetentionInDays: 3      
+
   # Create a TaskDefinition with container details
   TaskDefinition:
     Type: AWS::ECS::TaskDefinition
@@ -112,6 +121,13 @@ Resources:
           PortMappings:
             - ContainerPort: !Ref ContainerPort
               HostPort: !Ref ContainerPort
+      LogConfiguration:
+        LogDriver: awslogs
+        Options:
+            awslogs-group: !Ref 'CloudwatchLogsGroup'
+            awslogs-region: !Ref 'AWS::Region'
+            awslogs-stream-prefix: !Ref ProjectName
+
 
   # Creat a security group for load balancer and open port 80 in bound from internet
   LoadBalancerSecurityGroup:
@@ -180,7 +196,7 @@ Resources:
       ServiceName: !Join ['-', [!Ref Stage, !Ref 'AWS::AccountId', 'ECSService']]
       Cluster: !Ref Cluster
       TaskDefinition: !Ref TaskDefinition
-      DesiredCount: 2
+      DesiredCount: 1
       LaunchType: FARGATE
       NetworkConfiguration: 
         AwsvpcConfiguration:
