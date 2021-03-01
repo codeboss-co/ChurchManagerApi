@@ -6,7 +6,7 @@ namespace People.Contracts
 {
     public class PersonViewModel : Dictionary<string, object>
     {
-        public PersonViewModel(Person entity) : base(capacity: 15)
+        public PersonViewModel(Person entity) : base(capacity: 20)
         {
             Add("personId", entity.Id);
 
@@ -30,9 +30,7 @@ namespace People.Contracts
 
             Add("photoUrl", entity.PhotoUrl);
 
-            Add("birthDay", entity.BirthDate?.BirthDay);
-            Add("birthMonth", entity.BirthDate?.BirthMonth);
-            Add("birthYear", entity.BirthDate?.BirthYear);
+            Add("birthDate", entity.BirthDate);
 
             Add("phoneNumbers", entity.PhoneNumbers);
             Add("email", entity.Email);

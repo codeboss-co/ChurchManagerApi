@@ -4,8 +4,12 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
+
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\Codeboss\src\CodeBoss.CQRS\src\CodeBoss.CQRS\CodeBoss.CQRS.csproj" />
+    <PackageReference Include="CodeBoss.CQRS" Version="0.0.26" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\People.Contracts\People.Contracts.csproj" />
     <ProjectReference Include="..\People.Domain\People.Domain.csproj" />
     <ProjectReference Include="..\People.Infrastructure\People.Infrastructure.csproj" />

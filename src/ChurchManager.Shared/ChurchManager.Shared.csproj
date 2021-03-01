@@ -12,8 +12,9 @@
     <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="5.0.0" />
   </ItemGroup>
 
+
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Codeboss\src\Codeboss\src\Codeboss\Codeboss.csproj" />
+    <PackageReference Include="CodeBoss" Version="0.0.26" />
   </ItemGroup>
 
 </Project>

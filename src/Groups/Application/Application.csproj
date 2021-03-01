@@ -12,7 +12,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\Codeboss\src\CodeBoss.CQRS\src\CodeBoss.CQRS\CodeBoss.CQRS.csproj" />
+    <PackageReference Include="CodeBoss.CQRS" Version="0.0.26" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\ChurchManager.Core\ChurchManager.Core.csproj" />
     <ProjectReference Include="..\..\People\People.Domain\People.Domain.csproj" />
     <ProjectReference Include="..\Contracts\Contracts.csproj" />
