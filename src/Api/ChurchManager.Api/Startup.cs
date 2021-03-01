@@ -70,7 +70,8 @@ namespace ChurchManager.Api
                         ValidateIssuerSigningKey = true,
                         ValidateIssuer = true,
                         ValidateLifetime = false,
-                        ValidateAudience = false,   // Not provided by cognito
+                        ValidateAudience = false,   // Not provided by cognito,
+                        RoleClaimType = "cognito:groups",
                         ClockSkew = TimeSpan.FromSeconds(5)
                     };
                 });
