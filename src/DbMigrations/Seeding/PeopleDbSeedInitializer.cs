@@ -65,9 +65,7 @@ namespace DbMigrations.Seeding
         }
 
         private async Task SeedMyDetails()
-        {
-            var faker = new Faker("en");
-
+       {
             var cagnettaFamily = new Family {Name = "Cagnetta Family"};
             await _dbContext.SaveChangesAsync();
 
@@ -87,16 +85,18 @@ namespace DbMigrations.Seeding
                 UserLoginId = "08925ade-9249-476b-8787-b3dd8f5dbc13",
                 BirthDate = new BirthDate {BirthDay = 6, BirthMonth = 11, BirthYear = 1981},
                 ReceivedHolySpirit = true,
-                Occupation = "Software developer"
+                Occupation = "Software developer",
+                PhoneNumbers = new List<PhoneNumber>(1) {PhoneNumbersFaker()}
             };
 
+            var photoUrl = new Faker("en").Person.Avatar;
             var danielle = new Person
             {
                 Family = cagnettaFamily,
                 AgeClassification = AgeClassification.Adult,
                 RecordStatus = RecordStatus.Active,
                 Gender = Gender.Female,
-                PhotoUrl = faker.Person.Avatar,
+                PhotoUrl = photoUrl,
                 ConnectionStatus = ConnectionStatus.Member,
                 BaptismStatus = new Baptism { IsBaptised = true },
                 ChurchId = 1,
@@ -104,16 +104,18 @@ namespace DbMigrations.Seeding
                 FullName = new FullName { FirstName = "Danielle", LastName = "Cagnetta" },
                 BirthDate = new BirthDate { BirthDay = 13, BirthMonth = 03, BirthYear = 1980 },
                 ReceivedHolySpirit = true,
-                Occupation = "Church Right hand"
+                Occupation = "Church Right hand",
+                PhoneNumbers = new List<PhoneNumber>(1) { PhoneNumbersFaker() }
             };
 
+            photoUrl = new Faker("en").Person.Avatar;
             var david = new Person
             {
                 Family = cagnettaFamily,
                 AgeClassification = AgeClassification.Child,
                 RecordStatus = RecordStatus.Active,
                 Gender = Gender.Male,
-                PhotoUrl = faker.Person.Avatar,
+                PhotoUrl = photoUrl,
                 ConnectionStatus = ConnectionStatus.Member,
                 BaptismStatus = new Baptism { IsBaptised = true },
                 ChurchId = 1,
