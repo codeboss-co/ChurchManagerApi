@@ -67,10 +67,14 @@ namespace DbMigrations.Seeding
         private async Task SeedMyDetails()
         {
             var faker = new Faker("en");
+
+            var cagnettaFamily = new Family {Name = "Cagnetta Family"};
+            await _dbContext.SaveChangesAsync();
+
             // Add me as the first Person i.e. with Id 1
             var dillan = new Person
             {
-                Family = new Family {Name = "Cagnetta Family"},
+                Family = cagnettaFamily,
                 AgeClassification = AgeClassification.Adult,
                 RecordStatus = RecordStatus.Active,
                 Gender = Gender.Male,
@@ -88,7 +92,7 @@ namespace DbMigrations.Seeding
 
             var danielle = new Person
             {
-                FamilyId = dillan.FamilyId,
+                Family = cagnettaFamily,
                 AgeClassification = AgeClassification.Adult,
                 RecordStatus = RecordStatus.Active,
                 Gender = Gender.Female,
@@ -105,7 +109,7 @@ namespace DbMigrations.Seeding
 
             var david = new Person
             {
-                FamilyId = dillan.FamilyId,
+                Family = cagnettaFamily,
                 AgeClassification = AgeClassification.Child,
                 RecordStatus = RecordStatus.Active,
                 Gender = Gender.Male,
