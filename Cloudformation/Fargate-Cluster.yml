@@ -121,12 +121,12 @@ Resources:
           PortMappings:
             - ContainerPort: !Ref ContainerPort
               HostPort: !Ref ContainerPort
-      LogConfiguration:
-        LogDriver: awslogs
-        Options:
-            awslogs-group: !Ref 'CloudwatchLogsGroup'
-            awslogs-region: !Ref 'AWS::Region'
-            awslogs-stream-prefix: !Ref ProjectName
+          LogConfiguration:
+            LogDriver: awslogs
+            Options:
+                awslogs-group: !Ref 'CloudwatchLogsGroup'
+                awslogs-region: !Ref 'AWS::Region'
+                awslogs-stream-prefix: !Ref ProjectName
 
 
   # Creat a security group for load balancer and open port 80 in bound from internet
