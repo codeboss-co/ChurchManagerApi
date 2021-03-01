@@ -169,6 +169,7 @@ Resources:
                   {
                     "ImageURI" : { "Fn::GetParam" : ["build-output-artifacts", "imageDetail.json", "ImageURI"] },
                     "Stage":  "${Stage}",
+                    "ProjectName":  "${ProjectName}",
                     "ContainerPort": "${ContainerPort}"
                   }
                 RoleArn: 
