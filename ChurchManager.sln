@@ -47,6 +47,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Churches.Persistence.Models
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChurchManager.Core", "src\ChurchManager.Core\ChurchManager.Core.csproj", "{241AD03C-8334-40A9-AA72-2C933A258C59}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{15DF6258-78AD-46C7-B8B1-22CB29548C00}"
+	ProjectSection(SolutionItems) = preProject
+		buildspec.yml = buildspec.yml
+		Cloudformation\CodePipeline.yml = Cloudformation\CodePipeline.yml
+		Dockerfile = Dockerfile
+		Cloudformation\Fargate-Cluster.yml = Cloudformation\Fargate-Cluster.yml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
