@@ -1,4 +1,5 @@
-﻿using ChurchManager.Shared.Persistence;
+﻿using System;
+using ChurchManager.Shared.Persistence;
 using CodeBoss.AspNetCore.Startup;
 using Convey;
 using DbMigrations.DbContext;
