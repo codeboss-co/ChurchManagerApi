@@ -116,7 +116,7 @@ Resources:
       TaskRoleArn: !Ref ExecutionRole
       ExecutionRoleArn: !Ref ExecutionRole
       ContainerDefinitions:
-        - Name: !Join ['-', [!Ref Stage, !Ref 'AWS::AccountId', 'Container']]
+        - Name: !Join ['-', [!Ref Stage, !Ref ProjectName, !Ref 'AWS::AccountId', 'Container']]
           Image: !Ref ImageURI
           PortMappings:
             - ContainerPort: !Ref ContainerPort
@@ -158,7 +158,7 @@ Resources:
     Type: AWS::ElasticLoadBalancingV2::LoadBalancer
     Properties: 
       IpAddressType: ipv4
-      Name: !Join ['-', [!Ref Stage, !Ref 'AWS::AccountId', 'LoadBalancer']]
+      Name: !Join ['-', [!Ref Stage, !Ref ProjectName, !Ref 'AWS::AccountId', 'LoadBalancer']]
       Scheme: internet-facing
       SecurityGroups:
         - !Ref LoadBalancerSecurityGroup
@@ -171,11 +171,12 @@ Resources:
   TargetGroup:
     Type: AWS::ElasticLoadBalancingV2::TargetGroup
     Properties:
-      Name: !Join ['-', [!Ref Stage, !Ref 'AWS::AccountId', 'TargetGroup']]
+      Name: !Join ['-', [!Ref Stage, !Ref ProjectName, !Ref 'AWS::AccountId', 'TargetGroup']]
       Port: 80
       Protocol: HTTP
       TargetType: ip
       VpcId: !Ref VPC
+      HealthCheckPath : /utility
 
   # Create a LoadBalancerListener and attach the TargetGroup and LoadBalancer
   LoadBalancerListener:
@@ -193,7 +194,7 @@ Resources:
     Type: AWS::ECS::Service
     DependsOn: LoadBalancerListener
     Properties:
-      ServiceName: !Join ['-', [!Ref Stage, !Ref 'AWS::AccountId', 'ECSService']]
+      ServiceName: !Join ['-', [!Ref Stage, !Ref ProjectName, !Ref 'AWS::AccountId', 'ECSService']]
       Cluster: !Ref Cluster
       TaskDefinition: !Ref TaskDefinition
       DesiredCount: 1
@@ -207,6 +208,6 @@ Resources:
           SecurityGroups:
             - !Ref ContainerSecurityGroup
       LoadBalancers:
-        - ContainerName: !Join ['-', [!Ref Stage, !Ref 'AWS::AccountId', 'Container']]
+        - ContainerName: !Join ['-', [!Ref Stage, !Ref ProjectName, !Ref 'AWS::AccountId', 'Container']]
           ContainerPort: !Ref ContainerPort
           TargetGroupArn: !Ref TargetGroup
