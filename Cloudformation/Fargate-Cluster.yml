@@ -175,8 +175,7 @@ Resources:
       Port: 80
       Protocol: HTTP
       TargetType: ip
-      VpcId: !Ref VPC
-      HealthCheckPath : /utiltity
+      VpcId: !Ref VPC      
 
   # Create a LoadBalancerListener and attach the TargetGroup and LoadBalancer
   LoadBalancerListener:

@@ -11,7 +11,7 @@ using Microsoft.Extensions.Logging;
 namespace ChurchManager.Api.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("")]
     public class UtilityController : ControllerBase
     {
         private readonly ILogger<UtilityController> _logger;
