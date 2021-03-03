@@ -2,7 +2,7 @@ AWSTemplateFormatVersion: 2010-09-09
 Description: The CloudFormation template for the Fargate ECS Cluster.
 
 Parameters:
-  Stage:
+  EnvironmentName:
     Type: String
   ProjectName:
     Type: String        
@@ -17,7 +17,7 @@ Resources:
   Cluster:
     Type: AWS::ECS::Cluster
     Properties:
-      ClusterName: !Join ['-', [!Ref Stage, !Ref 'AWS::AccountId', 'Cluster']]
+      ClusterName: !Join ['-', [!Ref EnvironmentName, !Ref 'AWS::AccountId', 'Cluster']]
 
   # Create a VPC
   VPC:
@@ -87,7 +87,7 @@ Resources:
   ExecutionRole:
     Type: AWS::IAM::Role
     Properties:
-      RoleName: !Join ['-', [!Ref Stage, !Ref 'AWS::AccountId', 'ExecutionRole']]
+      RoleName: !Join ['-', [!Ref EnvironmentName, !Ref 'AWS::AccountId', 'ExecutionRole']]
       AssumeRolePolicyDocument:
         Statement:
           - Effect: Allow
@@ -101,7 +101,7 @@ Resources:
   CloudwatchLogsGroup:
     Type: AWS::Logs::LogGroup
     Properties:       
-      LogGroupName: !Join ['-', [!Ref Stage, !Ref ProjectName, !Ref 'AWS::AccountId', 'LogGroup']]
+      LogGroupName: !Join ['-', [!Ref EnvironmentName, !Ref ProjectName, !Ref 'AWS::AccountId', 'LogGroup']]
       RetentionInDays: 3      
 
   # Create a TaskDefinition with container details
@@ -116,7 +116,7 @@ Resources:
       TaskRoleArn: !Ref ExecutionRole
       ExecutionRoleArn: !Ref ExecutionRole
       ContainerDefinitions:
-        - Name: !Join ['-', [!Ref Stage, !Ref 'AWS::AccountId', 'Container']]
+        - Name: !Join ['-', [!Ref EnvironmentName, !Ref 'AWS::AccountId', 'Container']]
           Image: !Ref ImageURI
           PortMappings:
             - ContainerPort: !Ref ContainerPort
@@ -133,7 +133,7 @@ Resources:
   LoadBalancerSecurityGroup:
     Type: AWS::EC2::SecurityGroup
     Properties:
-      GroupDescription: !Join ['-', [!Ref Stage, !Ref 'AWS::AccountId', 'LoadBalancerSecurityGroup']]
+      GroupDescription: !Join ['-', [!Ref EnvironmentName, !Ref 'AWS::AccountId', 'LoadBalancerSecurityGroup']]
       VpcId: !Ref VPC
       SecurityGroupIngress:
         - IpProtocol: tcp
@@ -145,7 +145,7 @@ Resources:
   ContainerSecurityGroup:
     Type: AWS::EC2::SecurityGroup
     Properties:
-      GroupDescription: !Join ['-', [!Ref Stage, !Ref 'AWS::AccountId', 'ContainerSecurityGroup']]
+      GroupDescription: !Join ['-', [!Ref EnvironmentName, !Ref 'AWS::AccountId', 'ContainerSecurityGroup']]
       VpcId: !Ref VPC
       SecurityGroupIngress:
         - IpProtocol: tcp
@@ -158,7 +158,7 @@ Resources:
     Type: AWS::ElasticLoadBalancingV2::LoadBalancer
     Properties: 
       IpAddressType: ipv4
-      Name: !Join ['-', [!Ref Stage, !Ref 'AWS::AccountId', 'LoadBalancer']]
+      Name: !Join ['-', [!Ref EnvironmentName, !Ref 'AWS::AccountId', 'LoadBalancer']]
       Scheme: internet-facing
       SecurityGroups:
         - !Ref LoadBalancerSecurityGroup
@@ -171,7 +171,7 @@ Resources:
   TargetGroup:
     Type: AWS::ElasticLoadBalancingV2::TargetGroup
     Properties:
-      Name: !Join ['-', [!Ref Stage, !Ref 'AWS::AccountId', 'TargetGroup']]
+      Name: !Join ['-', [!Ref EnvironmentName, !Ref 'AWS::AccountId', 'TargetGroup']]
       Port: 80
       Protocol: HTTP
       TargetType: ip
@@ -193,7 +193,7 @@ Resources:
     Type: AWS::ECS::Service
     DependsOn: LoadBalancerListener
     Properties:
-      ServiceName: !Join ['-', [!Ref Stage, !Ref 'AWS::AccountId', 'ECSService']]
+      ServiceName: !Join ['-', [!Ref EnvironmentName, !Ref 'AWS::AccountId', 'ECSService']]
       Cluster: !Ref Cluster
       TaskDefinition: !Ref TaskDefinition
       DesiredCount: 1
@@ -207,6 +207,6 @@ Resources:
           SecurityGroups:
             - !Ref ContainerSecurityGroup
       LoadBalancers:
-        - ContainerName: !Join ['-', [!Ref Stage, !Ref 'AWS::AccountId', 'Container']]
+        - ContainerName: !Join ['-', [!Ref EnvironmentName, !Ref 'AWS::AccountId', 'Container']]
           ContainerPort: !Ref ContainerPort
           TargetGroupArn: !Ref TargetGroup        

@@ -2,9 +2,9 @@ AWSTemplateFormatVersion: 2010-09-09
 Description: The CloudFormation template for the CodePipeline.
 
 Parameters:
-  Stage:
+  EnvironmentName:
     Type: String
-    Default: dev
+    Default: prod
   ProjectName:
     Type: String
     Default: <LOWER CASE PROJECT NAME>
@@ -30,13 +30,13 @@ Resources:
   ECRRepository:
     Type: AWS::ECR::Repository
     Properties:
-      RepositoryName: !Join ['-', [!Ref Stage, !Ref ProjectName,!Ref 'AWS::AccountId', 'ecr-repository']]
+      RepositoryName: !Join ['-', [!Ref EnvironmentName, !Ref ProjectName,!Ref 'AWS::AccountId', 'ecr-repository']]
 
   # Create an S3 Bucket to store build artifacts
   S3Bucket:
     Type: AWS::S3::Bucket
     Properties:
-      BucketName: !Join ['-', [!Ref Stage, !Ref ProjectName,!Ref 'AWS::AccountId', 's3bucket']]
+      BucketName: !Join ['-', [!Ref EnvironmentName, !Ref ProjectName,!Ref 'AWS::AccountId', 's3bucket']]
 
   # Create Access Role for CodePipeLine
   CodePipeLineExecutionRole:
@@ -92,27 +92,27 @@ Resources:
         EnvironmentVariables:
           - Name: ECR_REPOSITORY_URI
             Value: !Join [ ".", [ !Ref "AWS::AccountId", "dkr.ecr", !Ref "AWS::Region", !Join [ "/", [ "amazonaws.com", !Ref "ECRRepository" ] ] ] ]
-      Name: !Join ['-', [!Ref Stage, !Ref ProjectName, !Ref 'AWS::AccountId', 'BuildProject']]
+      Name: !Join ['-', [!Ref EnvironmentName, !Ref ProjectName, !Ref 'AWS::AccountId', 'BuildProject']]
       ServiceRole: !Ref CodeBuildExecutionRole
       Source:
         Type: CODEPIPELINE
         # This file (buildspec.yml In Source code) contains commands to Create and Push a docker image to the ECR_REPOSITORY_URI
         BuildSpec: buildspec.yml
 
-  # Create CodePipeline with 3 stages (Source, Build and Deploy)
+  # Create CodePipeline with 3 EnvironmentNames (Source, Build and Deploy)
   CodePipeLine:
     Type: AWS::CodePipeline::Pipeline
     DependsOn: S3Bucket
     Properties: 
       ArtifactStore: 
-        Location: !Join ['-', [!Ref Stage, !Ref ProjectName, !Ref 'AWS::AccountId', 's3bucket']]
+        Location: !Join ['-', [!Ref EnvironmentName, !Ref ProjectName, !Ref 'AWS::AccountId', 's3bucket']]
         Type: S3
-      Name: !Join ['-', [!Ref Stage, !Ref ProjectName, !Ref 'AWS::AccountId', 'CodePipeLine']]
+      Name: !Join ['-', [!Ref EnvironmentName, !Ref ProjectName, !Ref 'AWS::AccountId', 'CodePipeLine']]
       RestartExecutionOnUpdate: False
       RoleArn: 
         Fn::GetAtt: [ CodePipeLineExecutionRole, Arn ]
         
-      Stages:
+      EnvironmentNames:
 
         # Download source code from Github Repo to source-output-artifacts path in S3 Bucket
         - Name: Source
@@ -167,13 +167,14 @@ Resources:
                 # Pass parameter values to Fargate-Cluster.yml for deployment
                 ParameterOverrides: !Sub |
                   {
-                    "ImageURI" : { "Fn::GetParam" : ["build-output-artifacts", "imageDetail.json", "ImageURI"] },
-                    "Stage":  "${Stage}",
-                    "ProjectName":  "${ProjectName}",
-                    "ContainerPort": "${ContainerPort}"
+                    "Image" : { "Fn::GetParam" : ["build-output-artifacts", "imageDetail.json", "ImageURI"] },
+                    "EnvironmentName":  "${EnvironmentName}",
+                    "ServiceName":  "${ProjectName}",
+                    "ContainerPort": "${ContainerPort}",
+                    "Subdomain": "${ProjectName}"
                   }
                 RoleArn: 
                   Fn::GetAtt: [ CloudformationExecutionRole, Arn ]
-                StackName: !Join ['-', [!Ref Stage, !Ref ProjectName, !Ref 'AWS::AccountId', 'FargateECSCluster']]
-                TemplatePath: source-output-artifacts::Cloudformation/Fargate-Cluster.yml
+                StackName: !Join ['-', [!Ref EnvironmentName, !Ref ProjectName, !Ref 'AWS::AccountId', 'FargateECSCluster']]
+                TemplatePath: source-output-artifacts::Cloudformation/infrastructure/2-deploy-ecs-task.yml
             RunOrder: 1
