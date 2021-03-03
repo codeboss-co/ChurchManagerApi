@@ -1,0 +1,22 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: Deploy service/task to ECS Cluster
+
+Parameters:
+  DomainName:
+    Type: String
+    # update with the name of the domain
+    Default: codeboss.tech
+  HostedZoneId:
+    Type: AWS::Route53::HostedZone::Id
+    # update with the name of the HostedZoneId    
+
+Resources:
+
+  ACMCertificate: 
+    Type: "AWS::CertificateManager::Certificate"
+    Properties: 
+      DomainName: !Join ['*.', [!Ref DomainName]]
+      DomainValidationOptions:
+            - DomainName: !Join ['*.', [!Ref DomainName]]
+              HostedZoneId: !Ref HostedZoneId
+      ValidationMethod: DNS 
