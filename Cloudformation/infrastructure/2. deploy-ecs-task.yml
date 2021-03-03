@@ -292,7 +292,7 @@ Resources:
   AutoScalingPolicy:
     Type: AWS::ApplicationAutoScaling::ScalingPolicy
     Properties:
-      PolicyName: !Join ['', [!Ref EnvironmentName, !Ref ServiceName, AutoScalingPolicy]]
+      PolicyName: !Join ['-', [!Ref EnvironmentName, !Ref ServiceName, AutoScalingPolicy]]
       PolicyType: TargetTrackingScaling
       ScalingTargetId: !Ref AutoScalingTarget
       TargetTrackingScalingPolicyConfiguration:
