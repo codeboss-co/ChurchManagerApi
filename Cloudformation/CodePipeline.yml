@@ -99,7 +99,7 @@ Resources:
         # This file (buildspec.yml In Source code) contains commands to Create and Push a docker image to the ECR_REPOSITORY_URI
         BuildSpec: buildspec.yml
 
-  # Create CodePipeline with 3 EnvironmentNames (Source, Build and Deploy)
+  # Create CodePipeline with 3 Stages (Source, Build and Deploy)
   CodePipeLine:
     Type: AWS::CodePipeline::Pipeline
     DependsOn: S3Bucket
@@ -112,7 +112,7 @@ Resources:
       RoleArn: 
         Fn::GetAtt: [ CodePipeLineExecutionRole, Arn ]
         
-      EnvironmentNames:
+      Stages:
 
         # Download source code from Github Repo to source-output-artifacts path in S3 Bucket
         - Name: Source
