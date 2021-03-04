@@ -168,3 +168,8 @@ Resources:
                   Fn::ImportValue: !Sub ${EnvironmentName}:ClusterName
                 ServiceName: !Join ['-', [!Ref EnvironmentName, !Ref ProjectName, service]]
                 FileName: imageDetail.json
+
+
+Outputs:
+  PipelineUrl:
+    Value: !Sub https://console.aws.amazon.com/codepipeline/home?region=${AWS::Region}#/view/${CodePipeLine}                
