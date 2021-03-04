@@ -33,7 +33,7 @@ Parameters:
     Default: 443
   HealthCheckPath:
     Type: String
-    Default: /healthcheck
+    Default: /
   HostedZoneName:
     Type: String
     Default: codeboss.tech
