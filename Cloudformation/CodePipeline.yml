@@ -30,13 +30,13 @@ Resources:
   ECRRepository:
     Type: AWS::ECR::Repository
     Properties:
-      RepositoryName: !Join ['-', [!Ref EnvironmentName, !Ref ProjectName,!Ref 'AWS::AccountId', 'ecr-repository']]
+      RepositoryName: !Join ['-', [!Ref EnvironmentName, !Ref ProjectName, 'ecr-repository']]
 
   # Create an S3 Bucket to store build artifacts
   S3Bucket:
     Type: AWS::S3::Bucket
     Properties:
-      BucketName: !Join ['-', [!Ref EnvironmentName, !Ref ProjectName,!Ref 'AWS::AccountId', 's3bucket']]
+      BucketName: !Join ['-', [!Ref EnvironmentName, !Ref ProjectName, 's3bucket']]
 
   # Create Access Role for CodePipeLine
   CodePipeLineExecutionRole:
@@ -85,7 +85,7 @@ Resources:
         Type: CODEPIPELINE
       Environment: 
         ComputeType: BUILD_GENERAL1_SMALL
-        Image: aws/codebuild/standard:2.0
+        Image: aws/codebuild/amazonlinux2-x86_64-standard:3.0
         ImagePullCredentialsType: CODEBUILD
         PrivilegedMode: True
         Type: LINUX_CONTAINER
@@ -93,8 +93,8 @@ Resources:
           - Name: ECR_REPOSITORY_URI
             Value: !Join [ ".", [ !Ref "AWS::AccountId", "dkr.ecr", !Ref "AWS::Region", !Join [ "/", [ "amazonaws.com", !Ref "ECRRepository" ] ] ] ]
           - Name: ENV_PROJECT_NAME
-            Value: !Join ['-', [!Ref EnvironmentName, !Ref ProjectName]]
-      Name: !Join ['-', [!Ref EnvironmentName, !Ref ProjectName, !Ref 'AWS::AccountId', 'BuildProject']]
+            Value: !Ref ProjectName
+      Name: !Join ['-', [!Ref EnvironmentName, !Ref ProjectName, 'BuildProject']]
       ServiceRole: !Ref CodeBuildExecutionRole
       Source:
         Type: CODEPIPELINE
@@ -107,9 +107,9 @@ Resources:
     DependsOn: S3Bucket
     Properties: 
       ArtifactStore: 
-        Location: !Join ['-', [!Ref EnvironmentName, !Ref ProjectName, !Ref 'AWS::AccountId', 's3bucket']]
+        Location: !Join ['-', [!Ref EnvironmentName, !Ref ProjectName, 's3bucket']]
         Type: S3
-      Name: !Join ['-', [!Ref EnvironmentName, !Ref ProjectName, !Ref 'AWS::AccountId', 'CodePipeLine']]
+      Name: !Join ['-', [!Ref EnvironmentName, !Ref ProjectName, 'CodePipeLine']]
       RestartExecutionOnUpdate: False
       RoleArn: 
         Fn::GetAtt: [ CodePipeLineExecutionRole, Arn ]
