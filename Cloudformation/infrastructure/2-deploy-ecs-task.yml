@@ -152,7 +152,8 @@ Resources:
           FromPort: !Ref ContainerPort
           ToPort: !Ref ContainerPort
           SourceSecurityGroupId: !ImportValue HttpSecurityGroup
-            
+
+# ECS Service            
   Service:
     Type: AWS::ECS::Service
     # This dependency is needed so that the load balancer is setup correctly in time
@@ -202,7 +203,8 @@ Resources:
           Value: 60 # default is 300
       TargetType: ip
       VpcId: !ImportValue 'VPC'
-
+ 
+ # Load Balancer Listeners
   ListenerHTTPS:
     Type: AWS::ElasticLoadBalancingV2::Listener
     Properties:
@@ -230,6 +232,7 @@ Resources:
       LoadBalancerArn: !Ref LoadBalancer
       Port: 80
       Protocol: HTTP        
+ # Load Balancer Listeners
 
   LoadBalancer:
     Type: AWS::ElasticLoadBalancingV2::LoadBalancer
@@ -247,6 +250,7 @@ Resources:
         - !ImportValue 'SubnetA'
         - !ImportValue 'SubnetB'
 
+# Route53 DNS Entries
   DNSRecord:
     Type: AWS::Route53::RecordSet
     Properties:
@@ -257,11 +261,13 @@ Resources:
         DNSName: !GetAtt LoadBalancer.DNSName
         HostedZoneId: !GetAtt LoadBalancer.CanonicalHostedZoneID
 
+# Cloudwatch
   LogGroup:
     Type: AWS::Logs::LogGroup
     Properties:
       LogGroupName: !Join ['', [/ecs/, !Ref EnvironmentName, !Ref ServiceName, -TaskDefinition]]
 
+# ECS AutoScaling 
   AutoScalingTarget:
     Type: AWS::ApplicationAutoScaling::ScalableTarget
     Properties:
