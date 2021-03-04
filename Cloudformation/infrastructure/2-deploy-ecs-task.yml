@@ -101,7 +101,7 @@ Resources:
   ExecutionRole:
     Type: AWS::IAM::Role
     Properties:
-      RoleName: !Join ['', [!Ref ServiceName, ExecutionRole]]
+      RoleName: !Join ['-', [!Ref ServiceName, ExecutionRole]]
       AssumeRolePolicyDocument:
         Statement:
           - Effect: Allow
@@ -116,7 +116,7 @@ Resources:
   TaskRole:
     Type: AWS::IAM::Role
     Properties:
-      RoleName: !Join ['', [!Ref ServiceName, TaskRole]]
+      RoleName: !Join ['-', [!Ref ServiceName, TaskRole]]
       AssumeRolePolicyDocument:
         Statement:
           - Effect: Allow
@@ -132,7 +132,7 @@ Resources:
   AutoScalingRole:
     Type: AWS::IAM::Role
     Properties:
-      RoleName: !Join ['', [!Ref ServiceName, AutoScalingRole]]
+      RoleName: !Join ['-', [!Ref ServiceName, AutoScalingRole]]
       AssumeRolePolicyDocument:
         Statement:
           - Effect: Allow
@@ -210,7 +210,7 @@ Resources:
         - TargetGroupArn: !Ref TargetGroup
           Type: forward
       LoadBalancerArn: !Ref LoadBalancer
-      Port: !Ref LoadBalancerPort
+      Port: 443
       Protocol: HTTPS
       Certificates:
         - CertificateArn: !Ref Certificate
