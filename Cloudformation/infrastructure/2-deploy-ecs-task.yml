@@ -123,8 +123,8 @@ Resources:
             Principal:
               Service: ecs-tasks.amazonaws.com
             Action: 'sts:AssumeRole'
-      # ManagedPolicyArns:
-      #   -
+      ManagedPolicyArns:
+        - 'arn:aws:iam::aws:policy/AmazonSSMReadOnlyAccess'
       # Policies:
       #   -
 
@@ -159,10 +159,22 @@ Resources:
       GroupDescription: !Join ['-', [!Ref ServiceName, LoadBalancerSecurityGroup]]
       VpcId: !ImportValue 'VPC'
       SecurityGroupIngress:
+      ## Allows port 443
         - IpProtocol: tcp
           FromPort: !Ref LoadBalancerPort
           ToPort: !Ref LoadBalancerPort
           CidrIp: 0.0.0.0/0
+      ## Allows port 80   
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: 0.0.0.0/0         
+      ## Outbound rules    
+      # SecurityGroupEgress:
+      #   - IpProtocol: tcp
+      #     FromPort: 80
+      #     ToPort: 80
+      #     CidrIp: 0.0.0.0/0               
 
   Service:
     Type: AWS::ECS::Service
