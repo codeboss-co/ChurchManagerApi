@@ -92,8 +92,6 @@ Resources:
         EnvironmentVariables:
           - Name: ECR_REPOSITORY_URI
             Value: !Join [ ".", [ !Ref "AWS::AccountId", "dkr.ecr", !Ref "AWS::Region", !Join [ "/", [ "amazonaws.com", !Ref "ECRRepository" ] ] ] ]
-          - Name: ENV_PROJECT_NAME
-            Value: !Join ['-', [!Ref EnvironmentName, !Ref ProjectName]]
       Name: !Join ['-', [!Ref EnvironmentName, !Ref ProjectName, !Ref 'AWS::AccountId', 'BuildProject']]
       ServiceRole: !Ref CodeBuildExecutionRole
       Source:
@@ -151,20 +149,32 @@ Resources:
                 ProjectName: !Ref BuildProject
             RunOrder: 1
 
-        # Deploy the project to ECS
+        # Deploy the project by executing Fargate-Cluster.yml file in the Source code with Cloudformation.
         - Name: Deploy
           Actions:
-            - Name: Deploy
-              RunOrder: 1
-              InputArtifacts:
-                - Name: build-output-artifacts
-              ActionTypeId:
-                Category: Deploy
-                Owner: AWS
-                Version: 1
-                Provider: ECS
-              Configuration:
-                ClusterName:
-                  Fn::ImportValue: !Sub ${EnvironmentName}:ClusterName
-                ServiceName: !Join ['-', [!Ref EnvironmentName, !Ref ProjectName, service]]
-                FileName: imageDetail.json
+          - Name: Deploy
+            ActionTypeId:
+              Category: Deploy
+              Owner: AWS
+              Version: 1
+              Provider: CloudFormation
+            InputArtifacts:
+              - Name: source-output-artifacts
+              - Name: build-output-artifacts
+            Configuration:
+                ActionMode: CREATE_UPDATE
+                Capabilities: CAPABILITY_NAMED_IAM
+                # Pass parameter values to Fargate-Cluster.yml for deployment
+                ParameterOverrides: !Sub |
+                  {
+                    "Image" : { "Fn::GetParam" : ["build-output-artifacts", "imageDetail.json", "ImageURI"] },
+                    "EnvironmentName":  "${EnvironmentName}",
+                    "ServiceName":  "${ProjectName}",
+                    "ContainerPort": "${ContainerPort}",
+                    "Subdomain": "${ProjectName}"
+                  }
+                RoleArn: 
+                  Fn::GetAtt: [ CloudformationExecutionRole, Arn ]
+                StackName: !Join ['-', [!Ref EnvironmentName, !Ref ProjectName, 'deploy-ecs-task']]
+                TemplatePath: source-output-artifacts::Cloudformation/infrastructure/2-deploy-ecs-task.yml
+            RunOrder: 1

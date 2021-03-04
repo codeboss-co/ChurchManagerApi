@@ -11,6 +11,7 @@ phases:
       - $(aws ecr get-login --region $AWS_DEFAULT_REGION --no-include-email)
       - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
       - IMAGE_TAG=${COMMIT_HASH:=latest}
+      - IMAGE_URI="$ECR_REPOSITORY_URI:$IMAGE_TAG"
   build:
     commands:
       - echo Build started on `date`
@@ -23,7 +24,8 @@ phases:
       - echo Pushing the Docker images...
       - docker push $ECR_REPOSITORY_URI:latest
       - docker push $ECR_REPOSITORY_URI:$IMAGE_TAG
-      - printf '{"ImageURI":"%s:%s"}' $ECR_REPOSITORY_URI $IMAGE_TAG > imageDetail.json
+      # - printf '{"ImageURI":"%s:%s"}' $ECR_REPOSITORY_URI $IMAGE_TAG > imageDetail.json
+      - printf '[{"name":"%s","imageUri":"%s"}]' $ENV_PROJECT_NAME $IMAGE_URI > imageDetail.json
 artifacts:
   files:
     - imageDetail.json
