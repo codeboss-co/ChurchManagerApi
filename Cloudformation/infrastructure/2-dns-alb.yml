@@ -1,0 +1,153 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: Deploy Load balancer with target groups and optional DNS record in Route53
+
+Parameters:
+  EnvironmentName:
+    Type: String
+    Default: prod
+    AllowedValues:
+      - qa      
+      - prod
+    Description: "A friendly environment name that will be used for namespacing all cluster resources. Example: staging, qa, or production"
+  Certificate:
+    Type: String
+    # Update with the certificate ARN from Certificate Manager, which must exist in the same region.
+    Default: ' arn:aws:acm:us-east-1:977844596384:certificate/7636252d-8fad-4cf7-be71-df035fd97c37'
+  ServiceName:
+    Type: String
+    # update with the name of the service
+    Default: churchmanager
+    Description: Will be used to create a load balancer specifically for this service/application
+  HealthCheckPath:
+    Type: String
+    Default: /
+  HostedZoneName:
+    Type: String
+    Default: codeboss.tech
+    AllowedValues:
+      - codeboss.tech      
+      - codeboss.co.za
+  Subdomain:
+    Type: String
+    Default: churchmanager
+    Description: if not specified - it will not create a DNS Route53 A record
+
+Conditions:
+  # If we specify the subdomain - create DNS record
+  CreateDNSRecord: !Not  
+    - !Equals 
+      - !Ref Subdomain
+      - ''
+  CreateHttps: !Not  
+    - !Equals 
+      - !Ref Certificate
+      - ''      
+
+Resources:
+
+  LoadBalancer:
+    Type: AWS::ElasticLoadBalancingV2::LoadBalancer
+    Properties:
+      LoadBalancerAttributes:
+        # this is the default, but is specified here in case it needs to be changed
+        - Key: idle_timeout.timeout_seconds
+          Value: 60
+      Name: !Join ['-', [!Ref EnvironmentName, !Ref ServiceName, alb]]
+      # "internal" is also an option
+      Scheme: internet-facing
+      SecurityGroups:
+        - !ImportValue HttpSecurityGroup
+      Subnets:
+        - !ImportValue 'SubnetA'
+        - !ImportValue 'SubnetB'
+ 
+  # A dummy target group is used to setup the ALB to just drop traffic
+  # initially, before any real service target groups have been added.
+  DummyTargetGroupPublic:
+    Type: AWS::ElasticLoadBalancingV2::TargetGroup    
+    Properties:
+      HealthCheckIntervalSeconds: 6
+      HealthCheckPath: /
+      HealthCheckProtocol: HTTP
+      HealthCheckTimeoutSeconds: 5
+      HealthyThresholdCount: 2
+      Port: 80
+      Protocol: HTTP
+      UnhealthyThresholdCount: 2
+      VpcId: !ImportValue 'VPC'
+      
+ # Load Balancer Listeners
+  ListenerHTTPS:
+    Type: AWS::ElasticLoadBalancingV2::Listener
+    Condition: CreateHttps
+    Properties:
+      DefaultActions:
+        - TargetGroupArn: !Ref DummyTargetGroupPublic
+          Type: forward
+      LoadBalancerArn: !Ref LoadBalancer
+      Port: 443
+      Protocol: HTTPS
+      Certificates:
+        - CertificateArn: !Ref Certificate
+
+  ListenerHTTP:
+    Type: "AWS::ElasticLoadBalancingV2::Listener"
+    Properties:
+      DefaultActions:
+        - RedirectConfig:
+            Host: '#{host}'
+            Path: '/#{path}'
+            Query: '#{query}'
+            Port: '443'
+            Protocol: HTTPS
+            StatusCode: HTTP_302
+          Type: redirect
+      LoadBalancerArn: !Ref LoadBalancer
+      Port: 80
+      Protocol: HTTP        
+ # Load Balancer Listeners
+
+
+# Route53 DNS Entries
+  DNSRecord:
+    Type: AWS::Route53::RecordSet
+    Condition: CreateDNSRecord
+    Properties:
+      HostedZoneName: !Join ['', [!Ref HostedZoneName, .]]
+      Name: !Join ['', [!Ref Subdomain, ., !Ref HostedZoneName, .]]
+      Type: A
+      AliasTarget:
+        DNSName: !GetAtt LoadBalancer.DNSName
+        HostedZoneId: !GetAtt LoadBalancer.CanonicalHostedZoneID
+
+
+Outputs:
+  Endpoint:
+    Condition: CreateDNSRecord
+    Description: Endpoint
+    Value: !Join ['', ['https://', !Ref DNSRecord]]     
+
+  ExternalUrl:
+    Description: The url of the external load balancer
+    Value: !Sub http://${LoadBalancer.DNSName}
+    Export:
+      Name: !Sub ${EnvironmentName}:ExternalUrl    
+    
+  LoadBalancer:
+    Description: The name of the ECS cluster
+    Value: !Ref 'LoadBalancer'
+    Export:
+      Name: !Sub ${EnvironmentName}:LoadBalancer       
+
+  HttpListener:
+    Description: The ARN of the public load balancer's Http Listener
+    Value: !Ref ListenerHTTP
+    Export:
+      Name: !Sub ${EnvironmentName}:ListenerHTTP
+      
+  HttpsListener:
+    Condition: CreateHttps
+    Description: The ARN of the public load balancer's Https Listener
+    Value: !Ref ListenerHTTPS
+    Export:
+      Name: !Sub ${EnvironmentName}:ListenerHTTPS      

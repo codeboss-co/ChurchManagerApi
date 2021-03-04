@@ -8,11 +8,7 @@ Parameters:
     AllowedValues:
       - qa      
       - prod
-    Description: "A friendly environment name that will be used for namespacing all cluster resources. Example: staging, qa, or production"
-  Certificate:
-    Type: String
-    # Update with the certificate ARN from Certificate Manager, which must exist in the same region.
-    Default: ' arn:aws:acm:us-east-1:977844596384:certificate/7636252d-8fad-4cf7-be71-df035fd97c37'
+    Description: "A friendly environment name that will be used for namespacing all cluster resources. Example: staging, qa, or production" 
   Image:
     Type: String
     # Update with the Docker image. "You can use images in the Docker Hub registry or specify other repositories (repository-url/image:tag)."
@@ -28,18 +24,9 @@ Parameters:
   ContainerPort:
     Type: Number
     Default: 80
-  LoadBalancerPort:
-    Type: Number
-    Default: 443
   HealthCheckPath:
     Type: String
     Default: /
-  HostedZoneName:
-    Type: String
-    Default: codeboss.tech
-  Subdomain:
-    Type: String
-    Default: myservice
   # for autoscaling
   MinContainers:
     Type: Number
@@ -251,15 +238,15 @@ Resources:
         - !ImportValue 'SubnetB'
 
 # Route53 DNS Entries
-  DNSRecord:
-    Type: AWS::Route53::RecordSet
-    Properties:
-      HostedZoneName: !Join ['', [!Ref HostedZoneName, .]]
-      Name: !Join ['', [!Ref Subdomain, ., !Ref HostedZoneName, .]]
-      Type: A
-      AliasTarget:
-        DNSName: !GetAtt LoadBalancer.DNSName
-        HostedZoneId: !GetAtt LoadBalancer.CanonicalHostedZoneID
+#  DNSRecord:
+#    Type: AWS::Route53::RecordSet
+#    Properties:
+#      HostedZoneName: !Join ['', [!Ref HostedZoneName, .]]
+#      Name: !Join ['', [!Ref Subdomain, ., !Ref HostedZoneName, .]]
+#      Type: A
+#      AliasTarget:
+#        DNSName: !GetAtt LoadBalancer.DNSName
+#        HostedZoneId: !GetAtt LoadBalancer.CanonicalHostedZoneID
 
 # Cloudwatch
   LogGroup:
@@ -299,7 +286,7 @@ Resources:
         TargetValue: !Ref AutoScalingTargetValue
 
         
-Outputs:
-  Endpoint:
-    Description: Endpoint
-    Value: !Join ['', ['https://', !Ref DNSRecord]]              
+#Outputs:
+#  Endpoint:
+#    Description: Endpoint
+#    Value: !Join ['', ['https://', !Ref DNSRecord]]              
