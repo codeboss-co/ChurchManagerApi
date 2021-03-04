@@ -151,31 +151,8 @@ Resources:
         - IpProtocol: tcp
           FromPort: !Ref ContainerPort
           ToPort: !Ref ContainerPort
-          SourceSecurityGroupId: !Ref LoadBalancerSecurityGroup
-
-  LoadBalancerSecurityGroup:
-    Type: AWS::EC2::SecurityGroup
-    Properties:
-      GroupDescription: !Join ['-', [!Ref ServiceName, LoadBalancerSecurityGroup]]
-      VpcId: !ImportValue 'VPC'
-      SecurityGroupIngress:
-      ## Allows port 443
-        - IpProtocol: tcp
-          FromPort: !Ref LoadBalancerPort
-          ToPort: !Ref LoadBalancerPort
-          CidrIp: 0.0.0.0/0
-      ## Allows port 80   
-        - IpProtocol: tcp
-          FromPort: 80
-          ToPort: 80
-          CidrIp: 0.0.0.0/0         
-      ## Outbound rules    
-      # SecurityGroupEgress:
-      #   - IpProtocol: tcp
-      #     FromPort: 80
-      #     ToPort: 80
-      #     CidrIp: 0.0.0.0/0               
-
+          SourceSecurityGroupId: !ImportValue HttpSecurityGroup
+            
   Service:
     Type: AWS::ECS::Service
     # This dependency is needed so that the load balancer is setup correctly in time
@@ -265,7 +242,7 @@ Resources:
       # "internal" is also an option
       Scheme: internet-facing
       SecurityGroups:
-        - !Ref LoadBalancerSecurityGroup
+        - !ImportValue HttpSecurityGroup
       Subnets:
         - !ImportValue 'SubnetA'
         - !ImportValue 'SubnetB'

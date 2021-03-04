@@ -24,6 +24,30 @@ Resources:
     Properties:
       ClusterName: !Join ['-', [!Ref EnvironmentName, 'Cluster']]    
 
+
+  HttpLoadBalancerSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Http-Https-LoadBalancerSecurityGroup
+      VpcId: !ImportValue 'VPC'
+      SecurityGroupIngress:
+      ## Allows port 443
+        - IpProtocol: tcp
+          FromPort: 443
+          ToPort: 443
+          CidrIp: 0.0.0.0/0
+      ## Allows port 80   
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: 0.0.0.0/0         
+      ## Outbound rules    
+      # SecurityGroupEgress:
+      #   - IpProtocol: tcp
+      #     FromPort: 80
+      #     ToPort: 80
+      #     CidrIp: 0.0.0.0/0        
+
 # These are the values output by the CloudFormation template. Be careful
 # about changing any of them, because of them are exported with specific
 # names so that the other task related CF templates can use them.
@@ -51,4 +75,12 @@ Outputs:
     Description: 'Subnet B on AZ2'
     Value: !Ref SubnetB
     Export:
-      Name: 'SubnetB'      
+      Name: 'SubnetB' 
+
+  HttpLoadBalancerSecurityGroup:
+    Description: 'Http Https Loadbalancer Security Group'
+    Value: !Ref HttpLoadBalancerSecurityGroup
+    Export:
+      Name: 'HttpSecurityGroup'       
+
+
