@@ -77,8 +77,9 @@ Outputs:
     Export:
       Name: 'SubnetB' 
 
+# Export the HTTP Default Load balancer
   HttpLoadBalancerSecurityGroup:
-    Description: 'Http Https Loadbalancer Security Group'
+    Description: 'Http Loadbalancer Security Group'
     Value: !Ref HttpLoadBalancerSecurityGroup
     Export:
       Name: 'HttpSecurityGroup'       
