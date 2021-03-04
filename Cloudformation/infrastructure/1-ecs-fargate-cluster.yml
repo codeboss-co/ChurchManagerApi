@@ -29,7 +29,7 @@ Resources:
     Type: AWS::EC2::SecurityGroup
     Properties:
       GroupDescription: Http-Https-LoadBalancerSecurityGroup
-      VpcId: !ImportValue 'VPC'
+      VpcId: !Ref VPC
       SecurityGroupIngress:
       ## Allows port 443
         - IpProtocol: tcp
