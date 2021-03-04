@@ -175,6 +175,6 @@ Resources:
                   }
                 RoleArn: 
                   Fn::GetAtt: [ CloudformationExecutionRole, Arn ]
-                StackName: !Join ['-', [!Ref EnvironmentName, !Ref ProjectName, !Ref 'AWS::AccountId', 'FargateECSCluster']]
+                StackName: !Join ['-', [!Ref EnvironmentName, !Ref ProjectName, 'deploy-ecs-task']]
                 TemplatePath: source-output-artifacts::Cloudformation/infrastructure/2-deploy-ecs-task.yml
             RunOrder: 1
