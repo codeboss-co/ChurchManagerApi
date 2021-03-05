@@ -29,7 +29,13 @@ namespace ChurchManager.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public IActionResult HealthCheck()
+        {
+            return Ok("All good in the hood!");
+        }
+
+        [HttpGet("db")]
+        public async Task<IActionResult> DatabaseCheck()
         {
             return Ok(await _queryDispatcher.QueryAsync(new GroupsForPersonQuery(1), CancellationToken.None));
         }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Security.Cryptography;
 using Application;
+using ChurchManager.Api.Extensions;
 using ChurchManager.Core;
 using CodeBoss.AspNetCore;
 using CodeBoss.CQRS.Commands;
@@ -23,6 +24,8 @@ namespace ChurchManager.Api
 {
     public class Startup
     {
+        private const string Prefix = "api";
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -33,12 +36,18 @@ namespace ChurchManager.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddControllersWithViews(options =>
+            {
+                options.UseGeneralRoutePrefix(Prefix);
+            });
+
             // TODO: Add specific environments
             services.AddCors(options =>
             {
                 options.AddPolicy("CorsPolicy",
                     builder => builder
-                        .WithOrigins("http://localhost:4200") // Angular App
+                        .WithOrigins("http://localhost:4200", // Angular App
+                                           "http://churchmanager.codeboss.tech") // Production
                         .AllowAnyMethod()
                         .AllowAnyHeader()
                         .AllowCredentials());
