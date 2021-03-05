@@ -5,18 +5,23 @@ Parameters:
   EnvironmentName:
     Type: String
     Default: prod
+    AllowedValues:
+      - qa      
+      - prod
+    Description: "A friendly environment name that will be used for namespacing all cluster resources. Example: staging, qa, or production"
   ProjectName:
     Type: String
-    Default: <LOWER CASE PROJECT NAME>
+    Default: churchmanager-ui
+    Description: Must be LOWERCASE - Will also be used as the container name in ECS.
   GithubUserName:
     Type: String
-    Default: <USERNAME>
+    Default: codeboss-co
   GithubRepo:
     Type: String
-    Default: <GITHUB REPO NAME>
+    Default: ChurchManagerUI
   GithubBranch:
     Type: String
-    Default: <BRANCH>
+    Default: master
   GithubOAuthToken:
     Type: String
     Default: <GITHUB ACCESS TOKEN>
