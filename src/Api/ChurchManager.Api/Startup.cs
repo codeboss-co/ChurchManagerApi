@@ -36,11 +36,6 @@ namespace ChurchManager.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews(options =>
-            {
-                options.UseGeneralRoutePrefix(Prefix);
-            });
-
             // TODO: Add specific environments
             services.AddCors(options =>
             {
@@ -55,7 +50,10 @@ namespace ChurchManager.Api
 
 
             // https://developerhandbook.com/aws/how-to-use-aws-cognito-with-net-core/
-            services.AddControllers();
+            services.AddControllers(options =>
+            {
+                options.UseGeneralRoutePrefix(Prefix);
+            });
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "ChurchManager.Api", Version = "v1" });

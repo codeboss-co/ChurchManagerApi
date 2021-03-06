@@ -14,7 +14,9 @@
 3. 
 	- `Update-Database -Context ChurchManagerDbContext`
 
+## Environment settings
 
+Most settings for production e.g. database connection will come from `AWS Parameter store`.
 
 ## Configurations
 
