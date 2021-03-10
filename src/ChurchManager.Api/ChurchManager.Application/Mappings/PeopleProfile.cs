@@ -9,6 +9,8 @@ namespace ChurchManager.Application.Mappings
         public PeopleProfile()
         {
             CreateMap<PersonDomain, PersonViewModel>();
+
+            CreateMap<FamilyMemberDomain, FamilyMembersViewModel>();
         }
     }
 }

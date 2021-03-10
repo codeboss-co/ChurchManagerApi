@@ -23,6 +23,7 @@ namespace ChurchManager.Domain.Model
     public class GroupMemberDomain
     {
         private readonly GroupMember _entity;
+        public int GroupMemberId => _entity.Id;
         public int GroupId  => _entity.GroupId;
         public RecordStatus RecordStatus => _entity.RecordStatus;
         public bool IsLeader => _entity.GroupMemberRole.IsLeader;

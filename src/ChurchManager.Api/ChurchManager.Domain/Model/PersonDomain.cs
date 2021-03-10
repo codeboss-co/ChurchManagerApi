@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using ChurchManager.Domain.Features.People;
 using ChurchManager.Persistence.Models.People;
 
@@ -26,7 +27,27 @@ namespace ChurchManager.Domain.Model
         public string PhotoUrl => _entity.PhotoUrl;
         public string Occupation => _entity.Occupation;
         public bool? ReceivedHolySpirit => _entity.ReceivedHolySpirit;
+        
+        // Gets the persons family members excluding them
+        public ICollection<FamilyMemberDomain> FamilyMembers
+            => _entity.Family.FamilyMembers
+                .Where(x => x.Id != PersonId)
+                .Select(x => new FamilyMemberDomain(x))
+                .ToList();
 
         public PersonDomain(Person entity) => _entity = entity;
+    }
+    
+    public class FamilyMemberDomain
+    {
+        private readonly Person _entity;
+
+        public FullName FullName => _entity.FullName;
+        public AgeClassification AgeClassification => _entity.AgeClassification;
+        public Gender Gender => _entity.Gender;
+        public BirthDate BirthDate => _entity.BirthDate;
+        public string PhotoUrl => _entity.PhotoUrl;
+
+        public FamilyMemberDomain(Person entity) => _entity = entity;
     }
 }
