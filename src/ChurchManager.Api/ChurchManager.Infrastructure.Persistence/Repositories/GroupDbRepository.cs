@@ -39,19 +39,19 @@ namespace ChurchManager.Infrastructure.Persistence.Repositories
             return groups;
         }
 
-        public async Task<ConveyPaging.PagedResult<DomainEntity>> BrowsePersonsGroups(int personId, string search, QueryParameter query, CancellationToken ct = default)
+        public async Task<ConveyPaging.PagedResult<GroupDomain>> BrowsePersonsGroups(int personId, string search, QueryParameter query, CancellationToken ct = default)
         {
             // Paging
             var pagedResult = await Queryable()
                 .Specify(new BrowsePersonsGroupsSpecification(personId, search))
-                .FieldLimit(query)
+                //.FieldLimit(query)
                 .PaginateAsync(query);
             
             // Shaping
-            var shapedData =  await _dataShaper.ShapeDataAsync(pagedResult.Items, query.Fields);
+            //var shapedData =  await _dataShaper.ShapeDataAsync(pagedResult.Items, query.Fields);
             
-            return ConveyPaging.PagedResult<DomainEntity>.Create(
-                shapedData,
+            return ConveyPaging.PagedResult<GroupDomain>.Create(
+                pagedResult.Items.Select(x => new GroupDomain(x)),
                 pagedResult.CurrentPage,
                 pagedResult.ResultsPerPage, 
                 pagedResult.TotalPages, 

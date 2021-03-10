@@ -7,7 +7,7 @@ namespace ChurchManager.Domain.Model
     public class GroupDomain 
     {
         private readonly Group _entity;
-        public int GroupId => _entity.Id;
+        public int Id => _entity.Id;
         public int? ChurchId => _entity.ChurchId;
         public int? ParentGroupId => _entity.ParentGroupId;
         public string GroupType => _entity.GroupType.Name;
@@ -23,6 +23,7 @@ namespace ChurchManager.Domain.Model
     public class GroupMemberDomain
     {
         private readonly GroupMember _entity;
+        public int Id => _entity.Id;
         public int GroupId  => _entity.GroupId;
         public RecordStatus RecordStatus => _entity.RecordStatus;
         public bool IsLeader => _entity.GroupMemberRole.IsLeader;
