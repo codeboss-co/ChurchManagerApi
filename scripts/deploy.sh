@@ -28,16 +28,16 @@ IMAGE_URI="$ECR_REPOSITORY_URI:$IMAGE_TAG"
 docker build -t $ECR_REPOSITORY_URI:latest .
 docker tag $ECR_REPOSITORY_URI:latest $ECR_REPOSITORY_URI:$IMAGE_TAG
 
-echo Pushing the Docker images...
+echo Pushing the Docker images...$IMAGE_URI
 
 docker push $ECR_REPOSITORY_URI:latest
 docker push $ECR_REPOSITORY_URI:$IMAGE_TAG
 
 case "$TRAVIS_BRANCH" in
   "master")
-    echo ################################################
+    echo -----------------------------------------------
     echo Deploying $SERVICE_NAME to $CLUSTER_NAME
-    echo ################################################
+    echo -----------------------------------------------
     ecs-deploy -c $CLUSTER_NAME -n prod-$SERVICE_NAME-service -i $IMAGE_URI
     ;;
 esac
