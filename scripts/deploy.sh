@@ -8,7 +8,7 @@ sudo apt-get install jq -y
 
 # install AWS SDK
 sudo pip install --user awscli
-export PATH=$PATH:$HOME/.local/bin
+which aws
 
 # install ecs-deploy
 sudo wget https://raw.githubusercontent.com/silinternational/ecs-deploy/master/ecs-deploy 
