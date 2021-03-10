@@ -1,0 +1,15 @@
+services:
+  - docker
+before_script:
+  - chmod -R a+x scripts
+  - chmod -R a+x src   
+deploy:
+  provider: script
+  script: bash ./scripts/deploy.sh
+  on:
+    branch: master
+notifications:
+  email:
+    on_success: never
+    on_failure: always    
+   
