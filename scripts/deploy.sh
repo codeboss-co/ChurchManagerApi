@@ -35,8 +35,10 @@ docker push $ECR_REPOSITORY_URI:$IMAGE_TAG
 
 case "$TRAVIS_BRANCH" in
   "master")
+    echo ################################################
     echo Deploying $SERVICE_NAME to $CLUSTER_NAME
-    ecs-deploy -c $CLUSTER_NAME -n $SERVICE_NAME -i $IMAGE_URI
+    echo ################################################
+    ecs-deploy -c $CLUSTER_NAME -n prod-$SERVICE_NAME-service -i $IMAGE_URI
     ;;
 esac
 
