@@ -9,7 +9,7 @@ sudo apt-get install jq -y
 # install AWS SDK
 pip install --upgrade pip
 pip install --upgrade --user awscli
-export PATH=~/.local/bin:$PATH
+export PATH=$HOME/.local/bin:$PATH
 aws --version
 
 # install ecs-deploy
@@ -25,7 +25,8 @@ $(aws ecr get-login --no-include-email)
 echo Building Docker image using branch $TRAVIS_BRANCH
 
 # update latest version
-IMAGE_TAG=${TRAVIS_BUILD_NUMBER:=latest}
+TIMESTAMP=$(date '+%Y%m%d%H%M%S')
+IMAGE_TAG="${TIMESTAMP}-${TRAVIS_BUILD_NUMBER:=latest}"
 IMAGE_URI="$ECR_REPOSITORY_URI:$IMAGE_TAG"
 
 docker build -t $ECR_REPOSITORY_URI:latest .

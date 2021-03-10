@@ -3,16 +3,21 @@ mono: none
 sudo: required
 os: linux
 dist: bionic
+
 services:
   - docker
+  
 branches:
   only:
     - master
+
 before_script:
   - chmod -R a+x scripts
   - chmod -R a+x src
+
 script:  
   - ./scripts/deploy.sh
+
 notifications:
   email:
     on_success: never
