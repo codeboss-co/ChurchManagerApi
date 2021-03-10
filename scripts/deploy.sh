@@ -1,14 +1,15 @@
 #!/bin/bash
 echo Executing after success scripts on branch $TRAVIS_BRANCH
 
-# install AWS SDK
-pip install --user awscli
-export PATH=$PATH:$HOME/.local/bin
-
 # install necessary dependency for ecs-deploy
 add-apt-repository ppa:eugenesan/ppa
 apt-get update
 apt-get install jq -y
+
+# install AWS SDK
+pip install --upgrade pip
+sudo pip install --user awscli
+export PATH=$PATH:$HOME/.local/bin
 
 # install ecs-deploy
 curl https://raw.githubusercontent.com/silinternational/ecs-deploy/master/ecs-deploy | sudo tee -a /usr/bin/ecs-deploy

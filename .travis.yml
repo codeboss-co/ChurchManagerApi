@@ -1,12 +1,18 @@
-language: csharp
+mono: none
 sudo: required
+os: linux
+dist: bionic
 services:
   - docker
-deploy:
-  provider: script
-  script: bash ./scripts/deploy.sh
-  on:
-    branch: develop
+branches:
+  only:
+    - master
+    - develop
+before_script:
+  - chmod -R a+x scripts
+  - chmod -R a+x src
+script:  
+  - ./scripts/deploy.sh
 notifications:
   email:
     on_success: never
