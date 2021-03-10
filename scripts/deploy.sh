@@ -2,7 +2,7 @@
 echo Executing after success scripts on branch $TRAVIS_BRANCH
 
 # install necessary dependency for ecs-deploy
-sudo add-apt-repository ppa:eugenesan/ppa
+sudo add-apt-repository ppa:eugenesan/ppa -y
 sudo apt-get update
 sudo apt-get install jq -y
 
