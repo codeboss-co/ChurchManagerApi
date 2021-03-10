@@ -11,7 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace ChurchManager.Application
 {
-    public static class ServiceExtensions
+    public static class ServiceRegistration
     {
         public static void AddApplicationLayer(this IServiceCollection services)
         {

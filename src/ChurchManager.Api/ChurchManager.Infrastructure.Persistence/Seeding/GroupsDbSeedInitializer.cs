@@ -6,6 +6,7 @@ using ChurchManager.Infrastructure.Persistence.Contexts;
 using ChurchManager.Persistence.Models.Groups;
 using CodeBoss.AspNetCore.Startup;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace ChurchManager.Infrastructure.Persistence.Seeding
 {
@@ -15,26 +16,21 @@ namespace ChurchManager.Infrastructure.Persistence.Seeding
     public class GroupsDbSeedInitializer : IInitializer
     {
         public int OrderNumber { get; } = 2;
-
-        private readonly ChurchManagerDbContext _dbContext;
+        private readonly IServiceScopeFactory _scopeFactory;
+        private ChurchManagerDbContext _dbContext;
 
         int personId = 2;
 
         // Cell Group Type
         private readonly GroupType _cellGroupType  = new() { Name = "Cell", Description = "Cell Ministry" };
-        
-        public GroupsDbSeedInitializer()
-        {
-            var connectionString = "Server=localhost;Port=5432;Database=churchmanager_db;User Id=admin;password=P455word1;";
 
-            var optionsBuilder = new DbContextOptionsBuilder<ChurchManagerDbContext>();
-            optionsBuilder.UseNpgsql(connectionString);
-
-            _dbContext = new ChurchManagerDbContext(optionsBuilder.Options);
-        }
+        public GroupsDbSeedInitializer(IServiceScopeFactory scopeFactory) => _scopeFactory = scopeFactory;
 
         public async Task InitializeAsync()
         {
+            using var scope = _scopeFactory.CreateScope();
+            _dbContext = scope.ServiceProvider.GetRequiredService<ChurchManagerDbContext>();
+
             if (!await _dbContext.GroupMemberRole.AnyAsync())
             {
                 var cellLeaderRole = new GroupMemberRole { Name = "Leader", Description = "Cell Leader", IsLeader = true };
@@ -50,27 +46,6 @@ namespace ChurchManager.Infrastructure.Persistence.Seeding
             { 
                 await SeedMyGroups();
             }
-
-           /*if (!await _dbContext.Group.AnyAsync())
-           {
-               await SeedMyGroups();
-
-               var faker = new Faker();
-               var random = new Random();
-               for (int i = 0; i < 20; i++)
-               {
-                   _dbContext.Group.Add(new Group
-                   {
-                       Name = faker.Address.City() + " Cell Group",
-                       Description = faker.Address.City() + " Cell Group",
-                       GroupType = _cellGroupType,
-                       ChurchId = random.Next(1, 3),
-                       Members = GenerateGroupMembers()
-                   });
-               }
-
-               await _dbContext.SaveChangesAsync();
-           }*/
         }
 
         private async Task SeedMyGroups()

@@ -24,6 +24,11 @@ namespace ChurchManager.Infrastructure.Persistence
             services.AddDbContext<ChurchManagerDbContext>(options =>
                 options.UseNpgsql(configuration.GetConnectionString("DefaultConnection"),
                     x => x.MigrationsAssembly("ChurchManager.Infrastructure.Persistence")));
+            
+            // Database Health Check 
+            services
+                .AddHealthChecks()
+                .AddDbContextCheck<ChurchManagerDbContext>();
 
             // Migrate database
             services.AddHostedService<DbMigrationHostedService<ChurchManagerDbContext>>();

@@ -10,6 +10,7 @@ using ChurchManager.Persistence.Models.People;
 using CodeBoss.AspNetCore.Startup;
 using CodeBoss.Extensions;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Person = ChurchManager.Persistence.Models.People.Person;
 
 namespace ChurchManager.Infrastructure.Persistence.Seeding
@@ -20,21 +21,16 @@ namespace ChurchManager.Infrastructure.Persistence.Seeding
     public class PeopleDbSeedInitializer : IInitializer
     {
         public int OrderNumber { get; } = 1;
+        private readonly IServiceScopeFactory _scopeFactory;
+        private ChurchManagerDbContext _dbContext;
 
-        private readonly ChurchManagerDbContext _dbContext;
-
-        public PeopleDbSeedInitializer()
-        {
-            var connectionString = "Server=localhost;Port=5432;Database=churchmanager_db;User Id=admin;password=P455word1;";
-
-            var optionsBuilder = new DbContextOptionsBuilder<ChurchManagerDbContext>();
-            optionsBuilder.UseNpgsql(connectionString);
-
-            _dbContext = new ChurchManagerDbContext(optionsBuilder.Options);
-        }
+        public PeopleDbSeedInitializer(IServiceScopeFactory scopeFactory) => _scopeFactory = scopeFactory;
 
         public async Task InitializeAsync()
         {
+            using var scope = _scopeFactory.CreateScope();
+            _dbContext = scope.ServiceProvider.GetRequiredService<ChurchManagerDbContext>();
+
             if (!await _dbContext.Person.AnyAsync())
             {
                 await SeedMyDetails();
