@@ -35,16 +35,16 @@ aws ecr get-login-password --region us-east-1 | docker login --username AWS --pa
 1. Create ECR Respository
 
 ```
-aws ecr create-repository --repository-name frontend/angular --image-scanning-configuration scanOnPush=true --image-tag-mutability IMMUTABLE  --region us-east-1 --profile personal
+aws ecr create-repository --repository-name frontend-angular --image-scanning-configuration scanOnPush=true --image-tag-mutability IMMUTABLE  --region us-east-1 --profile personal
 ```
 
 2. Build the docker image
 3. Tag the docker image
 
 ```
-docker tag church-manager-ui:latest 977844596384.dkr.ecr.us-east-1.amazonaws.com/frontend/angular:local
+docker tag church-manager-ui:latest 977844596384.dkr.ecr.us-east-1.amazonaws.com/frontend-angular:local
 ```
 
 4. Push the image
 
-`docker push 977844596384.dkr.ecr.us-east-1.amazonaws.com/frontend/angular:local`
+`docker push 977844596384.dkr.ecr.us-east-1.amazonaws.com/frontend-angular:local`

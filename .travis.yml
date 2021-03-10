@@ -2,7 +2,7 @@ language: csharp
 mono: none
 sudo: required
 os: linux
-dist: bionic
+dist: trusty
 services:
   - docker
 branches:

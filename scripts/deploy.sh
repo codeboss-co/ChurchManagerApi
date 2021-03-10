@@ -12,11 +12,12 @@ sudo pip install --user awscli
 export PATH=$PATH:$HOME/.local/bin
 
 # install ecs-deploy
-curl https://raw.githubusercontent.com/silinternational/ecs-deploy/master/ecs-deploy | sudo tee -a /usr/bin/ecs-deploy
+wget https://raw.githubusercontent.com/silinternational/ecs-deploy/master/ecs-deploy 
+sudo mv ecs-deploy /usr/bin/ecs-deploy
 sudo chmod +x /usr/bin/ecs-deploy
 
 # Use this for AWS ECR
-eval $(aws ecr get-login --region us-east-1)
+eval $(aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 977844596384.dkr.ecr.us-east-1.amazonaws.com)
 # Use this for Docker Hub
 #docker login --username $DOCKER_HUB_USER --password $DOCKER_HUB_PSW
 
