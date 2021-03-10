@@ -7,7 +7,6 @@ sudo apt-get update
 sudo apt-get install jq -y
 
 # install AWS SDK
-sudo pip install --upgrade pip
 sudo pip install --user awscliv2
 sudo alias aws='awsv2'
 export PATH=$PATH:$HOME/.local/bin
