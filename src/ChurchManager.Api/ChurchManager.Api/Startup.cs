@@ -62,7 +62,7 @@ namespace ChurchManager.Api
             app.UseAuthorization();
             
             app.UseErrorHandlingMiddleware();
-            app.UseHealthChecks("/health");
+            app.UseHealthChecks("/api/health");
 
             app.UseEndpoints(endpoints =>
              {
