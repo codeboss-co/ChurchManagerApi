@@ -1,3 +1,4 @@
+language: csharp
 mono: none
 sudo: required
 os: linux
@@ -7,7 +8,6 @@ services:
 branches:
   only:
     - master
-    - develop
 before_script:
   - chmod -R a+x scripts
   - chmod -R a+x src
