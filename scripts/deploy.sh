@@ -2,17 +2,18 @@
 echo Executing after success scripts on branch $TRAVIS_BRANCH
 
 # install necessary dependency for ecs-deploy
-add-apt-repository ppa:eugenesan/ppa
-apt-get update
-apt-get install jq -y
+sudo add-apt-repository ppa:eugenesan/ppa
+sudo apt-get update
+sudo apt-get install jq -y
 
 # install AWS SDK
-pip install --upgrade pip
+sudo pip install --upgrade pip
 sudo pip install --user awscliv2
+sudo alias aws='awsv2'
 export PATH=$PATH:$HOME/.local/bin
 
 # install ecs-deploy
-wget https://raw.githubusercontent.com/silinternational/ecs-deploy/master/ecs-deploy 
+sudo wget https://raw.githubusercontent.com/silinternational/ecs-deploy/master/ecs-deploy 
 sudo mv ecs-deploy /usr/bin/ecs-deploy
 sudo chmod +x /usr/bin/ecs-deploy
 
