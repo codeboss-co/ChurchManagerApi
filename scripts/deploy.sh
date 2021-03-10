@@ -7,8 +7,8 @@ sudo apt-get update
 sudo apt-get install jq -y
 
 # install AWS SDK
-sudo pip install --upgrade pip
-sudo pip install --upgrade --user awscli
+pip install --upgrade pip
+pip install --upgrade --user awscli
 export PATH=~/.local/bin:$PATH
 aws --version
 
