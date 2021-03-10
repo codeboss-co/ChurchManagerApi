@@ -17,7 +17,7 @@ sudo mv ecs-deploy /usr/bin/ecs-deploy
 sudo chmod +x /usr/bin/ecs-deploy
 
 # Use this for AWS ECR
-eval $($(aws ecr get-login --no-include-email --region us-east-1))
+eval $(aws ecr get-login --no-include-email --region us-east-1)
 # Use this for Docker Hub
 #docker login --username $DOCKER_HUB_USER --password $DOCKER_HUB_PSW
 
