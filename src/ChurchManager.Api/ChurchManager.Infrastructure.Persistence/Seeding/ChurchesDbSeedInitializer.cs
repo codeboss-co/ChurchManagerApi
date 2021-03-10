@@ -4,6 +4,7 @@ using ChurchManager.Infrastructure.Persistence.Contexts;
 using ChurchManager.Persistence.Models.Churches;
 using CodeBoss.AspNetCore.Startup;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace ChurchManager.Infrastructure.Persistence.Seeding
 {
@@ -13,22 +14,16 @@ namespace ChurchManager.Infrastructure.Persistence.Seeding
     public class ChurchesDbSeedInitializer : IInitializer
     {
         public int OrderNumber { get; } = 0;
+        private readonly IServiceScopeFactory _scopeFactory;
 
-        private readonly ChurchManagerDbContext _dbContext;
-
-        public ChurchesDbSeedInitializer()
-        {
-            var connectionString = "Server=localhost;Port=5432;Database=churchmanager_db;User Id=admin;password=P455word1;";
-
-            var optionsBuilder = new DbContextOptionsBuilder<ChurchManagerDbContext>();
-            optionsBuilder.UseNpgsql(connectionString);
-
-            _dbContext = new ChurchManagerDbContext(optionsBuilder.Options);
-        }
+        public ChurchesDbSeedInitializer(IServiceScopeFactory scopeFactory) => _scopeFactory = scopeFactory;
 
         public async Task InitializeAsync()
         {
-            if (!await _dbContext.Church.AnyAsync())
+            using var scope = _scopeFactory.CreateScope();
+            var dbContext = scope.ServiceProvider.GetRequiredService<ChurchManagerDbContext>();
+
+            if(!await dbContext.Church.AnyAsync())
             {
                 var faker = new Faker();
 
@@ -38,7 +33,7 @@ namespace ChurchManager.Infrastructure.Persistence.Seeding
 
                 for(int i = 0; i < 10; i++)
                 {
-                    _dbContext.Church.Add(new Church
+                    dbContext.Church.Add(new Church
                     {
                         Name = faker.Address.City() + " Church",
                         Description = faker.Address.City() + " Church",
@@ -48,7 +43,7 @@ namespace ChurchManager.Infrastructure.Persistence.Seeding
                     });
                 }
 
-                await _dbContext.SaveChangesAsync();
+                await dbContext.SaveChangesAsync();
             }
         }
     }
