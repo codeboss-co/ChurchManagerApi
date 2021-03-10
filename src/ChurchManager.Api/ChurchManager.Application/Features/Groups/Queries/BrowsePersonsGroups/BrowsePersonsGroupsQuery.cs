@@ -39,13 +39,9 @@ namespace ChurchManager.Application.Features.Groups.Queries.BrowsePersonsGroups
         {
             var pagedResult = await _groupDbRepository.BrowsePersonsGroups(query.PersonId, query.SearchTerm, query, ct);
 
-            var groups = pagedResult.Items;
-            var viewModels = _mapper.Map<IEnumerable<GroupSummaryViewModel>>(groups);
-            var pagedResponse = PagedResult<GroupSummaryViewModel>.Create(
-                viewModels,
-                pagedResult.CurrentPage, pagedResult.ResultsPerPage, pagedResult.TotalPages, pagedResult.TotalResults);
+            var viewModels = _mapper.Map<PagedResult<GroupSummaryViewModel>>(pagedResult);
 
-            return new PagedResponse<GroupSummaryViewModel>(pagedResponse);
+            return new PagedResponse<GroupSummaryViewModel>(viewModels);
         }
     }
 }
