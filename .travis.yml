@@ -1,3 +1,8 @@
+language: csharp
+mono: none
+sudo: required
+os: linux
+dist: bionic
 services:
   - docker
 before_script:
