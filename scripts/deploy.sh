@@ -25,7 +25,7 @@ $(aws ecr get-login --no-include-email)
 echo Building Docker image using branch $TRAVIS_BRANCH
 
 # update latest version
-TIMESTAMP=$(date '+%Y%m%d%H%M%S')
+TIMESTAMP=$(date '+%Y-%m-%d')
 IMAGE_TAG="${TIMESTAMP}-${TRAVIS_BUILD_NUMBER:=latest}"
 IMAGE_URI="$ECR_REPOSITORY_URI:$IMAGE_TAG"
 
