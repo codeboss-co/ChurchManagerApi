@@ -6,7 +6,7 @@
 
 *Migrations*
 
-1. In `Package manager console` change to `DbMigrations` project
+1. In `Package manager console` change to `ChurchManager.Infrastructure.Persistence` project
 
 2.
 	- `Add-Migration InitialDbMigration -Context ChurchManagerDbContext -o Migrations` 
