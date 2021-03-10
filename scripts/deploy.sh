@@ -22,17 +22,21 @@ sudo chmod +x /usr/bin/ecs-deploy
 # it expects aws access key and secret set in environmental vars
 $(aws ecr get-login --no-include-email)
 
+echo -----------------------------------------------
 echo Building Docker image using branch $TRAVIS_BRANCH
+echo -----------------------------------------------
 
 # update latest version
-TIMESTAMP=$(date '+%Y-%m-%d')
+TIMESTAMP=$(date '+%Y%m%d')
 IMAGE_TAG="${TIMESTAMP}-${TRAVIS_BUILD_NUMBER:=latest}"
 IMAGE_URI="$ECR_REPOSITORY_URI:$IMAGE_TAG"
 
 docker build -t $ECR_REPOSITORY_URI:latest .
 docker tag $ECR_REPOSITORY_URI:latest $ECR_REPOSITORY_URI:$IMAGE_TAG
 
+echo -----------------------------------------------
 echo Pushing the Docker images...$IMAGE_URI
+echo -----------------------------------------------
 # push new version
 docker push $ECR_REPOSITORY_URI:latest
 docker push $ECR_REPOSITORY_URI:$IMAGE_TAG
