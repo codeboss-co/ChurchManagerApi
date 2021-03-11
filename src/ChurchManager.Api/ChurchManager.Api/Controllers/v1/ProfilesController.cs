@@ -9,6 +9,7 @@ using Microsoft.Extensions.Logging;
 namespace ChurchManager.Api.Controllers.v1
 {
     [ApiVersion("1.0")]
+    [Authorize]
     public class ProfilesController : BaseApiController
     {
         private readonly ILogger<ProfilesController> _logger;
@@ -30,11 +31,9 @@ namespace ChurchManager.Api.Controllers.v1
         }
 
         [HttpGet("current-user")]
-        [Authorize]
         public async Task<IActionResult> GetCurrentUserProfileByUserLogin(CancellationToken token)
         {
-            var userLoginId = _currentUser.UserLoginId;
-            var response = await Mediator.Send(new ProfileByUserLoginIdQuery(userLoginId), token);
+            var response = await GetUserProfileByUserLogin(_currentUser.UserLoginId, token);
             return Ok(response);
         }
 
