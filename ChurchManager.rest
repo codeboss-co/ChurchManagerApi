@@ -1,4 +1,4 @@
-@api = http://localhost:5000
+@api = http://localhost:5000/api
 @accessToken = eyJraWQiOiJYUU9RK0NBSmxmVGF5TUQyclR5SEQzcGxDclBCN2lob3N1XC84cW9CWjlQQT0iLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiIwODkyNWFkZS05MjQ5LTQ3NmItODc4Ny1iM2RkOGY1ZGJjMTMiLCJldmVudF9pZCI6IjRiMDQ0NWM1LTc1NzUtNGJiZi1hY2YzLTU5NzRkODdlNzYxYiIsInRva2VuX3VzZSI6ImFjY2VzcyIsInNjb3BlIjoiYXdzLmNvZ25pdG8uc2lnbmluLnVzZXIuYWRtaW4gcGhvbmUgb3BlbmlkIHByb2ZpbGUgZW1haWwiLCJhdXRoX3RpbWUiOjE2MTQyNzQyMjQsImlzcyI6Imh0dHBzOlwvXC9jb2duaXRvLWlkcC51cy1lYXN0LTEuYW1hem9uYXdzLmNvbVwvdXMtZWFzdC0xX2k2cFdKeHU4cSIsImV4cCI6MTYxNDI3NzgyNCwiaWF0IjoxNjE0Mjc0MjI0LCJ2ZXJzaW9uIjoyLCJqdGkiOiJkZjQ3ZWZkYy0wOGRhLTQ0MDYtOGE5ZS1lMzU3M2MzYTJlMDUiLCJjbGllbnRfaWQiOiI1Ymw5ZTdlMWsydmY5NjZubGppZHVkNnA1diIsInVzZXJuYW1lIjoiZGlsbGFuIn0.QEEmoLcPTd6DDrsNYDQzWA2a0W6sgBgCYpAHKhR_zRoXmeI3Qp7c9FVT3QEZNT3-3mb3OvcVMRdF5jwypkmrDc7pDzpFFdkY9vq5kO_gexUFTe5jdHmL1bZlkxeUX_Qj0eSVn6glTKgQ34N990-kn2QMVcih_oKW0nCYd-LJRTt7qYxKRDy7Ok5g3-M92Drn-nwLQYx-CRmbXuZRIssZhdbdLh3YLFP4VtL024fMNskZmEqgoVIR69nKBo8NZyfUkIuhcKMQbNdgJPGduNS3gbqXWsoxGO3F-_vWexc0-sVJc-c5bdFhQj73HKyIeqOV4bOd2-_CxsywohDSVTh0sQ
 # Ensure this is in the Countries Table
 @countryId = 1 
@@ -14,21 +14,23 @@ Content-Type: application/json
 }
 
 # ============== UTILITY / TESTS ==================== #
-GET {{api}}/utility
-GET {{api}}/utility/auth
+GET {{api}}/
+GET {{api}}/auth
+Authorization: Bearer {{accessToken}}
+
 
 # ============== GROUPS ==================== #
 # GetAllPersonsGroups
 @personId = 1 
-GET {{api}}/group/{{personId}}}
+GET {{api}}/v1/groups/{{personId}}}
 
 # GetAllCurrentUsersGroups
-GET {{api}}/group/current-person
+GET {{api}}/v1/groups/current-person
 Content-Type: application/json
 Authorization: Bearer {{accessToken}}
 
 # BrowseGroups
-POST {{api}}/group/browse
+POST {{api}}/v1/groups/browse
 Content-Type: application/json
 Authorization: Bearer {{accessToken}}
 
@@ -41,5 +43,14 @@ Authorization: Bearer {{accessToken}}
 }
 
 # ============== PEOPLE ==================== #
-# GetPersonByUsername
-GET {{api}}/person/userlogin/{{userLoginId}}
+
+
+# ============== PROFILES ==================== #
+# GetCurrentUserProfileByUserLogin
+GET {{api}}/v1/profiles/current-user
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
+GET {{api}}/v1/profiles/userlogin/{{userLoginId}}
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}

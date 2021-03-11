@@ -27,10 +27,11 @@ namespace ChurchManager.Domain.Model
         public string PhotoUrl => _entity.PhotoUrl;
         public string Occupation => _entity.Occupation;
         public bool? ReceivedHolySpirit => _entity.ReceivedHolySpirit;
-        
+        public string UserLoginId => _entity.UserLoginId;
+
         // Gets the persons family members excluding them
         public ICollection<FamilyMemberDomain> FamilyMembers
-            => _entity.Family.FamilyMembers
+            => _entity.Family?.FamilyMembers?
                 .Where(x => x.Id != PersonId)
                 .Select(x => new FamilyMemberDomain(x))
                 .ToList();

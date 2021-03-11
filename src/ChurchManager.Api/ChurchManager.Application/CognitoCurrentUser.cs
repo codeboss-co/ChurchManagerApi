@@ -27,5 +27,10 @@ namespace ChurchManager.Application
         /// Loads the Current User using the
         /// </summary>
         public Lazy<Task<PersonDomain>> CurrentPerson => new(async () => await _applicationService.PersonByUserLoginId(Id));
+
+        /// <summary>
+        /// Helper for easier access
+        /// </summary>
+        public string UserLoginId => CurrentPerson.Value.Result.UserLoginId;
     }
 }
