@@ -13,6 +13,8 @@ namespace ChurchManager.Application
         private readonly ICurrentPrincipalAccessor _principalAccessor;
         private readonly IPersonAppService _applicationService;
 
+        internal const string ClaimTypeUsername = "Username";
+
         public CognitoCurrentUser(ICurrentPrincipalAccessor principalAccessor, IPersonAppService applicationService)
         {
             _principalAccessor = principalAccessor;
@@ -20,17 +22,12 @@ namespace ChurchManager.Application
         }
 
         public virtual bool IsAuthenticated => !string.IsNullOrEmpty(Id);
-
         public string Id => _principalAccessor.Principal.FindFirstValue(ClaimTypes.NameIdentifier);
+        public string Username => _principalAccessor.Principal.FindFirstValue(ClaimTypeUsername);
 
         /// <summary>
         /// Loads the Current User using the
         /// </summary>
         public Lazy<Task<PersonDomain>> CurrentPerson => new(async () => await _applicationService.PersonByUserLoginId(Id));
-
-        /// <summary>
-        /// Helper for easier access
-        /// </summary>
-        public string UserLoginId => CurrentPerson.Value.Result.UserLoginId;
     }
 }

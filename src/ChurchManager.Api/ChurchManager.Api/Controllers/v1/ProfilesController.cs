@@ -49,15 +49,15 @@ namespace ChurchManager.Api.Controllers.v1
         [HttpGet("current-user")]
         public async Task<IActionResult> GetCurrentUserProfileByUserLogin(CancellationToken token)
         {
-            var response = await GetUserProfileByUserLogin(_currentUser.UserLoginId, token);
+            var response = await Mediator.Send(new ProfileByUserLoginIdQuery(_currentUser.Id), token);
             return Ok(response);
         }
 
         // v1/profiles/userdetails/current-user
         [HttpGet("userdetails/current-user")]
-        public async Task<IActionResult> GetCurrentUserDetailsSummaryByUserLogin(string userLoginId, CancellationToken token)
+        public async Task<IActionResult> GetCurrentUserDetailsSummaryByUserLogin(CancellationToken token)
         {
-            var response = await GetUserDetailsSummaryByUserLogin(_currentUser.UserLoginId, token);
+            var response = await Mediator.Send(new UserDetailsByUserLoginQuery(_currentUser.Id), token);
             return Ok(response);
         } 
 

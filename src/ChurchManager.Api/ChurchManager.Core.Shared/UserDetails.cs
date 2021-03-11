@@ -1,4 +1,12 @@
 ﻿namespace ChurchManager.Core.Shared
 {
-    public record UserDetails(string Username, string UserLoginId, string FirstName, string LastName, string Email) { }
+    public record UserDetails
+    {
+        public string Username { get; set; }
+        public string UserLoginId { get; init; }
+        public string FirstName { get; init; }
+        public string LastName { get; init; }
+        public string Email { get; init; }
+        public string PhotoUrl { get; init; }
+    }
 }

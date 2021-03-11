@@ -33,16 +33,20 @@ namespace ChurchManager.Infrastructure.Persistence.Repositories
                 : null;
         }
 
-        public async Task<UserDetails> UserDetailsByUserLoginId(string userLoginId)
+        public Task<UserDetails> UserDetailsByUserLoginId(string userLoginId)
         {
-            var entity = await Queryable()
+            return Queryable()
                 .AsNoTracking()
                 .Where(x => x.UserLoginId == userLoginId)
-                .Select(x => new UserDetails(
-                    x.UserLoginId, x.UserLoginId, x.FullName.FirstName, x.FullName.LastName, x.Email.Address))
+                .Select(x => new UserDetails
+                {
+                    UserLoginId = x.UserLoginId,
+                    FirstName = x.FullName.FirstName,
+                    LastName = x.FullName.LastName,
+                    Email = x.Email.Address,
+                    PhotoUrl = x.PhotoUrl
+                })
                 .FirstOrDefaultAsync();
-
-            return entity;
         }
     }
 }
