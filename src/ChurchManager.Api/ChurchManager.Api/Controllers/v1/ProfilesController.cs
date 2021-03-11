@@ -23,6 +23,7 @@ namespace ChurchManager.Api.Controllers.v1
             _currentUser = currentUser;
         }
 
+        // v1/profiles/userlogin/{{userLoginId}}
         [HttpGet("userlogin/{userLoginId}")]
         public async Task<IActionResult> GetUserProfileByUserLogin(string userLoginId, CancellationToken token)
         {
@@ -30,6 +31,7 @@ namespace ChurchManager.Api.Controllers.v1
             return Ok(response);
         }
 
+        // v1/profiles/current-user
         [HttpGet("current-user")]
         public async Task<IActionResult> GetCurrentUserProfileByUserLogin(CancellationToken token)
         {
@@ -41,6 +43,13 @@ namespace ChurchManager.Api.Controllers.v1
         public async Task<IActionResult> GetUserDetailsSummaryByUserLogin(string userLoginId, CancellationToken token)
         {
             var response = await Mediator.Send(new UserDetailsByUserLoginQuery(userLoginId), token);
+            return Ok(response);
+        }
+
+        [HttpGet("userdetails/current-user")]
+        public async Task<IActionResult> GetCurrentUserDetailsSummaryByUserLogin(string userLoginId, CancellationToken token)
+        {
+            var response = await GetUserDetailsSummaryByUserLogin(_currentUser.UserLoginId, token);
             return Ok(response);
         }
     }
