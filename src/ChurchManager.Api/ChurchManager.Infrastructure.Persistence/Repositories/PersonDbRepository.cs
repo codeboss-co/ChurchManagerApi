@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
+using ChurchManager.Core.Shared;
 using ChurchManager.Domain.Features.People.Repositories;
 using ChurchManager.Domain.Model;
 using ChurchManager.Infrastructure.Abstractions;
@@ -22,11 +24,29 @@ namespace ChurchManager.Infrastructure.Persistence.Repositories
 
         public async Task<PersonDomain> ProfileByUserLoginId(string userLoginId)
         {
-            var entity = await Queryable(new ProfileByUserLoginSpecification(userLoginId)).FirstOrDefaultAsync();
+            var entity = await Queryable(new ProfileByUserLoginSpecification(userLoginId))
+                .AsNoTracking()
+                .FirstOrDefaultAsync();
 
             return entity is not null
                 ? new PersonDomain(entity)
                 : null;
+        }
+
+        public Task<UserDetails> UserDetailsByUserLoginId(string userLoginId)
+        {
+            return Queryable()
+                .AsNoTracking()
+                .Where(x => x.UserLoginId == userLoginId)
+                .Select(x => new UserDetails
+                {
+                    UserLoginId = x.UserLoginId,
+                    FirstName = x.FullName.FirstName,
+                    LastName = x.FullName.LastName,
+                    Email = x.Email.Address,
+                    PhotoUrl = x.PhotoUrl
+                })
+                .FirstOrDefaultAsync();
         }
     }
 }

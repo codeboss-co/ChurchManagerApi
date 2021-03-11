@@ -4,11 +4,13 @@ using ChurchManager.Api.Requests;
 using ChurchManager.Application.Features.Groups.Queries.BrowsePersonsGroups;
 using ChurchManager.Application.Features.Groups.Queries.GroupsForPerson;
 using ChurchManager.Domain;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ChurchManager.Api.Controllers.v1
 {
     [ApiVersion("1.0")]
+    [Authorize]
     public class GroupsController : BaseApiController
     {
         private readonly ICognitoCurrentUser _currentUser;
