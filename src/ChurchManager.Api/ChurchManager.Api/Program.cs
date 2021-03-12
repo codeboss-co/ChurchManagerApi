@@ -1,4 +1,5 @@
 using System;
+using Amazon.Runtime;
 using Convey;
 using Convey.Logging;
 using Microsoft.AspNetCore.Hosting;
@@ -24,16 +25,25 @@ namespace ChurchManager.Api
                 {
                     webBuilder.UseStartup<Startup>();
                 })
-                .ConfigureAppConfiguration((context, builder) =>
+                .ConfigureAppConfiguration((context, config) =>
                 {
                     // We pull settings from AWS parameter store if not running locally
                     if(!context.HostingEnvironment.IsDevelopment())
                     {
-                        var configuration = context.Configuration;
                         var environmentName = context.HostingEnvironment.EnvironmentName;
+
+                        config
+                            .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                            .AddJsonFile($"appsettings.{environmentName}.json", true, true);
+
+                        var configuration = config.Build();
+
                         // AWS Configuration
                         var awsOptions = configuration.GetAWSOptions();
-                        builder.AddSystemsManager($"/{AppName}/{environmentName}", awsOptions);
+                        var accessKey = configuration["AWS:AccessKey"];
+                        var secretKey = configuration["AWS:SecretKey"];
+                        awsOptions.Credentials = new BasicAWSCredentials(accessKey, secretKey);
+                        config.AddSystemsManager($"/{AppName}/{environmentName}", awsOptions);
                     }
                 })
                 .UseLogging();
