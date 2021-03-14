@@ -2,6 +2,7 @@
 {
     public record GroupMemberViewModel
     {
+        public int GroupMemberId { get; set; }
         public int PersonId { get; set; }
         public string FirstName { get; set; }
         public string MiddleName { get; set; }
