@@ -58,6 +58,24 @@ namespace ChurchManager.Infrastructure.Persistence.Repositories
                 pagedResult.TotalResults);
         }
 
+        public async Task<IEnumerable<GroupMemberViewModel>> GroupMembersAsync(int groupId, CancellationToken ct)
+        {
+            var groups = await Queryable(new GroupMembersSpecification(groupId, RecordStatus.Active))
+                .SelectMany(x => x.Members)
+                .Select(x => new GroupMemberViewModel
+                {
+                    PersonId = x.PersonId,
+                    FirstName = x.Person.FullName.FirstName,
+                    MiddleName = x.Person.FullName.MiddleName,
+                    LastName = x.Person.FullName.LastName,
+                    Gender = x.Person.Gender,
+                    PhotoUrl = x.Person.PhotoUrl
+                })
+                .ToArrayAsync(ct);
+
+            return groups;
+        }
+
         private IQueryable<Group> FilterByColumn(IQueryable<Group> queryable, string search)
         {
             queryable.Include("GroupType");

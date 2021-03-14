@@ -11,6 +11,7 @@ namespace ChurchManager.Domain.Model
         public int? ChurchId => _entity.ChurchId;
         public int? ParentGroupId => _entity.ParentGroupId;
         public string GroupType => _entity.GroupType.Name;
+        public bool TakesAttendance => _entity.GroupType.TakesAttendance;
         public string Name => _entity.Name;
         public string Description => _entity.Description;
         public RecordStatus RecordStatus => _entity.RecordStatus;

@@ -1,6 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using ChurchManager.Application.Features.Groups.Queries.BrowsePersonsGroups;
+using ChurchManager.Application.Features.Groups.Queries.GroupMembers;
 using ChurchManager.Application.Features.Groups.Queries.GroupsForPerson;
 using ChurchManager.Domain;
 using Microsoft.AspNetCore.Authorization;
@@ -38,6 +39,12 @@ namespace ChurchManager.Api.Controllers.v1
         {
             query.PersonId = _currentUser.PersonId; // Reset to current person
             return Ok(await Mediator.Send(query, token));
+        }
+
+        [HttpGet("{groupId}/members")]
+        public async Task<IActionResult> GetGroupMembers(int groupId, CancellationToken token)
+        {
+            return Ok(await Mediator.Send(new GroupMembersQuery(groupId), token));
         }
     }
 }

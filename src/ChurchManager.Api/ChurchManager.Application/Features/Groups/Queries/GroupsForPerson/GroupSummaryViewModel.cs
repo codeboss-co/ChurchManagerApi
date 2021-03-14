@@ -10,6 +10,7 @@ namespace ChurchManager.Application.Features.Groups.Queries.GroupsForPerson
         public int? ParentGroupId { get; set; }
         public string GroupType { get; set; }
         public string RecordStatus { get; set; }
+        public bool TakesAttendance { get; set; }
         public int MembersCount { get; set; }
     }
 
