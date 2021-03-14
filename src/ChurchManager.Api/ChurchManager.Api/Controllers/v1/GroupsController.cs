@@ -1,6 +1,5 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using ChurchManager.Api.Requests;
 using ChurchManager.Application.Features.Groups.Queries.BrowsePersonsGroups;
 using ChurchManager.Application.Features.Groups.Queries.GroupsForPerson;
 using ChurchManager.Domain;
@@ -28,10 +27,17 @@ namespace ChurchManager.Api.Controllers.v1
         }
 
         [HttpPost("browse/person/{personId}")]
-        //[Authorize]
-        public async Task<IActionResult> BrowseGroups(int personId, [FromBody] SearchTermRequest request, CancellationToken token)
+        public async Task<IActionResult> BrowseGroups(int personId, [FromBody] BrowsePersonsGroupsQuery query, CancellationToken token)
         {
-            return Ok(await Mediator.Send(new BrowsePersonsGroupsQuery(request.SearchTerm, personId), token));
+            query.PersonId = personId; // Reset to the person we are searching for in the URL
+            return Ok(await Mediator.Send(query, token));
+        }
+
+        [HttpPost("browse/current-user")]
+        public async Task<IActionResult> BrowseCurrentUserGroups([FromBody] BrowsePersonsGroupsQuery query, CancellationToken token)
+        {
+            query.PersonId = _currentUser.PersonId; // Reset to current person
+            return Ok(await Mediator.Send(query, token));
         }
     }
 }

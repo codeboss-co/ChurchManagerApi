@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using ChurchManager.Application.Features.Groups.Queries.GroupsForPerson;
@@ -13,8 +12,11 @@ using MediatR;
 
 namespace ChurchManager.Application.Features.Groups.Queries.BrowsePersonsGroups
 {
-    public record BrowsePersonsGroupsQuery(string SearchTerm, int PersonId)
-        : QueryParameter, IRequest<PagedResponse<GroupSummaryViewModel>> { }
+    public record BrowsePersonsGroupsQuery
+        : SearchTermQueryParameter, IRequest<PagedResponse<GroupSummaryViewModel>>
+    {
+        public int PersonId { get; set; }
+    }
 
     public class BrowsePersonsGroupsHandler : IRequestHandler<BrowsePersonsGroupsQuery, PagedResponse<GroupSummaryViewModel>>
     {
