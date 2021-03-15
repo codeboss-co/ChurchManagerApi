@@ -1,5 +1,6 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
+using ChurchManager.Application.Features.Groups.Commands.GroupAttendanceRecord;
 using ChurchManager.Application.Features.Groups.Queries.BrowsePersonsGroups;
 using ChurchManager.Application.Features.Groups.Queries.GroupMembers;
 using ChurchManager.Application.Features.Groups.Queries.GroupsForPerson;
@@ -45,6 +46,12 @@ namespace ChurchManager.Api.Controllers.v1
         public async Task<IActionResult> GetGroupMembers(int groupId, CancellationToken token)
         {
             return Ok(await Mediator.Send(new GroupMembersQuery(groupId), token));
+        }
+
+        [HttpPost("{groupId}/attendance")]
+        public async Task<IActionResult> PostGroupAttendanceRecord([FromBody] GroupAttendanceRecordCommand command, CancellationToken token)
+        {
+            return Ok(await Mediator.Send(command, token));
         }
     }
 }
