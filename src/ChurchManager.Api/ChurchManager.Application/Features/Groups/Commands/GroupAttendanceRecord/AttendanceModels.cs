@@ -4,6 +4,7 @@
     {
         public bool ReceivedHolySpirit { get; set; }
         public bool NewConvert { get; set; }
+        public string Note { get; set; }
     }
 
     public record FirstTimerAttendance : AttendanceBase
@@ -16,6 +17,6 @@
     {
         public int GroupMemberId { get; set; }
         public string GroupMemberName { get; set; }
-        public bool GroupMemberPresent { get; set; }
+        public bool GroupMemberDidAttend { get; set; }
     }
 }

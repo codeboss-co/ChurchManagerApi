@@ -47,6 +47,7 @@ namespace ChurchManager.Infrastructure.Persistence
             services.AddTransient(typeof(IGenericRepositoryAsync<>), typeof(GenericRepositoryAsync<>));
             services.AddScoped<IGroupDbRepository, GroupDbRepository>();
             services.AddScoped<IPersonDbRepository, PersonDbRepository>();
+            services.AddScoped<IGroupAttendanceDbRepository, GroupAttendanceDbRepository>();
 
             #endregion
 

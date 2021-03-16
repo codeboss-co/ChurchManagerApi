@@ -14,6 +14,7 @@ namespace ChurchManager.Domain.Features.Groups.Repositories
     {
         Task<IEnumerable<GroupDomain>> AllPersonsGroups(int personId, RecordStatus recordStatus, CancellationToken ct = default);
         Task<PagedResult<GroupDomain>> BrowsePersonsGroups(int personId, string search, QueryParameter query, CancellationToken ct = default);
-        Task<IEnumerable<GroupMemberViewModel>> GroupMembersAsync(int groupId, CancellationToken ct);
+        Task<IEnumerable<GroupMemberViewModel>> GroupMembersAsync(int groupId, CancellationToken ct = default);
+        Task<IEnumerable<GroupMemberRole>> GroupRolesForGroupAsync(int groupId, CancellationToken ct);
     }
 }

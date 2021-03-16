@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Threading;
@@ -75,6 +76,14 @@ namespace ChurchManager.Infrastructure.Persistence.Repositories
                 .ToArrayAsync(ct);
 
             return groups;
+        }
+
+        public async Task<IEnumerable<GroupMemberRole>> GroupRolesForGroupAsync(int groupId, CancellationToken ct)
+        {
+            return await Queryable(new GroupRolesForGroupSpecification(groupId))
+                .SelectMany(x => x.Members)
+                .Select(x => x.GroupMemberRole)
+                .ToArrayAsync(ct);
         }
 
         private IQueryable<Group> FilterByColumn(IQueryable<Group> queryable, string search)

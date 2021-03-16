@@ -2,22 +2,35 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using ChurchManager.Application.Features.Groups.Services;
 using MediatR;
 
 namespace ChurchManager.Application.Features.Groups.Commands.GroupAttendanceRecord
 {
     public record GroupAttendanceRecordCommand : IRequest
     {
-        public DateTime MeetingDate { get; set; }
+        public int GroupId { get; set; }
+        public DateTime? AttendanceDate { get; set; }
+        public bool? DidNotOccur { get; set; }
         public IEnumerable<GroupMemberAttendance> Members { get; set; }
         public IEnumerable<FirstTimerAttendance> FirstTimers { get; set; }
+        public string Note { get; set; }
     }
 
     public class GroupAttendanceHandler : IRequestHandler<GroupAttendanceRecordCommand>
     {
-        public Task<Unit> Handle(GroupAttendanceRecordCommand command, CancellationToken ct)
+        private readonly IGroupAttendanceAppService _appService;
+
+        public GroupAttendanceHandler(IGroupAttendanceAppService appService)
         {
-            throw new NotImplementedException();
+            _appService = appService;
+        }
+
+        public async Task<Unit> Handle(GroupAttendanceRecordCommand command, CancellationToken ct)
+        {
+            await _appService.RecordAttendanceAsync(command, ct);
+
+            return new Unit();
         }
     }
 }
