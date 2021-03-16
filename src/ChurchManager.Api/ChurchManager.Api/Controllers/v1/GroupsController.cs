@@ -49,9 +49,11 @@ namespace ChurchManager.Api.Controllers.v1
         }
 
         [HttpPost("{groupId}/attendance")]
-        public async Task<IActionResult> PostGroupAttendanceRecord([FromBody] GroupAttendanceRecordCommand command, CancellationToken token)
+        public async Task<IActionResult> PostGroupAttendanceRecord([FromBody] GroupAttendanceRecordCommand command,
+            CancellationToken token)
         {
-            return Ok(await Mediator.Send(command, token));
+            await Mediator.Send(command, token);
+            return Accepted();
         }
     }
 }

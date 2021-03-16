@@ -17,7 +17,6 @@ namespace ChurchManager.Application.Features.Groups.Services
 
     public class GroupAttendanceAppService : IGroupAttendanceAppService
     {
-        private readonly IPersonDbRepository _personDbRepository;
         private readonly IGroupDbRepository _groupDbRepository;
         private readonly IGroupAttendanceDbRepository _attendanceDbRepository;
 
@@ -26,7 +25,6 @@ namespace ChurchManager.Application.Features.Groups.Services
             IGroupDbRepository groupDbRepository,
             IGroupAttendanceDbRepository attendanceDbRepository)
         {
-            _personDbRepository = personDbRepository;
             _groupDbRepository = groupDbRepository;
             _attendanceDbRepository = attendanceDbRepository;
         }
@@ -57,7 +55,7 @@ namespace ChurchManager.Application.Features.Groups.Services
                             GroupId = command.GroupId,
                             GroupMember = new GroupMember
                             {
-                                
+                                GroupMemberRole = groupMemberRoles.First(x => !x.IsLeader)
                             },
                             AttendanceDate = command.AttendanceDate.Value,
                             DidAttend = true,

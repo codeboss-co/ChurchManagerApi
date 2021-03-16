@@ -246,6 +246,9 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("character varying(200)");
 
+                    b.Property<bool?>("ReceivedHolySpirit")
+                        .HasColumnType("boolean");
+
                     b.HasKey("Id");
 
                     b.HasIndex("GroupAttendanceId");
@@ -382,6 +385,9 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                         .HasColumnType("boolean");
 
                     b.Property<string>("RecordStatus")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Source")
                         .HasColumnType("text");
 
                     b.Property<string>("UserLoginId")

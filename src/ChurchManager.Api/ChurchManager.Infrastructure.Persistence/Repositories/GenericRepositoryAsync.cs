@@ -29,7 +29,7 @@ namespace ChurchManager.Infrastructure.Persistence.Repositories
 
         #region Constructors
 
-        protected GenericRepositoryAsync(DbContext dbContext)
+        public GenericRepositoryAsync(DbContext dbContext)
         {
             DbContext = dbContext;
             ObjectSet = DbContext.Set<T>();

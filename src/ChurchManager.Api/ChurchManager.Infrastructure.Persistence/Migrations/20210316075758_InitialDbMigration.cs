@@ -193,6 +193,7 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                     GivingGroupId = table.Column<Guid>(type: "uuid", nullable: true),
                     UserLoginId = table.Column<string>(type: "text", nullable: true),
                     ViewedCount = table.Column<int>(type: "integer", nullable: true),
+                    Source = table.Column<string>(type: "text", nullable: true),
                     RecordStatus = table.Column<string>(type: "text", nullable: true),
                     InactiveDateTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: true)
                 },
@@ -324,6 +325,7 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                     DidAttend = table.Column<bool>(type: "boolean", nullable: true),
                     IsFirstTime = table.Column<bool>(type: "boolean", nullable: true),
                     IsNewConvert = table.Column<bool>(type: "boolean", nullable: true),
+                    ReceivedHolySpirit = table.Column<bool>(type: "boolean", nullable: true),
                     Note = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: true),
                     GroupAttendanceId = table.Column<int>(type: "integer", nullable: true)
                 },
