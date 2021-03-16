@@ -83,7 +83,8 @@ namespace ChurchManager.Infrastructure.Persistence.Repositories
             return await Queryable(new GroupRolesForGroupSpecification(groupId))
                 .SelectMany(x => x.Members)
                 .Select(x => x.GroupMemberRole)
-                .ToArrayAsync(ct);
+                .Distinct()
+                .ToListAsync(ct);
         }
 
         private IQueryable<Group> FilterByColumn(IQueryable<Group> queryable, string search)

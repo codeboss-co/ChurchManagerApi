@@ -4,7 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using ChurchManager.Application.Features.Groups.Commands.GroupAttendanceRecord;
 using ChurchManager.Domain.Features.Groups.Repositories;
-using ChurchManager.Domain.Features.People.Repositories;
+using ChurchManager.Infrastructure.Abstractions.Persistence;
 using ChurchManager.Persistence.Models.Groups;
 using GroupMemberAttendance = ChurchManager.Persistence.Models.Groups.GroupMemberAttendance;
 
@@ -18,14 +18,16 @@ namespace ChurchManager.Application.Features.Groups.Services
     public class GroupAttendanceAppService : IGroupAttendanceAppService
     {
         private readonly IGroupDbRepository _groupDbRepository;
+        private readonly IGenericRepositoryAsync<GroupMemberAttendance> _groupMemberAttendance;
         private readonly IGroupAttendanceDbRepository _attendanceDbRepository;
 
         public GroupAttendanceAppService(
-            IPersonDbRepository personDbRepository,
             IGroupDbRepository groupDbRepository,
+            IGenericRepositoryAsync<GroupMemberAttendance> groupMemberAttendance,
             IGroupAttendanceDbRepository attendanceDbRepository)
         {
             _groupDbRepository = groupDbRepository;
+            _groupMemberAttendance = groupMemberAttendance;
             _attendanceDbRepository = attendanceDbRepository;
         }
 
@@ -35,57 +37,76 @@ namespace ChurchManager.Application.Features.Groups.Services
 
             try
             {
-                var groupMemberRoles = await _groupDbRepository.GroupRolesForGroupAsync(command.GroupId, ct);
+                GroupAttendance groupAttendance;
 
-                var members = command.Members
-                    .Select(x => new GroupMemberAttendance
+                // Group meeting did not occur
+                if (command.DidNotOccur.HasValue && command.DidNotOccur == true)
+                {
+                    groupAttendance = new GroupAttendance
                     {
                         GroupId = command.GroupId,
-                        GroupMemberId = x.GroupMemberId,
-                        AttendanceDate = command.AttendanceDate.Value,
-                        DidAttend = x.GroupMemberDidAttend,
-                        IsNewConvert = x.NewConvert,
-                        ReceivedHolySpirit = x.ReceivedHolySpirit
-                    }
-                ).ToList();
+                        AttendanceDate = command.AttendanceDate,
+                        DidNotOccur = command.DidNotOccur
+                    };
+                }
+                else
+                {
+                    var groupMemberRoles = await _groupDbRepository.GroupRolesForGroupAsync(command.GroupId, ct);
 
-                var firstTimers = command.FirstTimers
-                    .Select(x => new GroupMemberAttendance
+                    var members = command.Members
+                        .Select(x => new GroupMemberAttendance
+                        {
+                            GroupId = command.GroupId,
+                            GroupMemberId = x.GroupMemberId,
+                            AttendanceDate = command.AttendanceDate,
+                            DidAttend = x.GroupMemberDidAttend,
+                            IsNewConvert = x.NewConvert,
+                            ReceivedHolySpirit = x.ReceivedHolySpirit
+                        }
+                    ).ToList();
+
+                    var firstTimers = command.FirstTimers
+                        .Select(x => new GroupMemberAttendance
                         {
                             GroupId = command.GroupId,
                             GroupMember = new GroupMember
                             {
                                 GroupMemberRole = groupMemberRoles.First(x => !x.IsLeader)
                             },
-                            AttendanceDate = command.AttendanceDate.Value,
+                            AttendanceDate = command.AttendanceDate,
                             DidAttend = true,
                             IsNewConvert = x.NewConvert,
                             ReceivedHolySpirit = x.ReceivedHolySpirit
                         }
-                    ).ToList();
+                        ).ToList();
 
-                var groupAttendance = new GroupAttendance
-                {
-                    GroupId = command.GroupId,
-                    AttendanceDate = command.AttendanceDate.Value,
-                    DidNotOccur = command.DidNotOccur,
-                    AttendanceCount = command.DidNotOccur == null
-                        ? null
-                        : command.Members.Count() + command.FirstTimers.Count(),
-                    FirstTimerCount = command.DidNotOccur == null ? null : command.FirstTimers.Count(),
-                    NewConvertCount = command.DidNotOccur == null ? null : command.Members.Count(x => x.NewConvert),
-                    Attendees = members
-                };
+                    await _groupMemberAttendance.AddRangeAsync(firstTimers);
+                    await _attendanceDbRepository.SaveChangesAsync();
+
+                    var attendees = members.Concat(firstTimers).ToList();
+
+                    groupAttendance = new GroupAttendance
+                    {
+                        GroupId = command.GroupId,
+                        AttendanceDate = command.AttendanceDate,
+                        DidNotOccur = command.DidNotOccur,
+                        AttendanceCount = command.DidNotOccur == null
+                            ? null
+                            : command.Members.Count() + command.FirstTimers.Count(),
+                        FirstTimerCount = command.DidNotOccur == null ? null : command.FirstTimers.Count(),
+                        NewConvertCount = command.DidNotOccur == null ? null : command.Members.Count(x => x.NewConvert),
+                        Attendees = members
+                    };
+                }
 
                 await _attendanceDbRepository.AddAsync(groupAttendance);
-
+                await _attendanceDbRepository.SaveChangesAsync();
             }
             catch (Exception e)
             {
                 await transaction.RollbackAsync(ct);
                 throw;
             }
-            
         }
     }
 }

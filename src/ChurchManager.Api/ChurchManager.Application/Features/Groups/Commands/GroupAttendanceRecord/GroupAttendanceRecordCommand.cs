@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Threading;
 using System.Threading.Tasks;
 using ChurchManager.Application.Features.Groups.Services;
@@ -9,8 +10,10 @@ namespace ChurchManager.Application.Features.Groups.Commands.GroupAttendanceReco
 {
     public record GroupAttendanceRecordCommand : IRequest
     {
+        [Required]
         public int GroupId { get; set; }
-        public DateTime? AttendanceDate { get; set; }
+        [Required]
+        public DateTime AttendanceDate { get; set; }
         public bool? DidNotOccur { get; set; }
         public IEnumerable<GroupMemberAttendance> Members { get; set; }
         public IEnumerable<FirstTimerAttendance> FirstTimers { get; set; }
