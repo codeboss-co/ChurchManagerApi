@@ -3,9 +3,12 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using ChurchManager.Application.Features.Groups.Commands.GroupAttendanceRecord;
+using ChurchManager.Domain;
 using ChurchManager.Domain.Features.Groups.Repositories;
-using ChurchManager.Infrastructure.Abstractions.Persistence;
+using ChurchManager.Domain.Features.People;
 using ChurchManager.Persistence.Models.Groups;
+using ChurchManager.Persistence.Models.People;
+using Microsoft.EntityFrameworkCore;
 using GroupMemberAttendance = ChurchManager.Persistence.Models.Groups.GroupMemberAttendance;
 
 namespace ChurchManager.Application.Features.Groups.Services
@@ -18,16 +21,13 @@ namespace ChurchManager.Application.Features.Groups.Services
     public class GroupAttendanceAppService : IGroupAttendanceAppService
     {
         private readonly IGroupDbRepository _groupDbRepository;
-        private readonly IGenericRepositoryAsync<GroupMemberAttendance> _groupMemberAttendance;
         private readonly IGroupAttendanceDbRepository _attendanceDbRepository;
 
         public GroupAttendanceAppService(
             IGroupDbRepository groupDbRepository,
-            IGenericRepositoryAsync<GroupMemberAttendance> groupMemberAttendance,
             IGroupAttendanceDbRepository attendanceDbRepository)
         {
             _groupDbRepository = groupDbRepository;
-            _groupMemberAttendance = groupMemberAttendance;
             _attendanceDbRepository = attendanceDbRepository;
         }
 
@@ -52,6 +52,11 @@ namespace ChurchManager.Application.Features.Groups.Services
                 else
                 {
                     var groupMemberRoles = await _groupDbRepository.GroupRolesForGroupAsync(command.GroupId, ct);
+                    var group = await _groupDbRepository
+                        .Queryable()
+                        .AsNoTracking()
+                        .Include(x => x.GroupType)
+                        .SingleAsync(x => x.Id == command.GroupId, ct);
 
                     var members = command.Members
                         .Select(x => new GroupMemberAttendance
@@ -71,17 +76,25 @@ namespace ChurchManager.Application.Features.Groups.Services
                             GroupId = command.GroupId,
                             GroupMember = new GroupMember
                             {
-                                GroupMemberRole = groupMemberRoles.First(x => !x.IsLeader)
+                                GroupId = command.GroupId,
+                                GroupMemberRole = groupMemberRoles.First(x => !x.IsLeader),
+                                Person = new Person
+                                {
+                                    FullName = new FullName { FirstName = x.FirstName, LastName = x.LastName},
+                                    Gender = x.Gender,
+                                    FirstVisitDate = command.AttendanceDate,
+                                    ConnectionStatus = ConnectionStatus.FirstTimer,
+                                    RecordStatus = RecordStatus.Pending,
+                                    Source = $"{group.GroupType.Name} {group.GroupType.GroupTerm}"
+                                }
                             },
                             AttendanceDate = command.AttendanceDate,
                             DidAttend = true,
+                            IsFirstTime = true,
                             IsNewConvert = x.NewConvert,
                             ReceivedHolySpirit = x.ReceivedHolySpirit
                         }
                         ).ToList();
-
-                    await _groupMemberAttendance.AddRangeAsync(firstTimers);
-                    await _attendanceDbRepository.SaveChangesAsync();
 
                     var attendees = members.Concat(firstTimers).ToList();
 
@@ -90,17 +103,17 @@ namespace ChurchManager.Application.Features.Groups.Services
                         GroupId = command.GroupId,
                         AttendanceDate = command.AttendanceDate,
                         DidNotOccur = command.DidNotOccur,
-                        AttendanceCount = command.DidNotOccur == null
-                            ? null
-                            : command.Members.Count() + command.FirstTimers.Count(),
-                        FirstTimerCount = command.DidNotOccur == null ? null : command.FirstTimers.Count(),
-                        NewConvertCount = command.DidNotOccur == null ? null : command.Members.Count(x => x.NewConvert),
-                        Attendees = members
+                        AttendanceCount = attendees.Where(x => x.DidAttend.HasValue).Count(x => x.DidAttend.Value),
+                        FirstTimerCount = command.FirstTimers.Count(),
+                        NewConvertCount = attendees.Where(x =>x.IsNewConvert.HasValue).Count(x => x.IsNewConvert.Value),
+                        ReceivedHolySpiritCount = attendees.Where(x => x.ReceivedHolySpirit.HasValue).Count(x => x.ReceivedHolySpirit.Value),
+                        Attendees = attendees
                     };
                 }
 
                 await _attendanceDbRepository.AddAsync(groupAttendance);
                 await _attendanceDbRepository.SaveChangesAsync();
+                await transaction.CommitAsync(ct);
             }
             catch (Exception e)
             {
