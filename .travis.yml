@@ -3,7 +3,7 @@
 # https://pypi.org/project/ecs-deploy/
 #
 # ENVIRONMENT VARIABLES
-#   -  SERVICE_NAME = container name in ECS e.g. churchmanager-api
+#   -  SERVICE_NAME = container name in ECS Task e.g. churchmanager-api
 #   -  ECR_REPOSITORY_URI = the container registry for this
 #   -  ENVIRONMENT = passed in based on the branch built e.g. develop=Test, master=Production
 #
@@ -12,6 +12,7 @@
 sudo: required
 dist: trusty
 language: csharp
+mono: none
 python:
     - '3.7'
     - '3.9'
