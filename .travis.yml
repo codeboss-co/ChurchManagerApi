@@ -1,26 +1,57 @@
-language: csharp
-mono: none
+######################################
+#
+# https://pypi.org/project/ecs-deploy/
+#
+# ENVIRONMENT VARIABLES
+#   -  SERVICE_NAME = container name in ECS e.g. churchmanager-api
+#   -  ECR_REPOSITORY_URI = the container registry for this
+#   -  ENVIRONMENT = passed in based on the branch built e.g. develop=Test, master=Production
+#
+#####################################
+
 sudo: required
-os: linux
-dist: bionic
-
+dist: trusty
+language: csharp
+python:
+    - '3.7'
+    - '3.9'
 services:
-  - docker
-  
+    - docker
+
 branches:
-  only:
-    - develop
-    - master
+    only:
+        - develop
+        - master
+env:
+    - TIMESTAMP=$(date '+%Y%m%d') IMAGE_TAG="${TIMESTAMP}-${TRAVIS_BUILD_NUMBER:=latest}" IMAGE_URI="$ECR_REPOSITORY_URI:$IMAGE_TAG"
 
-before_script:
-  - chmod -R a+x scripts
-  - chmod -R a+x src
+before_install:
+    - pip install --upgrade --user awscli
+    - pip install --upgrade --user ecs-deploy
+    - export PATH=$PATH:$HOME/.local/bin
 
-script:  
-  - ./scripts/deploy.sh
+script:
+    - $(aws ecr get-login --no-include-email)
+    - docker build -t $ECR_REPOSITORY_URI:latest .
+    - docker tag $ECR_REPOSITORY_URI:latest $ECR_REPOSITORY_URI:$IMAGE_TAG
+    - docker push $ECR_REPOSITORY_URI:latest
+    - docker push $ECR_REPOSITORY_URI:$IMAGE_TAG
+    
+# Just some logging    
+before_deploy:
+    - echo $IMAGE_TAG
+
+deploy:
+    provider: script
+    script: ecs deploy $CLUSTER_NAME prod-$SERVICE_NAME-service --tag $IMAGE_TAG -e $SERVICE_NAME ASPNETCORE_ENVIRONMENT $ENVIRONMENT
+    on:
+        branch: master
+    #- provider: script
+    #  script: ecs deploy $CLUSTER_NAME test-$SERVICE_NAME-service --tag $IMAGE_TAG
+    #  on:
+    #      branch: develop
 
 notifications:
-  email:
-    on_success: never
-    on_failure: always    
-   
+    email:
+        on_success: never
+        on_failure: always
