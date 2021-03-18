@@ -10,12 +10,10 @@
 #####################################
 
 sudo: required
-dist: trusty
-language: csharp
+dist: xenial
+language: python
 mono: none
-python:
-    - '3.7'
-    - '3.9'
+python: 3.9
 services:
     - docker
 
