@@ -30,6 +30,8 @@ namespace ChurchManager.Infrastructure.Persistence
                 .AddHealthChecks()
                 .AddDbContextCheck<ChurchManagerDbContext>();
 
+            services.AddScoped<IChurchManagerDbContext>(s => s.GetService<ChurchManagerDbContext>());
+
             // Migrate database
             services.AddHostedService<DbMigrationHostedService<ChurchManagerDbContext>>();
 
@@ -44,9 +46,10 @@ namespace ChurchManager.Infrastructure.Persistence
 
             #region Repositories
 
-            services.AddTransient(typeof(IGenericRepositoryAsync<>), typeof(GenericRepositoryAsync<>));
+            services.AddScoped(typeof(IGenericRepositoryAsync<>), typeof(GenericRepositoryAsync<>));
             services.AddScoped<IGroupDbRepository, GroupDbRepository>();
             services.AddScoped<IPersonDbRepository, PersonDbRepository>();
+            services.AddScoped<IGroupAttendanceDbRepository, GroupAttendanceDbRepository>();
 
             #endregion
 

@@ -6,7 +6,7 @@ Parameters:
     Type: String
     Default: prod
     AllowedValues:
-      - qa      
+      - test      
       - prod
     Description: "A friendly environment name that will be used for namespacing all cluster resources. Example: staging, qa, or production"
   VPC:
@@ -15,6 +15,15 @@ Parameters:
     Type: AWS::EC2::Subnet::Id
   SubnetB:
     Type: AWS::EC2::Subnet::Id
+  ExportVPN:
+    Description: Whether I should export the VPN. (True if its the first deployment)
+    Default: true
+    Type: String
+    AllowedValues: [true, false]    
+
+Conditions:
+  ShouldExportVPN:
+    !Equals [true, !Ref ExportVPN]    
 
 Resources:
 
@@ -59,7 +68,10 @@ Outputs:
     Export:
       Name: !Sub ${EnvironmentName}:ClusterName      
 
+
+## ONLY NEEDS TO BE EXPORTED THE FIRST TIME
   VPC:
+    Condition: ShouldExportVPN
     Description: VPC
     Value: !Ref VPC
     Export:
@@ -69,19 +81,19 @@ Outputs:
     Description: 'Subnet A on AZ1'
     Value: !Ref SubnetA
     Export:
-      Name: 'SubnetA'
+      Name: !Join [':', [!Ref EnvironmentName, SubnetA]]
 
   SubnetB:
     Description: 'Subnet B on AZ2'
     Value: !Ref SubnetB
     Export:
-      Name: 'SubnetB' 
+      Name: !Join [':', [!Ref EnvironmentName, SubnetB]]
 
 # Export the HTTP Default Load balancer
   HttpLoadBalancerSecurityGroup:
     Description: 'Http Loadbalancer Security Group'
     Value: !Ref HttpLoadBalancerSecurityGroup
     Export:
-      Name: 'HttpSecurityGroup'       
+      Name: !Join [':', [!Ref EnvironmentName, HttpSecurityGroup]]  
 
 

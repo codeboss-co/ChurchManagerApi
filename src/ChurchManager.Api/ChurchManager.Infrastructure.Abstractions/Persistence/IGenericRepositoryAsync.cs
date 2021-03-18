@@ -5,13 +5,12 @@ using System.Threading.Tasks;
 using ChurchManager.Persistence.Shared;
 using Codeboss.Types;
 using Convey.CQRS.Queries;
-using Microsoft.EntityFrameworkCore;
 
 namespace ChurchManager.Infrastructure.Abstractions.Persistence
 {
     public interface IGenericRepositoryAsync<T> where T : class, IAggregateRoot<int>
     {
-        DbContext DbContext { get; }
+        IChurchManagerDbContext DbContext { get; }
         IQueryable<T> Queryable();
         IQueryable<T> Queryable(ISpecification<T> specification);
         Task<T> GetByIdAsync(int id);
@@ -19,6 +18,7 @@ namespace ChurchManager.Infrastructure.Abstractions.Persistence
         Task<IEnumerable<T>> GetPagedResponseAsync(int pageNumber, int pageSize);
         Task<IEnumerable<T>> GetPagedAdvancedResponseAsync(int pageNumber, int pageSize, string orderBy, string fields);
         Task<T> AddAsync(T entity);
+        Task AddRangeAsync(IEnumerable<T> entities);
         Task UpdateAsync(int id, T sourceItem);
         Task DeleteAsync(int id);
         Task<int> SaveChangesAsync();

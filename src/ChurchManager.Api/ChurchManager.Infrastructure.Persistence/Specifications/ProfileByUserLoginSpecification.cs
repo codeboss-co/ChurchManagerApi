@@ -8,6 +8,8 @@ namespace ChurchManager.Infrastructure.Persistence.Specifications
         public ProfileByUserLoginSpecification(string userLoginId)
         {
             Criteria = x => x.UserLoginId == userLoginId;
+
+            IncludeStrings.Add("Family.FamilyMembers");
         }
     }
 }

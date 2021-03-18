@@ -25,7 +25,6 @@ namespace ChurchManager.Infrastructure.Persistence.Repositories
         public async Task<PersonDomain> ProfileByUserLoginId(string userLoginId)
         {
             var entity = await Queryable(new ProfileByUserLoginSpecification(userLoginId))
-                .AsNoTracking()
                 .FirstOrDefaultAsync();
 
             return entity is not null

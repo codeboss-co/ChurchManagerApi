@@ -33,14 +33,6 @@ namespace ChurchManager.Api.Controllers.v1
             return Ok(response);
         }
 
-        // v1/profiles/userdetails/{{userLoginId}}
-        [HttpGet("userdetails/{userLoginId}")]
-        public async Task<IActionResult> GetUserDetailsSummaryByUserLogin(string userLoginId, CancellationToken token)
-        {
-            var response = await Mediator.Send(new UserDetailsByUserLoginQuery(userLoginId), token);
-            return Ok(response);
-        } 
-
         #endregion
 
         #region Current User
@@ -52,14 +44,6 @@ namespace ChurchManager.Api.Controllers.v1
             var response = await Mediator.Send(new ProfileByUserLoginIdQuery(_currentUser.Id), token);
             return Ok(response);
         }
-
-        // v1/profiles/userdetails/current-user
-        [HttpGet("userdetails/current-user")]
-        public async Task<IActionResult> GetCurrentUserDetailsSummaryByUserLogin(CancellationToken token)
-        {
-            var response = await Mediator.Send(new UserDetailsByUserLoginQuery(_currentUser.Id), token);
-            return Ok(response);
-        } 
 
         #endregion
     }

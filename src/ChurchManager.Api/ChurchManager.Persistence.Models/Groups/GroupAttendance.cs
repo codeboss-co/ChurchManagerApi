@@ -23,6 +23,7 @@ namespace ChurchManager.Persistence.Models.Groups
         public int? AttendanceCount { get; set; }
         public int? FirstTimerCount { get; set; }
         public int? NewConvertCount { get; set; }
+        public int? ReceivedHolySpiritCount { get; set; }
         [MaxLength(200)]
         public string Notes { get; set; }
 

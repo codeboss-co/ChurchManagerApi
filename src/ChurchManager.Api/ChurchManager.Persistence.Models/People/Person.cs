@@ -49,6 +49,12 @@ namespace ChurchManager.Persistence.Models.People
         public string UserLoginId { get; set; }
 
         public int? ViewedCount { get; set; }
+        
+        /// <summary>
+        /// Where this person came from e.g. Cell, Outreach, Church, Online etc
+        /// </summary>
+        public string Source { get; set; }
+
 
         #region Navigation
 

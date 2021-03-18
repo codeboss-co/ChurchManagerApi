@@ -1,0 +1,30 @@
+
+###
+#
+# THIS ONLT NEEDS TO BE RUN IF WE DO NOT RUN CODEPILELINE cloudformation
+#
+###
+
+AWSTemplateFormatVersion: 2010-09-09
+Description: Creates the ECR repository storing docker images.
+
+Parameters:
+  EnvironmentName:
+    Type: String
+    Default: prod
+    AllowedValues:
+      - test      
+      - prod
+    Description: "Example: test or production"
+  ProjectName:
+    Type: String
+    Default: churchmanager-api
+    Description: Must be LOWERCASE - Will also be used as the container name in ECS.
+
+Resources:
+
+  # Create an ECR Repository to store docker images
+  ECRRepository:
+    Type: AWS::ECR::Repository
+    Properties:
+      RepositoryName: !Join ['-', [!Ref EnvironmentName, !Ref ProjectName, 'ecr-repository']]

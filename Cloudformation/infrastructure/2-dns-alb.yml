@@ -6,7 +6,7 @@ Parameters:
     Type: String
     Default: prod
     AllowedValues:
-      - qa      
+      - test      
       - prod
     Description: "A friendly environment name that will be used for namespacing all cluster resources. Example: staging, qa, or production"
   Certificate:
@@ -56,17 +56,17 @@ Resources:
       # "internal" is also an option
       Scheme: internet-facing
       SecurityGroups:
-        - !ImportValue HttpSecurityGroup
+        - Fn::ImportValue: !Sub ${EnvironmentName}:HttpSecurityGroup
       Subnets:
-        - !ImportValue 'SubnetA'
-        - !ImportValue 'SubnetB'
+        - Fn::ImportValue: !Sub ${EnvironmentName}:SubnetA
+        - Fn::ImportValue: !Sub ${EnvironmentName}:SubnetB
  
   # A dummy target group is used to setup the ALB to just drop traffic
   # initially, before any real service target groups have been added.
   DummyTargetGroupPublic:
     Type: AWS::ElasticLoadBalancingV2::TargetGroup    
     Properties:
-      HealthCheckIntervalSeconds: 6
+      HealthCheckIntervalSeconds: 30
       HealthCheckPath: /
       HealthCheckProtocol: HTTP
       HealthCheckTimeoutSeconds: 5

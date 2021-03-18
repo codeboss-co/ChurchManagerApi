@@ -7,5 +7,6 @@ namespace ChurchManager.Domain
     public interface ICognitoCurrentUser : ICognitoCurrentUser<PersonDomain>
     {
         public string Username { get; }
+        public int PersonId { get; }
     }
 }

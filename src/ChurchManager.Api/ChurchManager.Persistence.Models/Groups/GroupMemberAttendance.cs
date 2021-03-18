@@ -33,6 +33,7 @@ namespace ChurchManager.Persistence.Models.Groups
         public bool? IsFirstTime { get; set; }
 
         public bool? IsNewConvert { get; set; }
+        public bool? ReceivedHolySpirit { get; set; }
         [MaxLength(200)]
         public string Note { get; set; }
 

@@ -7,10 +7,15 @@ namespace ChurchManager.Api.Extensions
     {
         public static void UseSwaggerExtension(this IApplicationBuilder app)
         {
-            app.UseSwagger();
+            app.UseSwagger(c =>
+            {
+                c.RouteTemplate = "api/swagger/{documentname}/swagger.json";
+            });
+
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "ChurchManager.Api v1");
+                c.SwaggerEndpoint("/api/swagger/v1/swagger.json", "ChurchManager.Api v1");
+                c.RoutePrefix = "api/swagger";
             });
         }
         public static void UseErrorHandlingMiddleware(this IApplicationBuilder app)

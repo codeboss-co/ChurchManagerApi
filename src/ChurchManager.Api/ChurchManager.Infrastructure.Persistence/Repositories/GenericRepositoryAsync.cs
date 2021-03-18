@@ -23,13 +23,13 @@ namespace ChurchManager.Infrastructure.Persistence.Repositories
 
         #region Properties
 
-        public DbContext DbContext { get; }
+        public IChurchManagerDbContext DbContext { get; }
 
         #endregion
 
         #region Constructors
 
-        protected GenericRepositoryAsync(DbContext dbContext)
+        public GenericRepositoryAsync(IChurchManagerDbContext dbContext)
         {
             DbContext = dbContext;
             ObjectSet = DbContext.Set<T>();
@@ -91,7 +91,12 @@ namespace ChurchManager.Infrastructure.Persistence.Repositories
             await ObjectSet.AddAsync(entity);
             return entity;
         }
-        
+
+        public Task AddRangeAsync(IEnumerable<T> entities)
+        {
+            return ObjectSet.AddRangeAsync(entities);
+        }
+
         public async Task UpdateAsync(int id, T sourceItem)
         {
             var targetItem = await ObjectSet.FindAsync(id);

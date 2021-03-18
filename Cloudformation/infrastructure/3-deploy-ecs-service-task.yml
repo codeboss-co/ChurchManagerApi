@@ -6,13 +6,13 @@ Parameters:
     Type: String
     Default: prod
     AllowedValues:
-      - qa      
+      - test      
       - prod
     Description: "A friendly environment name that will be used for namespacing all cluster resources. Example: staging, qa, or production" 
   Image:
     Type: String
     # Update with the Docker image. "You can use images in the Docker Hub registry or specify other repositories (repository-url/image:tag)."
-    Default: nginx:latest
+    Default: 977844596384.dkr.ecr.us-east-1.amazonaws.com/prod-churchmanager-api-ecr-repository:latest
   ServiceName:
     Type: String
     # update with the name of the service
@@ -46,7 +46,7 @@ Parameters:
   # for autoscaling
   MaxContainers:
     Type: Number
-    Default: 2
+    Default: 1
   # target CPU utilization (%)
   AutoScalingTargetValue:
     Type: Number
@@ -66,7 +66,7 @@ Resources:
     DependsOn: LogGroup
     Properties:
       # Name of the task definition. Subsequent versions of the task definition are grouped together under this name.
-      Family: !Join ['-', [!Ref EnvironmentName, !Ref ServiceName, 'TaskDefinition']]
+      Family: !Join ['-', [!Ref EnvironmentName, !Ref ServiceName]]
       # awsvpc is required for Fargate
       NetworkMode: awsvpc
       RequiresCompatibilities:
@@ -106,7 +106,7 @@ Resources:
   ExecutionRole:
     Type: AWS::IAM::Role
     Properties:
-      RoleName: !Join ['-', [!Ref ServiceName, ExecutionRole]]
+      RoleName: !Join ['-', [!Ref EnvironmentName, !Ref ServiceName, ExecutionRole]]
       AssumeRolePolicyDocument:
         Statement:
           - Effect: Allow
@@ -121,7 +121,7 @@ Resources:
   TaskRole:
     Type: AWS::IAM::Role
     Properties:
-      RoleName: !Join ['-', [!Ref ServiceName, TaskRole]]
+      RoleName: !Join ['-', [!Ref EnvironmentName, !Ref ServiceName, TaskRole]]
       AssumeRolePolicyDocument:
         Statement:
           - Effect: Allow
@@ -137,7 +137,7 @@ Resources:
   AutoScalingRole:
     Type: AWS::IAM::Role
     Properties:
-      RoleName: !Join ['-', [!Ref ServiceName, AutoScalingRole]]
+      RoleName: !Join ['-', [!Ref EnvironmentName, !Ref ServiceName, AutoScalingRole]]
       AssumeRolePolicyDocument:
         Statement:
           - Effect: Allow
@@ -150,7 +150,7 @@ Resources:
   ContainerSecurityGroup:
     Type: AWS::EC2::SecurityGroup
     Properties:
-      GroupDescription: !Join ['-', [!Ref ServiceName, ContainerSecurityGroup]]
+      GroupDescription: !Join ['-', [!Ref EnvironmentName, !Ref ServiceName, ContainerSecurityGroup]]
       VpcId: !ImportValue 'VPC'
       SecurityGroupIngress:
         - IpProtocol: tcp
@@ -178,8 +178,8 @@ Resources:
           # change to DISABLED if you're using private subnets that have access to a NAT gateway
           AssignPublicIp: ENABLED
           Subnets:
-            - !ImportValue 'SubnetA'
-            - !ImportValue 'SubnetB'
+            - Fn::ImportValue: !Sub ${EnvironmentName}:SubnetA
+            - Fn::ImportValue: !Sub ${EnvironmentName}:SubnetB
           SecurityGroups:
             - !Ref ContainerSecurityGroup
       LoadBalancers:

@@ -9,4 +9,9 @@ namespace ChurchManager.Core.Shared.Parameters
         public virtual string Fields { get; set; }
         public virtual string SortOrder { get; set; }
     }
+
+    public record SearchTermQueryParameter: QueryParameter
+    {
+        public string SearchTerm { get; set; }
+    }
 }

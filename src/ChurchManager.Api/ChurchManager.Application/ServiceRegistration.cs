@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using ChurchManager.Application.Behaviours;
+using ChurchManager.Application.Features.Groups.Services;
 using ChurchManager.Application.Features.People.Services;
 using ChurchManager.Domain;
 using ChurchManager.Infrastructure.Abstractions;
@@ -22,7 +23,12 @@ namespace ChurchManager.Application
 
             services.AddScoped<IModelHelper, ModelHelper>();
 
-            services.AddScoped<IPersonAppService, PersonAppService>();
+            #region Application Services
+
+            services.AddScoped<IPersonAppService, PersonAppService>(); 
+            services.AddScoped<IGroupAttendanceAppService, GroupAttendanceAppService>(); 
+
+            #endregion
 
             services.AddAspNetCurrentUser<ICognitoCurrentUser, CognitoCurrentUser>();
         }
