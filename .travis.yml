@@ -25,8 +25,8 @@ env:
     - TIMESTAMP=$(date '+%Y%m%d') IMAGE_TAG="${TIMESTAMP}-${TRAVIS_BUILD_NUMBER:=latest}" IMAGE_URI="$ECR_REPOSITORY_URI:$IMAGE_TAG"
 
 before_install:
-    - pip install --upgrade --user awscli
-    - pip install --upgrade --user ecs-deploy
+    - pip install --upgrade awscli
+    - pip install --upgrade ecs-deploy
     - export PATH=$PATH:$HOME/.local/bin
 
 script:
