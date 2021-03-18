@@ -43,12 +43,12 @@ before_deploy:
 deploy:
     # deploy master to production
     - provider: script
-      script: ecs deploy $CLUSTER_NAME prod-$SERVICE_NAME-service --tag $IMAGE_TAG -e $SERVICE_NAME ANGULAR_ENVIRONMENT $ENVIRONMENT
+      script: ecs deploy $CLUSTER_NAME prod-$SERVICE_NAME-service --tag $IMAGE_TAG -e $SERVICE_NAME ASPNETCORE_ENVIRONMENT $ENVIRONMENT
       on:
         branch: master
     # deploy develop to the test environment
     - provider: script
-      script: ecs deploy $CLUSTER_NAME test-$SERVICE_NAME-service --tag $IMAGE_TAG -e $SERVICE_NAME ANGULAR_ENVIRONMENT $ENVIRONMENT
+      script: ecs deploy $CLUSTER_NAME test-$SERVICE_NAME-service --tag $IMAGE_TAG -e $SERVICE_NAME ASPNETCORE_ENVIRONMENT $ENVIRONMENT
       on:
         branch: develop
 
