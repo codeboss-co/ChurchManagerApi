@@ -1,6 +1,8 @@
 using ChurchManager.Api.Extensions;
+using ChurchManager.Api.Hubs;
 using ChurchManager.Application;
 using ChurchManager.Infrastructure.Persistence;
+using CodeBoss.AspNetCore.DependencyInjection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -12,33 +14,22 @@ namespace ChurchManager.Api
 {
     public class Startup
     {
-        private const string Prefix = "api";
         public IConfiguration Configuration { get; }
+        public IWebHostEnvironment Environment { get; }
 
-        public Startup(IConfiguration configuration)
+
+        public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
             Configuration = configuration;
+            Environment = env;
         }
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddCorsExtension();
-            services.AddControllersExtension(Prefix);
-            services.AddSwaggerExtension();
-
             services.AddPersistenceInfrastructure(Configuration);
             services.AddApplicationLayer();
 
-            services.AddHealthChecks();
-            // API version
-            services.AddApiVersioningExtension();
-            // API explorer
-            services.AddMvcCore()
-                .AddApiExplorer();
-            // API explorer version
-            services.AddVersionedApiExplorerExtension();
-
-            services.AddAuth(Configuration);
+            services.InstallServicesInAssemblies(Configuration, Environment, typeof(Startup).Assembly);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -62,11 +53,12 @@ namespace ChurchManager.Api
             app.UseAuthorization();
             
             app.UseErrorHandlingMiddleware();
-            app.UseHealthChecks("/api/health");
+            app.UseHealthChecks(ApiRoutes.HealthChecks.DefaultUrl);
 
             app.UseEndpoints(endpoints =>
              {
                  endpoints.MapControllers();
+                 endpoints.MapHub<NotificationHub>(ApiRoutes.Hubs.NotificationHub);
              });
         }
     }

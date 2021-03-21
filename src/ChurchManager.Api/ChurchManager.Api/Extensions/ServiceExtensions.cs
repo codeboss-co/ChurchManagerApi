@@ -108,45 +108,5 @@ namespace ChurchManager.Api.Extensions
                 config.ReportApiVersions = true;
             });
         }
-
-        public static void AddAuth(this IServiceCollection services, IConfiguration configuration)
-        {
-            var jwtSettings = configuration.GetOptions<JwtSettings>(nameof(JwtSettings));
-
-            // https://developerhandbook.com/aws/how-to-use-aws-cognito-with-net-core/
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(options =>
-                {
-                    options.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        IssuerSigningKey = SigningKey(
-                            jwtSettings.Key,
-                            "AQAB"
-                        ),
-
-                        ValidIssuer = jwtSettings.Issuer,
-                        //ValidAudience = jwtSettings.Audience,
-                        ValidateIssuerSigningKey = true,
-                        ValidateIssuer = true,
-                        ValidateLifetime = false,
-                        ValidateAudience = false,   // Not provided by cognito,
-                        RoleClaimType = "cognito:groups",
-                        ClockSkew = TimeSpan.FromSeconds(5)
-                    };
-                });
-
-            RsaSecurityKey SigningKey(string Key, string Expo)
-            {
-                RSA rsa = RSA.Create();
-
-                rsa.ImportParameters(new RSAParameters
-                {
-                    Modulus = Base64UrlEncoder.DecodeBytes(Key),
-                    Exponent = Base64UrlEncoder.DecodeBytes(Expo)
-                });
-
-                return new RsaSecurityKey(rsa);
-            }
-        }
     }
 }

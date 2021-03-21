@@ -24,7 +24,7 @@ namespace ChurchManager.Infrastructure.Persistence.Contexts
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
-            foreach(var entry in ChangeTracker.Entries<AuditableEntity>())
+            foreach(var entry in ChangeTracker.Entries<AuditableEntity<int>>())
             {
                 switch(entry.State)
                 {
