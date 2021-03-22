@@ -81,7 +81,9 @@ namespace ChurchManager.Api.Extensions
                         .WithOrigins(
                             "http://localhost:4200", // Angular App
                             "http://test-churchmanager.codeboss.tech", // Test
-                            "http://churchmanager.codeboss.tech" // Production
+                            "https://test-churchmanager.codeboss.tech", // Test
+                            "http://churchmanager.codeboss.tech", // Production
+                            "https://churchmanager.codeboss.tech" // Production
                             ) 
                         .AllowAnyMethod()
                         .AllowAnyHeader()
