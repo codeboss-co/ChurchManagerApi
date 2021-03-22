@@ -28,16 +28,15 @@ namespace ChurchManager.Api.Hubs
         {
             var person = await _dbRepository.ProfileByUserLoginId(Context.UserIdentifier);
 
-            _logger.LogDebug("UserIdentifier: {userloginId}", Context.UserIdentifier);
+            _logger.LogDebug("[√] NotificationHub Connected for {user}", Context.UserIdentifier);
 
             var notification = new
             {
                 Type = "info",
-                Title = $"Welcome, {person?.FullName.FirstName}",
+                Title = $"Welcome back, {person?.FullName.FirstName}",
                 Payload = Context.UserIdentifier
             };
 
-            await Task.Delay(2000);
             await Clients.User(Context.UserIdentifier).SendAsync("DirectMessage", notification);
             await base.OnConnectedAsync();
         }

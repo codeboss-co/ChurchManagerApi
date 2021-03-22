@@ -2,6 +2,8 @@
 {
     public static class ApiRoutes
     {
+        public const string DefaultCorsPolicy = "CorsPolicy";
+
         public static class HealthChecks
         {
             public const string DefaultUrl = "/api/health";

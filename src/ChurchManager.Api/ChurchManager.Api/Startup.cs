@@ -34,7 +34,7 @@ namespace ChurchManager.Api
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.UseCors("CorsPolicy");
+            app.UseCors(ApiRoutes.DefaultCorsPolicy);
             app.UseSwaggerExtension();
             app.UseSerilogRequestLogging();
 
@@ -53,6 +53,7 @@ namespace ChurchManager.Api
             app.UseAuthorization();
             
             app.UseErrorHandlingMiddleware();
+
             app.UseHealthChecks(ApiRoutes.HealthChecks.DefaultUrl);
 
             app.UseEndpoints(endpoints =>

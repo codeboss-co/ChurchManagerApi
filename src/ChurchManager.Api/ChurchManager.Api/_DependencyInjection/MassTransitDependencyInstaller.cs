@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Reflection;
 using ChurchManager.Api.Hubs;
 using CodeBoss.AspNetCore.DependencyInjection;
 using MassTransit;
+using MassTransit.Definition;
 using MassTransit.SignalR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -20,6 +22,8 @@ namespace ChurchManager.Api._DependencyInjection
             services.AddSignalR();
             services.AddMassTransit(x =>
             {
+                x.AddConsumers(Assembly.GetExecutingAssembly());
+
                 // ** Add Hubs Here **
                 x.AddSignalRHub<NotificationHub>();
 
@@ -29,9 +33,7 @@ namespace ChurchManager.Api._DependencyInjection
 
                     cfg.UseHealthCheck(provider);
 
-                    cfg.ConfigureEndpoints(provider);
-
-                    cfg.UseJsonSerializer();
+                    cfg.ConfigureEndpoints(provider, new SnakeCaseEndpointNameFormatter());
                 }));
 
             });

@@ -76,10 +76,11 @@ namespace ChurchManager.Api.Extensions
             // TODO: Add specific environments
             services.AddCors(options =>
             {
-                options.AddPolicy("CorsPolicy",
+                options.AddPolicy(ApiRoutes.DefaultCorsPolicy,
                     builder => builder
                         .WithOrigins(
                             "http://localhost:4200", // Angular App
+                            "http://test-churchmanager.codeboss.tech", // Test
                             "http://churchmanager.codeboss.tech" // Production
                             ) 
                         .AllowAnyMethod()
