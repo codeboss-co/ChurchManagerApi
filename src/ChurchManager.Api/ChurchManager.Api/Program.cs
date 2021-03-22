@@ -37,6 +37,7 @@ namespace ChurchManager.Api
                             .AddJsonFile($"appsettings.{environmentName}.json", true, true);
 
                         var configuration = config.Build();
+
                         // AWS Configuration
                         var awsOptions = configuration.GetAWSOptions();
                         var accessKey = configuration["AWS:AccessKey"];

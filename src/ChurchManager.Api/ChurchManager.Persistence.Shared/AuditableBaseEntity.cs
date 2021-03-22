@@ -2,7 +2,7 @@
 
 namespace ChurchManager.Persistence.Shared
 {
-    public abstract class AuditableEntity : Entity<int>
+    public abstract class AuditableEntity<TPrimaryKey> : Entity<TPrimaryKey>
     {
         public string CreatedBy { get; set; }
         public DateTime CreatedDate { get; set; } = DateTime.UtcNow;

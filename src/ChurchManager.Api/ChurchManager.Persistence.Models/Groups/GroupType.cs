@@ -19,5 +19,6 @@ namespace ChurchManager.Persistence.Models.Groups
         [MaxLength(50)]
         public string GroupMemberTerm { get; set; } = "Member";
         public bool TakesAttendance { get; set; } = true;
+        public bool IsSystem { get; set; } = false;
     }
 }

@@ -76,11 +76,14 @@ namespace ChurchManager.Api.Extensions
             // TODO: Add specific environments
             services.AddCors(options =>
             {
-                options.AddPolicy("CorsPolicy",
+                options.AddPolicy(ApiRoutes.DefaultCorsPolicy,
                     builder => builder
                         .WithOrigins(
                             "http://localhost:4200", // Angular App
-                            "http://churchmanager.codeboss.tech" // Production
+                            "http://test-churchmanager.codeboss.tech", // Test
+                            "https://test-churchmanager.codeboss.tech", // Test
+                            "http://churchmanager.codeboss.tech", // Production
+                            "https://churchmanager.codeboss.tech" // Production
                             ) 
                         .AllowAnyMethod()
                         .AllowAnyHeader()
@@ -107,46 +110,6 @@ namespace ChurchManager.Api.Extensions
                 // Advertise the API versions supported for the particular endpoint
                 config.ReportApiVersions = true;
             });
-        }
-
-        public static void AddAuth(this IServiceCollection services, IConfiguration configuration)
-        {
-            var jwtSettings = configuration.GetOptions<JwtSettings>(nameof(JwtSettings));
-
-            // https://developerhandbook.com/aws/how-to-use-aws-cognito-with-net-core/
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(options =>
-                {
-                    options.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        IssuerSigningKey = SigningKey(
-                            jwtSettings.Key,
-                            "AQAB"
-                        ),
-
-                        ValidIssuer = jwtSettings.Issuer,
-                        //ValidAudience = jwtSettings.Audience,
-                        ValidateIssuerSigningKey = true,
-                        ValidateIssuer = true,
-                        ValidateLifetime = false,
-                        ValidateAudience = false,   // Not provided by cognito,
-                        RoleClaimType = "cognito:groups",
-                        ClockSkew = TimeSpan.FromSeconds(5)
-                    };
-                });
-
-            RsaSecurityKey SigningKey(string Key, string Expo)
-            {
-                RSA rsa = RSA.Create();
-
-                rsa.ImportParameters(new RSAParameters
-                {
-                    Modulus = Base64UrlEncoder.DecodeBytes(Key),
-                    Exponent = Base64UrlEncoder.DecodeBytes(Expo)
-                });
-
-                return new RsaSecurityKey(rsa);
-            }
         }
     }
 }

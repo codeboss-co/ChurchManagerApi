@@ -2,6 +2,10 @@
 
 ## Running Locally
 
+### Prerequisites
+
+1. Run all the docker commands in the `docker containers` file in the root directory.
+
 ### Database
 
 *Migrations*
