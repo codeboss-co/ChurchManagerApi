@@ -43,7 +43,40 @@ Authorization: Bearer {{accessToken}}
 }
 
 # ============== PEOPLE ==================== #
+# New Family
+POST {{api}}/v1/people/new-family
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
 
+{
+	"familyName": "Cagnetta",
+	"familyMembers": [{
+		"churchId": 1,
+		"connectionStatus": "New Convert",
+		"source": "Outreach",
+		"person": {
+			"firstName": "Dillan",
+			"middleName": "Dillan",
+			"lastName": "Cagnetta",
+			"gender": "Male",
+			"ageClassification": "Adult",
+			"occupation": "Software",
+			"birthDate": {
+			  	"day" : 6,
+				"month" : 11,
+				"year" : 1908
+			},
+			"receivedHolySpirit": false
+		}
+	}],
+	"address": {
+		"street": "4283 Express Lane\nSuite 6432-188",
+		"city": "Sarasota",
+		"country": "United States of America",
+		"province": "FLORIDA",
+		"postalCode": "34249"
+	}
+}	
 
 # ============== PROFILES ==================== #
 # GetCurrentUserProfileByUserLogin
