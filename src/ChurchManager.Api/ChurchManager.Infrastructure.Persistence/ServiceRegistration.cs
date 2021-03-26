@@ -4,22 +4,27 @@ using ChurchManager.Infrastructure.Abstractions;
 using ChurchManager.Infrastructure.Abstractions.Persistence;
 using ChurchManager.Infrastructure.Persistence.Contexts;
 using ChurchManager.Infrastructure.Persistence.Repositories;
-using ChurchManager.Infrastructure.Persistence.Seeding;
+using ChurchManager.Infrastructure.Persistence.Seeding.Development;
+using ChurchManager.Infrastructure.Persistence.Seeding.Production;
 using ChurchManager.Infrastructure.Shared;
 using ChurchManager.Persistence.Models.Groups;
 using ChurchManager.Persistence.Models.People;
 using ChurchManager.Persistence.Shared;
 using CodeBoss.AspNetCore.Startup;
 using Convey;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 namespace ChurchManager.Infrastructure.Persistence
 {
     public static class ServiceRegistration
     {
-        public static void AddPersistenceInfrastructure(this IServiceCollection services, IConfiguration configuration)
+        public static void AddPersistenceInfrastructure(this IServiceCollection services,
+            IConfiguration configuration,
+            IWebHostEnvironment environment)
         {
             services.AddDbContext<ChurchManagerDbContext>(options =>
                 options.UseNpgsql(configuration.GetConnectionString("DefaultConnection"),
@@ -37,11 +42,21 @@ namespace ChurchManager.Infrastructure.Persistence
 
             // Seeding: Switch this off in `appsettings.json`
             bool seedDatabaseEnabled = configuration.GetOptions<DbOptions>(nameof(DbOptions)).Seed;
-            if(seedDatabaseEnabled)
+            if (seedDatabaseEnabled)
             {
-                services.AddInitializer<ChurchesDbSeedInitializer>();
-                services.AddInitializer<PeopleDbSeedInitializer>();
-                services.AddInitializer<GroupsDbSeedInitializer>();
+                if(environment.IsProduction())
+                {
+                    services.AddInitializer<ChurchesDbSeedInitializer>();
+                    services.AddInitializer<PeopleDbSeedInitializer>();
+                    services.AddInitializer<GroupsDbSeedInitializer>();
+                }
+                // Development / Test -  Seeding
+                else
+                {
+                    services.AddInitializer<ChurchesFakeDbSeedInitializer>();
+                    services.AddInitializer<PeopleFakeDbSeedInitializer>();
+                    services.AddInitializer<GroupsFakeDbSeedInitializer>();
+                }
             }
 
             #region Repositories

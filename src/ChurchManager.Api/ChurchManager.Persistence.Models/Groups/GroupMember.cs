@@ -20,6 +20,8 @@ namespace ChurchManager.Persistence.Models.Groups
 
         public int GroupMemberRoleId { get; set; }
 
+        public DateTime? FirstVisitDate { get; set; }
+
         public ArchiveStatus ArchiveStatus { get; set; }
 
         /// <summary>
@@ -28,10 +30,12 @@ namespace ChurchManager.Persistence.Models.Groups
         [MaxLength(20)]
         public string CommunicationPreference { get; set; } = "Email";
 
+        #region Navigation
         public virtual Group Group { get; set; }
         public virtual GroupMemberRole GroupMemberRole { get; set; }
         public virtual Person Person { get; set; }
 
+        #endregion
     }
 
     #region Owned
@@ -52,6 +56,4 @@ namespace ChurchManager.Persistence.Models.Groups
     }
 
     #endregion
-
-
 }

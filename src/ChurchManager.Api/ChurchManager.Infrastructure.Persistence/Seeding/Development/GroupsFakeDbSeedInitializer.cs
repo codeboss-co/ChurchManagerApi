@@ -8,12 +8,12 @@ using CodeBoss.AspNetCore.Startup;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace ChurchManager.Infrastructure.Persistence.Seeding
+namespace ChurchManager.Infrastructure.Persistence.Seeding.Development
 {
     /// <summary>
     /// Seeds the database with some dummy data
     /// </summary>
-    public class GroupsDbSeedInitializer : IInitializer
+    public class GroupsFakeDbSeedInitializer : IInitializer
     {
         public int OrderNumber { get; } = 2;
         private readonly IServiceScopeFactory _scopeFactory;
@@ -24,7 +24,7 @@ namespace ChurchManager.Infrastructure.Persistence.Seeding
         // Cell Group Type
         private readonly GroupType _cellGroupType  = new() { Name = "Cell", Description = "Cell Ministry" };
 
-        public GroupsDbSeedInitializer(IServiceScopeFactory scopeFactory) => _scopeFactory = scopeFactory;
+        public GroupsFakeDbSeedInitializer(IServiceScopeFactory scopeFactory) => _scopeFactory = scopeFactory;
 
         public async Task InitializeAsync()
         {

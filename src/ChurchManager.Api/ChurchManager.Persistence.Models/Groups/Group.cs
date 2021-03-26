@@ -22,6 +22,7 @@ namespace ChurchManager.Persistence.Models.Groups
         public string Description { get; set; }
 
         public int? GroupCapacity { get; set; }
+        public bool? IsOnline { get; set; }
 
         #region Navigation
 
@@ -39,6 +40,11 @@ namespace ChurchManager.Persistence.Models.Groups
         /// Note that this does not include Archived GroupMembers
         /// </summary>
         public virtual ICollection<GroupMember> Members { get; set; } = new Collection<GroupMember>();
+
+        /// <summary>
+        /// Gets or sets a collection containing the <see cref="GroupFeature">Features</see> this group has e.g. Child Care Provided
+        /// </summary>
+        public virtual ICollection<GroupFeature> Features { get; set; } = new Collection<GroupFeature>();
 
         #endregion
     }
