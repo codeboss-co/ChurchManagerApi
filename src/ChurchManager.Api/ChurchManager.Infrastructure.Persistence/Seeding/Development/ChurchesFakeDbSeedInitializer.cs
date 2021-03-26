@@ -6,17 +6,17 @@ using CodeBoss.AspNetCore.Startup;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace ChurchManager.Infrastructure.Persistence.Seeding
+namespace ChurchManager.Infrastructure.Persistence.Seeding.Development
 {
     /// <summary>
     /// Seeds the database with some dummy data
     /// </summary>
-    public class ChurchesDbSeedInitializer : IInitializer
+    public class ChurchesFakeDbSeedInitializer : IInitializer
     {
         public int OrderNumber { get; } = 0;
         private readonly IServiceScopeFactory _scopeFactory;
 
-        public ChurchesDbSeedInitializer(IServiceScopeFactory scopeFactory) => _scopeFactory = scopeFactory;
+        public ChurchesFakeDbSeedInitializer(IServiceScopeFactory scopeFactory) => _scopeFactory = scopeFactory;
 
         public async Task InitializeAsync()
         {

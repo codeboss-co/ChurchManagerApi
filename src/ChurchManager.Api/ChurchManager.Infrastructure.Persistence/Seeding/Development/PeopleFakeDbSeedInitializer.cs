@@ -13,18 +13,18 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Person = ChurchManager.Persistence.Models.People.Person;
 
-namespace ChurchManager.Infrastructure.Persistence.Seeding
+namespace ChurchManager.Infrastructure.Persistence.Seeding.Development
 {
     /// <summary>
     /// Seeds the database with some dummy data
     /// </summary>
-    public class PeopleDbSeedInitializer : IInitializer
+    public class PeopleFakeDbSeedInitializer : IInitializer
     {
         public int OrderNumber { get; } = 1;
         private readonly IServiceScopeFactory _scopeFactory;
         private ChurchManagerDbContext _dbContext;
 
-        public PeopleDbSeedInitializer(IServiceScopeFactory scopeFactory) => _scopeFactory = scopeFactory;
+        public PeopleFakeDbSeedInitializer(IServiceScopeFactory scopeFactory) => _scopeFactory = scopeFactory;
 
         public async Task InitializeAsync()
         {
@@ -85,14 +85,13 @@ namespace ChurchManager.Infrastructure.Persistence.Seeding
                 PhoneNumbers = new List<PhoneNumber>(1) {PhoneNumbersFaker()}
             };
 
-            var photoUrl = new Faker("en").Person.Avatar;
             var danielle = new Person
             {
                 Family = cagnettaFamily,
                 AgeClassification = AgeClassification.Adult,
                 RecordStatus = RecordStatus.Active,
                 Gender = Gender.Female,
-                PhotoUrl = photoUrl,
+                PhotoUrl = "https://samanthabernhardi.com/site/wp-content/uploads/2019/10/danielle-cagnetta-1.jpg",
                 ConnectionStatus = ConnectionStatus.Member,
                 BaptismStatus = new Baptism { IsBaptised = true },
                 ChurchId = 1,
@@ -104,25 +103,40 @@ namespace ChurchManager.Infrastructure.Persistence.Seeding
                 PhoneNumbers = new List<PhoneNumber>(1) { PhoneNumbersFaker() }
             };
 
-            photoUrl = new Faker("en").Person.Avatar;
             var david = new Person
             {
                 Family = cagnettaFamily,
                 AgeClassification = AgeClassification.Child,
                 RecordStatus = RecordStatus.Active,
                 Gender = Gender.Male,
-                PhotoUrl = photoUrl,
+                PhotoUrl = null,
                 ConnectionStatus = ConnectionStatus.Member,
-                BaptismStatus = new Baptism { IsBaptised = true },
+                BaptismStatus = new Baptism { IsBaptised = false },
                 ChurchId = 1,
                 FullName = new FullName { FirstName = "David", LastName = "Cagnetta" },
                 BirthDate = new BirthDate { BirthDay = 06, BirthMonth = 07, BirthYear = 2017 },
                 ReceivedHolySpirit = false,
             };
 
+            var daniel = new Person
+            {
+                Family = cagnettaFamily,
+                AgeClassification = AgeClassification.Child,
+                RecordStatus = RecordStatus.Active,
+                Gender = Gender.Male,
+                PhotoUrl = null,
+                ConnectionStatus = ConnectionStatus.Member,
+                BaptismStatus = new Baptism { IsBaptised = true },
+                ChurchId = 1,
+                FullName = new FullName { FirstName = "Daniel", LastName = "Cagnetta" },
+                BirthDate = new BirthDate { BirthDay = 28, BirthMonth = 06, BirthYear = 2013 },
+                ReceivedHolySpirit = true,
+            };
+
             await _dbContext.Person.AddAsync(dillan);
             await _dbContext.Person.AddAsync(danielle);
             await _dbContext.Person.AddAsync(david);
+            await _dbContext.Person.AddAsync(daniel);
 
             await _dbContext.SaveChangesAsync();
         }

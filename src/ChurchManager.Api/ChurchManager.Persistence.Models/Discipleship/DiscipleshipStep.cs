@@ -1,15 +1,16 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using ChurchManager.Persistence.Models.People;
 using ChurchManager.Persistence.Shared;
 
-namespace ChurchManager.Persistence.Models.People.Discipleship
+namespace ChurchManager.Persistence.Models.Discipleship
 {
-    [Table("Step", Schema = "Discipleship")]
+    [Table("DiscipleshipStep", Schema = "Discipleship")]
 
     public class DiscipleshipStep : AuditableEntity<int>
     {
-        public int DiscipleshipTypeId { get; set; }
+        public int DiscipleshipStepDefinitionId { get; set; }
         public int PersonId { get; set; }
         public DateTime CompletionDate { get; set; }
         [MaxLength(100)]
@@ -19,7 +20,7 @@ namespace ChurchManager.Persistence.Models.People.Discipleship
 
         #region Navigation
 
-        public virtual DiscipleshipType DiscipleshipType { get; set; }
+        public virtual DiscipleshipStepDefinition Definition { get; set; }
         public virtual Person Person { get; set; }
 
         #endregion

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations.Schema;
 using ChurchManager.Persistence.Models.Churches;
-using ChurchManager.Persistence.Models.People.Discipleship;
+using ChurchManager.Persistence.Models.Discipleship;
 using ChurchManager.Persistence.Models.People.Notes;
 using ChurchManager.Persistence.Shared;
 using Codeboss.Types;
@@ -62,7 +62,7 @@ namespace ChurchManager.Persistence.Models.People
 
         public virtual Family Family { get; set; }
         public virtual Church Church { get; set; }
-        public virtual ICollection<DiscipleshipStep> DiscipleshipSteps { get; set; } = new Collection<DiscipleshipStep>();
+        public virtual ICollection<DiscipleshipProgram> DiscipleshipPrograms { get; set; } = new Collection<DiscipleshipProgram>();
         public virtual ICollection<Note> Notes { get; set; } = new Collection<Note>();
         
         #endregion

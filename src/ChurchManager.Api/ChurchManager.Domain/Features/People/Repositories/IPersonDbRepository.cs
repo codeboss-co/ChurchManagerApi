@@ -1,10 +1,12 @@
 ﻿using System.Threading.Tasks;
 using ChurchManager.Core.Shared;
 using ChurchManager.Domain.Model;
+using ChurchManager.Infrastructure.Abstractions.Persistence;
+using ChurchManager.Persistence.Models.People;
 
 namespace ChurchManager.Domain.Features.People.Repositories
 {
-    public interface IPersonDbRepository
+    public interface IPersonDbRepository : IGenericRepositoryAsync<Person>
     {
         Task<PersonDomain> ProfileByUserLoginId(string userLoginId);
         Task<UserDetails> UserDetailsByUserLoginId(string queryUserLoginId);

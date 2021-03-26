@@ -14,6 +14,12 @@ namespace ChurchManager.Infrastructure.Persistence.Configurations
                 .HasConversion(
                     v => v.ToString(),
                     v => new RecordStatus(v));
+
+            // GroupFeatures (Many-to-Many)
+            builder
+                .HasMany(p => p.Features)
+                .WithMany(p => p.Groups)
+                .UsingEntity(j => j.ToTable("GroupFeatures", "Groups"));
         }
     }
 }

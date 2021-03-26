@@ -20,9 +20,6 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
             migrationBuilder.EnsureSchema(
                 name: "Groups");
 
-            migrationBuilder.EnsureSchema(
-                name: "Notes");
-
             migrationBuilder.CreateTable(
                 name: "ChurchGroup",
                 schema: "Churches",
@@ -66,12 +63,33 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(type: "text", nullable: true),
+                    Address_Street = table.Column<string>(type: "text", nullable: true),
+                    Address_City = table.Column<string>(type: "text", nullable: true),
+                    Address_Country = table.Column<string>(type: "text", nullable: true),
+                    Address_Province = table.Column<string>(type: "text", nullable: true),
+                    Address_PostalCode = table.Column<string>(type: "text", nullable: true),
                     RecordStatus = table.Column<string>(type: "text", nullable: true),
                     InactiveDateTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Family", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "GroupFeature",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Name = table.Column<string>(type: "text", nullable: true),
+                    Description = table.Column<string>(type: "text", nullable: true),
+                    RecordStatus = table.Column<string>(type: "text", nullable: true),
+                    InactiveDateTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_GroupFeature", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -111,7 +129,7 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
 
             migrationBuilder.CreateTable(
                 name: "NoteType",
-                schema: "Notes",
+                schema: "People",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
@@ -157,6 +175,36 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "DiscipleshipStepDefinition",
+                schema: "Discipleship",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    DiscipleshipTypeId = table.Column<int>(type: "integer", nullable: false),
+                    Order = table.Column<int>(type: "integer", nullable: false),
+                    Name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
+                    Description = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: true),
+                    RecordStatus = table.Column<string>(type: "text", nullable: true),
+                    InactiveDateTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
+                    CreatedBy = table.Column<string>(type: "text", nullable: true),
+                    CreatedDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    ModifiedBy = table.Column<string>(type: "text", nullable: true),
+                    ModifiedDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DiscipleshipStepDefinition", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_DiscipleshipStepDefinition_DiscipleshipType_DiscipleshipTyp~",
+                        column: x => x.DiscipleshipTypeId,
+                        principalSchema: "Discipleship",
+                        principalTable: "DiscipleshipType",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Group",
                 schema: "Groups",
                 columns: table => new
@@ -169,6 +217,7 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                     Name = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
                     Description = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
                     GroupCapacity = table.Column<int>(type: "integer", nullable: true),
+                    IsOnline = table.Column<bool>(type: "boolean", nullable: true),
                     RecordStatus = table.Column<string>(type: "text", nullable: true),
                     InactiveDateTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: true)
                 },
@@ -287,6 +336,60 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "GroupFeatures",
+                schema: "Groups",
+                columns: table => new
+                {
+                    FeaturesId = table.Column<int>(type: "integer", nullable: false),
+                    GroupsId = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_GroupFeatures", x => new { x.FeaturesId, x.GroupsId });
+                    table.ForeignKey(
+                        name: "FK_GroupFeatures_Group_GroupsId",
+                        column: x => x.GroupsId,
+                        principalSchema: "Groups",
+                        principalTable: "Group",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_GroupFeatures_GroupFeature_FeaturesId",
+                        column: x => x.FeaturesId,
+                        principalTable: "GroupFeature",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "DiscipleshipProgram",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
+                    Description = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: true),
+                    PersonId = table.Column<int>(type: "integer", nullable: true),
+                    RecordStatus = table.Column<string>(type: "text", nullable: true),
+                    InactiveDateTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
+                    CreatedBy = table.Column<string>(type: "text", nullable: true),
+                    CreatedDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    ModifiedBy = table.Column<string>(type: "text", nullable: true),
+                    ModifiedDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DiscipleshipProgram", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_DiscipleshipProgram_Person_PersonId",
+                        column: x => x.PersonId,
+                        principalSchema: "People",
+                        principalTable: "Person",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "GroupMember",
                 schema: "Groups",
                 columns: table => new
@@ -296,6 +399,7 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                     GroupId = table.Column<int>(type: "integer", nullable: false),
                     PersonId = table.Column<int>(type: "integer", nullable: false),
                     GroupMemberRoleId = table.Column<int>(type: "integer", nullable: false),
+                    FirstVisitDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
                     ArchiveStatus_IsArchived = table.Column<bool>(type: "boolean", nullable: true),
                     ArchiveStatus_ArchivedDateTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
                     CommunicationPreference = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: true),
@@ -330,7 +434,7 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
 
             migrationBuilder.CreateTable(
                 name: "Note",
-                schema: "Notes",
+                schema: "People",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
@@ -353,7 +457,7 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                     table.ForeignKey(
                         name: "FK_Note_NoteType_NoteTypeId",
                         column: x => x.NoteTypeId,
-                        principalSchema: "Notes",
+                        principalSchema: "People",
                         principalTable: "NoteType",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -394,17 +498,18 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Step",
+                name: "DiscipleshipStep",
                 schema: "Discipleship",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    DiscipleshipTypeId = table.Column<int>(type: "integer", nullable: false),
+                    DiscipleshipStepDefinitionId = table.Column<int>(type: "integer", nullable: false),
                     PersonId = table.Column<int>(type: "integer", nullable: false),
                     CompletionDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     Status = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
                     Notes = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: true),
+                    DiscipleshipProgramId = table.Column<int>(type: "integer", nullable: true),
                     RecordStatus = table.Column<string>(type: "text", nullable: true),
                     InactiveDateTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
                     CreatedBy = table.Column<string>(type: "text", nullable: true),
@@ -414,16 +519,22 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Step", x => x.Id);
+                    table.PrimaryKey("PK_DiscipleshipStep", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Step_DiscipleshipType_DiscipleshipTypeId",
-                        column: x => x.DiscipleshipTypeId,
+                        name: "FK_DiscipleshipStep_DiscipleshipProgram_DiscipleshipProgramId",
+                        column: x => x.DiscipleshipProgramId,
+                        principalTable: "DiscipleshipProgram",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_DiscipleshipStep_DiscipleshipStepDefinition_DiscipleshipSte~",
+                        column: x => x.DiscipleshipStepDefinitionId,
                         principalSchema: "Discipleship",
-                        principalTable: "DiscipleshipType",
+                        principalTable: "DiscipleshipStepDefinition",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Step_Person_PersonId",
+                        name: "FK_DiscipleshipStep_Person_PersonId",
                         column: x => x.PersonId,
                         principalSchema: "People",
                         principalTable: "Person",
@@ -481,6 +592,35 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                 column: "ChurchGroupId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_DiscipleshipProgram_PersonId",
+                table: "DiscipleshipProgram",
+                column: "PersonId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DiscipleshipStep_DiscipleshipProgramId",
+                schema: "Discipleship",
+                table: "DiscipleshipStep",
+                column: "DiscipleshipProgramId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DiscipleshipStep_DiscipleshipStepDefinitionId",
+                schema: "Discipleship",
+                table: "DiscipleshipStep",
+                column: "DiscipleshipStepDefinitionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DiscipleshipStep_PersonId",
+                schema: "Discipleship",
+                table: "DiscipleshipStep",
+                column: "PersonId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DiscipleshipStepDefinition_DiscipleshipTypeId",
+                schema: "Discipleship",
+                table: "DiscipleshipStepDefinition",
+                column: "DiscipleshipTypeId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Group_ChurchId",
                 schema: "Groups",
                 table: "Group",
@@ -503,6 +643,12 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                 schema: "Groups",
                 table: "GroupAttendance",
                 column: "GroupId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_GroupFeatures_GroupsId",
+                schema: "Groups",
+                table: "GroupFeatures",
+                column: "GroupsId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_GroupMember_GroupId",
@@ -542,13 +688,13 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_Note_NoteTypeId",
-                schema: "Notes",
+                schema: "People",
                 table: "Note",
                 column: "NoteTypeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Note_PersonId",
-                schema: "Notes",
+                schema: "People",
                 table: "Note",
                 column: "PersonId");
 
@@ -569,37 +715,39 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                 schema: "People",
                 table: "PhoneNumber",
                 column: "PersonId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Step_DiscipleshipTypeId",
-                schema: "Discipleship",
-                table: "Step",
-                column: "DiscipleshipTypeId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Step_PersonId",
-                schema: "Discipleship",
-                table: "Step",
-                column: "PersonId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "DiscipleshipStep",
+                schema: "Discipleship");
+
+            migrationBuilder.DropTable(
+                name: "GroupFeatures",
+                schema: "Groups");
+
             migrationBuilder.DropTable(
                 name: "GroupMemberAttendance",
                 schema: "Groups");
 
             migrationBuilder.DropTable(
                 name: "Note",
-                schema: "Notes");
+                schema: "People");
 
             migrationBuilder.DropTable(
                 name: "PhoneNumber",
                 schema: "People");
 
             migrationBuilder.DropTable(
-                name: "Step",
+                name: "DiscipleshipProgram");
+
+            migrationBuilder.DropTable(
+                name: "DiscipleshipStepDefinition",
                 schema: "Discipleship");
+
+            migrationBuilder.DropTable(
+                name: "GroupFeature");
 
             migrationBuilder.DropTable(
                 name: "GroupAttendance",
@@ -611,7 +759,7 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
 
             migrationBuilder.DropTable(
                 name: "NoteType",
-                schema: "Notes");
+                schema: "People");
 
             migrationBuilder.DropTable(
                 name: "DiscipleshipType",
