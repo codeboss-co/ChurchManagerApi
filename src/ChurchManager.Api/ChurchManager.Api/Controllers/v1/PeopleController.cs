@@ -24,7 +24,7 @@ namespace ChurchManager.Api.Controllers.v1
         }
 
         [HttpPost("family/new")]
-        public async Task<IActionResult> PostGroupAttendanceRecord([FromBody] AddNewFamilyCommand command, CancellationToken token)
+        public async Task<IActionResult> NewFamily([FromBody] AddNewFamilyCommand command, CancellationToken token)
         {
             await Mediator.Send(command, token);
             return Accepted();

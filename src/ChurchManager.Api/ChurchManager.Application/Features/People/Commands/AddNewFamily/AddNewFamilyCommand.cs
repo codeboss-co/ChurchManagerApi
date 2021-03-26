@@ -29,7 +29,7 @@ namespace ChurchManager.Application.Features.People.Commands.AddNewFamily
         {
             var family = new Family
             {
-                Name = command.FamilyName,
+                Name = $"{command.FamilyName} Family",
                 Address = new Persistence.Models.People.Address
                 {
                     Street = command.Address.Street,
@@ -68,6 +68,7 @@ namespace ChurchManager.Application.Features.People.Commands.AddNewFamily
             });
 
             await _dbRepository.AddRangeAsync(members);
+            await _dbRepository.SaveChangesAsync();
 
             return new Unit();
         }
