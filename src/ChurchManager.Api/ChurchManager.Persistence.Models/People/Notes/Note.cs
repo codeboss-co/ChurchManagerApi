@@ -3,7 +3,7 @@ using ChurchManager.Persistence.Shared;
 
 namespace ChurchManager.Persistence.Models.People.Notes
 {
-    [Table("Note", Schema = "Notes")]
+    [Table("Note", Schema = "People")]
     public class Note : AuditableEntity<int>
     {
         public int NoteTypeId { get; set; }

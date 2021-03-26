@@ -26,7 +26,7 @@ namespace ChurchManager.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddPersistenceInfrastructure(Configuration);
+            services.AddPersistenceInfrastructure(Configuration, Environment);
             services.AddApplicationLayer();
 
             services.InstallServicesInAssemblies(Configuration, Environment, typeof(Startup).Assembly);
