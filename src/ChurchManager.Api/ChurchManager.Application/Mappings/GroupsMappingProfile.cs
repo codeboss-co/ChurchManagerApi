@@ -13,7 +13,6 @@ namespace ChurchManager.Application.Mappings
                 .ForMember(d => d.MembersCount, 
                     opt => opt.MapFrom(src => src.Members.Count));
 
-
             CreateMap<PagedResult<GroupDomain>, PagedResult<GroupSummaryViewModel>>()
                 .ForMember(d => d.Items,
                     opt => opt.MapFrom(src => src.Items));

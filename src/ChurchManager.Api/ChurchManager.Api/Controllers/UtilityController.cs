@@ -39,13 +39,25 @@ namespace ChurchManager.Api.Controllers
             return Ok("All good in the hood!");
         }
 
+        /// <summary>
+        /// Checks database migrations status and performs basic db query
+        /// </summary>
+        /// <returns>Returns the database status</returns>
+        /// <response code="200">Returns the database status</response>
         [HttpGet("db")]
         public async Task<IActionResult> DatabaseCheck(CancellationToken token)
         {
             var applied = await _dbContext.Database.GetAppliedMigrationsAsync(token);
             var pending = await _dbContext.Database.GetPendingMigrationsAsync(token);
+            var query = await _mediator.Send(new GroupsForPersonQuery(1), token);
 
-            return Ok(await _mediator.Send(new GroupsForPersonQuery(1), CancellationToken.None));
+            var result = new
+            {
+                database = new { applied , pending },
+                query
+            };
+
+            return Ok(result);
         }
 
         [HttpGet("auth")]
