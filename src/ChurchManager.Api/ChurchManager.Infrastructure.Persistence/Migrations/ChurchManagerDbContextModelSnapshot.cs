@@ -66,6 +66,75 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                     b.ToTable("Church", "Churches");
                 });
 
+            modelBuilder.Entity("ChurchManager.Persistence.Models.Churches.ChurchAttendance", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<int>("AttendanceCount")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("AttendanceDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int?>("ChildrenCount")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("ChurchAttendanceTypeId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("ChurchId")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("FemalesCount")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("FirstTimerCount")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("MalesCount")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("NewConvertCount")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Notes")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<int?>("ReceivedHolySpiritCount")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ChurchAttendanceTypeId");
+
+                    b.ToTable("ChurchAttendance", "Churches");
+                });
+
+            modelBuilder.Entity("ChurchManager.Persistence.Models.Churches.ChurchAttendanceType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ChurchAttendanceType");
+                });
+
             modelBuilder.Entity("ChurchManager.Persistence.Models.Churches.ChurchGroup", b =>
                 {
                     b.Property<int>("Id")
@@ -745,6 +814,17 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                         .HasForeignKey("ChurchGroupId");
 
                     b.Navigation("ChurchGroup");
+                });
+
+            modelBuilder.Entity("ChurchManager.Persistence.Models.Churches.ChurchAttendance", b =>
+                {
+                    b.HasOne("ChurchManager.Persistence.Models.Churches.ChurchAttendanceType", "ChurchAttendanceType")
+                        .WithMany()
+                        .HasForeignKey("ChurchAttendanceTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ChurchAttendanceType");
                 });
 
             modelBuilder.Entity("ChurchManager.Persistence.Models.Discipleship.DiscipleshipProgram", b =>
