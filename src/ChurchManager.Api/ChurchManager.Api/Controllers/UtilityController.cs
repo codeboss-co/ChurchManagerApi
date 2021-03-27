@@ -3,9 +3,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using ChurchManager.Application.Features.Groups.Queries.GroupsForPerson;
 using ChurchManager.Domain;
+using ChurchManager.Infrastructure.Abstractions.Persistence;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace ChurchManager.Api.Controllers
@@ -17,15 +19,18 @@ namespace ChurchManager.Api.Controllers
         private readonly ILogger<UtilityController> _logger;
         private readonly IMediator _mediator;
         private readonly ICognitoCurrentUser _currentUser;
+        private readonly IChurchManagerDbContext _dbContext;
 
         public UtilityController(
             ILogger<UtilityController> logger,
             IMediator mediator,
-            ICognitoCurrentUser currentUser)
+            ICognitoCurrentUser currentUser,
+            IChurchManagerDbContext dbContext)
         {
             _logger = logger;
             _mediator = mediator;
             _currentUser = currentUser;
+            _dbContext = dbContext;
         }
 
         [HttpGet]
@@ -35,8 +40,11 @@ namespace ChurchManager.Api.Controllers
         }
 
         [HttpGet("db")]
-        public async Task<IActionResult> DatabaseCheck()
+        public async Task<IActionResult> DatabaseCheck(CancellationToken token)
         {
+            var applied = await _dbContext.Database.GetAppliedMigrationsAsync(token);
+            var pending = await _dbContext.Database.GetPendingMigrationsAsync(token);
+
             return Ok(await _mediator.Send(new GroupsForPersonQuery(1), CancellationToken.None));
         }
 
