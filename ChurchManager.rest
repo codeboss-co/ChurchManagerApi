@@ -15,9 +15,15 @@ Content-Type: application/json
 
 # ============== UTILITY / TESTS ==================== #
 GET {{api}}/
+GET {{api}}/db
 GET {{api}}/auth
 Authorization: Bearer {{accessToken}}
 
+# ============== CHURCHES ==================== #
+# GET ALL
+GET {{api}}/v1/churches
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
 
 # ============== GROUPS ==================== #
 # GetAllPersonsGroups

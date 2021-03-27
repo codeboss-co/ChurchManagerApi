@@ -64,7 +64,7 @@ namespace ChurchManager.Infrastructure.Persistence.Repositories
         }
 
         public virtual async Task<T> GetByIdAsync(int id) => await ObjectSet.FindAsync(id);
-        public async Task<IEnumerable<T>> GetAllAsync() => await ObjectSet.ToListAsync();
+        public async Task<IEnumerable<T>> GetAllAsync() => await ObjectSet.AsNoTracking().ToListAsync();
 
         public async Task<IEnumerable<T>> GetPagedResponseAsync(int pageNumber, int pageSize)
         {
