@@ -23,7 +23,9 @@ namespace ChurchManager.Infrastructure.Persistence.Repositories
                 .Select(x => new
                 {
                     x.AttendanceDate,
-                    x.AttendanceCount
+                    x.AttendanceCount,
+                    x.NewConvertCount,
+                    x.FirstTimerCount,
                 })
                 .GroupBy(x => new
                     {
@@ -34,7 +36,9 @@ namespace ChurchManager.Infrastructure.Persistence.Repositories
                     {
                         Year = x.Year,
                         Month = x.Month,
-                        TotalAttendance = e.Sum(y => y.AttendanceCount)
+                        TotalAttendance = e.Sum(y => y.AttendanceCount),
+                        TotalNewConverts = e.Sum(y => y.NewConvertCount),
+                        TotalFirstTimers = e.Sum(y => y.FirstTimerCount),
                     })
                 .OrderByDescending(x => x.Year).ThenByDescending(x => x.Month)
                 .ToListAsync();
