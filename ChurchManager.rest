@@ -96,6 +96,6 @@ Authorization: Bearer {{accessToken}}
 
 # ============== DASHBOARD ==================== #
 # CHURCH ATTENDANCE
-GET {{api}}/v1/dashboard/church-attendance?from=2019-01-01T00:00:00&to=2022-01-01T00:00:00
+GET {{api}}/v1/dashboard/church-attendance?from=2019-01-01&to=2022-01-01
 Content-Type: application/json
 Authorization: Bearer {{accessToken}}

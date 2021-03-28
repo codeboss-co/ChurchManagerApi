@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ChurchManager.Core.Shared;
 using ChurchManager.Domain.Features.Churches.Repositories;
 using ChurchManager.Infrastructure.Abstractions.Persistence;
 using ChurchManager.Persistence.Models.Churches;
@@ -14,9 +16,9 @@ namespace ChurchManager.Infrastructure.Persistence.Repositories
         {
         }
 
-        public async Task<dynamic> DashboardChurchAttendanceAsync(DateTime from, DateTime to)
+        public async Task<IEnumerable<ChurchAttendanceAnnualBreakdownVm>> DashboardChurchAttendanceAsync(DateTime from, DateTime to)
         {
-            return await Queryable()
+            var raw = await Queryable()
                 .Where(x => x.AttendanceDate >= from && x.AttendanceDate <= to)
                 .Select(x => new
                 {
@@ -28,14 +30,22 @@ namespace ChurchManager.Infrastructure.Persistence.Repositories
                         Year = x.AttendanceDate.Year,
                         Month = x.AttendanceDate.Month
                     },
-                    (x, e) => new
+                    (x, e) => new ChurchAttendanceMonthlyTotalsVm
                     {
-                        x.Year,
-                        x.Month,
+                        Year = x.Year,
+                        Month = x.Month,
                         TotalAttendance = e.Sum(y => y.AttendanceCount)
                     })
                 .OrderByDescending(x => x.Year).ThenByDescending(x => x.Month)
                 .ToListAsync();
+
+            return raw
+                .GroupBy(x => x.Year)
+                .Select( x => new ChurchAttendanceAnnualBreakdownVm
+                {
+                    Year = x.Key,
+                    Data = x
+                });
         }
     }
 }
