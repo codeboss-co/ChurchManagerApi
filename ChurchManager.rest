@@ -99,3 +99,8 @@ Authorization: Bearer {{accessToken}}
 GET {{api}}/v1/dashboard/church-attendance?from=2019-01-01&to=2022-01-01
 Content-Type: application/json
 Authorization: Bearer {{accessToken}}
+
+# CHURCH ATTENDANCE BREAKDOWN
+GET {{api}}/v1/dashboard/church-attendance-breakdown?from=2019-01-01&to=2022-01-01
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}

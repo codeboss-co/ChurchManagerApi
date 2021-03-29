@@ -28,5 +28,12 @@ namespace ChurchManager.Api.Controllers.v1
             var attendances = await _attendanceDbRepository.DashboardChurchAttendanceAsync(from, to);
             return Ok(attendances);
         }
+
+        [HttpGet("church-attendance-breakdown")]
+        public async Task<IActionResult> ChurchAttendanceBreakdown([FromQuery] DateTime from, DateTime to, CancellationToken token)
+        {
+            var breakdown = await _attendanceDbRepository.DashboardChurchAttendanceBreakdownAsync(from, to);
+            return Ok(breakdown);
+        }
     }
 }

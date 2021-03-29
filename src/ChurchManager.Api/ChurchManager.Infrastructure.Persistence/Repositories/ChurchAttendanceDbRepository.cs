@@ -51,5 +51,44 @@ namespace ChurchManager.Infrastructure.Persistence.Repositories
                     Data = x
                 });
         }
+
+        public async Task<dynamic> DashboardChurchAttendanceBreakdownAsync(DateTime from, DateTime to)
+        {
+            var raw = await Queryable()
+                .Where(x => x.AttendanceDate >= from && x.AttendanceDate <= to)
+                .Select(x => new
+                {
+                    x.AttendanceDate,
+                    x.AttendanceCount,
+                    x.MalesCount,
+                    x.FemalesCount,
+                    x.ChildrenCount,
+                })
+                .GroupBy(x => new
+                    {
+                        Year = x.AttendanceDate.Year,
+                        Month = x.AttendanceDate.Month
+                    },
+                    (x, e) => new 
+                    {
+                        Year = x.Year,
+                        Month = x.Month,
+                        TotalAttendance = e.Sum(y => y.AttendanceCount),
+                        TotalMales = e.Sum(y => y.MalesCount),
+                        TotalFemales = e.Sum(y => y.FemalesCount),
+                        TotalChildren = e.Sum(y => y.ChildrenCount),
+                    })
+                .OrderByDescending(x => x.Year).ThenByDescending(x => x.Month)
+                .ToListAsync();
+
+            return raw
+                .GroupBy(x => x.Year)
+                .Select(x => new
+                {
+                    Year = x.Key,
+                    Data = x
+                });
+        }
+
     }
 }

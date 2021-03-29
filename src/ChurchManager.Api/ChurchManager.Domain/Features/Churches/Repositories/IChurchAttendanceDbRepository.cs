@@ -10,5 +10,6 @@ namespace ChurchManager.Domain.Features.Churches.Repositories
     public interface IChurchAttendanceDbRepository : IGenericRepositoryAsync<ChurchAttendance>
     {
         Task<IEnumerable<ChurchAttendanceAnnualBreakdownVm>> DashboardChurchAttendanceAsync(DateTime from, DateTime to);
+        Task<dynamic> DashboardChurchAttendanceBreakdownAsync(DateTime from, DateTime to);
     }
 }
