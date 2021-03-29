@@ -164,4 +164,42 @@ FROM
    cte2;
 
 
+-- FUNCTIONS
+-- https://carto.com/help/working-with-data/sql-stored-procedures/
+CREATE OR REPLACE FUNCTION get_total_attendance_basic()
+RETURNS TABLE(
+   YearA INT,
+   MonthA INT,
+   TotalAttendancea NUMERIC,
+   Previous NUMERIC
+)
+AS $$
+BEGIN
+  RETURN QUERY
+    -- LAG BASIC
+    WITH cte AS (
+       SELECT
+            date_part('year', "AttendanceDate") AS Year,
+            date_part('month', "AttendanceDate") AS Month,
+            COALESCE(SUM("AttendanceCount"), 0) AS TotalAttendance
+       FROM "Churches"."ChurchAttendance"
+        GROUP BY Year, Month
+        ORDER BY Year, Month
+    )
+    SELECT
+       Year::INT,
+       Month::INT,
+       TotalAttendance::NUMERIC,
+       LAG(TotalAttendance, 1) OVER (
+          ORDER BY Year
+       )::NUMERIC  ASprevious_year_attendance
+    FROM
+       cte;
+
+END;
+$$ LANGUAGE plpgsql;
+
+SELECT * FROM get_total_attendance_basic();
+
+
 
