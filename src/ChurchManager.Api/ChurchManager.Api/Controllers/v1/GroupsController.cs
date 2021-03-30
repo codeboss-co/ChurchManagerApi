@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using ChurchManager.Application.Features.Groups.Commands.GroupAttendanceRecord;
 using ChurchManager.Application.Features.Groups.Queries.BrowsePersonsGroups;
 using ChurchManager.Application.Features.Groups.Queries.GroupMembers;
+using ChurchManager.Application.Features.Groups.Queries.GroupsForChurch;
 using ChurchManager.Application.Features.Groups.Queries.GroupsForPerson;
 using ChurchManager.Domain;
 using Microsoft.AspNetCore.Authorization;
@@ -46,6 +47,12 @@ namespace ChurchManager.Api.Controllers.v1
         public async Task<IActionResult> GetGroupMembers(int groupId, CancellationToken token)
         {
             return Ok(await Mediator.Send(new GroupMembersQuery(groupId), token));
+        }
+
+        [HttpGet("church/{churchId}")]
+        public async Task<IActionResult> GetGroupsForChurchSelectItem(int churchId, CancellationToken token)
+        {
+            return Ok(await Mediator.Send(new GroupsForChurchSelectItemQuery(churchId), token));
         }
 
         [HttpPost("{groupId}/attendance")]

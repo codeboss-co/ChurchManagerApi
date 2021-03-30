@@ -12,7 +12,7 @@ namespace ChurchManager.Application.Features.Groups.Queries.BrowseGroupAttendanc
     public record BrowseGroupAttendanceQuery
         : QueryParameter, IRequest<PagedResponse<GroupAttendanceViewModel>>
     {
-        public int GroupTypeId { get; set; }
+        public int GroupTypeId { get; set; } = 1; // Cell Ministry is 1
         public int? ChurchId { get; set; }
         public bool? WithFeedBack { get; set; }
         public DateTime? From { get; set; }

@@ -18,8 +18,8 @@ namespace ChurchManager.Api._DependencyInjection
             else
             {
                 var connectionString = configuration.GetConnectionString("SignalR");
-                services.AddSignalR()
-                    .AddAzureSignalR(connectionString);
+                services.AddSignalR();
+                //.AddAzureSignalR(connectionString);
             }
 
             // Change to use name as the user identifier for SignalR

@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using ChurchManager.Application.Features.Groups.Queries.GroupsForPerson;
+using ChurchManager.Core.Shared;
 using ChurchManager.Domain.Model;
+using ChurchManager.Persistence.Models.Groups;
 using Convey.CQRS.Queries;
 
 namespace ChurchManager.Application.Mappings
@@ -16,6 +18,8 @@ namespace ChurchManager.Application.Mappings
             CreateMap<PagedResult<GroupDomain>, PagedResult<GroupSummaryViewModel>>()
                 .ForMember(d => d.Items,
                     opt => opt.MapFrom(src => src.Items));
+
+            CreateMap<Group, SelectItemViewModel>().ReverseMap();
         }
     }
 }
