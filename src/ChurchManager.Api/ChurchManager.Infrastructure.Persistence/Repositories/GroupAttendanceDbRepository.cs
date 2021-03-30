@@ -1,6 +1,14 @@
-﻿using ChurchManager.Domain.Features.Groups.Repositories;
+﻿using System;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using ChurchManager.Core.Shared.Parameters;
+using ChurchManager.Domain.Features.Groups.Repositories;
 using ChurchManager.Infrastructure.Persistence.Contexts;
+using ChurchManager.Infrastructure.Persistence.Extensions;
+using ChurchManager.Infrastructure.Persistence.Specifications;
 using ChurchManager.Persistence.Models.Groups;
+using Convey.CQRS.Queries;
 
 namespace ChurchManager.Infrastructure.Persistence.Repositories
 {
@@ -8,6 +16,21 @@ namespace ChurchManager.Infrastructure.Persistence.Repositories
     {
         public GroupAttendanceDbRepository(ChurchManagerDbContext dbContext) : base(dbContext)
         {
+        }
+
+        public async Task<PagedResult<object>> BrowseGroupAttendance(QueryParameter query, int groupTypeId, int? churchId, bool? withFeedback, DateTime? from, DateTime? to, CancellationToken ct = default)
+        {
+            // Paging
+            var pagedResult = await Queryable()
+                .Specify(new BrowseGroupAttendanceSpecification(groupTypeId, churchId, withFeedback, from, to))
+                .PaginateAsync(query);
+
+            return PagedResult<object>.Create(
+                pagedResult.Items.Select(x => new {x}),
+                pagedResult.CurrentPage,
+                pagedResult.ResultsPerPage,
+                pagedResult.TotalPages,
+                pagedResult.TotalResults);
         }
     }
 }

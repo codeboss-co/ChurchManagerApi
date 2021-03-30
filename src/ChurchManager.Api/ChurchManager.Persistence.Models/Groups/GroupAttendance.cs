@@ -4,7 +4,9 @@ using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Text.Json;
 using Codeboss.Types;
+using Microsoft.EntityFrameworkCore;
 
 namespace ChurchManager.Persistence.Models.Groups
 {
@@ -26,6 +28,16 @@ namespace ChurchManager.Persistence.Models.Groups
         public int? ReceivedHolySpiritCount { get; set; }
         [MaxLength(200)]
         public string Notes { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Id of the photos attached for this attendance
+        /// </summary>
+        public List<string> PhotoUrls { get; set; } = new();
+
+        /// <summary>
+        /// Gets or sets the <see cref="AttendanceReview"/> or feedback for this attendance records
+        /// </summary>
+        public AttendanceReview AttendanceReview { get; set; }
 
         #region Navigation
 
@@ -65,5 +77,20 @@ namespace ChurchManager.Persistence.Models.Groups
                 return 0.0d;
             }
         }
+
+        /// <summary>
+        /// Gets a value indicating whether attendance was reviewed.
+        /// </summary>
+        public virtual bool AttendanceReviewed => AttendanceReview.IsReviewed.HasValue && AttendanceReview.IsReviewed.Value;
+    }
+
+    [Owned]
+    public record AttendanceReview
+    {
+        public bool? IsReviewed { get; set; }
+        [MaxLength(200)]
+        public string Feedback { get; set; }
+        [MaxLength(50)]
+        public string ReviewedBy { get; set; }
     }
 }

@@ -60,6 +60,7 @@ namespace ChurchManager.Infrastructure.Persistence
                     services.AddInitializer<PeopleFakeDbSeedInitializer>();
                     services.AddInitializer<GroupsFakeDbSeedInitializer>();
                     services.AddInitializer<ChurchAttendanceFakeDbInitializer>();
+                    services.AddInitializer<GroupAttendanceFakeDbSeedInitializer>();
                 }
             }
 
