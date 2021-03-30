@@ -1,6 +1,6 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using ChurchManager.Application.Features.Churches.Queries.RetrieveChurches;
+using ChurchManager.Application.Features.Groups.Queries.BrowseGroupAttendance;
 using ChurchManager.Domain;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -18,10 +18,10 @@ namespace ChurchManager.Api.Controllers.v1
             _currentUser = currentUser;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> AllCellGroups(CancellationToken token)
+        [HttpPost("browse")]
+        public async Task<IActionResult> BrowseCellGroups([FromBody] BrowseGroupAttendanceQuery query, CancellationToken token)
         {
-            var groups = await Mediator.Send(new ChurchesQuery(), token);
+            var groups = await Mediator.Send(query, token);
             return Ok(groups);
         }
     }

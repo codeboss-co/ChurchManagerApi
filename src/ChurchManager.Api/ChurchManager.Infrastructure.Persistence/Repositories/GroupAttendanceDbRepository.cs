@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using ChurchManager.Core.Shared;
 using ChurchManager.Core.Shared.Parameters;
 using ChurchManager.Domain.Features.Groups.Repositories;
 using ChurchManager.Infrastructure.Persistence.Contexts;
@@ -18,15 +19,25 @@ namespace ChurchManager.Infrastructure.Persistence.Repositories
         {
         }
 
-        public async Task<PagedResult<object>> BrowseGroupAttendance(QueryParameter query, int groupTypeId, int? churchId, bool? withFeedback, DateTime? from, DateTime? to, CancellationToken ct = default)
+        public async Task<PagedResult<GroupAttendanceViewModel>> BrowseGroupAttendance(QueryParameter query, int groupTypeId, int? churchId, bool? withFeedback, DateTime? from, DateTime? to, CancellationToken ct = default)
         {
             // Paging
             var pagedResult = await Queryable()
                 .Specify(new BrowseGroupAttendanceSpecification(groupTypeId, churchId, withFeedback, from, to))
                 .PaginateAsync(query);
 
-            return PagedResult<object>.Create(
-                pagedResult.Items.Select(x => new {x}),
+            return PagedResult<GroupAttendanceViewModel>.Create(
+                pagedResult.Items.Select(x => new GroupAttendanceViewModel
+                {
+                    AttendanceDate = x.AttendanceDate,
+                    DidNotOccur = x.DidNotOccur,
+                    AttendanceCount = x.AttendanceCount,
+                    FirstTimerCount = x.FirstTimerCount,
+                    NewConvertCount = x.NewConvertCount,
+                    ReceivedHolySpiritCount = x.ReceivedHolySpiritCount,
+                    Notes = x.Notes,
+                    PhotoUrls = x.PhotoUrls
+                }),
                 pagedResult.CurrentPage,
                 pagedResult.ResultsPerPage,
                 pagedResult.TotalPages,

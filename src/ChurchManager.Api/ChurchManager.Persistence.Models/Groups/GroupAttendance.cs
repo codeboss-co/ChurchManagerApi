@@ -81,7 +81,7 @@ namespace ChurchManager.Persistence.Models.Groups
         /// <summary>
         /// Gets a value indicating whether attendance was reviewed.
         /// </summary>
-        public virtual bool AttendanceReviewed => AttendanceReview.IsReviewed.HasValue && AttendanceReview.IsReviewed.Value;
+        public virtual bool AttendanceReviewed => AttendanceReview != null && AttendanceReview.IsReviewed.HasValue && AttendanceReview.IsReviewed.Value;
     }
 
     [Owned]
