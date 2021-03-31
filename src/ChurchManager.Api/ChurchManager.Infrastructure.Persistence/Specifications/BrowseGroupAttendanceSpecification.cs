@@ -47,7 +47,7 @@ namespace ChurchManager.Infrastructure.Persistence.Specifications
             // Date Filters
             if(from.HasValue)
             {
-                Expression<Func<GroupAttendance, bool>> fromFilter = g => g.AttendanceDate >= to.Value;
+                Expression<Func<GroupAttendance, bool>> fromFilter = g => g.AttendanceDate >= from.Value;
                 Criteria = Criteria.And(fromFilter);
             }
             if(to.HasValue)
