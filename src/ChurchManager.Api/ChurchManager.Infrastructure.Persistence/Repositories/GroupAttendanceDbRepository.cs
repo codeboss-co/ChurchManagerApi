@@ -36,6 +36,7 @@ namespace ChurchManager.Infrastructure.Persistence.Repositories
             return PagedResult<GroupAttendanceViewModel>.Create(
                 pagedResult.Items.Select(x => new GroupAttendanceViewModel
                 {
+                    GroupName = x.Group.Name,
                     AttendanceDate = x.AttendanceDate,
                     DidNotOccur = x.DidNotOccur,
                     AttendanceCount = x.AttendanceCount,

@@ -8,6 +8,9 @@ namespace ChurchManager.Infrastructure.Persistence.Specifications
 {
     public class BrowseGroupAttendanceSpecification : Specification<GroupAttendance>
     {
+        // When the GroupId is 0 - it means we want to include all groups
+        private const int AllGroupsId = 0;
+
         public BrowseGroupAttendanceSpecification(
             int groupTypeId,
             int? churchId,
@@ -28,7 +31,7 @@ namespace ChurchManager.Infrastructure.Persistence.Specifications
             }
 
             // Group Filter
-            if(groupId.HasValue)
+            if(groupId.HasValue && groupId != AllGroupsId)
             {
                 Expression<Func<GroupAttendance, bool>> groupFilter = g => g.Group.Id == groupId;
                 Criteria = Criteria.And(groupFilter);

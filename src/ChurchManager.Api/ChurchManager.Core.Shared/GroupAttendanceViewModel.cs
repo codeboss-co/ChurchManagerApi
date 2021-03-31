@@ -5,6 +5,7 @@ namespace ChurchManager.Core.Shared
 {
     public class GroupAttendanceViewModel
     {
+        public string GroupName { get; set; }
         public DateTime AttendanceDate { get; set; }
         public bool? DidNotOccur { get; set; }
         public int? AttendanceCount { get; set; }
