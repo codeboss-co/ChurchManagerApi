@@ -19,11 +19,18 @@ namespace ChurchManager.Infrastructure.Persistence.Repositories
         {
         }
 
-        public async Task<PagedResult<GroupAttendanceViewModel>> BrowseGroupAttendance(QueryParameter query, int groupTypeId, int? churchId, bool? withFeedback, DateTime? from, DateTime? to, CancellationToken ct = default)
+        public async Task<PagedResult<GroupAttendanceViewModel>> BrowseGroupAttendance(
+            QueryParameter query,
+            int groupTypeId,
+            int? churchId,
+            int? groupId,
+            bool? withFeedback,
+            DateTime? from, DateTime? to,
+            CancellationToken ct = default)
         {
             // Paging
             var pagedResult = await Queryable()
-                .Specify(new BrowseGroupAttendanceSpecification(groupTypeId, churchId, withFeedback, from, to))
+                .Specify(new BrowseGroupAttendanceSpecification(groupTypeId, churchId, groupId, withFeedback, from, to))
                 .PaginateAsync(query);
 
             return PagedResult<GroupAttendanceViewModel>.Create(

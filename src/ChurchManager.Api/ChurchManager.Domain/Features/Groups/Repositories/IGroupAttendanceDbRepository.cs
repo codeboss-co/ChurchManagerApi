@@ -12,6 +12,12 @@ namespace ChurchManager.Domain.Features.Groups.Repositories
     public interface IGroupAttendanceDbRepository : IGenericRepositoryAsync<GroupAttendance>
     {
         Task<PagedResult<GroupAttendanceViewModel>> BrowseGroupAttendance(
-            QueryParameter query, int groupTypeId, int? churchId, bool? withFeedback, DateTime? from, DateTime? to, CancellationToken ct = default);
+            QueryParameter query, 
+            int groupTypeId,
+            int? churchId,
+            int? groupId,
+            bool? withFeedback,
+            DateTime? from, DateTime? to,
+            CancellationToken ct = default);
     }
 }

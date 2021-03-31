@@ -18,8 +18,8 @@ namespace ChurchManager.Api.Controllers.v1
             _currentUser = currentUser;
         }
 
-        [HttpPost("browse")]
-        public async Task<IActionResult> BrowseCellGroups([FromBody] BrowseGroupAttendanceQuery query, CancellationToken token)
+        [HttpPost("attendance/browse")]
+        public async Task<IActionResult> BrowseGroupAttendances([FromBody] BrowseGroupAttendanceQuery query, CancellationToken token)
         {
             var groups = await Mediator.Send(query, token);
             return Ok(groups);

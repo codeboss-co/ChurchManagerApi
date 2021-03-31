@@ -8,7 +8,12 @@ namespace ChurchManager.Infrastructure.Persistence.Specifications
 {
     public class BrowseGroupAttendanceSpecification : Specification<GroupAttendance>
     {
-        public BrowseGroupAttendanceSpecification(int groupTypeId, int? churchId, bool? withFeedback, DateTime? from, DateTime? to)
+        public BrowseGroupAttendanceSpecification(
+            int groupTypeId,
+            int? churchId,
+            int? groupId,
+            bool? withFeedback,
+            DateTime? from, DateTime? to)
         {
             // Group Type Filter
             Expression<Func<GroupAttendance, bool>> groupTypeFilter = g => g.Group.GroupTypeId == groupTypeId;
@@ -20,6 +25,13 @@ namespace ChurchManager.Infrastructure.Persistence.Specifications
             {
                 Expression<Func<GroupAttendance, bool>> churchFilter = g => g.Group.ChurchId.HasValue && g.Group.ChurchId.Value == churchId;
                 Criteria = Criteria.And(churchFilter);
+            }
+
+            // Group Filter
+            if(groupId.HasValue)
+            {
+                Expression<Func<GroupAttendance, bool>> groupFilter = g => g.Group.Id == groupId;
+                Criteria = Criteria.And(groupFilter);
             }
 
             // Include attendance with feedback
