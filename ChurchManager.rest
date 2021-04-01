@@ -104,3 +104,17 @@ Authorization: Bearer {{accessToken}}
 GET {{api}}/v1/dashboard/church-attendance-breakdown?from=2019-01-01&to=2022-01-01
 Content-Type: application/json
 Authorization: Bearer {{accessToken}}
+
+# ============== CELL MINISTRY ==================== #
+# Browse Attendance
+POST {{api}}/v1/cellministry/browse
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
+{
+    "groupTypeId": 1,    
+    "page": 1,
+    "results": 20,
+    "orderBy": "AttendanceDate",
+    "sortOrder": "DESC"
+}

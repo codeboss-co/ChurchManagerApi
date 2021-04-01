@@ -1,11 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using ChurchManager.Core.Shared;
 
 namespace ChurchManager.Application.Features.Churches.Queries.RetrieveChurches
 {
-    public record ChurchViewModel
+    public record ChurchViewModel : SelectItemViewModel
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
         public string Description { get; set; }
         public string ShortCode { get; set; }
     }

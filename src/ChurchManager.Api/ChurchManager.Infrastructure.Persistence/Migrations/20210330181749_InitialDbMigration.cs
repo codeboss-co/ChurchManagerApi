@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -365,7 +366,11 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                     FirstTimerCount = table.Column<int>(type: "integer", nullable: true),
                     NewConvertCount = table.Column<int>(type: "integer", nullable: true),
                     ReceivedHolySpiritCount = table.Column<int>(type: "integer", nullable: true),
-                    Notes = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: true)
+                    Notes = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: true),
+                    PhotoUrls = table.Column<List<string>>(type: "text[]", nullable: true),
+                    AttendanceReview_IsReviewed = table.Column<bool>(type: "boolean", nullable: true),
+                    AttendanceReview_Feedback = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: true),
+                    AttendanceReview_ReviewedBy = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: true)
                 },
                 constraints: table =>
                 {
