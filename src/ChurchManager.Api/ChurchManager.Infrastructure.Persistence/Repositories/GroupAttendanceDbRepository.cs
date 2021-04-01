@@ -57,9 +57,10 @@ namespace ChurchManager.Infrastructure.Persistence.Repositories
 
         public  async Task<dynamic> WeeklyBreakdownForPeriodAsync(int? groupId, ReportPeriod reportPeriod, CancellationToken ct)
         {
-            var queryable = Queryable();
-            var monthAgo = DateTime.Now.AddMonths(-1);
-            /*switch (reportPeriod)
+            var queryable = Queryable()
+                .Where(x => x.DidNotOccur == null || x.DidNotOccur.Value != true);
+
+            switch (reportPeriod)
             {
                 case ReportPeriod.Month:
                     var monthAgo = DateTime.Now.AddMonths(-1);
@@ -79,42 +80,10 @@ namespace ChurchManager.Infrastructure.Persistence.Repositories
             if (groupId.HasValue)
             {
                 queryable = queryable.Where(x => x.GroupId == groupId.Value);
-            }*/
+            }
 
             // https://entityframeworkcore.com/knowledge-base/53307101/group-by-week-ef-core-2-1
-            /*var results = await queryable
-                .Select(x => new
-                {
-                    x.AttendanceDate,
-                    x.AttendanceCount,
-                    x.NewConvertCount,
-                    x.FirstTimerCount,
-                })
-                .GroupBy(g => new { Week = g.AttendanceDate.Year },
-                    (x, e) => new
-                    {
-                        Week = x,
-                        TotalAttendance = e.Sum(y => y.AttendanceCount),
-                        TotalNewConverts = e.Sum(y => y.NewConvertCount),
-                        TotalFirstTimers = e.Sum(y => y.FirstTimerCount)
-                    })
-                .OrderBy(x => x.Week)
-                .ToListAsync(ct);*/
-
-
-            /*.Select(e => new
-        {
-            Week = e.Key,
-            TotalAttendance = e.Sum(y => y.AttendanceCount),
-            TotalNewConverts = e.Sum(y => y.NewConvertCount),
-            TotalFirstTimers = e.Sum(y => y.FirstTimerCount)
-        })*/
-
-            //return results;
-
-            return await Queryable()
-                .Where(x => x.AttendanceDate >= monthAgo &&
-                            (x.DidNotOccur == null || x.DidNotOccur.Value != true))
+            return await queryable
                 .Select(x => new
                 {
                     x.AttendanceDate,
@@ -137,8 +106,6 @@ namespace ChurchManager.Infrastructure.Persistence.Repositories
                     })
                 .OrderBy(x => x.Week)
                 .ToListAsync(ct);
-
-           
         }
     }
 }
