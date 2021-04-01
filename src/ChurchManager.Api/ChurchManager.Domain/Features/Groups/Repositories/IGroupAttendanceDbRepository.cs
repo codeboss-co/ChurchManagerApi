@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using ChurchManager.Core.Shared;
 using ChurchManager.Core.Shared.Parameters;
+using ChurchManager.Domain.Common;
 using ChurchManager.Infrastructure.Abstractions.Persistence;
 using ChurchManager.Persistence.Models.Groups;
 using Convey.CQRS.Queries;
@@ -19,5 +20,7 @@ namespace ChurchManager.Domain.Features.Groups.Repositories
             bool? withFeedback,
             DateTime? from, DateTime? to,
             CancellationToken ct = default);
+
+        Task<dynamic> WeeklyBreakdownForPeriodAsync(int? groupId, ReportPeriod reportPeriod, CancellationToken ct);
     }
 }

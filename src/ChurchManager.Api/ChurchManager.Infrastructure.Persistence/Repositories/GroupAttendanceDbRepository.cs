@@ -1,15 +1,18 @@
 ﻿using System;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using ChurchManager.Core.Shared;
 using ChurchManager.Core.Shared.Parameters;
+using ChurchManager.Domain.Common;
 using ChurchManager.Domain.Features.Groups.Repositories;
 using ChurchManager.Infrastructure.Persistence.Contexts;
 using ChurchManager.Infrastructure.Persistence.Extensions;
 using ChurchManager.Infrastructure.Persistence.Specifications;
 using ChurchManager.Persistence.Models.Groups;
 using Convey.CQRS.Queries;
+using Microsoft.EntityFrameworkCore;
 
 namespace ChurchManager.Infrastructure.Persistence.Repositories
 {
@@ -50,6 +53,92 @@ namespace ChurchManager.Infrastructure.Persistence.Repositories
                 pagedResult.ResultsPerPage,
                 pagedResult.TotalPages,
                 pagedResult.TotalResults);
+        }
+
+        public  async Task<dynamic> WeeklyBreakdownForPeriodAsync(int? groupId, ReportPeriod reportPeriod, CancellationToken ct)
+        {
+            var queryable = Queryable();
+            var monthAgo = DateTime.Now.AddMonths(-1);
+            /*switch (reportPeriod)
+            {
+                case ReportPeriod.Month:
+                    var monthAgo = DateTime.Now.AddMonths(-1);
+                    var now = DateTime.Now;
+                    queryable = queryable.Where(x => 
+                        x.AttendanceDate >= monthAgo &&
+                        x.AttendanceDate <= now);
+                    break;
+
+                default:
+                    var sixMonthsAgo = DateTime.Now.AddMonths(-6);
+                    queryable = queryable.Where(x =>
+                        x.AttendanceDate >= sixMonthsAgo);
+                    break;
+            }
+
+            if (groupId.HasValue)
+            {
+                queryable = queryable.Where(x => x.GroupId == groupId.Value);
+            }*/
+
+            // https://entityframeworkcore.com/knowledge-base/53307101/group-by-week-ef-core-2-1
+            /*var results = await queryable
+                .Select(x => new
+                {
+                    x.AttendanceDate,
+                    x.AttendanceCount,
+                    x.NewConvertCount,
+                    x.FirstTimerCount,
+                })
+                .GroupBy(g => new { Week = g.AttendanceDate.Year },
+                    (x, e) => new
+                    {
+                        Week = x,
+                        TotalAttendance = e.Sum(y => y.AttendanceCount),
+                        TotalNewConverts = e.Sum(y => y.NewConvertCount),
+                        TotalFirstTimers = e.Sum(y => y.FirstTimerCount)
+                    })
+                .OrderBy(x => x.Week)
+                .ToListAsync(ct);*/
+
+
+            /*.Select(e => new
+        {
+            Week = e.Key,
+            TotalAttendance = e.Sum(y => y.AttendanceCount),
+            TotalNewConverts = e.Sum(y => y.NewConvertCount),
+            TotalFirstTimers = e.Sum(y => y.FirstTimerCount)
+        })*/
+
+            //return results;
+
+            return await Queryable()
+                .Where(x => x.AttendanceDate >= monthAgo &&
+                            (x.DidNotOccur == null || x.DidNotOccur.Value != true))
+                .Select(x => new
+                {
+                    x.AttendanceDate,
+                    x.AttendanceCount,
+                    x.NewConvertCount,
+                    x.FirstTimerCount,
+                    x.ReceivedHolySpiritCount
+                })
+                .GroupBy(x => new
+                    {
+                        Week = 1 + (x.AttendanceDate.DayOfYear - 1) / 7
+                    },
+                    (x, e) => new
+                    {
+                        x.Week,
+                        TotalAttendance = e.Sum(y => y.AttendanceCount),
+                        TotalNewConverts = e.Sum(y => y.NewConvertCount),
+                        TotalFirstTimers = e.Sum(y => y.FirstTimerCount),
+                        TotalHolySpirit = e.Sum(y => y.ReceivedHolySpiritCount),
+                    })
+                .OrderBy(x => x.Week)
+                .ToListAsync(ct);
+
+           
         }
     }
 }
