@@ -5,8 +5,11 @@ using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using ChurchManager.Domain.Features.People.Repositories;
+using ChurchManager.Infrastructure.Abstractions.Persistence;
+using ChurchManager.Persistence.Models.People;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace ChurchManager.Api.Hubs
@@ -15,6 +18,7 @@ namespace ChurchManager.Api.Hubs
     public class NotificationHub : Hub
     {
         private readonly IPersonDbRepository _dbRepository;
+        private readonly IGenericRepositoryAsync<OnlineUser> _onlineUserRepository;
         private readonly ILogger<NotificationHub> _logger;
 
         private static readonly ConcurrentBag<NotificationConnection> NotificationConnections = new();
@@ -22,9 +26,11 @@ namespace ChurchManager.Api.Hubs
 
         public NotificationHub(
             IPersonDbRepository dbRepository,
+            IGenericRepositoryAsync<OnlineUser> onlineUserRepository,
             ILogger<NotificationHub> logger)
         {
             _dbRepository = dbRepository;
+            _onlineUserRepository = onlineUserRepository;
             _logger = logger;
         }
 
@@ -51,12 +57,19 @@ namespace ChurchManager.Api.Hubs
             // Extra
             var connectionId = Context.ConnectionId;
             var userId = Context.UserIdentifier;
-            if (NotificationConnections.All(p => p.UserId != userId))
+            var onlineUser = await _onlineUserRepository.Queryable().FirstOrDefaultAsync(p => p.UserLoginId == userId);
+            if (onlineUser == null)
             {
-                NotificationConnections.Add(new NotificationConnection { UserId = userId, ConnectionId = connectionId });
+                await _onlineUserRepository.AddAsync(new OnlineUser {UserLoginId = userId});
             }
+            else
+            {
+                onlineUser.GoOnline();
+            }
+            await _onlineUserRepository.SaveChangesAsync();
 
-            var onlineUser = new
+
+            var onlineUserVm = new
             {
                 Id = userId,
                 Name = $"{person.FullName.FirstName} {person.FullName.LastName}",
@@ -65,19 +78,22 @@ namespace ChurchManager.Api.Hubs
                 Unread = 2
             };
 
-            await Clients.All.SendAsync("OnlineUser", onlineUser);
+            await Clients.All.SendAsync("OnlineUser", onlineUserVm);
         }
 
         public override async Task OnDisconnectedAsync(Exception ex)
         {
             var userId = Context.UserIdentifier;
-            var item = NotificationConnections.FirstOrDefault(p => p.UserId == userId);
-            if(item != null && NotificationConnections.TryTake(out item))
+            var onlineUser = await _onlineUserRepository.Queryable().FirstOrDefaultAsync(p => p.UserLoginId == userId);
+            if(onlineUser != null)
             {
                 _logger.LogDebug("[x] NotificationHub Disconnected for {user} with Connection: {connection}", Context.UserIdentifier, Context.ConnectionId);
-                
+
+                onlineUser.GoOffline();
+                await _onlineUserRepository.SaveChangesAsync();
+
                 var person = await _dbRepository.ProfileByUserLoginId(Context.UserIdentifier);
-                var onlineUser = new
+                var onlineUserVm = new
                 {
                     Id = userId,
                     Name = $"{person.FullName.FirstName} {person.FullName.LastName}",
@@ -86,7 +102,7 @@ namespace ChurchManager.Api.Hubs
                     Unread = 2
                 };
 
-                await Clients.All.SendAsync("OnlineUser", onlineUser);
+                await Clients.All.SendAsync("OnlineUser", onlineUserVm);
             }
 
             await base.OnDisconnectedAsync(ex);
