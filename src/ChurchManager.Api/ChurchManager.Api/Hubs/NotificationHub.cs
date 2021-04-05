@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using ChurchManager.Domain.Features.People.Repositories;
 using ChurchManager.Infrastructure.Abstractions.Persistence;
@@ -21,9 +18,6 @@ namespace ChurchManager.Api.Hubs
         private readonly IGenericRepositoryAsync<OnlineUser> _onlineUserRepository;
         private readonly ILogger<NotificationHub> _logger;
 
-        private static readonly ConcurrentBag<NotificationConnection> NotificationConnections = new();
-
-
         public NotificationHub(
             IPersonDbRepository dbRepository,
             IGenericRepositoryAsync<OnlineUser> onlineUserRepository,
@@ -40,27 +34,37 @@ namespace ChurchManager.Api.Hubs
         /// </summary>
         public override async Task OnConnectedAsync()
         {
-            var person = await _dbRepository.ProfileByUserLoginId(Context.UserIdentifier);
-
             _logger.LogDebug("[√] NotificationHub Connected for {user}", Context.UserIdentifier);
 
+            var person = await _dbRepository.ProfileByUserLoginId(Context.UserIdentifier) 
+                         ?? throw new ArgumentNullException("person", "Person not found with UserLoginId");
             var notification = new
             {
                 Type = "info",
-                Title = $"Welcome back, {person?.FullName.FirstName}",
+                Title = $"Welcome back, {person.FullName.FirstName}",
                 Payload = Context.UserIdentifier
             };
 
+            // Send welcome message to user
             await Clients.User(Context.UserIdentifier).SendAsync("DirectMessage", notification);
             await base.OnConnectedAsync();
 
             // Extra
             var connectionId = Context.ConnectionId;
             var userId = Context.UserIdentifier;
-            var onlineUser = await _onlineUserRepository.Queryable().FirstOrDefaultAsync(p => p.UserLoginId == userId);
-            if (onlineUser == null)
+            var onlineUser = await _onlineUserRepository
+                .Queryable()
+                .Include(x => x.Person)
+                .FirstOrDefaultAsync(p => p.Person.UserLoginId == userId);
+
+            // Create new online user
+            if (onlineUser is null)
             {
-                await _onlineUserRepository.AddAsync(new OnlineUser {UserLoginId = userId});
+                await _onlineUserRepository.AddAsync(new OnlineUser
+                {
+                    PersonId = person.PersonId,
+                    ConnectionId = connectionId
+                });
             }
             else
             {
@@ -68,41 +72,55 @@ namespace ChurchManager.Api.Hubs
             }
             await _onlineUserRepository.SaveChangesAsync();
 
+            var onlineUsers = _onlineUserRepository
+                .Queryable()
+                .AsNoTracking()
+                .Include(x => x.Person)
+                //.Where(x => x.Status == "online")
+                .Select(x => new
+                {
+                    Id = userId,
+                    Name = $"{x.Person.FullName.FirstName} {x.Person.FullName.LastName}",
+                    Avatar = x.Person.PhotoUrl,
+                    x.Status,
+                    Unread = 2,
+                    LastOnline = x.LastOnlineDateTime
+                });
 
-            var onlineUserVm = new
-            {
-                Id = userId,
-                Name = $"{person.FullName.FirstName} {person.FullName.LastName}",
-                Avatar = person.PhotoUrl,
-                Status = "online",
-                Unread = 2
-            };
-
-            await Clients.All.SendAsync("OnlineUser", onlineUserVm);
+            await Clients.All.SendAsync("OnlineUsers", onlineUsers);
         }
 
         public override async Task OnDisconnectedAsync(Exception ex)
         {
             var userId = Context.UserIdentifier;
-            var onlineUser = await _onlineUserRepository.Queryable().FirstOrDefaultAsync(p => p.UserLoginId == userId);
-            if(onlineUser != null)
+            var onlineUser = await _onlineUserRepository
+                .Queryable()
+                .Include(x => x.Person)
+                .FirstOrDefaultAsync(p => p.Person.UserLoginId == userId);
+
+            if(onlineUser is not null)
             {
                 _logger.LogDebug("[x] NotificationHub Disconnected for {user} with Connection: {connection}", Context.UserIdentifier, Context.ConnectionId);
 
                 onlineUser.GoOffline();
                 await _onlineUserRepository.SaveChangesAsync();
 
-                var person = await _dbRepository.ProfileByUserLoginId(Context.UserIdentifier);
-                var onlineUserVm = new
-                {
-                    Id = userId,
-                    Name = $"{person.FullName.FirstName} {person.FullName.LastName}",
-                    Avatar = person.PhotoUrl,
-                    Status = "offline",
-                    Unread = 2
-                };
+                var onlineUsers = _onlineUserRepository
+                    .Queryable()
+                    .AsNoTracking()
+                    .Include(x => x.Person)
+                    //.Where(x => x.Status == "online")
+                    .Select(x => new
+                    {
+                        Id = userId,
+                        Name = $"{x.Person.FullName.FirstName} {x.Person.FullName.LastName}",
+                        Avatar = x.Person.PhotoUrl,
+                        x.Status,
+                        Unread = 2,
+                        LastOnline = x.LastOnlineDateTime
+                    });
 
-                await Clients.All.SendAsync("OnlineUser", onlineUserVm);
+                await Clients.All.SendAsync("OnlineUsers", onlineUsers);
             }
 
             await base.OnDisconnectedAsync(ex);

@@ -23,6 +23,7 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
 
             migrationBuilder.CreateTable(
                 name: "ChurchAttendanceType",
+                schema: "Churches",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
@@ -93,6 +94,7 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
 
             migrationBuilder.CreateTable(
                 name: "GroupFeature",
+                schema: "Groups",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
@@ -185,6 +187,7 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                     table.ForeignKey(
                         name: "FK_ChurchAttendance_ChurchAttendanceType_ChurchAttendanceTypeId",
                         column: x => x.ChurchAttendanceTypeId,
+                        principalSchema: "Churches",
                         principalTable: "ChurchAttendanceType",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -405,6 +408,7 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                     table.ForeignKey(
                         name: "FK_GroupFeatures_GroupFeature_FeaturesId",
                         column: x => x.FeaturesId,
+                        principalSchema: "Groups",
                         principalTable: "GroupFeature",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -412,6 +416,7 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
 
             migrationBuilder.CreateTable(
                 name: "DiscipleshipProgram",
+                schema: "Discipleship",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
@@ -520,6 +525,30 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "OnlineUser",
+                schema: "People",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    PersonId = table.Column<int>(type: "integer", nullable: false),
+                    ConnectionId = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: true),
+                    Status = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: true),
+                    LastOnlineDateTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_OnlineUser", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_OnlineUser_Person_PersonId",
+                        column: x => x.PersonId,
+                        principalSchema: "People",
+                        principalTable: "Person",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "PhoneNumber",
                 schema: "People",
                 columns: table => new
@@ -572,6 +601,7 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                     table.ForeignKey(
                         name: "FK_DiscipleshipStep_DiscipleshipProgram_DiscipleshipProgramId",
                         column: x => x.DiscipleshipProgramId,
+                        principalSchema: "Discipleship",
                         principalTable: "DiscipleshipProgram",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -648,6 +678,7 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_DiscipleshipProgram_PersonId",
+                schema: "Discipleship",
                 table: "DiscipleshipProgram",
                 column: "PersonId");
 
@@ -754,6 +785,12 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                 column: "PersonId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_OnlineUser_PersonId",
+                schema: "People",
+                table: "OnlineUser",
+                column: "PersonId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Person_ChurchId",
                 schema: "People",
                 table: "Person",
@@ -795,21 +832,28 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                 schema: "People");
 
             migrationBuilder.DropTable(
+                name: "OnlineUser",
+                schema: "People");
+
+            migrationBuilder.DropTable(
                 name: "PhoneNumber",
                 schema: "People");
 
             migrationBuilder.DropTable(
-                name: "ChurchAttendanceType");
+                name: "ChurchAttendanceType",
+                schema: "Churches");
 
             migrationBuilder.DropTable(
-                name: "DiscipleshipProgram");
+                name: "DiscipleshipProgram",
+                schema: "Discipleship");
 
             migrationBuilder.DropTable(
                 name: "DiscipleshipStepDefinition",
                 schema: "Discipleship");
 
             migrationBuilder.DropTable(
-                name: "GroupFeature");
+                name: "GroupFeature",
+                schema: "Groups");
 
             migrationBuilder.DropTable(
                 name: "GroupAttendance",
