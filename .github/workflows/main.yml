@@ -1,0 +1,76 @@
+# This workflow will build and push a new container image to Amazon ECR,
+# and then will deploy a new task definition to Amazon ECS, when a release is created
+
+on:
+  push:
+    branches:
+    - develop
+    - master
+
+# Global environment variables
+env:
+    CONTAINER_NAME: churchmanager-api
+    ECR_REPOSITORY: prod-churchmanager-api-ecr-repository
+
+name: Deploy to Amazon ECS
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    #environment: Development
+
+    steps:
+
+    -   name: Set env to Test
+        if: endsWith(github.ref, '/develop')
+        run: |
+            echo "ENVIRONMENT=Test" >> $GITHUB_ENV
+            echo "CLUSTER_NAME=test-Cluster" >> $GITHUB_ENV
+            echo "SERVICE_NAME=test-${{ env.CONTAINER_NAME }}-service" >> $GITHUB_ENV
+
+    -   name: Set env to Production
+        if: endsWith(github.ref, '/master')
+        run: |
+            echo "ENVIRONMENT=Production" >> $GITHUB_ENV
+            echo "CLUSTER_NAME=prod-Cluster" >> $GITHUB_ENV
+            echo "SERVICE_NAME=prod-${{ env.CONTAINER_NAME }}-service" >> $GITHUB_ENV
+
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Install ecs-deploy script
+      run: pip install --upgrade ecs-deploy
+
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-east-1
+
+    - name: Login to Amazon ECR
+      id: login-ecr
+      uses: aws-actions/amazon-ecr-login@v1
+
+    - name: Set current date
+      id: date
+      run: echo "::set-output name=date::$(date +'%Y%m%d')"
+
+    - name: Build, tag, and push image to Amazon ECR
+      id: build-image
+      env:
+        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        ECR_REPOSITORY: ${{ env.ECR_REPOSITORY }}
+        IMAGE_TAG: ${{ steps.date.outputs.date }}-${{ github.run_number }}
+      run: |
+        # Build & push a docker container to ECR.
+        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+        echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+        echo "::set-output name=tag::$IMAGE_TAG"
+
+    - name: Deploy ECS Cluster
+      if: endsWith(github.ref, '/develop') ||  endsWith(github.ref, '/master')
+      run: |
+          ecs deploy ${{ env.CLUSTER_NAME }} ${{ env.SERVICE_NAME }} --tag ${{ steps.build-image.outputs.tag }} -e ${{ env.CONTAINER_NAME }} ASPNETCORE_ENVIRONMENT ${{ env.ENVIRONMENT }}
