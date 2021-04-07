@@ -115,7 +115,7 @@ namespace ChurchManager.Application.Features.Groups.Services
                 await _attendanceDbRepository.SaveChangesAsync();
                 await transaction.CommitAsync(ct);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 await transaction.RollbackAsync(ct);
                 throw;

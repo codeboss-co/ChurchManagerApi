@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="CodeBoss.AspNetCore" Version="0.1.9" />
+    <PackageReference Include="CodeBoss.AspNetCore" Version="0.1.10" />
   </ItemGroup>
 
   <ItemGroup>
