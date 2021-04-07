@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using ChurchManager.Domain.Features.People.Repositories;
 using ChurchManager.Infrastructure.Abstractions.Persistence;
 using ChurchManager.Persistence.Models.People;
+using Codeboss.Types;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
@@ -16,15 +17,18 @@ namespace ChurchManager.Api.Hubs
     {
         private readonly IPersonDbRepository _dbRepository;
         private readonly IGenericRepositoryAsync<OnlineUser> _onlineUserRepository;
+        private readonly IDateTimeProvider _dateTime;
         private readonly ILogger<NotificationHub> _logger;
 
         public NotificationHub(
             IPersonDbRepository dbRepository,
             IGenericRepositoryAsync<OnlineUser> onlineUserRepository,
+            IDateTimeProvider dateTime,
             ILogger<NotificationHub> logger)
         {
             _dbRepository = dbRepository;
             _onlineUserRepository = onlineUserRepository;
+            _dateTime = dateTime;
             _logger = logger;
         }
 
@@ -84,7 +88,7 @@ namespace ChurchManager.Api.Hubs
                     Avatar = x.Person.PhotoUrl,
                     x.Status,
                     Unread = 2,
-                    LastOnline = x.LastOnlineDateTime
+                    LastOnline = _dateTime.ConvertFromUtc(x.LastOnlineDateTime.Value)
                 });
 
             await Clients.All.SendAsync("OnlineUsers", onlineUsers);
@@ -117,7 +121,7 @@ namespace ChurchManager.Api.Hubs
                         Avatar = x.Person.PhotoUrl,
                         x.Status,
                         Unread = 2,
-                        LastOnline = x.LastOnlineDateTime
+                        LastOnline = _dateTime.ConvertFromUtc(x.LastOnlineDateTime.Value)
                     });
 
                 await Clients.All.SendAsync("OnlineUsers", onlineUsers);
