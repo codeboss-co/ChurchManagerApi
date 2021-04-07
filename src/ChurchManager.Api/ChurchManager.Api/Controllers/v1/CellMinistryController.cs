@@ -1,6 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using ChurchManager.Application.Features.Groups.Queries.BrowseGroupAttendance;
+using ChurchManager.Application.Features.Groups.Queries.Charts.WeeklyComparison;
 using ChurchManager.Domain;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -23,6 +24,13 @@ namespace ChurchManager.Api.Controllers.v1
         {
             var groups = await Mediator.Send(query, token);
             return Ok(groups);
+        }
+
+        [HttpGet("charts")]
+        public async Task<IActionResult> Charts([FromQuery] WeeklyBreakdownForMonthQuery query, CancellationToken token)
+        {
+            var data = await Mediator.Send(query, token);
+            return Ok(data);
         }
     }
 }

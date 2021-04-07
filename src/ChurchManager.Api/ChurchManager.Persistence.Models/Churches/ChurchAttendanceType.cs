@@ -1,8 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Codeboss.Types;
 
 namespace ChurchManager.Persistence.Models.Churches
 {
+    [Table("ChurchAttendanceType", Schema = "Churches")]
+
     public record ChurchAttendanceType : IEntity<int>
     {
         [Key]

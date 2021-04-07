@@ -118,3 +118,8 @@ Authorization: Bearer {{accessToken}}
     "orderBy": "AttendanceDate",
     "sortOrder": "DESC"
 }
+
+# Charts
+GET {{api}}/v1/cellministry/charts
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}

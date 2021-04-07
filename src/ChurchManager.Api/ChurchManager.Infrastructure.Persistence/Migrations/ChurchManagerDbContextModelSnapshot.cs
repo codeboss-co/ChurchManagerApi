@@ -133,7 +133,7 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ChurchAttendanceType");
+                    b.ToTable("ChurchAttendanceType", "Churches");
                 });
 
             modelBuilder.Entity("ChurchManager.Persistence.Models.Churches.ChurchGroup", b =>
@@ -206,7 +206,7 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("PersonId");
 
-                    b.ToTable("DiscipleshipProgram");
+                    b.ToTable("DiscipleshipProgram", "Discipleship");
                 });
 
             modelBuilder.Entity("ChurchManager.Persistence.Models.Discipleship.DiscipleshipStep", b =>
@@ -448,7 +448,7 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GroupFeature");
+                    b.ToTable("GroupFeature", "Groups");
                 });
 
             modelBuilder.Entity("ChurchManager.Persistence.Models.Groups.GroupMember", b =>
@@ -689,6 +689,34 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("NoteType", "People");
+                });
+
+            modelBuilder.Entity("ChurchManager.Persistence.Models.People.OnlineUser", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("ConnectionId")
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<DateTimeOffset>("LastOnlineDateTime")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("PersonId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Status")
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PersonId");
+
+                    b.ToTable("OnlineUser", "People");
                 });
 
             modelBuilder.Entity("ChurchManager.Persistence.Models.People.Person", b =>
@@ -1055,6 +1083,17 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                         .HasForeignKey("PersonId");
 
                     b.Navigation("NoteType");
+                });
+
+            modelBuilder.Entity("ChurchManager.Persistence.Models.People.OnlineUser", b =>
+                {
+                    b.HasOne("ChurchManager.Persistence.Models.People.Person", "Person")
+                        .WithMany()
+                        .HasForeignKey("PersonId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Person");
                 });
 
             modelBuilder.Entity("ChurchManager.Persistence.Models.People.Person", b =>
