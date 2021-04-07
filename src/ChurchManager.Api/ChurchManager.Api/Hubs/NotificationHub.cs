@@ -51,7 +51,6 @@ namespace ChurchManager.Api.Hubs
 
             // Send welcome message to user
             await Clients.User(Context.UserIdentifier).SendAsync("DirectMessage", notification);
-            await base.OnConnectedAsync();
 
             // Extra
             var connectionId = Context.ConnectionId;
@@ -93,6 +92,8 @@ namespace ChurchManager.Api.Hubs
                 .ToListAsync();
             
             await Clients.All.SendAsync("OnlineUsers", onlineUsers);
+
+            await base.OnConnectedAsync();
         }
 
         public override async Task OnDisconnectedAsync(Exception ex)
@@ -132,11 +133,5 @@ namespace ChurchManager.Api.Hubs
             await base.OnDisconnectedAsync(ex);
         }
 
-    }
-
-    public class NotificationConnection
-    {
-        public string ConnectionId { get; set; }
-        public string UserId { get; set; }
     }
 }
