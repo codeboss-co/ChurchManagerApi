@@ -17,7 +17,7 @@ namespace ChurchManager.Persistence.Models.People
         public string ConnectionId { get; set; }
         [MaxLength(20)] 
         public string Status { get; set; } = "online"; // offline
-        public DateTime? LastOnlineDateTime { get; set; } = DateTime.UtcNow;
+        public DateTimeOffset LastOnlineDateTime { get; set; } = DateTimeOffset.UtcNow;
 
         #region Navigation
 
@@ -36,5 +36,7 @@ namespace ChurchManager.Persistence.Models.People
             Status = "offline";
             LastOnlineDateTime = DateTime.UtcNow;
         }
+
+        public bool IsOnline => Status == "online";
     }
 }

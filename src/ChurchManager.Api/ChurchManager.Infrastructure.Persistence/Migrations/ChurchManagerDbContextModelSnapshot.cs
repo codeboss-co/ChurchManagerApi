@@ -702,8 +702,8 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
-                    b.Property<DateTime?>("LastOnlineDateTime")
-                        .HasColumnType("timestamp without time zone");
+                    b.Property<DateTimeOffset>("LastOnlineDateTime")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<int>("PersonId")
                         .HasColumnType("integer");

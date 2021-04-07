@@ -11,7 +11,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ChurchManager.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(ChurchManagerDbContext))]
-    [Migration("20210405093700_InitialDbMigration")]
+    [Migration("20210407014432_InitialDbMigration")]
     partial class InitialDbMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -704,8 +704,8 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
-                    b.Property<DateTime?>("LastOnlineDateTime")
-                        .HasColumnType("timestamp without time zone");
+                    b.Property<DateTimeOffset>("LastOnlineDateTime")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<int>("PersonId")
                         .HasColumnType("integer");

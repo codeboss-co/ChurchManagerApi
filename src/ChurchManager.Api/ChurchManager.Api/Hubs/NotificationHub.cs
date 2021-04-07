@@ -76,7 +76,7 @@ namespace ChurchManager.Api.Hubs
             }
             await _onlineUserRepository.SaveChangesAsync();
 
-            var onlineUsers = _onlineUserRepository
+            var onlineUsers = await _onlineUserRepository
                 .Queryable()
                 .AsNoTracking()
                 .Include(x => x.Person)
@@ -88,9 +88,10 @@ namespace ChurchManager.Api.Hubs
                     Avatar = x.Person.PhotoUrl,
                     x.Status,
                     Unread = 2,
-                    LastOnline = _dateTime.ConvertFromUtc(x.LastOnlineDateTime.Value)
-                });
-
+                    LastOnline = _dateTime.ConvertFromUtc(x.LastOnlineDateTime.UtcDateTime)
+                })
+                .ToListAsync();
+            
             await Clients.All.SendAsync("OnlineUsers", onlineUsers);
         }
 
@@ -102,14 +103,14 @@ namespace ChurchManager.Api.Hubs
                 .Include(x => x.Person)
                 .FirstOrDefaultAsync(p => p.Person.UserLoginId == userId);
 
-            if(onlineUser is not null)
+            if(onlineUser is not null && onlineUser.IsOnline)
             {
                 _logger.LogDebug("[x] NotificationHub Disconnected for {user} with Connection: {connection}", Context.UserIdentifier, Context.ConnectionId);
 
                 onlineUser.GoOffline();
                 await _onlineUserRepository.SaveChangesAsync();
 
-                var onlineUsers = _onlineUserRepository
+                var onlineUsers = await _onlineUserRepository
                     .Queryable()
                     .AsNoTracking()
                     .Include(x => x.Person)
@@ -121,8 +122,9 @@ namespace ChurchManager.Api.Hubs
                         Avatar = x.Person.PhotoUrl,
                         x.Status,
                         Unread = 2,
-                        LastOnline = _dateTime.ConvertFromUtc(x.LastOnlineDateTime.Value)
-                    });
+                        LastOnline = _dateTime.ConvertFromUtc(x.LastOnlineDateTime.UtcDateTime)
+                    })
+                    .ToListAsync();
 
                 await Clients.All.SendAsync("OnlineUsers", onlineUsers);
             }

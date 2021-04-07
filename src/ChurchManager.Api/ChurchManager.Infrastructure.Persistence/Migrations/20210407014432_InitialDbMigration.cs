@@ -534,7 +534,7 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                     PersonId = table.Column<int>(type: "integer", nullable: false),
                     ConnectionId = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: true),
                     Status = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: true),
-                    LastOnlineDateTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: true)
+                    LastOnlineDateTime = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
