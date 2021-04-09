@@ -1,4 +1,6 @@
-﻿namespace ChurchManager.Application.Features.People.Commands.AddNewFamily
+﻿using System;
+
+namespace ChurchManager.Application.Features.People.Commands.AddNewFamily
 {
     public record BirthDate
     {
@@ -14,6 +16,8 @@
         public string LastName { get; set; }
         public string Gender { get; set; }
         public string AgeClassification { get; set; }
+        public string EmailAddress { get; set; }
+        public string PhoneNumber { get; set; }
         public string Occupation { get; set; }
         public BirthDate BirthDate { get; set; }
         public bool ReceivedHolySpirit { get; set; }
@@ -24,9 +28,8 @@
         public int ChurchId { get; set; }
         public string ConnectionStatus { get; set; }
         public string Source { get; set; }
+        public DateTime? FirstVisitDate { get; set; }
         public PersonBasicDetails Person { get; set; }
-        public string EmailAddress { get; set; }
-        public string PhoneNumber { get; set; }
     }
 
     public record Address

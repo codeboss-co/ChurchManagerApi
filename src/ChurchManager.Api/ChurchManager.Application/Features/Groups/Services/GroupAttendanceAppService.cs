@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -85,6 +86,7 @@ namespace ChurchManager.Application.Features.Groups.Services
                                     FirstVisitDate = command.AttendanceDate,
                                     ConnectionStatus = ConnectionStatus.FirstTimer,
                                     RecordStatus = RecordStatus.Pending,
+                                    PhoneNumbers = new List<PhoneNumber>() { new() { CountryCode = "+27" , Number = x.PhoneNumber } },
                                     Source = $"{group.GroupType.Name} {group.GroupType.GroupTerm}"
                                 }
                             },
