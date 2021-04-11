@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using ChurchManager.Core.Shared;
 using ChurchManager.Domain.Features.People.Repositories;
@@ -46,6 +47,16 @@ namespace ChurchManager.Infrastructure.Persistence.Repositories
                     PhotoUrl = x.PhotoUrl
                 })
                 .FirstOrDefaultAsync();
+        }
+
+        public async Task<AutocompleteResults> AutocompleteAsync(string searchTerm, CancellationToken ct = default)
+        {
+            var autocomplete = await Queryable(new PeopleAutocompleteSpecification(searchTerm))
+                .AsNoTracking()
+                .Select(x => new AutocompleteViewModel(x.Id, x.FullName.ToString()))
+                .ToListAsync(ct);
+
+            return new AutocompleteResults(autocomplete);
         }
     }
 }

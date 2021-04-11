@@ -1,6 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using ChurchManager.Application.Features.People.Commands.AddNewFamily;
+using ChurchManager.Application.Features.People.Queries.PeopleAutocomplete;
 using ChurchManager.Domain;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -28,6 +29,12 @@ namespace ChurchManager.Api.Controllers.v1
         {
             await Mediator.Send(command, token);
             return Accepted();
+        }
+
+        [HttpGet("autocomplete")]
+        public async Task<IActionResult> Autocomplete([FromQuery] PeopleAutocompleteQuery query, CancellationToken token)
+        {
+            return Ok(await Mediator.Send(query, token));
         }
     }
 }
