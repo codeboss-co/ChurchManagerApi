@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using ChurchManager.Core.Shared;
 using ChurchManager.Domain.Features.People.Repositories;
@@ -32,6 +33,16 @@ namespace ChurchManager.Infrastructure.Persistence.Repositories
                 : null;
         }
 
+        public async Task<PersonDomain> ProfileByPersonId(int personId)
+        {
+            var entity = await Queryable(new ProfileByPersonSpecification(personId))
+                .FirstOrDefaultAsync();
+
+            return entity is not null
+                ? new PersonDomain(entity)
+                : null;
+        }
+
         public Task<UserDetails> UserDetailsByUserLoginId(string userLoginId)
         {
             return Queryable()
@@ -46,6 +57,23 @@ namespace ChurchManager.Infrastructure.Persistence.Repositories
                     PhotoUrl = x.PhotoUrl
                 })
                 .FirstOrDefaultAsync();
+        }
+
+        // https://www.npgsql.org/efcore/misc/collations-and-case-sensitivity.html?tabs=data-annotations#ilike
+        // https://stackoverflow.com/questions/45708715/entity-framework-ef-functions-like-vs-string-contains
+        public async Task<PeopleAutocompleteResults> AutocompleteAsync(string searchTerm, CancellationToken ct = default)
+        {
+            var autocomplete = await Queryable()
+                .AsNoTracking()
+                .Where(x => 
+                    EF.Functions.ILike(x.FullName.FirstName, $"%{searchTerm}%") ||
+                    EF.Functions.ILike(x.FullName.MiddleName, $"%{searchTerm}%") ||
+                    EF.Functions.ILike(x.FullName.LastName, $"%{searchTerm}%")
+                )
+                .Select(x => new PeopleAutocompleteViewModel(x.Id, x.FullName.ToString(), x.PhotoUrl))
+                .ToListAsync(ct);
+
+            return new PeopleAutocompleteResults(autocomplete);
         }
     }
 }
