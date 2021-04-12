@@ -33,6 +33,14 @@ namespace ChurchManager.Api.Controllers.v1
             return Ok(response);
         }
 
+        // v1/profiles/person/{{personId}}
+        [HttpGet("person/{personId}")]
+        public async Task<IActionResult> GetUserProfileByPerson(int personId, CancellationToken token)
+        {
+            var response = await Mediator.Send(new ProfileByPersonIdQuery(personId), token);
+            return Ok(response);
+        }
+
         #endregion
 
         #region Current User

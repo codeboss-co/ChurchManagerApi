@@ -14,16 +14,19 @@ namespace ChurchManager.Persistence.Models.People
     [Table("Person", Schema = "People")]
     public class Person : Entity<int>, IAggregateRoot<int>
     {
-        public int? ChurchId { get; set; }
-
+        public FullName FullName { get; set; }
         public string ConnectionStatus { get; set; }
         public DeceasedStatus DeceasedStatus { get; set; }
         public string AgeClassification { get; set; }
         public string Gender { get; set; }
+        public BirthDate BirthDate { get; set; }
+
+        /// <summary>
+        /// Where this person came from e.g. Cell, Outreach, Church, Online etc
+        /// </summary>
+        public string Source { get; set; }
         public DateTime? FirstVisitDate { get; set; }
 
-        public FullName FullName { get; set; }
-        public BirthDate BirthDate { get; set; }
         public Baptism BaptismStatus { get; set; }
 
         public string MaritalStatus { get; set; }
@@ -45,17 +48,15 @@ namespace ChurchManager.Persistence.Models.People
         /// </summary>
         public Guid? GivingGroupId { get; set; }
 
+        public int? ChurchId { get; set; }
+
         /// <summary>
         /// Gets or sets the user login id from AWS Cognito
         /// </summary>
         public string UserLoginId { get; set; }
 
         public int? ViewedCount { get; set; }
-        
-        /// <summary>
-        /// Where this person came from e.g. Cell, Outreach, Church, Online etc
-        /// </summary>
-        public string Source { get; set; }
+
 
 
         #region Navigation
@@ -85,6 +86,8 @@ namespace ChurchManager.Persistence.Models.People
         public string MiddleName { get; set; }
         public string LastName { get; set; }
         public string Suffix { get; set; }
+
+        public override string ToString() => $"{FirstName} {LastName}";
     }
 
     [Owned]
