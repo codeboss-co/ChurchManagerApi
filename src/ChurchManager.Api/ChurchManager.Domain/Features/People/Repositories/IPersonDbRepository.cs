@@ -10,6 +10,7 @@ namespace ChurchManager.Domain.Features.People.Repositories
     public interface IPersonDbRepository : IGenericRepositoryAsync<Person>
     {
         Task<PersonDomain> ProfileByUserLoginId(string userLoginId);
+        Task<PersonDomain> ProfileByPersonId(int personId);
         Task<UserDetails> UserDetailsByUserLoginId(string queryUserLoginId);
         Task<PeopleAutocompleteResults> AutocompleteAsync(string searchTerm, CancellationToken ct = default);
     }

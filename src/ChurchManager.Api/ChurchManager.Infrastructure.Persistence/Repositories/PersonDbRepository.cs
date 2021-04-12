@@ -33,6 +33,16 @@ namespace ChurchManager.Infrastructure.Persistence.Repositories
                 : null;
         }
 
+        public async Task<PersonDomain> ProfileByPersonId(int personId)
+        {
+            var entity = await Queryable(new ProfileByPersonSpecification(personId))
+                .FirstOrDefaultAsync();
+
+            return entity is not null
+                ? new PersonDomain(entity)
+                : null;
+        }
+
         public Task<UserDetails> UserDetailsByUserLoginId(string userLoginId)
         {
             return Queryable()

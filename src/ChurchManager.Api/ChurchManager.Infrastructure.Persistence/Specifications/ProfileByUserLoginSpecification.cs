@@ -12,4 +12,14 @@ namespace ChurchManager.Infrastructure.Persistence.Specifications
             IncludeStrings.Add("Family.FamilyMembers");
         }
     }
+
+    public class ProfileByPersonSpecification : Specification<Person>
+    {
+        public ProfileByPersonSpecification(int personId)
+        {
+            Criteria = x => x.Id == personId;
+
+            IncludeStrings.Add("Family.FamilyMembers");
+        }
+    }
 }
