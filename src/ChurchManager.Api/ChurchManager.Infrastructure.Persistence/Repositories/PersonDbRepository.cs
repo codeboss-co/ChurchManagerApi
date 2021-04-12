@@ -49,10 +49,13 @@ namespace ChurchManager.Infrastructure.Persistence.Repositories
                 .FirstOrDefaultAsync();
         }
 
+        // https://www.npgsql.org/efcore/misc/collations-and-case-sensitivity.html?tabs=data-annotations#ilike
+        // https://stackoverflow.com/questions/45708715/entity-framework-ef-functions-like-vs-string-contains
         public async Task<AutocompleteResults> AutocompleteAsync(string searchTerm, CancellationToken ct = default)
         {
-            var autocomplete = await Queryable(new PeopleAutocompleteSpecification(searchTerm))
+            var autocomplete = await Queryable()
                 .AsNoTracking()
+                .Where(x => EF.Functions.ILike(x.FullName.FirstName, $"%{searchTerm}%"))
                 .Select(x => new AutocompleteViewModel(x.Id, x.FullName.ToString()))
                 .ToListAsync(ct);
 
