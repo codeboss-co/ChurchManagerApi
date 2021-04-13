@@ -82,7 +82,12 @@ Authorization: Bearer {{accessToken}}
 		"province": "FLORIDA",
 		"postalCode": "34249"
 	}
-}	
+}
+
+# Person autocomplete
+GET {{api}}/v1/people/autocomplete?searchTerm=Dan
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
 
 # ============== PROFILES ==================== #
 # GetCurrentUserProfileByUserLogin

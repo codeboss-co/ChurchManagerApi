@@ -30,7 +30,7 @@ namespace ChurchManager.Api.Controllers.v1
         }
 
         [HttpPost("browse/person/{personId}")]
-        public async Task<IActionResult> BrowseGroups(int personId, [FromBody] BrowsePersonsGroupsQuery query, CancellationToken token)
+        public async Task<IActionResult> BrowseGroupsForPerson(int personId, [FromBody] BrowsePersonsGroupsQuery query, CancellationToken token)
         {
             query.PersonId = personId; // Reset to the person we are searching for in the URL
             return Ok(await Mediator.Send(query, token));
