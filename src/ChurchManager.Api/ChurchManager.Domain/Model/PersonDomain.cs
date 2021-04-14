@@ -10,8 +10,8 @@ namespace ChurchManager.Domain.Model
     {
         private readonly Person _entity;
         public int PersonId => _entity.Id;
-        public int? ChurchId => _entity.ChurchId;
         public int? FamilyId => _entity.FamilyId;
+        public ChurchDomain Church => new (_entity.Church);
         public ConnectionStatus ConnectionStatus => _entity.ConnectionStatus;
         public RecordStatus RecordStatus => _entity.RecordStatus;
         public AgeClassification AgeClassification => _entity.AgeClassification;
