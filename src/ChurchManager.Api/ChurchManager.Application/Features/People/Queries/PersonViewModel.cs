@@ -25,6 +25,7 @@ namespace ChurchManager.Application.Features.People.Queries
         public string CommunicationPreference { get; set; }
         public string PhotoUrl { get; set; }
         public string Occupation { get; set; }
+        public string Source { get; set; }
         public bool? ReceivedHolySpirit { get; set; } = false;
         public ICollection<FamilyMembersViewModel> FamilyMembers { get; set; } = new Collection<FamilyMembersViewModel>();
     }
