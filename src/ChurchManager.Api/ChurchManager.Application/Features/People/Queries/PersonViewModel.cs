@@ -9,6 +9,7 @@ namespace ChurchManager.Application.Features.People.Queries
     {
         public int PersonId { get; set; }
         public int? FamilyId { get; set; }
+        public int? ChurchId { get; set; }
         public string ConnectionStatus { get; set; }
         public string AgeClassification { get; set; }
         public string Gender { get; set; }
