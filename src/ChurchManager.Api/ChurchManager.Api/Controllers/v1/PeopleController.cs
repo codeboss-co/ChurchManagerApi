@@ -1,6 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using ChurchManager.Application.Features.People.Commands.AddNewFamily;
+using ChurchManager.Application.Features.People.Commands.UpdatePerson;
 using ChurchManager.Application.Features.People.Queries.PeopleAutocomplete;
 using ChurchManager.Domain;
 using Microsoft.AspNetCore.Authorization;
@@ -35,6 +36,24 @@ namespace ChurchManager.Api.Controllers.v1
         public async Task<IActionResult> Autocomplete([FromQuery] PeopleAutocompleteQuery query, CancellationToken token)
         {
             return Ok(await Mediator.Send(query, token));
+        }
+
+        // v1/people/edit/{personId}/connection-info/
+        [HttpPost("edit/{personId}/connection-info")]
+        public async Task<IActionResult> EditConnectionInfo(int personId, [FromBody] UpdateConnectionInfoCommand command, CancellationToken token)
+        {
+            command.PersonId = personId;
+            await Mediator.Send(command, token);
+            return Accepted();
+        }
+
+        // v1/people/edit/{personId}/general-info/
+        [HttpPost("edit/{personId}/general-info")]
+        public async Task<IActionResult> EditGeneralInfo(int personId, [FromBody] UpdateGeneralInfoCommand command, CancellationToken token)
+        {
+            command.PersonId = personId;
+            await Mediator.Send(command, token);
+            return Accepted();
         }
     }
 }
