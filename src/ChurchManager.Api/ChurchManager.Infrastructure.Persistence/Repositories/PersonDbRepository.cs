@@ -70,7 +70,7 @@ namespace ChurchManager.Infrastructure.Persistence.Repositories
                     EF.Functions.ILike(x.FullName.MiddleName, $"%{searchTerm}%") ||
                     EF.Functions.ILike(x.FullName.LastName, $"%{searchTerm}%")
                 )
-                .Select(x => new PeopleAutocompleteViewModel(x.Id, x.FullName.ToString(), x.PhotoUrl))
+                .Select(x => new PeopleAutocompleteViewModel(x.Id, x.FullName.ToString(), x.PhotoUrl, x.ConnectionStatus))
                 .ToListAsync(ct);
 
             return new PeopleAutocompleteResults(autocomplete);
