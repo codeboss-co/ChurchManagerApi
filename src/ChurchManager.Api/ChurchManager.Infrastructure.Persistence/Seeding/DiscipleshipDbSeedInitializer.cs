@@ -48,6 +48,7 @@ namespace ChurchManager.Infrastructure.Persistence.Seeding
             {
                 Definition = definition,
                 CompletionDate = DateTime.Today.AddYears(-15),
+                Status = "Completed",
                 Person = dillan
             };
 

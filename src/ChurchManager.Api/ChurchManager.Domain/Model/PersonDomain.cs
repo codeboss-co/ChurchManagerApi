@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using ChurchManager.Core.Shared;
 using ChurchManager.Domain.Features.People;
 using ChurchManager.Persistence.Models.People;
 
@@ -29,6 +30,7 @@ namespace ChurchManager.Domain.Model
         public string Occupation => _entity.Occupation;
         public string Source => _entity.Source;
         public bool? ReceivedHolySpirit => _entity.ReceivedHolySpirit;
+        public DiscipleshipStepViewModel FoundationSchool { get; }
         public string UserLoginId => _entity.UserLoginId;
 
         // Gets the persons family members excluding them
@@ -38,7 +40,21 @@ namespace ChurchManager.Domain.Model
                 .Select(x => new FamilyMemberDomain(x))
                 .ToList();
 
-        public PersonDomain(Person entity) => _entity = entity;
+        public PersonDomain(Person entity)
+        {
+            _entity = entity;
+
+            var newConvertsDiscipleshipProgram =
+                _entity.DiscipleshipPrograms.FirstOrDefault(x => x.Name == "New Converts Program");
+            var foundationSchoolStep = newConvertsDiscipleshipProgram?.DiscipleshipSteps.FirstOrDefault();
+
+            FoundationSchool = new()
+            {
+                IsCompleted = foundationSchoolStep != null && foundationSchoolStep.Status == "Completed",
+                Status = foundationSchoolStep?.Status,
+                CompletionDate = foundationSchoolStep?.CompletionDate
+            };
+        }
     }
     
     public class FamilyMemberDomain

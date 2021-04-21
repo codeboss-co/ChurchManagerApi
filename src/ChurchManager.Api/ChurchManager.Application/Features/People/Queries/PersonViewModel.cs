@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using ChurchManager.Application.Features.Churches.Queries.RetrieveChurches;
+using ChurchManager.Core.Shared;
 using ChurchManager.Persistence.Models.People;
 
 namespace ChurchManager.Application.Features.People.Queries
@@ -27,6 +28,7 @@ namespace ChurchManager.Application.Features.People.Queries
         public string Occupation { get; set; }
         public string Source { get; set; }
         public bool? ReceivedHolySpirit { get; set; } = false;
+        public DiscipleshipStepViewModel FoundationSchool { get; set; }
         public ICollection<FamilyMembersViewModel> FamilyMembers { get; set; } = new Collection<FamilyMembersViewModel>();
     }
 
@@ -38,4 +40,5 @@ namespace ChurchManager.Application.Features.People.Queries
         public string PhotoUrl { get; set; }
         public BirthDate BirthDate { get; set; }
     }
+
 }
