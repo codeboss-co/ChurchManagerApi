@@ -59,6 +59,8 @@ namespace ChurchManager.Infrastructure.Persistence.Seeding
                 DiscipleshipSteps = new List<DiscipleshipStep>(1) { personFoundationSchoolStep }
             };
 
+            dillan.DiscipleshipPrograms.Add(newConvertsDiscipleshipProgram);
+
             await dbContext.AddAsync(personFoundationSchoolStep);
             await dbContext.AddAsync(newConvertsDiscipleshipProgram);
         }
