@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using ChurchManager.Application.Features.Churches.Queries.RetrieveChurches;
 using ChurchManager.Persistence.Models.People;
 
 namespace ChurchManager.Application.Features.People.Queries
@@ -9,6 +10,7 @@ namespace ChurchManager.Application.Features.People.Queries
     {
         public int PersonId { get; set; }
         public int? FamilyId { get; set; }
+        public ChurchViewModel Church { get; set; }
         public string ConnectionStatus { get; set; }
         public string AgeClassification { get; set; }
         public string Gender { get; set; }
@@ -23,6 +25,7 @@ namespace ChurchManager.Application.Features.People.Queries
         public string CommunicationPreference { get; set; }
         public string PhotoUrl { get; set; }
         public string Occupation { get; set; }
+        public string Source { get; set; }
         public bool? ReceivedHolySpirit { get; set; } = false;
         public ICollection<FamilyMembersViewModel> FamilyMembers { get; set; } = new Collection<FamilyMembersViewModel>();
     }

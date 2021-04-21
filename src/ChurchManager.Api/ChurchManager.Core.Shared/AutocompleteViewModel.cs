@@ -11,7 +11,7 @@ namespace ChurchManager.Core.Shared
         }
     }
     
-    public record PeopleAutocompleteViewModel(int Id, string Label, string PhotoUrl) : AutocompleteViewModel(Id, Label) { }
+    public record PeopleAutocompleteViewModel(int Id, string Label, string PhotoUrl, string ConnectionStatus) : AutocompleteViewModel(Id, Label) { }
     public class PeopleAutocompleteResults : List<PeopleAutocompleteViewModel>
     {
         public PeopleAutocompleteResults(IEnumerable<PeopleAutocompleteViewModel> collection) : base(collection)
