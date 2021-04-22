@@ -27,7 +27,7 @@ namespace ChurchManager.Api.Controllers.v1
         }
 
         [HttpGet("attendance/{attendanceId}")]
-        public async Task<IActionResult> Charts(int attendanceId, CancellationToken token)
+        public async Task<IActionResult> GetAttendanceRecord(int attendanceId, CancellationToken token)
         {
             var data = await Mediator.Send(new AttendanceRecordQuery(attendanceId), token);
             return Ok(data);

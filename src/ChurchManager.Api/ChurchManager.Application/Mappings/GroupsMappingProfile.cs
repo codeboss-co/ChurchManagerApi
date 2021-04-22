@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Collections.Generic;
+using AutoMapper;
 using ChurchManager.Application.Features.Groups.Queries.GroupsForPerson;
 using ChurchManager.Core.Shared;
 using ChurchManager.Domain.Model;
@@ -21,11 +22,22 @@ namespace ChurchManager.Application.Mappings
 
             CreateMap<Group, SelectItemViewModel>().ReverseMap();
 
-
             // Attendance Records
-            CreateMap<GroupAttendance, GroupAttendanceViewModel>()
+            CreateMap<GroupMemberAttendance, GroupMemberAttendanceViewModel>().ReverseMap();
+            CreateMap<GroupMember, GroupMemberViewModel>()
+                .ForMember(dest => dest.GroupMemberId, opt => opt.MapFrom(src => src.Id))
+                .ForMember(dest => dest.FirstName, opt => opt.MapFrom(src => src.Person.FullName.FirstName))
+                .ForMember(dest => dest.MiddleName, opt => opt.MapFrom(src => src.Person.FullName.MiddleName))
+                .ForMember(dest => dest.LastName, opt => opt.MapFrom(src => src.Person.FullName.LastName))
+                .ForMember(dest => dest.Gender, opt => opt.MapFrom(src => src.Person.Gender))
+                .ForMember(dest => dest.PhotoUrl, opt => opt.MapFrom(src => src.Person.PhotoUrl))
+                ;
+
+            CreateMap<GroupAttendance, GroupAttendanceDetailViewModel>()
                 .ForMember(d => d.GroupName,
-                    opt => opt.MapFrom(src => src.Group.Name));
+                    opt => opt.MapFrom(src => src.Group.Name))
+                .ForMember(dest => dest.Attendees, opt => opt.MapFrom(src => src.Attendees));
+;
         }
     }
 }
