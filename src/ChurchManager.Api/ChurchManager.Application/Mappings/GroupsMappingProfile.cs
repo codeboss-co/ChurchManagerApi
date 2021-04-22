@@ -20,6 +20,12 @@ namespace ChurchManager.Application.Mappings
                     opt => opt.MapFrom(src => src.Items));
 
             CreateMap<Group, SelectItemViewModel>().ReverseMap();
+
+
+            // Attendance Records
+            CreateMap<GroupAttendance, GroupAttendanceViewModel>()
+                .ForMember(d => d.GroupName,
+                    opt => opt.MapFrom(src => src.Group.Name));
         }
     }
 }
