@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using ChurchManager.Persistence.Models.Groups;
 
 namespace ChurchManager.Core.Shared
 {
@@ -26,6 +27,7 @@ namespace ChurchManager.Core.Shared
         public bool AttendanceEntered { get; set; }
         public int DidAttendCount { get; set; }
         public double AttendanceRate { get; set; }
+        public AttendanceReview AttendanceReview { get; set; }
     }
 
     public record GroupMemberAttendanceViewModel
