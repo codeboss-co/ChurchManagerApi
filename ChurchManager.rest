@@ -4,6 +4,8 @@
 @countryId = 1 
 # From AWS Cognito
 @userLoginId = 08925ade-9249-476b-8787-b3dd8f5dbc13
+# This is me
+@personId = 1
 
 # ============== IDENTITY ==================== #
 POST {{api}}/authorization/login 
@@ -82,7 +84,12 @@ Authorization: Bearer {{accessToken}}
 		"province": "FLORIDA",
 		"postalCode": "34249"
 	}
-}	
+}
+
+# Person autocomplete
+GET {{api}}/v1/people/autocomplete?searchTerm=Dan
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
 
 # ============== PROFILES ==================== #
 # GetCurrentUserProfileByUserLogin
@@ -90,7 +97,13 @@ GET {{api}}/v1/profiles/current-user
 Content-Type: application/json
 Authorization: Bearer {{accessToken}}
 
+# GetUserProfileByUserLogin
 GET {{api}}/v1/profiles/userlogin/{{userLoginId}}
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
+# GetUserProfileByPerson
+GET {{api}}/v1/profiles/person/{{personId}}
 Content-Type: application/json
 Authorization: Bearer {{accessToken}}
 

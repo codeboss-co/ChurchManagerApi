@@ -105,7 +105,7 @@ namespace ChurchManager.Application.Features.Groups.Services
                         GroupId = command.GroupId,
                         AttendanceDate = command.AttendanceDate,
                         DidNotOccur = command.DidNotOccur,
-                        AttendanceCount = attendees.Where(x => x.DidAttend.HasValue).Count(x => x.DidAttend.Value),
+                        AttendanceCount = attendees.Where(x => x.DidAttend.HasValue).Count(x => x.DidAttend.Value) + command.FirstTimers.Count(),
                         FirstTimerCount = command.FirstTimers.Count(),
                         NewConvertCount = attendees.Where(x =>x.IsNewConvert.HasValue).Count(x => x.IsNewConvert.Value),
                         ReceivedHolySpiritCount = attendees.Where(x => x.ReceivedHolySpirit.HasValue).Count(x => x.ReceivedHolySpirit.Value),

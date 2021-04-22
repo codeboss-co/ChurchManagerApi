@@ -23,7 +23,7 @@ namespace ChurchManager.Api.Controllers.v1
             _currentUser = currentUser;
         }
 
-        // v1/profiles/userdetails/{{userLoginId}}
+        // v1/userdetails/userlogin/{{userLoginId}}
         [HttpGet("userlogin/{userLoginId}")]
         public async Task<IActionResult> GetUserDetailsSummaryByUserLogin(string userLoginId, CancellationToken token)
         {
@@ -31,7 +31,7 @@ namespace ChurchManager.Api.Controllers.v1
             return Ok(response);
         }
 
-        // v1/profiles/userdetails/current-user
+        // v1/userdetails/current-user
         [HttpGet("current-user")]
         public async Task<IActionResult> GetCurrentUserDetailsSummaryByUserLogin(CancellationToken token)
         {

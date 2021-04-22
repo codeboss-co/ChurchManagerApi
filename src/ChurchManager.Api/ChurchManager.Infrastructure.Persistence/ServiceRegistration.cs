@@ -5,6 +5,7 @@ using ChurchManager.Infrastructure.Abstractions;
 using ChurchManager.Infrastructure.Abstractions.Persistence;
 using ChurchManager.Infrastructure.Persistence.Contexts;
 using ChurchManager.Infrastructure.Persistence.Repositories;
+using ChurchManager.Infrastructure.Persistence.Seeding;
 using ChurchManager.Infrastructure.Persistence.Seeding.Development;
 using ChurchManager.Infrastructure.Persistence.Seeding.Production;
 using ChurchManager.Infrastructure.Shared;
@@ -46,6 +47,7 @@ namespace ChurchManager.Infrastructure.Persistence
             if (seedDatabaseEnabled)
             {
                 services.AddInitializer<ChurchAttendanceTypeDbInitializer>();
+                services.AddInitializer<DiscipleshipDbSeedInitializer>();
 
                 if(environment.IsProduction())
                 {

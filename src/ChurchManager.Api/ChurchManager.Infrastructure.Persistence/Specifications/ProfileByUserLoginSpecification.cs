@@ -9,7 +9,10 @@ namespace ChurchManager.Infrastructure.Persistence.Specifications
         {
             Criteria = x => x.UserLoginId == userLoginId;
 
+            Includes.Add(x => x.Church);
+            Includes.Add(x => x.PhoneNumbers);
             IncludeStrings.Add("Family.FamilyMembers");
+            IncludeStrings.Add("DiscipleshipPrograms.DiscipleshipSteps");
         }
     }
 
@@ -19,7 +22,10 @@ namespace ChurchManager.Infrastructure.Persistence.Specifications
         {
             Criteria = x => x.Id == personId;
 
+            Includes.Add(x => x.Church);
+            Includes.Add(x => x.PhoneNumbers);
             IncludeStrings.Add("Family.FamilyMembers");
+            IncludeStrings.Add("DiscipleshipPrograms.DiscipleshipSteps");
         }
     }
 }
