@@ -1,5 +1,6 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
+using ChurchManager.Application.Features.Groups.Commands.AttendanceFeedback;
 using ChurchManager.Application.Features.Groups.Queries.BrowseGroupAttendance;
 using ChurchManager.Application.Features.Groups.Queries.Charts.WeeklyComparison;
 using ChurchManager.Domain;
@@ -24,6 +25,20 @@ namespace ChurchManager.Api.Controllers.v1
         {
             var groups = await Mediator.Send(query, token);
             return Ok(groups);
+        }
+
+        [HttpGet("attendance/{attendanceId}")]
+        public async Task<IActionResult> GetAttendanceRecord(int attendanceId, CancellationToken token)
+        {
+            var data = await Mediator.Send(new AttendanceRecordQuery(attendanceId), token);
+            return Ok(data);
+        }
+
+        [HttpPost("attendance/feedback")]
+        public async Task<IActionResult> AttendanceFeedback([FromBody] GroupAttendanceFeedbackCommand command, CancellationToken token)
+        {
+            await Mediator.Send(command, token);
+            return Accepted();
         }
 
         [HttpGet("charts")]
