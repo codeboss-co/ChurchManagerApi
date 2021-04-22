@@ -25,7 +25,7 @@ namespace ChurchManager.Core.Shared
         public bool AttendanceReviewed { get; set; }
         public bool AttendanceEntered { get; set; }
         public int DidAttendCount { get; set; }
-        public int AttendanceRate { get; set; }
+        public double AttendanceRate { get; set; }
     }
 
     public record GroupMemberAttendanceViewModel
