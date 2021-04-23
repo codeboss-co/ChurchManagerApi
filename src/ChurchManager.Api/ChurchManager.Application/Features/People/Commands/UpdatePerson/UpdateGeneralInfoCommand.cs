@@ -50,11 +50,25 @@ namespace ChurchManager.Application.Features.People.Commands.UpdatePerson
                 };
             }
 
+            if (person.BirthDate is null)
+            {
+                person.BirthDate = new Persistence.Models.People.BirthDate
+                {
+                    BirthDay = command.BirthDate.Day,
+                    BirthMonth = command.BirthDate.Month,
+                    BirthYear = command.BirthDate.Year
+                };
+            }
+            else
+            {
+                person.BirthDate.BirthDay = command.BirthDate.Day;
+                person.BirthDate.BirthMonth = command.BirthDate.Month;
+                person.BirthDate.BirthYear = command.BirthDate.Year;
+            }
+
+            person.Occupation = command.Occupation;
             person.Email = new Email {Address = command.Email, IsActive = !command.Email.IsNullOrEmpty()};
             person.MaritalStatus = command.MaritalStatus;
-            person.BirthDate.BirthDay = command.BirthDate.Day;
-            person.BirthDate.BirthMonth = command.BirthDate.Month;
-            person.BirthDate.BirthYear = command.BirthDate.Year;
 
             await _dbRepository.SaveChangesAsync();
 
