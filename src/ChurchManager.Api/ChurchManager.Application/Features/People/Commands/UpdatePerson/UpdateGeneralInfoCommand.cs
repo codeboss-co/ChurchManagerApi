@@ -1,19 +1,22 @@
-﻿using System.Threading;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
-using ChurchManager.Application.Features.People.Commands.AddNewFamily;
 using ChurchManager.Domain.Features.People.Repositories;
+using ChurchManager.Persistence.Models.People;
+using CodeBoss.Extensions;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
+using BirthDate = ChurchManager.Application.Features.People.Commands.AddNewFamily.BirthDate;
 
 namespace ChurchManager.Application.Features.People.Commands.UpdatePerson
 {
     public record UpdateGeneralInfoCommand : IRequest
     {
         public int PersonId { get; set; }
-        public string FirstName { get; set; }
-        public string MiddleName { get; set; }
-        public string LastName { get; set; }
-        public string Gender { get; set; }
-        public string AgeClassification { get; set; }
+        public string Occupation { get; set; }
+        public string PhoneNumber { get; set; }
+        public string Email { get; set; }
         public string MaritalStatus { get; set; }
         public BirthDate BirthDate { get; set; }
     }
@@ -27,14 +30,27 @@ namespace ChurchManager.Application.Features.People.Commands.UpdatePerson
             _dbRepository = dbRepository;
         }
 
-        public async Task<Unit> Handle(UpdateGeneralInfoCommand command, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(UpdateGeneralInfoCommand command, CancellationToken ct)
         {
-            var person = await _dbRepository.GetByIdAsync(command.PersonId);
-            person.FullName.FirstName = command.FirstName;
-            person.FullName.MiddleName = command.MiddleName;
-            person.FullName.LastName = command.LastName;
-            person.Gender = command.Gender;
-            person.AgeClassification = command.AgeClassification;
+            var person = await _dbRepository.Queryable()
+                .Include(x => x.PhoneNumbers)
+                .FirstOrDefaultAsync(x => x.Id == command.PersonId, ct);
+
+            if (person.PhoneNumbers.Any())
+            {
+                var phoneNumber = person.PhoneNumbers.First();
+                phoneNumber.CountryCode = "+27";
+                phoneNumber.Number = command.PhoneNumber;
+            }
+            else
+            {
+                person.PhoneNumbers = new List<PhoneNumber>
+                {
+                    new() {CountryCode = "+27", Number = command.PhoneNumber}
+                };
+            }
+
+            person.Email = new Email {Address = command.Email, IsActive = !command.Email.IsNullOrEmpty()};
             person.MaritalStatus = command.MaritalStatus;
             person.BirthDate.BirthDay = command.BirthDate.Day;
             person.BirthDate.BirthMonth = command.BirthDate.Month;
