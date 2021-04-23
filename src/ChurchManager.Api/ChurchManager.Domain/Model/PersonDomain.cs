@@ -60,7 +60,7 @@ namespace ChurchManager.Domain.Model
     public class FamilyMemberDomain
     {
         private readonly Person _entity;
-
+        public int PersonId => _entity.Id;
         public FullName FullName => _entity.FullName;
         public AgeClassification AgeClassification => _entity.AgeClassification;
         public Gender Gender => _entity.Gender;
