@@ -2,12 +2,15 @@
 using System.Threading;
 using System.Threading.Tasks;
 using ChurchManager.Core.Shared;
+using ChurchManager.Core.Shared.Parameters;
 using ChurchManager.Domain.Features.People.Repositories;
 using ChurchManager.Domain.Model;
 using ChurchManager.Infrastructure.Abstractions;
 using ChurchManager.Infrastructure.Persistence.Contexts;
+using ChurchManager.Infrastructure.Persistence.Extensions;
 using ChurchManager.Infrastructure.Persistence.Specifications;
 using ChurchManager.Persistence.Models.People;
+using Convey.CQRS.Queries;
 using Microsoft.EntityFrameworkCore;
 
 namespace ChurchManager.Infrastructure.Persistence.Repositories
@@ -74,6 +77,29 @@ namespace ChurchManager.Infrastructure.Persistence.Repositories
                 .ToListAsync(ct);
 
             return new PeopleAutocompleteResults(autocomplete);
+        }
+
+        public async Task<PagedResult<object>> BrowsePeopleAsync(SearchTermQueryParameter query, CancellationToken ct = default)
+        {
+            // Paging
+            var pagedResult = await Queryable()
+                .Specify(new BrowsePeopleSpecification(query.SearchTerm))
+                .PaginateAsync(query);
+
+            return PagedResult<object>.Create(
+                pagedResult.Items.Select(x => new 
+                {
+                    x.Id,
+                    Name = x.FullName.FirstName + " " + x.FullName.LastName,
+                    Email = x.Email?.Address,
+                    PhoneNumber = x.PhoneNumbers.FirstOrDefault()?.Number,
+                    x.ConnectionStatus,
+                    x.PhotoUrl
+                }),
+                pagedResult.CurrentPage,
+                pagedResult.ResultsPerPage,
+                pagedResult.TotalPages,
+                pagedResult.TotalResults);
         }
     }
 }
