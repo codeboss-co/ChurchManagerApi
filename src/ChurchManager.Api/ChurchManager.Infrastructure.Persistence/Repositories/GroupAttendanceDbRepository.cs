@@ -27,7 +27,7 @@ namespace ChurchManager.Infrastructure.Persistence.Repositories
             int groupTypeId,
             int? churchId,
             int? groupId,
-            bool? withFeedback,
+            bool withFeedback,
             DateTime? from, DateTime? to,
             CancellationToken ct = default)
         {

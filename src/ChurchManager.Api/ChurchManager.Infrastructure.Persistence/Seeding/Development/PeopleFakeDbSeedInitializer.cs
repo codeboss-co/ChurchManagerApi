@@ -158,7 +158,7 @@ namespace ChurchManager.Infrastructure.Persistence.Seeding.Development
                 .RuleFor(p => p.PhotoUrl, f => f.Internet.Avatar())
                 .RuleFor(p => p.Occupation, f => f.Commerce.Department())
                 .RuleFor(p => p.ReceivedHolySpirit, f => f.PickRandom(true, false))
-                .RuleFor(p => p.ConnectionStatus, f => f.PickRandom(ConnectionStatuses))
+                .RuleFor(p => p.ConnectionStatus, f => f.PickRandom(ConnectionStatuses).Value)
                 .RuleFor(p => p.Gender, f => f.PickRandom(Genders).Value)
                 .RuleFor(p => p.AgeClassification, f => f.PickRandom(AgeClassifications).Value)
                 .RuleFor(p => p.Email, f => EmailFaker())
@@ -198,7 +198,7 @@ namespace ChurchManager.Infrastructure.Persistence.Seeding.Development
                     .RuleFor(u => u.Family, f => family)
                     .RuleFor(p => p.FullName, f => momFullName)
                     .RuleFor(p => p.PhotoUrl, f => f.Internet.Avatar())
-                    .RuleFor(p => p.ConnectionStatus, f => f.PickRandom(ConnectionStatuses))
+                    .RuleFor(p => p.ConnectionStatus, f => f.PickRandom(ConnectionStatuses).Value)
                     .RuleFor(p => p.Gender, f => Gender.Female.Value)
                     .RuleFor(p => p.AgeClassification, f => AgeClassification.Adult.Value)
                     .RuleFor(p => p.Email, f => EmailFaker())
@@ -211,7 +211,7 @@ namespace ChurchManager.Infrastructure.Persistence.Seeding.Development
                     .RuleFor(u => u.Family, f => family )
                     .RuleFor(p => p.FullName, f => dadFullName)
                     .RuleFor(p => p.PhotoUrl, f => f.Internet.Avatar())
-                    .RuleFor(p => p.ConnectionStatus, f => f.PickRandom(ConnectionStatuses))
+                    .RuleFor(p => p.ConnectionStatus, f => f.PickRandom(ConnectionStatuses).Value)
                     .RuleFor(p => p.Gender, f => Gender.Male.Value)
                     .RuleFor(p => p.AgeClassification, f => AgeClassification.Adult.Value)
                     .RuleFor(p => p.Email, f => EmailFaker())
@@ -241,6 +241,7 @@ namespace ChurchManager.Infrastructure.Persistence.Seeding.Development
                 .RuleFor(u => u.ChurchId, f => churchId)
                 .RuleFor(u => u.Family, f => family)
                 .RuleFor(p => p.AgeClassification, f => AgeClassification.Child.Value)
+                .RuleFor(p => p.ConnectionStatus, f => f.PickRandom(ConnectionStatuses).Value)
                 .RuleFor(p => p.Gender, f => f.PickRandom(Genders).Value)
                 .RuleFor(p => p.FullName, f => fullName);
 
@@ -275,7 +276,7 @@ namespace ChurchManager.Infrastructure.Persistence.Seeding.Development
 
         private Gender[] Genders => new[] { Gender.Male, Gender.Female, Gender.Unknown };
 
-        private string[] ConnectionStatuses => new[] { "Member", "Visitor", "New Convert" };
+        private ConnectionStatus[] ConnectionStatuses => new[] { ConnectionStatus.Member, ConnectionStatus.FirstTimer, ConnectionStatus.NewConvert };
 
         private AgeClassification[] AgeClassifications => new[] { AgeClassification.Adult, AgeClassification.Child, AgeClassification.Unknown };
     }

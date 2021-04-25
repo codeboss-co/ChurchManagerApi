@@ -96,6 +96,56 @@ namespace ChurchManager.Persistence.Models.People
         public int? BirthDay { get; set; }
         public int? BirthMonth { get; set; }
         public int? BirthYear { get; set; }
+
+        [NotMapped]
+        public virtual int? Age => GetAge(CalculateBirthDate());
+
+        /// <summary>
+        /// Calculates the birthdate from the BirthYear, BirthMonth, and BirthDay.
+        /// Will return null if BirthMonth or BirthDay is null.
+        /// If BirthYear is null then DateTime.MinValue.Year (Year = 1) is used.
+        /// </summary>
+        /// <returns></returns>
+        private DateTime? CalculateBirthDate()
+        {
+            if(BirthDay == null || BirthMonth == null)
+            {
+                return null;
+            }
+
+            if(BirthMonth <= 12)
+            {
+                if(BirthDay <= DateTime.DaysInMonth(BirthYear ?? DateTime.MinValue.Year, BirthMonth.Value))
+                {
+                    return new DateTime(BirthYear ?? DateTime.MinValue.Year, BirthMonth.Value, BirthDay.Value);
+                }
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Gets the age.
+        /// </summary>
+        /// <param name="birthDate">The birth date.</param>
+        /// <returns></returns>
+        public static int? GetAge(DateTime? birthDate)
+        {
+            if(birthDate.HasValue && birthDate.Value.Year != DateTime.MinValue.Year)
+            {
+                DateTime today = DateTime.UtcNow;
+                int age = today.Year - birthDate.Value.Year;
+                if(birthDate.Value > today.AddYears(-age))
+                {
+                    // their birthdate is after today's date, so they aren't a year older yet
+                    age--;
+                }
+
+                return age;
+            }
+
+            return null;
+        }
     }
 
     [Owned]

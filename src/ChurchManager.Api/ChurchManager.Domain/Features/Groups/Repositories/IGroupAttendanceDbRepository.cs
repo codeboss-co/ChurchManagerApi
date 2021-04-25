@@ -17,7 +17,7 @@ namespace ChurchManager.Domain.Features.Groups.Repositories
             int groupTypeId,
             int? churchId,
             int? groupId,
-            bool? withFeedback,
+            bool withFeedback,
             DateTime? from, DateTime? to,
             CancellationToken ct = default);
 

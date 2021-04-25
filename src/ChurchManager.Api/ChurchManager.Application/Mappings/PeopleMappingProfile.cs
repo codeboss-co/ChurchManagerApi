@@ -3,6 +3,7 @@ using ChurchManager.Application.Features.People.Queries;
 using ChurchManager.Core.Shared;
 using ChurchManager.Domain.Model;
 using ChurchManager.Persistence.Models.People;
+using Convey.CQRS.Queries;
 
 namespace ChurchManager.Application.Mappings
 {
@@ -26,6 +27,12 @@ namespace ChurchManager.Application.Mappings
                 .ForMember(d => d.PersonId,
                     opt => opt.MapFrom(src => src.Id))
                 ;
+
+
+            CreateMap<PagedResult<PersonDomain>, PagedResult<PersonViewModel>>()
+                .ForMember(d => d.Items,
+                    opt => opt.MapFrom(src => src.Items));
+
         }
     }
 }
