@@ -15,6 +15,7 @@ namespace ChurchManager.Infrastructure.Persistence.Specifications
                 EF.Functions.ILike(person.FullName.FirstName, $"%{searchTerm}%") ||
                 EF.Functions.ILike(person.FullName.LastName, $"%{searchTerm}%");
 
+            Includes.Add(person => person.Church);
             Includes.Add(person => person.PhoneNumbers);
         }
     }

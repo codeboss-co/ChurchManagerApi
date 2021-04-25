@@ -79,23 +79,26 @@ namespace ChurchManager.Infrastructure.Persistence.Repositories
             return new PeopleAutocompleteResults(autocomplete);
         }
 
-        public async Task<PagedResult<object>> BrowsePeopleAsync(SearchTermQueryParameter query, CancellationToken ct = default)
+        public async Task<PagedResult<PersonDomain>> BrowsePeopleAsync(SearchTermQueryParameter query, CancellationToken ct = default)
         {
             // Paging
             var pagedResult = await Queryable()
                 .Specify(new BrowsePeopleSpecification(query.SearchTerm))
+                /*.Select(x => new PersonBrowseViewModel
+                {
+                    PersonId = x.Id,
+                    FullName = x.FullName,
+                    AgeClassification = x.AgeClassification,
+                    ConnectionStatus = x.ConnectionStatus,
+                    Gender = x.Gender,
+                    BirthDate = x.BirthDate,
+                    Church = x.Church.Name
+                    
+                })*/
                 .PaginateAsync(query);
 
-            return PagedResult<object>.Create(
-                pagedResult.Items.Select(x => new 
-                {
-                    x.Id,
-                    Name = x.FullName.FirstName + " " + x.FullName.LastName,
-                    Email = x.Email?.Address,
-                    PhoneNumber = x.PhoneNumbers.FirstOrDefault()?.Number,
-                    x.ConnectionStatus,
-                    x.PhotoUrl
-                }),
+            return PagedResult<PersonDomain>.Create(
+                pagedResult.Items.Select(entity => new PersonDomain(entity)),
                 pagedResult.CurrentPage,
                 pagedResult.ResultsPerPage,
                 pagedResult.TotalPages,

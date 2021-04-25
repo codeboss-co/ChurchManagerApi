@@ -15,6 +15,6 @@ namespace ChurchManager.Domain.Features.People.Repositories
         Task<PersonDomain> ProfileByPersonId(int personId);
         Task<UserDetails> UserDetailsByUserLoginId(string queryUserLoginId);
         Task<PeopleAutocompleteResults> AutocompleteAsync(string searchTerm, CancellationToken ct = default);
-        Task<PagedResult<object>> BrowsePeopleAsync(SearchTermQueryParameter query, CancellationToken ct = default);
+        Task<PagedResult<PersonDomain>> BrowsePeopleAsync(SearchTermQueryParameter query, CancellationToken ct = default);
     }
 }

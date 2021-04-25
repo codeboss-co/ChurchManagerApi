@@ -13,7 +13,7 @@ namespace ChurchManager.Domain.Model
         public int PersonId => _entity.Id;
         public int? FamilyId => _entity.FamilyId;
         public ChurchDomain Church => new (_entity.Church);
-        public ConnectionStatus ConnectionStatus => _entity.ConnectionStatus;
+        public ConnectionStatus ConnectionStatus => _entity.ConnectionStatus ?? ConnectionStatus.Unknown;
         public RecordStatus RecordStatus => _entity.RecordStatus;
         public AgeClassification AgeClassification => _entity.AgeClassification;
         public FullName FullName => _entity.FullName;

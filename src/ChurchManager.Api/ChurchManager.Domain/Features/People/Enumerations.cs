@@ -42,6 +42,7 @@ namespace ChurchManager.Domain.Features.People
         public static ConnectionStatus FirstTimer = new("First Timer");
         public static ConnectionStatus NewConvert = new("New Convert");
         public static ConnectionStatus Member = new("Member");
+        public static ConnectionStatus Unknown = new("Unknown");
         // Implicit conversion from string
         public static implicit operator ConnectionStatus(string value) => new(value);
     }
