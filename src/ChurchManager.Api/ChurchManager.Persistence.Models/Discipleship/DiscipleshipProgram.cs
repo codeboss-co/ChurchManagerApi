@@ -3,12 +3,13 @@ using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using ChurchManager.Persistence.Shared;
+using Codeboss.Types;
 
 namespace ChurchManager.Persistence.Models.Discipleship
 {
     [Table("DiscipleshipProgram", Schema = "Discipleship")]
 
-    public class DiscipleshipProgram : AuditableEntity<int>
+    public class DiscipleshipProgram : AuditableEntity<int>, IAggregateRoot<int>
     {
         [MaxLength(100)]
         public string Name { get; set; }
