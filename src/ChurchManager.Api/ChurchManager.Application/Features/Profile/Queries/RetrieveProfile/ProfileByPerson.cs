@@ -13,7 +13,7 @@ namespace ChurchManager.Application.Features.Profile.Queries.RetrieveProfile
     /// BaseRequestParameter - contains paging parameters
     /// To add filter/search parameters, add search properties to the body of this class
     /// </summary>
-    public record ProfileByPersonIdQuery(int PersonId) : IRequest<ApiResponse>
+    public record ProfileByPersonIdQuery(int PersonId, bool Condensed) : IRequest<ApiResponse>
     {
     }
 
@@ -30,7 +30,7 @@ namespace ChurchManager.Application.Features.Profile.Queries.RetrieveProfile
 
         public async Task<ApiResponse> Handle(ProfileByPersonIdQuery query, CancellationToken cancellationToken)
         {
-            var domain = await _personDbRepository.ProfileByPersonId(query.PersonId);
+            var domain = await _personDbRepository.ProfileByPersonId(query.PersonId, query.Condensed);
             
             return domain is null 
                 ? new ApiResponse("No matching user login Id found")

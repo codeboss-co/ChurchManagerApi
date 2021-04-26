@@ -84,6 +84,7 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                     Address_Country = table.Column<string>(type: "text", nullable: true),
                     Address_Province = table.Column<string>(type: "text", nullable: true),
                     Address_PostalCode = table.Column<string>(type: "text", nullable: true),
+                    Language = table.Column<string>(type: "text", nullable: true),
                     RecordStatus = table.Column<string>(type: "text", nullable: true),
                     InactiveDateTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: true)
                 },
@@ -584,7 +585,8 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     DiscipleshipStepDefinitionId = table.Column<int>(type: "integer", nullable: false),
                     PersonId = table.Column<int>(type: "integer", nullable: false),
-                    CompletionDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    CommencementDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
+                    CompletionDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
                     Status = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
                     Notes = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: true),
                     DiscipleshipProgramId = table.Column<int>(type: "integer", nullable: true),

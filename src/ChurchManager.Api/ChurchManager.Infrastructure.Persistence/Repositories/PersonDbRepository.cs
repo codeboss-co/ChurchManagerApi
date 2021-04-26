@@ -36,9 +36,9 @@ namespace ChurchManager.Infrastructure.Persistence.Repositories
                 : null;
         }
 
-        public async Task<PersonDomain> ProfileByPersonId(int personId)
+        public async Task<PersonDomain> ProfileByPersonId(int personId, bool condensed = false)
         {
-            var entity = await Queryable(new ProfileByPersonSpecification(personId))
+            var entity = await Queryable(new ProfileByPersonSpecification(personId, condensed))
                 .FirstOrDefaultAsync();
 
             return entity is not null
