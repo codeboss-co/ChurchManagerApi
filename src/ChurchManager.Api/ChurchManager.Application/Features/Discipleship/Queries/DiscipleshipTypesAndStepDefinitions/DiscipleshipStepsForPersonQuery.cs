@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -12,8 +11,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ChurchManager.Application.Features.Discipleship.Queries.DiscipleshipTypesAndStepDefinitions
 {
-    public record DiscipleshipForPersonQuery(int PersonId) : IRequest<ApiResponse>
+    public record DiscipleshipForPersonQuery : IRequest<ApiResponse>
     {
+        public int? PersonId { get; set; }
     }
 
     public class DiscipleshipForPersonHandler : IRequestHandler<DiscipleshipForPersonQuery, ApiResponse>

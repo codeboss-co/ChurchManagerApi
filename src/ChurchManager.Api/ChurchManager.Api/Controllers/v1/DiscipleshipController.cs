@@ -1,6 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using ChurchManager.Application.Features.Discipleship.Queries.DiscipleshipTypesAndStepDefinitions;
+using ChurchManager.Domain;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,6 +11,12 @@ namespace ChurchManager.Api.Controllers.v1
     [Authorize]
     public class DiscipleshipController : BaseApiController
     {
+        private readonly ICognitoCurrentUser _currentUser;
+
+        public DiscipleshipController(ICognitoCurrentUser currentUser)
+        {
+            _currentUser = currentUser;
+        }
 
         [HttpGet("types")]
         public async Task<IActionResult> GetDiscipleshipTypes(CancellationToken token)
@@ -23,10 +30,11 @@ namespace ChurchManager.Api.Controllers.v1
             return Ok(await Mediator.Send(new DiscipleshipDefinitionStepsQuery(typeId), token));
         }
 
-        [HttpGet("person/{personId}/programs")]
-        public async Task<IActionResult> GetDiscipleshipStepsForPerson(int personId, CancellationToken token)
+        [HttpPost("person/programs")]
+        public async Task<IActionResult> GetDiscipleshipStepsForPerson([FromBody] DiscipleshipForPersonQuery query, CancellationToken token)
         {
-            return Ok(await Mediator.Send(new DiscipleshipForPersonQuery(personId), token));
+            query.PersonId ??= _currentUser.PersonId;
+            return Ok(await Mediator.Send(query, token));
         }
     }
 }
