@@ -12,7 +12,7 @@ namespace ChurchManager.Persistence.Models.Discipleship
     {
         public int DiscipleshipStepDefinitionId { get; set; }
         public int PersonId { get; set; }
-        public DateTime CompletionDate { get; set; }
+        public DateTime? CompletionDate { get; set; }
         [MaxLength(100)]
         public string Status { get; set; }
         [MaxLength(200)]

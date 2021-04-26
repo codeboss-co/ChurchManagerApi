@@ -34,15 +34,14 @@ namespace ChurchManager.Application.Features.Discipleship.Queries.DiscipleshipTy
                   .ThenInclude(x => x.Definition)
                     .ThenInclude(x => x.DiscipleshipType)
                 .Where(x => x.DiscipleshipSteps.Any(s => s.PersonId == query.PersonId))
-                .Select(x => new
+                .Select(x => new DiscipleshipForPersonViewModel
                 {
-                    DiscipleshipProgram = new GeneralViewModel {Name = x.Name, Id = x.Id, Description = x.Description},
-                    DiscipleshipSteps = x.DiscipleshipSteps.Select(x => new
+                    Program = new GeneralViewModel {Name = x.Name, Id = x.Id, Description = x.Description},
+                    Steps = x.DiscipleshipSteps.Select(x => new DiscipleshipStepsViewModel
                     {
-                        x.CompletionDate,
-                        x.Status,
-                        StepDefinition = new GeneralViewModel
-                            {Id = x.Definition.Id, Description = x.Definition.Description, Name = x.Definition.Name},
+                        CompletionDate = x.CompletionDate,
+                        Status = x.Status,
+                        StepDefinition = new StepDefinitionViewModel {Order = x.Definition.Order, Id = x.Definition.Id, Description = x.Definition.Description, Name = x.Definition.Name},
                         DiscipleshipType = new GeneralViewModel
                         {
                             Id = x.Definition.DiscipleshipType.Id,
@@ -52,7 +51,12 @@ namespace ChurchManager.Application.Features.Discipleship.Queries.DiscipleshipTy
                     })
                 })
                 .ToListAsync(ct);
-                
+
+            // Ordering
+            vm.ForEach(x =>
+            {
+                x.Steps = x.Steps.OrderBy(s => s.StepDefinition.Order);
+            });
 
             return new ApiResponse(vm);
         }
