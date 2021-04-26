@@ -84,6 +84,7 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                     Address_Country = table.Column<string>(type: "text", nullable: true),
                     Address_Province = table.Column<string>(type: "text", nullable: true),
                     Address_PostalCode = table.Column<string>(type: "text", nullable: true),
+                    Language = table.Column<string>(type: "text", nullable: true),
                     RecordStatus = table.Column<string>(type: "text", nullable: true),
                     InactiveDateTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: true)
                 },

@@ -604,6 +604,9 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                     b.Property<DateTime?>("InactiveDateTime")
                         .HasColumnType("timestamp without time zone");
 
+                    b.Property<string>("Language")
+                        .HasColumnType("text");
+
                     b.Property<string>("Name")
                         .HasColumnType("text");
 

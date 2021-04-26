@@ -35,7 +35,7 @@ namespace ChurchManager.Infrastructure.Persistence.Seeding.Production
 
         private async Task SeedMyDetails()
        {
-            var cagnettaFamily = new Family {Name = "Cagnetta Family"};
+            var cagnettaFamily = new Family {Name = "Cagnetta Family", Language = "English"};
             await _dbContext.SaveChangesAsync();
 
             // Add me as the first Person i.e. with Id 1
