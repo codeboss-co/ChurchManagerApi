@@ -25,4 +25,8 @@
     <PackageReference Include="CodeBoss.AspNetCore" Version="0.1.10" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+  </ItemGroup>
+
 </Project>

@@ -15,7 +15,7 @@ namespace ChurchManager.Infrastructure.Persistence.Specifications
             int groupTypeId,
             int? churchId,
             int? groupId,
-            bool? withFeedback,
+            bool withFeedback,
             DateTime? from, DateTime? to)
         {
             // Group Type Filter
@@ -38,9 +38,14 @@ namespace ChurchManager.Infrastructure.Persistence.Specifications
             }
 
             // Include attendance with feedback
-            if(withFeedback.HasValue && withFeedback.Value)
+            if(withFeedback)
             {
-                Expression<Func<GroupAttendance, bool>> feedBackFilter = g => g.AttendanceReviewed;
+                Expression<Func<GroupAttendance, bool>> feedBackFilter = g => g.AttendanceReview != null && g.AttendanceReview.IsReviewed == true;
+                Criteria = Criteria.And(feedBackFilter);
+            }
+            else
+            {
+                Expression<Func<GroupAttendance, bool>> feedBackFilter = g => g.AttendanceReview == null || g.AttendanceReview.IsReviewed == false;
                 Criteria = Criteria.And(feedBackFilter);
             }
 

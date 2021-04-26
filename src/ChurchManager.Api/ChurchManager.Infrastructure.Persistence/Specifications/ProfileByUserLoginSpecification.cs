@@ -18,14 +18,18 @@ namespace ChurchManager.Infrastructure.Persistence.Specifications
 
     public class ProfileByPersonSpecification : Specification<Person>
     {
-        public ProfileByPersonSpecification(int personId)
+        public ProfileByPersonSpecification(int personId, bool condensed = false)
         {
             Criteria = x => x.Id == personId;
 
             Includes.Add(x => x.Church);
             Includes.Add(x => x.PhoneNumbers);
-            IncludeStrings.Add("Family.FamilyMembers");
-            IncludeStrings.Add("DiscipleshipPrograms.DiscipleshipSteps");
+
+            if (!condensed)
+            {
+                IncludeStrings.Add("Family.FamilyMembers");
+                IncludeStrings.Add("DiscipleshipPrograms.DiscipleshipSteps");
+            }
         }
     }
 }

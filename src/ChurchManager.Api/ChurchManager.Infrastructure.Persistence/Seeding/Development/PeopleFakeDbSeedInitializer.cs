@@ -62,7 +62,7 @@ namespace ChurchManager.Infrastructure.Persistence.Seeding.Development
 
         private async Task SeedMyDetails()
        {
-            var cagnettaFamily = new Family {Name = "Cagnetta Family"};
+            var cagnettaFamily = new Family {Name = "Cagnetta Family", Language = "English"};
             await _dbContext.SaveChangesAsync();
 
             // Add me as the first Person i.e. with Id 1
@@ -78,6 +78,8 @@ namespace ChurchManager.Infrastructure.Persistence.Seeding.Development
                 ChurchId = 1,
                 Email = new Email {Address = "dillancagnetta@yahoo.com", IsActive = true},
                 FullName = new FullName {FirstName = "Dillan", LastName = "Cagnetta"},
+                MaritalStatus = "Married",
+                AnniversaryDate = new DateTime(2013, 01, 22),
                 UserLoginId = "08925ade-9249-476b-8787-b3dd8f5dbc13",
                 BirthDate = new BirthDate {BirthDay = 6, BirthMonth = 11, BirthYear = 1981},
                 ReceivedHolySpirit = true,
@@ -97,6 +99,8 @@ namespace ChurchManager.Infrastructure.Persistence.Seeding.Development
                 ChurchId = 1,
                 Email = new Email { Address = "danielle@yahoo.com", IsActive = true },
                 FullName = new FullName { FirstName = "Danielle", LastName = "Cagnetta" },
+                MaritalStatus = "Married",
+                AnniversaryDate = new DateTime(2013, 01, 22),
                 BirthDate = new BirthDate { BirthDay = 13, BirthMonth = 03, BirthYear = 1980 },
                 ReceivedHolySpirit = true,
                 Occupation = "Church Right hand",
@@ -145,7 +149,6 @@ namespace ChurchManager.Infrastructure.Persistence.Seeding.Development
         {
             var faker = new Faker("en");
             string lastName = faker.Name.LastName();
-            
 
             var fullName = new Faker<FullName>()
                 .RuleFor(u => u.FirstName, (f, u) => f.Name.FirstName())
@@ -158,7 +161,7 @@ namespace ChurchManager.Infrastructure.Persistence.Seeding.Development
                 .RuleFor(p => p.PhotoUrl, f => f.Internet.Avatar())
                 .RuleFor(p => p.Occupation, f => f.Commerce.Department())
                 .RuleFor(p => p.ReceivedHolySpirit, f => f.PickRandom(true, false))
-                .RuleFor(p => p.ConnectionStatus, f => f.PickRandom(ConnectionStatuses))
+                .RuleFor(p => p.ConnectionStatus, f => f.PickRandom(ConnectionStatuses).Value)
                 .RuleFor(p => p.Gender, f => f.PickRandom(Genders).Value)
                 .RuleFor(p => p.AgeClassification, f => f.PickRandom(AgeClassifications).Value)
                 .RuleFor(p => p.Email, f => EmailFaker())
@@ -167,7 +170,16 @@ namespace ChurchManager.Infrastructure.Persistence.Seeding.Development
                 .RuleFor(p => p.FirstVisitDate, f => f.Date.Past(yearsToGoBack: 2));
             ;
 
+            // Generate singles and add to family
             var people = testPeople.Generate(200);
+            people.ForEach(x =>
+            {
+                var familyFaker = new Faker<Family>()
+                    .RuleFor(u => u.Name, f => $"{x.FullName.LastName} Family")
+                    .RuleFor(u => u.Language, f => faker.PickRandom(Languages));
+
+                x.Family = familyFaker.Generate();
+            });
 
             return people;
         }
@@ -189,7 +201,8 @@ namespace ChurchManager.Infrastructure.Persistence.Seeding.Development
                 .RuleFor(u => u.LastName, (f, u) => lastName);
 
             var familyFaker = new Faker<Family>()
-                .RuleFor(u => u.Name, f => $"{lastName} Family");
+                .RuleFor(u => u.Name, f => $"{lastName} Family")
+                .RuleFor(u => u.Language, f => faker.PickRandom(Languages));
 
             var family = familyFaker.Generate();
 
@@ -198,7 +211,7 @@ namespace ChurchManager.Infrastructure.Persistence.Seeding.Development
                     .RuleFor(u => u.Family, f => family)
                     .RuleFor(p => p.FullName, f => momFullName)
                     .RuleFor(p => p.PhotoUrl, f => f.Internet.Avatar())
-                    .RuleFor(p => p.ConnectionStatus, f => f.PickRandom(ConnectionStatuses))
+                    .RuleFor(p => p.ConnectionStatus, f => f.PickRandom(ConnectionStatuses).Value)
                     .RuleFor(p => p.Gender, f => Gender.Female.Value)
                     .RuleFor(p => p.AgeClassification, f => AgeClassification.Adult.Value)
                     .RuleFor(p => p.Email, f => EmailFaker())
@@ -211,7 +224,7 @@ namespace ChurchManager.Infrastructure.Persistence.Seeding.Development
                     .RuleFor(u => u.Family, f => family )
                     .RuleFor(p => p.FullName, f => dadFullName)
                     .RuleFor(p => p.PhotoUrl, f => f.Internet.Avatar())
-                    .RuleFor(p => p.ConnectionStatus, f => f.PickRandom(ConnectionStatuses))
+                    .RuleFor(p => p.ConnectionStatus, f => f.PickRandom(ConnectionStatuses).Value)
                     .RuleFor(p => p.Gender, f => Gender.Male.Value)
                     .RuleFor(p => p.AgeClassification, f => AgeClassification.Adult.Value)
                     .RuleFor(p => p.Email, f => EmailFaker())
@@ -241,6 +254,7 @@ namespace ChurchManager.Infrastructure.Persistence.Seeding.Development
                 .RuleFor(u => u.ChurchId, f => churchId)
                 .RuleFor(u => u.Family, f => family)
                 .RuleFor(p => p.AgeClassification, f => AgeClassification.Child.Value)
+                .RuleFor(p => p.ConnectionStatus, f => f.PickRandom(ConnectionStatuses).Value)
                 .RuleFor(p => p.Gender, f => f.PickRandom(Genders).Value)
                 .RuleFor(p => p.FullName, f => fullName);
 
@@ -273,9 +287,11 @@ namespace ChurchManager.Infrastructure.Persistence.Seeding.Development
         // Churches Ids
         private int[] Churches => new[] { 1, 2 };
 
+        private string[] Languages => new[] { "English", "Afrikaans", "Xhosa", "IsiZulu" };
+
         private Gender[] Genders => new[] { Gender.Male, Gender.Female, Gender.Unknown };
 
-        private string[] ConnectionStatuses => new[] { "Member", "Visitor", "New Convert" };
+        private ConnectionStatus[] ConnectionStatuses => new[] { ConnectionStatus.Member, ConnectionStatus.FirstTimer, ConnectionStatus.NewConvert };
 
         private AgeClassification[] AgeClassifications => new[] { AgeClassification.Adult, AgeClassification.Child, AgeClassification.Unknown };
     }

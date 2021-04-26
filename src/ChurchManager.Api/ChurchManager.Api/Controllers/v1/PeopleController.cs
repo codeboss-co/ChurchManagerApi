@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using ChurchManager.Application.Features.People.Commands.AddNewFamily;
 using ChurchManager.Application.Features.People.Commands.UpdatePerson;
+using ChurchManager.Application.Features.People.Queries.BrowsePeople;
 using ChurchManager.Application.Features.People.Queries.PeopleAutocomplete;
 using ChurchManager.Domain;
 using Microsoft.AspNetCore.Authorization;
@@ -38,9 +39,19 @@ namespace ChurchManager.Api.Controllers.v1
             return Ok(await Mediator.Send(query, token));
         }
 
+        #region Edit Person
         // v1/people/edit/{personId}/connection-info/
         [HttpPost("edit/{personId}/connection-info")]
         public async Task<IActionResult> EditConnectionInfo(int personId, [FromBody] UpdateConnectionInfoCommand command, CancellationToken token)
+        {
+            command.PersonId = personId;
+            await Mediator.Send(command, token);
+            return Accepted();
+        }
+
+        // v1/people/edit/{personId}/connection-info/
+        [HttpPost("edit/{personId}/personal-info")]
+        public async Task<IActionResult> EditPersonalInfo(int personId, [FromBody] UpdatePersonalInfoCommand command, CancellationToken token)
         {
             command.PersonId = personId;
             await Mediator.Send(command, token);
@@ -54,6 +65,14 @@ namespace ChurchManager.Api.Controllers.v1
             command.PersonId = personId;
             await Mediator.Send(command, token);
             return Accepted();
+        }
+        #endregion
+
+        [HttpPost("browse")]
+        public async Task<IActionResult> BrowsePeople([FromBody] BrowsePeopleQuery query, CancellationToken token)
+        {
+            var groups = await Mediator.Send(query, token);
+            return Ok(groups);
         }
     }
 }

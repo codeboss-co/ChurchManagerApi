@@ -2,12 +2,15 @@
 using System.Threading;
 using System.Threading.Tasks;
 using ChurchManager.Core.Shared;
+using ChurchManager.Core.Shared.Parameters;
 using ChurchManager.Domain.Features.People.Repositories;
 using ChurchManager.Domain.Model;
 using ChurchManager.Infrastructure.Abstractions;
 using ChurchManager.Infrastructure.Persistence.Contexts;
+using ChurchManager.Infrastructure.Persistence.Extensions;
 using ChurchManager.Infrastructure.Persistence.Specifications;
 using ChurchManager.Persistence.Models.People;
+using Convey.CQRS.Queries;
 using Microsoft.EntityFrameworkCore;
 
 namespace ChurchManager.Infrastructure.Persistence.Repositories
@@ -33,9 +36,9 @@ namespace ChurchManager.Infrastructure.Persistence.Repositories
                 : null;
         }
 
-        public async Task<PersonDomain> ProfileByPersonId(int personId)
+        public async Task<PersonDomain> ProfileByPersonId(int personId, bool condensed = false)
         {
-            var entity = await Queryable(new ProfileByPersonSpecification(personId))
+            var entity = await Queryable(new ProfileByPersonSpecification(personId, condensed))
                 .FirstOrDefaultAsync();
 
             return entity is not null
@@ -74,6 +77,32 @@ namespace ChurchManager.Infrastructure.Persistence.Repositories
                 .ToListAsync(ct);
 
             return new PeopleAutocompleteResults(autocomplete);
+        }
+
+        public async Task<PagedResult<PersonDomain>> BrowsePeopleAsync(SearchTermQueryParameter query, CancellationToken ct = default)
+        {
+            // Paging
+            var pagedResult = await Queryable()
+                .Specify(new BrowsePeopleSpecification(query.SearchTerm))
+                /*.Select(x => new PersonBrowseViewModel
+                {
+                    PersonId = x.Id,
+                    FullName = x.FullName,
+                    AgeClassification = x.AgeClassification,
+                    ConnectionStatus = x.ConnectionStatus,
+                    Gender = x.Gender,
+                    BirthDate = x.BirthDate,
+                    Church = x.Church.Name
+                    
+                })*/
+                .PaginateAsync(query);
+
+            return PagedResult<PersonDomain>.Create(
+                pagedResult.Items.Select(entity => new PersonDomain(entity)),
+                pagedResult.CurrentPage,
+                pagedResult.ResultsPerPage,
+                pagedResult.TotalPages,
+                pagedResult.TotalResults);
         }
     }
 }

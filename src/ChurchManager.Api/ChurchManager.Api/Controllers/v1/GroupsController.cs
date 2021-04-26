@@ -29,6 +29,7 @@ namespace ChurchManager.Api.Controllers.v1
             return Ok(groups);
         }
 
+        #region Browse
         [HttpPost("browse/person/{personId}")]
         public async Task<IActionResult> BrowseGroupsForPerson(int personId, [FromBody] BrowsePersonsGroupsQuery query, CancellationToken token)
         {
@@ -41,7 +42,8 @@ namespace ChurchManager.Api.Controllers.v1
         {
             query.PersonId = _currentUser.PersonId; // Reset to current person
             return Ok(await Mediator.Send(query, token));
-        }
+        } 
+        #endregion
 
         [HttpGet("{groupId}/members")]
         public async Task<IActionResult> GetGroupMembers(int groupId, CancellationToken token)

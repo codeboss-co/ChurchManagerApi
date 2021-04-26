@@ -35,9 +35,9 @@ namespace ChurchManager.Api.Controllers.v1
 
         // v1/profiles/person/{{personId}}
         [HttpGet("person/{personId}")]
-        public async Task<IActionResult> GetUserProfileByPerson(int personId, CancellationToken token)
+        public async Task<IActionResult> GetUserProfileByPerson(int personId, [FromQuery] bool condensed, CancellationToken token)
         {
-            var response = await Mediator.Send(new ProfileByPersonIdQuery(personId), token);
+            var response = await Mediator.Send(new ProfileByPersonIdQuery(personId, condensed), token);
             return Ok(response);
         }
 
