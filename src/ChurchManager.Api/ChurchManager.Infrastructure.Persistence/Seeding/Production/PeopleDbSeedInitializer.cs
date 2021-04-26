@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using ChurchManager.Domain;
 using ChurchManager.Domain.Features.People;
@@ -51,6 +52,8 @@ namespace ChurchManager.Infrastructure.Persistence.Seeding.Production
                 ChurchId = 1,
                 Email = new Email {Address = "dillancagnetta@yahoo.com", IsActive = true},
                 FullName = new FullName {FirstName = "Dillan", LastName = "Cagnetta"},
+                MaritalStatus = "Married",
+                AnniversaryDate = new DateTime(2013, 01, 22),
                 UserLoginId = "08925ade-9249-476b-8787-b3dd8f5dbc13",
                 BirthDate = new BirthDate {BirthDay = 6, BirthMonth = 11, BirthYear = 1981},
                 ReceivedHolySpirit = true,
@@ -70,6 +73,8 @@ namespace ChurchManager.Infrastructure.Persistence.Seeding.Production
                 ChurchId = 1,
                 Email = new Email { Address = "danielle@yahoo.com", IsActive = true },
                 FullName = new FullName { FirstName = "Danielle", LastName = "Cagnetta" },
+                MaritalStatus = "Married",
+                AnniversaryDate = new DateTime(2013, 01, 22),
                 BirthDate = new BirthDate { BirthDay = 13, BirthMonth = 03, BirthYear = 1980 },
                 ReceivedHolySpirit = true,
                 Occupation = "Church Right hand",

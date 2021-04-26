@@ -11,7 +11,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ChurchManager.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(ChurchManagerDbContext))]
-    [Migration("20210426074802_InitialDbMigration")]
+    [Migration("20210426121625_InitialDbMigration")]
     partial class InitialDbMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -218,7 +218,10 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<DateTime>("CompletionDate")
+                    b.Property<DateTime?>("CommencementDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<DateTime?>("CompletionDate")
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("CreatedBy")

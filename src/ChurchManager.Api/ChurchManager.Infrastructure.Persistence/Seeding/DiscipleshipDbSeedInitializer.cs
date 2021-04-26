@@ -31,24 +31,42 @@ namespace ChurchManager.Infrastructure.Persistence.Seeding
                     Description = "Basics of our Faith and Doctrine",
                     DiscipleshipType = newConvertsDiscipleshipType
                 };
-               
+                var baptismClassStepDefinition = new DiscipleshipStepDefinition
+                {
+                    Name = "Baptism Class",
+                    Description = "Understanding Baptism",
+                    DiscipleshipType = newConvertsDiscipleshipType
+                };
+
 
                 await dbContext.AddAsync(foundationSchoolStepDefinition);
+                await dbContext.AddAsync(baptismClassStepDefinition);
 
-                await AddFoundationSchoolStepsToPeopleAsync(dbContext, foundationSchoolStepDefinition);
+                await AddFoundationSchoolStepsToPeopleAsync(dbContext, foundationSchoolStepDefinition, baptismClassStepDefinition);
 
                 await dbContext.SaveChangesAsync();
             }
         }
 
-        private async Task AddFoundationSchoolStepsToPeopleAsync(ChurchManagerDbContext dbContext, DiscipleshipStepDefinition definition)
+        private async Task AddFoundationSchoolStepsToPeopleAsync(
+            ChurchManagerDbContext dbContext, 
+            DiscipleshipStepDefinition foundationSchool,
+            DiscipleshipStepDefinition baptismClass
+            )
         {
             var dillan = await dbContext.Person.FirstOrDefaultAsync(x => x.Id == 1);
             var personFoundationSchoolStep = new DiscipleshipStep
             {
-                Definition = definition,
+                Definition = foundationSchool,
                 CompletionDate = DateTime.Today.AddYears(-15),
                 Status = "Completed",
+                Person = dillan
+            };
+            var baptismClassStep = new DiscipleshipStep
+            {
+                Definition = baptismClass,
+                CommencementDate = DateTime.Today.AddYears(-15),
+                Status = "In Progress",
                 Person = dillan
             };
 
@@ -56,7 +74,7 @@ namespace ChurchManager.Infrastructure.Persistence.Seeding
             {
                 Name = "New Converts Program",
                 Description = "Discipleship for New Converts",
-                DiscipleshipSteps = new List<DiscipleshipStep>(1) { personFoundationSchoolStep }
+                DiscipleshipSteps = new List<DiscipleshipStep>(1) { personFoundationSchoolStep, baptismClassStep }
             };
 
             dillan.DiscipleshipPrograms.Add(newConvertsDiscipleshipProgram);
