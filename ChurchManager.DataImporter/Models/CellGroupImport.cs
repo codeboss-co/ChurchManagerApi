@@ -1,6 +1,6 @@
 ﻿namespace ChurchManager.DataImporter.Models
 {
-    public class CellGroupImport
+    public record CellGroupImport
     {
         public string Name { get; set; }
         public string Description { get; set; }
