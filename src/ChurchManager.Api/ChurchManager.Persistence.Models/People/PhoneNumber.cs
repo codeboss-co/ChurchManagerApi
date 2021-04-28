@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.RegularExpressions;
 using Codeboss.Types;
 
 namespace ChurchManager.Persistence.Models.People
@@ -50,7 +51,27 @@ namespace ChurchManager.Persistence.Models.People
                 return _fullNumber;
             }
         }
-
         private string _fullNumber;
+
+        #region Methods
+
+        /// <summary>
+        /// Removes non-numeric characters from a provided number
+        /// </summary>
+        /// <param name="number">A <see cref="System.String"/> containing the phone number to clean.</param>
+        /// <returns>A <see cref="System.String"/> containing the phone number with all non numeric characters removed. </returns>
+        public static string CleanNumber(string number)
+        {
+            if(!string.IsNullOrEmpty(number))
+            {
+                return DigitsOnly.Replace(number, string.Empty);
+            }
+
+            return string.Empty;
+        }
+
+        private static readonly Regex DigitsOnly = new Regex(@"[^\d]");
+
+        #endregion
     }
 }
