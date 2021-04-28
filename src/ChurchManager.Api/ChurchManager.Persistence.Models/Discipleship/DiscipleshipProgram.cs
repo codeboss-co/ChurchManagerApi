@@ -12,14 +12,23 @@ namespace ChurchManager.Persistence.Models.Discipleship
     public class DiscipleshipProgram : AuditableEntity<int>, IAggregateRoot<int>
     {
         [MaxLength(100)]
+        [Required]
         public string Name { get; set; }
 
         [MaxLength(200)]
         public string Description { get; set; }
 
+        [MaxLength(100)]
+        public string Category { get; set; }
+
+        /// <summary>
+        /// Gets or sets the order.
+        /// </summary>
+        public int Order { get; set; }
+
         #region Navigation
 
-        public virtual ICollection<DiscipleshipStep> DiscipleshipSteps { get; set; } = new Collection<DiscipleshipStep>();
+        public virtual ICollection<DiscipleshipStepDefinition> StepDefinitions { get; set; } = new Collection<DiscipleshipStepDefinition>();
 
         #endregion
     }

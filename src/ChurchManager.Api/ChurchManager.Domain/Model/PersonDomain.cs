@@ -44,7 +44,7 @@ namespace ChurchManager.Domain.Model
         {
             _entity = entity;
 
-            var newConvertsDiscipleshipProgram =
+            /*var newConvertsDiscipleshipProgram =
                 _entity.DiscipleshipPrograms.FirstOrDefault(x => x.Name == "New Converts Program");
             var foundationSchoolStep = newConvertsDiscipleshipProgram?.DiscipleshipSteps.FirstOrDefault();
 
@@ -53,7 +53,7 @@ namespace ChurchManager.Domain.Model
                 IsCompleted = foundationSchoolStep != null && foundationSchoolStep.Status == "Completed",
                 Status = foundationSchoolStep?.Status,
                 CompletionDate = foundationSchoolStep?.CompletionDate
-            };
+            };*/
         }
     }
     

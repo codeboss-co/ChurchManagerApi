@@ -29,10 +29,10 @@ namespace ChurchManager.Application.Features.Discipleship.Queries.DiscipleshipTy
 
         public async Task<ApiResponse> Handle(DiscipleshipForPersonQuery query, CancellationToken ct)
         {
+            /*
             var vm = await _dbRepository.Queryable()
-                .Include(x => x.DiscipleshipSteps)
-                  .ThenInclude(x => x.Definition)
-                    .ThenInclude(x => x.DiscipleshipType)
+                .Include(x => x.StepDefinitions)
+                  .ThenInclude(x => x.Steps)
                 .Where(x => x.DiscipleshipSteps.Any(s => s.PersonId == query.PersonId))
                 .Select(x => new DiscipleshipForPersonViewModel
                 {
@@ -57,8 +57,9 @@ namespace ChurchManager.Application.Features.Discipleship.Queries.DiscipleshipTy
             {
                 x.Steps = x.Steps.OrderBy(s => s.StepDefinition.Order);
             });
+            */
 
-            return new ApiResponse(vm);
+            return new ApiResponse(null);
         }
     }
 }

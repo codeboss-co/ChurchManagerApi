@@ -18,10 +18,10 @@ namespace ChurchManager.Api.Controllers.v1
             _currentUser = currentUser;
         }
 
-        [HttpGet("types")]
-        public async Task<IActionResult> GetDiscipleshipTypes(CancellationToken token)
+        [HttpGet("programs")]
+        public async Task<IActionResult> GetDiscipleshipPrograms(CancellationToken token)
         {
-            return Ok(await Mediator.Send(new DiscipleshipTypesQuery(), token));
+            return Ok(await Mediator.Send(new DiscipleshipProgramsQuery(), token));
         }
 
         [HttpGet("types/{typeId}/definitions")]

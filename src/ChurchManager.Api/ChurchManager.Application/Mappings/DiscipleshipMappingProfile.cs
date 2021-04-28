@@ -9,7 +9,6 @@ namespace ChurchManager.Application.Mappings
         public DiscipleshipMappingProfile()
         {
             CreateMap<DiscipleshipProgram, GeneralViewModel>().ReverseMap();
-            CreateMap<DiscipleshipType, GeneralViewModel>().ReverseMap();
             CreateMap<DiscipleshipStepDefinition, GeneralViewModel>().ReverseMap();
         }
     }

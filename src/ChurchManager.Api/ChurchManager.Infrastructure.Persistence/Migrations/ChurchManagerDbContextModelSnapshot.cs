@@ -173,6 +173,10 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
+                    b.Property<string>("Category")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
                     b.Property<string>("CreatedBy")
                         .HasColumnType("text");
 
@@ -193,18 +197,17 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
 
-                    b.Property<int?>("PersonId")
+                    b.Property<int>("Order")
                         .HasColumnType("integer");
 
                     b.Property<string>("RecordStatus")
                         .HasColumnType("text");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("PersonId");
 
                     b.ToTable("DiscipleshipProgram", "Discipleship");
                 });
@@ -216,9 +219,6 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<DateTime?>("CommencementDate")
-                        .HasColumnType("timestamp without time zone");
-
                     b.Property<DateTime?>("CompletionDate")
                         .HasColumnType("timestamp without time zone");
 
@@ -228,11 +228,11 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<int?>("DiscipleshipProgramId")
-                        .HasColumnType("integer");
-
                     b.Property<int>("DiscipleshipStepDefinitionId")
                         .HasColumnType("integer");
+
+                    b.Property<DateTime?>("EndDateTime")
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<DateTime?>("InactiveDateTime")
                         .HasColumnType("timestamp without time zone");
@@ -243,7 +243,7 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                     b.Property<DateTime?>("ModifiedDate")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<string>("Notes")
+                    b.Property<string>("Note")
                         .HasMaxLength(200)
                         .HasColumnType("character varying(200)");
 
@@ -253,13 +253,14 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                     b.Property<string>("RecordStatus")
                         .HasColumnType("text");
 
+                    b.Property<DateTime?>("StartDateTime")
+                        .HasColumnType("timestamp without time zone");
+
                     b.Property<string>("Status")
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("DiscipleshipProgramId");
 
                     b.HasIndex("DiscipleshipStepDefinitionId");
 
@@ -275,6 +276,9 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
+                    b.Property<bool>("AllowMultiple")
+                        .HasColumnType("boolean");
+
                     b.Property<string>("CreatedBy")
                         .HasColumnType("text");
 
@@ -285,8 +289,12 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("character varying(200)");
 
-                    b.Property<int>("DiscipleshipTypeId")
+                    b.Property<int>("DiscipleshipProgramId")
                         .HasColumnType("integer");
+
+                    b.Property<string>("IconCssClass")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
 
                     b.Property<DateTime?>("InactiveDateTime")
                         .HasColumnType("timestamp without time zone");
@@ -298,6 +306,7 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
 
@@ -309,35 +318,9 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DiscipleshipTypeId");
+                    b.HasIndex("DiscipleshipProgramId");
 
                     b.ToTable("DiscipleshipStepDefinition", "Discipleship");
-                });
-
-            modelBuilder.Entity("ChurchManager.Persistence.Models.Discipleship.DiscipleshipType", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<string>("Description")
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
-
-                    b.Property<DateTime?>("InactiveDateTime")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
-
-                    b.Property<string>("RecordStatus")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("DiscipleshipType", "Discipleship");
                 });
 
             modelBuilder.Entity("ChurchManager.Persistence.Models.Groups.Group", b =>
@@ -865,21 +848,10 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                     b.Navigation("ChurchAttendanceType");
                 });
 
-            modelBuilder.Entity("ChurchManager.Persistence.Models.Discipleship.DiscipleshipProgram", b =>
-                {
-                    b.HasOne("ChurchManager.Persistence.Models.People.Person", null)
-                        .WithMany("DiscipleshipPrograms")
-                        .HasForeignKey("PersonId");
-                });
-
             modelBuilder.Entity("ChurchManager.Persistence.Models.Discipleship.DiscipleshipStep", b =>
                 {
-                    b.HasOne("ChurchManager.Persistence.Models.Discipleship.DiscipleshipProgram", null)
-                        .WithMany("DiscipleshipSteps")
-                        .HasForeignKey("DiscipleshipProgramId");
-
                     b.HasOne("ChurchManager.Persistence.Models.Discipleship.DiscipleshipStepDefinition", "Definition")
-                        .WithMany()
+                        .WithMany("Steps")
                         .HasForeignKey("DiscipleshipStepDefinitionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -897,13 +869,13 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
 
             modelBuilder.Entity("ChurchManager.Persistence.Models.Discipleship.DiscipleshipStepDefinition", b =>
                 {
-                    b.HasOne("ChurchManager.Persistence.Models.Discipleship.DiscipleshipType", "DiscipleshipType")
-                        .WithMany()
-                        .HasForeignKey("DiscipleshipTypeId")
+                    b.HasOne("ChurchManager.Persistence.Models.Discipleship.DiscipleshipProgram", "DiscipleshipProgram")
+                        .WithMany("StepDefinitions")
+                        .HasForeignKey("DiscipleshipProgramId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("DiscipleshipType");
+                    b.Navigation("DiscipleshipProgram");
                 });
 
             modelBuilder.Entity("ChurchManager.Persistence.Models.Groups.Group", b =>
@@ -1276,7 +1248,12 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
 
             modelBuilder.Entity("ChurchManager.Persistence.Models.Discipleship.DiscipleshipProgram", b =>
                 {
-                    b.Navigation("DiscipleshipSteps");
+                    b.Navigation("StepDefinitions");
+                });
+
+            modelBuilder.Entity("ChurchManager.Persistence.Models.Discipleship.DiscipleshipStepDefinition", b =>
+                {
+                    b.Navigation("Steps");
                 });
 
             modelBuilder.Entity("ChurchManager.Persistence.Models.Groups.Group", b =>
@@ -1298,8 +1275,6 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
 
             modelBuilder.Entity("ChurchManager.Persistence.Models.People.Person", b =>
                 {
-                    b.Navigation("DiscipleshipPrograms");
-
                     b.Navigation("Notes");
 
                     b.Navigation("PhoneNumbers");
