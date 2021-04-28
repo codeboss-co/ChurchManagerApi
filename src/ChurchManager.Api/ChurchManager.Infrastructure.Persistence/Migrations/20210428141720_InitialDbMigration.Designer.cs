@@ -11,7 +11,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ChurchManager.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(ChurchManagerDbContext))]
-    [Migration("20210427140312_InitialDbMigration")]
+    [Migration("20210428141720_InitialDbMigration")]
     partial class InitialDbMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -66,7 +66,7 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("ChurchGroupId");
 
-                    b.ToTable("Church", "Churches");
+                    b.ToTable("Church");
                 });
 
             modelBuilder.Entity("ChurchManager.Persistence.Models.Churches.ChurchAttendance", b =>
@@ -114,7 +114,7 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("ChurchAttendanceTypeId");
 
-                    b.ToTable("ChurchAttendance", "Churches");
+                    b.ToTable("ChurchAttendance");
                 });
 
             modelBuilder.Entity("ChurchManager.Persistence.Models.Churches.ChurchAttendanceType", b =>
@@ -135,7 +135,7 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ChurchAttendanceType", "Churches");
+                    b.ToTable("ChurchAttendanceType");
                 });
 
             modelBuilder.Entity("ChurchManager.Persistence.Models.Churches.ChurchGroup", b =>
@@ -165,7 +165,7 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ChurchGroup", "Churches");
+                    b.ToTable("ChurchGroup");
                 });
 
             modelBuilder.Entity("ChurchManager.Persistence.Models.Discipleship.DiscipleshipProgram", b =>
@@ -211,7 +211,7 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("DiscipleshipProgram", "Discipleship");
+                    b.ToTable("DiscipleshipProgram");
                 });
 
             modelBuilder.Entity("ChurchManager.Persistence.Models.Discipleship.DiscipleshipStep", b =>
@@ -268,7 +268,7 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("PersonId");
 
-                    b.ToTable("DiscipleshipStep", "Discipleship");
+                    b.ToTable("DiscipleshipStep");
                 });
 
             modelBuilder.Entity("ChurchManager.Persistence.Models.Discipleship.DiscipleshipStepDefinition", b =>
@@ -322,7 +322,7 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("DiscipleshipProgramId");
 
-                    b.ToTable("DiscipleshipStepDefinition", "Discipleship");
+                    b.ToTable("DiscipleshipStepDefinition");
                 });
 
             modelBuilder.Entity("ChurchManager.Persistence.Models.Groups.Group", b =>
@@ -331,6 +331,9 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("Address")
+                        .HasColumnType("text");
 
                     b.Property<int?>("ChurchId")
                         .HasColumnType("integer");
@@ -362,6 +365,9 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                     b.Property<string>("RecordStatus")
                         .HasColumnType("text");
 
+                    b.Property<DateTimeOffset?>("StartDate")
+                        .HasColumnType("timestamp with time zone");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ChurchId");
@@ -370,7 +376,7 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("ParentGroupId");
 
-                    b.ToTable("Group", "Groups");
+                    b.ToTable("Group");
                 });
 
             modelBuilder.Entity("ChurchManager.Persistence.Models.Groups.GroupAttendance", b =>
@@ -412,7 +418,7 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("GroupId");
 
-                    b.ToTable("GroupAttendance", "Groups");
+                    b.ToTable("GroupAttendance");
                 });
 
             modelBuilder.Entity("ChurchManager.Persistence.Models.Groups.GroupFeature", b =>
@@ -436,7 +442,7 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GroupFeature", "Groups");
+                    b.ToTable("GroupFeature");
                 });
 
             modelBuilder.Entity("ChurchManager.Persistence.Models.Groups.GroupMember", b =>
@@ -476,7 +482,7 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("PersonId");
 
-                    b.ToTable("GroupMember", "Groups");
+                    b.ToTable("GroupMember");
                 });
 
             modelBuilder.Entity("ChurchManager.Persistence.Models.Groups.GroupMemberAttendance", b =>
@@ -522,7 +528,7 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("GroupMemberId");
 
-                    b.ToTable("GroupMemberAttendance", "Groups");
+                    b.ToTable("GroupMemberAttendance");
                 });
 
             modelBuilder.Entity("ChurchManager.Persistence.Models.Groups.GroupMemberRole", b =>
@@ -545,7 +551,7 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GroupMemberRole", "Groups");
+                    b.ToTable("GroupMemberRole");
                 });
 
             modelBuilder.Entity("ChurchManager.Persistence.Models.Groups.GroupType", b =>
@@ -579,7 +585,7 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GroupType", "Groups");
+                    b.ToTable("GroupType");
                 });
 
             modelBuilder.Entity("ChurchManager.Persistence.Models.People.Family", b =>
@@ -603,7 +609,7 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Family", "People");
+                    b.ToTable("Family");
                 });
 
             modelBuilder.Entity("ChurchManager.Persistence.Models.People.Notes.Note", b =>
@@ -652,7 +658,7 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("PersonId");
 
-                    b.ToTable("Note", "People");
+                    b.ToTable("Note");
                 });
 
             modelBuilder.Entity("ChurchManager.Persistence.Models.People.Notes.NoteType", b =>
@@ -679,7 +685,7 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("NoteType", "People");
+                    b.ToTable("NoteType");
                 });
 
             modelBuilder.Entity("ChurchManager.Persistence.Models.People.OnlineUser", b =>
@@ -707,7 +713,7 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("PersonId");
 
-                    b.ToTable("OnlineUser", "People");
+                    b.ToTable("OnlineUser");
                 });
 
             modelBuilder.Entity("ChurchManager.Persistence.Models.People.Person", b =>
@@ -777,7 +783,7 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("FamilyId");
 
-                    b.ToTable("Person", "People");
+                    b.ToTable("Person");
                 });
 
             modelBuilder.Entity("ChurchManager.Persistence.Models.People.PhoneNumber", b =>
@@ -812,7 +818,7 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("PersonId");
 
-                    b.ToTable("PhoneNumber", "People");
+                    b.ToTable("PhoneNumber");
                 });
 
             modelBuilder.Entity("GroupGroupFeature", b =>
@@ -827,7 +833,7 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("GroupsId");
 
-                    b.ToTable("GroupFeatures", "Groups");
+                    b.ToTable("GroupsFeatures");
                 });
 
             modelBuilder.Entity("ChurchManager.Persistence.Models.Churches.Church", b =>

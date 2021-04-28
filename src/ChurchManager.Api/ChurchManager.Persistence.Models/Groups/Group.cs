@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -21,7 +22,7 @@ namespace ChurchManager.Persistence.Models.Groups
         [MaxLength(100)]
         public string Description { get; set; }
         public string Address { get; set; }
-
+        public DateTimeOffset? StartDate { get; set; }
         public int? GroupCapacity { get; set; }
         public bool? IsOnline { get; set; }
 
