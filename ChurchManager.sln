@@ -36,6 +36,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Apps", "Apps", "{F839B0EA-9799-4939-AA57-FB1272B9912A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChurchManager.DataImporter", "ChurchManager.DataImporter\ChurchManager.DataImporter.csproj", "{0AB306C6-4AA1-4081-B17B-7A8015D92178}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -78,6 +82,10 @@ Global
 		{9955BE8F-BB7A-4C19-83C1-DB47AE562FE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9955BE8F-BB7A-4C19-83C1-DB47AE562FE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9955BE8F-BB7A-4C19-83C1-DB47AE562FE5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0AB306C6-4AA1-4081-B17B-7A8015D92178}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0AB306C6-4AA1-4081-B17B-7A8015D92178}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0AB306C6-4AA1-4081-B17B-7A8015D92178}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0AB306C6-4AA1-4081-B17B-7A8015D92178}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -92,6 +100,7 @@ Global
 		{5586DECE-E9F6-4B8C-8A5F-6444958FFC91} = {D4173B5E-3368-41B7-A208-72DD77CE12C5}
 		{5C385EC4-CAF1-4E19-AEF6-52C7630647C7} = {61F45238-00AE-452D-98B9-A42DB00CC3F0}
 		{9955BE8F-BB7A-4C19-83C1-DB47AE562FE5} = {D4173B5E-3368-41B7-A208-72DD77CE12C5}
+		{0AB306C6-4AA1-4081-B17B-7A8015D92178} = {F839B0EA-9799-4939-AA57-FB1272B9912A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FFB97C3E-0578-455B-ABD1-9C774B9BDEAC}
