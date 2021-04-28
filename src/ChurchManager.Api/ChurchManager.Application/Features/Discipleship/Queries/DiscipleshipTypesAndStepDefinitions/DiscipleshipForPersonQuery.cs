@@ -43,7 +43,7 @@ namespace ChurchManager.Application.Features.Discipleship.Queries.DiscipleshipTy
                         Category = program.Category,
                         Order = program.Order
                     },
-                    Steps = program.StepDefinitions.SelectMany(definition => definition.Steps).Select(x => new DiscipleshipStepsViewModel
+                    Steps = program.StepDefinitions.SelectMany(definition => definition.Steps).Select(x => new DiscipleshipStepViewModel
                     {
                         CompletionDate = x.CompletionDate,
                         Status = x.Status,

@@ -31,7 +31,14 @@ namespace ChurchManager.Api.Controllers.v1
         }
 
         [HttpPost("person/programs")]
-        public async Task<IActionResult> GetDiscipleshipStepsForPerson([FromBody] DiscipleshipForPersonQuery query, CancellationToken token)
+        public async Task<IActionResult> GetDiscipleshipForPerson([FromBody] DiscipleshipForPersonQuery query, CancellationToken token)
+        {
+            query.PersonId ??= _currentUser.PersonId;
+            return Ok(await Mediator.Send(query, token));
+        }
+
+        [HttpPost("person/step")]
+        public async Task<IActionResult> GetDiscipleshipStepInfoForPerson([FromBody] DiscipleshipStepInfoForPersonQuery query, CancellationToken token)
         {
             query.PersonId ??= _currentUser.PersonId;
             return Ok(await Mediator.Send(query, token));

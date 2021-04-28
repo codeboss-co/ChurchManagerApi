@@ -30,7 +30,7 @@ namespace ChurchManager.Domain.Model
         public string Occupation => _entity.Occupation;
         public string Source => _entity.Source;
         public bool? ReceivedHolySpirit => _entity.ReceivedHolySpirit;
-        public DiscipleshipStepViewModel FoundationSchool { get; }
+        public DiscipleshipStepViewModel FoundationSchool { get; set; }
         public string UserLoginId => _entity.UserLoginId;
 
         // Gets the persons family members excluding them
