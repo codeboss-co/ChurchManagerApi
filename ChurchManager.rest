@@ -136,3 +136,12 @@ Authorization: Bearer {{accessToken}}
 GET {{api}}/v1/cellministry/charts
 Content-Type: application/json
 Authorization: Bearer {{accessToken}}
+
+# ============== DISCIPLESHIP ==================== #
+POST {{api}}/v1/discipleship/person/programs
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
+{
+    "personId": 1
+}

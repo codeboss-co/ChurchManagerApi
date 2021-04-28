@@ -4,12 +4,13 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.Serialization;
 using ChurchManager.Persistence.Models.People;
 using ChurchManager.Persistence.Shared;
+using Codeboss.Types;
 
 namespace ChurchManager.Persistence.Models.Discipleship
 {
     [Table("DiscipleshipStep", Schema = "Discipleship")]
 
-    public class DiscipleshipStep : AuditableEntity<int>
+    public class DiscipleshipStep : AuditableEntity<int>, IAggregateRoot<int>
     {
         [Required]
         public int DiscipleshipStepDefinitionId { get; set; }

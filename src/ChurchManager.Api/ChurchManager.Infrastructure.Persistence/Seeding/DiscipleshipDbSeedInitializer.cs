@@ -29,13 +29,14 @@ namespace ChurchManager.Infrastructure.Persistence.Seeding
                     Name = "Foundation School",
                     Description = "Basics of our Faith and Doctrine",
                     IconCssClass = "heroicons-solid:academic-cap",
-                    
+                    Order = 0
                 };
                 var baptismClassStepDefinition = new DiscipleshipStepDefinition
                 {
                     Name = "Baptism Class",
                     Description = "Understanding Baptism",
                     AllowMultiple = false,
+                    Order = 1
                 };
 
                 var newConvertsDiscipleshipProgram = new DiscipleshipProgram
