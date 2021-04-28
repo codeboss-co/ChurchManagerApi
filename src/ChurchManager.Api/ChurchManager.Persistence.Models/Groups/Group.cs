@@ -8,7 +8,7 @@ using Codeboss.Types;
 
 namespace ChurchManager.Persistence.Models.Groups
 {
-    [Table("Group", Schema = "Groups")]
+    [Table("Group")]
 
     public class Group : Entity<int>, IAggregateRoot<int>
     {
@@ -20,6 +20,7 @@ namespace ChurchManager.Persistence.Models.Groups
         public string Name { get; set; }
         [MaxLength(100)]
         public string Description { get; set; }
+        public string Address { get; set; }
 
         public int? GroupCapacity { get; set; }
         public bool? IsOnline { get; set; }

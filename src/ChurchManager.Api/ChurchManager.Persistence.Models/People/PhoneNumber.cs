@@ -4,7 +4,7 @@ using Codeboss.Types;
 
 namespace ChurchManager.Persistence.Models.People
 {
-    [Table("PhoneNumber", Schema = "People")]
+    [Table("PhoneNumber")]
 
     public class PhoneNumber : IEntity<int>
     {

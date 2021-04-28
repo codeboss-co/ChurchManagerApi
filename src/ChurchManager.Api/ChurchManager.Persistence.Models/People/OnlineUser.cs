@@ -5,7 +5,7 @@ using Codeboss.Types;
 
 namespace ChurchManager.Persistence.Models.People
 {
-    [Table("OnlineUser", Schema = "People")]
+    [Table("OnlineUser")]
 
     public class OnlineUser : IAggregateRoot<int>
     {

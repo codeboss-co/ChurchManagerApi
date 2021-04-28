@@ -4,7 +4,7 @@ using ChurchManager.Persistence.Shared;
 
 namespace ChurchManager.Persistence.Models.Groups
 {
-    [Table("GroupFeature", Schema = "Groups")]
+    [Table("GroupFeature")]
     public class GroupFeature : Entity<int>
     {
         public string Name { get; set; }

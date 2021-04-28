@@ -9,7 +9,7 @@ namespace ChurchManager.Persistence.Models.Groups
     /// or more <see cref="GroupMemberRole">GroupRoles</see> assigned to them (for instance the leader of a group can have both a leader and member role). Examples
     /// of roles include leader, member, team leader, coach, host, etc.
     /// </summary>
-    [Table("GroupMemberRole", Schema = "Groups")]
+    [Table("GroupMemberRole")]
 
     public record GroupMemberRole : IEntity<int>
     {

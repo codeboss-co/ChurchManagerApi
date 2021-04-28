@@ -4,7 +4,7 @@ using Codeboss.Types;
 
 namespace ChurchManager.Persistence.Models.Groups
 {
-    [Table("GroupType", Schema = "Groups")]
+    [Table("GroupType")]
 
     public record GroupType : IEntity<int>
     {

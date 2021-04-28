@@ -7,7 +7,7 @@ using Codeboss.Types;
 
 namespace ChurchManager.Persistence.Models.Discipleship
 {
-    [Table("DiscipleshipStepDefinition", Schema = "Discipleship")]
+    [Table("DiscipleshipStepDefinition")]
 
     public class DiscipleshipStepDefinition : AuditableEntity<int>, IAggregateRoot<int>
     {

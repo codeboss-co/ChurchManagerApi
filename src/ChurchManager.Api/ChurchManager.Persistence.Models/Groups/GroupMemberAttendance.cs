@@ -9,7 +9,7 @@ namespace ChurchManager.Persistence.Models.Groups
     /// Represents an instance where a <see cref="GroupMember"/> attended (or was scheduled to attend) a group/location/schedule.
     /// This can be used for attendee/volunteer check-in, group attendance, etc.
     /// </summary>
-    [Table("GroupMemberAttendance", Schema = "Groups")]
+    [Table("GroupMemberAttendance")]
 
     public class GroupMemberAttendance : IAggregateRoot<int>
     {

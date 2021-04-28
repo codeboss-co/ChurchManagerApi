@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ChurchManager.Persistence.Models.People
 {
-    [Table("Person", Schema = "People")]
+    [Table("Person")]
     public class Person : Entity<int>, IAggregateRoot<int>
     {
         public FullName FullName { get; set; }
