@@ -47,6 +47,7 @@ namespace ChurchManager.Application.Features.Discipleship.Queries.DiscipleshipTy
                     {
                         CompletionDate = x.CompletionDate,
                         Status = x.Status,
+                        IsComplete = x.IsComplete,
                         StepDefinition = new StepDefinitionViewModel {Order = x.Definition.Order, Id = x.Definition.Id, Description = x.Definition.Description, Name = x.Definition.Name},
                     })
                 })
