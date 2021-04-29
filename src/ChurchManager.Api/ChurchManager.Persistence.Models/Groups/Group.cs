@@ -31,6 +31,7 @@ namespace ChurchManager.Persistence.Models.Groups
         public virtual Group ParentGroup { get; set; }
         public virtual GroupType GroupType { get; set; }
         public virtual Church Church { get; set; }
+        public virtual Schedule Schedule { get; set; }
 
         /// <summary>
         /// Gets or sets a collection the Groups that are children of this group.
