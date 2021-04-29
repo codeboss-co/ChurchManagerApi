@@ -73,6 +73,9 @@ namespace ChurchManager.DataImporter
 
                 if(!dbContext.Group.Any())
                 {
+                    Console.WriteLine();
+                    Console.WriteLine("*** Groups ***");
+
                     var churchDbList = dbContext.Church.ToList();
 
                     // First insert all root parent groups i.e. they have no parents
@@ -83,7 +86,7 @@ namespace ChurchManager.DataImporter
 
                     dbContext.AddRange(parentGroups);
                     var inserted = dbContext.SaveChanges();
-                    Console.WriteLine($"Parents added: {inserted}");
+                    Console.WriteLine($"\t > Root Groups added: {inserted}");
 
                     var children = new List<Group>(0);
                     while (parentGroups.Any())
@@ -102,11 +105,12 @@ namespace ChurchManager.DataImporter
                         {
                             dbContext.AddRange(children);
                             inserted = dbContext.SaveChanges();
-                            Console.WriteLine($"Children added: {inserted}");
+                            Console.WriteLine($"\t\t > Children added: {inserted}");
                         }
 
                         // Make the children the new parents and start again
                         parentGroups = children;
+                        Console.WriteLine($"\t\t > Processing new parents");
                     }
                 }
 
