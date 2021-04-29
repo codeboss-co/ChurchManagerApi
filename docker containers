@@ -1,2 +1,4 @@
 docker run --name rabbitmq --hostname rabbitmq --restart unless-stopped -d -p 5672:5672 -p 15672:15672 rabbitmq:3-management
 
+docker volume create --name postgres-volume
+docker run -p 5432:5432 --name postgres --restart=always -e  POSTGRES_USER=admin  -e POSTGRES_PASSWORD=P455word1 -v postgres-volume:/var/lib/postgresql/data -d postgres

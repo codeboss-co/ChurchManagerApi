@@ -1,4 +1,6 @@
-﻿namespace ChurchManager.DataImporter.Models
+﻿using System;
+
+namespace ChurchManager.DataImporter.Models
 {
     public record CellGroupImport
     {
@@ -8,5 +10,6 @@
         public bool? IsOnline { get; set; }
         public string ParentGroup { get; set; }
         public string Church { get; set; }
+        public DateTimeOffset? StartDate { get; set; }
     }
 }
