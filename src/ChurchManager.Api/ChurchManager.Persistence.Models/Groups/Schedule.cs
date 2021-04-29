@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.IO;
-using System.Runtime.Serialization;
+using System.Linq;
 using ChurchManager.Persistence.Shared;
 using Ical.Net;
 using Ical.Net.CalendarComponents;
@@ -20,12 +20,23 @@ namespace ChurchManager.Persistence.Models.Groups
         public string Description { get; set; }
 
         /// <summary>
+        /// Gets or sets the Date that the Schedule becomes effective/active. This property is inclusive, and the schedule will be inactive before this date. 
+        /// </summary>
+        [Column(TypeName = "Date")]
+        public DateTime? StartDate { get; set; }
+
+        /// <summary>
+        /// Gets or sets that date that this Schedule expires and becomes inactive. This value is inclusive and the schedule will be inactive after this date.
+        /// </summary>
+        [Column(TypeName = "Date")]
+        public DateTime? EndDate { get; set; }
+
+        /// <summary>
         /// Gets or sets the content lines of the iCalendar
         /// </summary>
         /// <value>
         /// A <see cref="System.String"/>representing the  content of the iCalendar.
         /// </value>
-        [DataMember]
         public string iCalendarContent
         {
             get => _iCalendarContent ?? string.Empty;
@@ -38,31 +49,11 @@ namespace ChurchManager.Persistence.Models.Groups
         }
         private string _iCalendarContent;
 
-        /// <summary>
-        /// Gets or sets the Date that the Schedule becomes effective/active. This property is inclusive, and the schedule will be inactive before this date. 
-        /// </summary>
-        /// <value>
-        /// A <see cref="System.DateTime"/> value that represents the date that this Schedule becomes active.
-        /// </value>
-        [DataMember]
-        [Column(TypeName = "Date")]
-        public DateTime? EffectiveStartDate { get; set; }
-
-        /// <summary>
-        /// Gets or sets that date that this Schedule expires and becomes inactive. This value is inclusive and the schedule will be inactive after this date.
-        /// </summary>
-        /// <value>
-        /// A <see cref="System.DateTime"/> value that represents the date that this Schedule ends and becomes inactive.
-        /// </value>
-        [DataMember]
-        [Column(TypeName = "Date")]
-        public DateTime? EffectiveEndDate { get; set; }
-
         public DayOfWeek? WeeklyDayOfWeek { get; set; }
 
         public TimeSpan? WeeklyTimeOfDay { get; set; }
 
-        #region Virtual methods
+        #region Virtual Methods
 
         /// <summary>
         /// Gets the Schedule's iCalender Event.
@@ -80,7 +71,43 @@ namespace ChurchManager.Persistence.Models.Groups
             return _getICalEvent;
         }
 
-        private CalendarEvent _getICalEvent = null;
+        private CalendarEvent _getICalEvent;
+
+        /// <summary>
+        /// Gets the type of the schedule.
+        /// </summary>
+        /// <value>
+        /// The type of the schedule.
+        /// </value>
+        public virtual ScheduleType ScheduleType
+        {
+            get
+            {
+                if (WeeklyDayOfWeek.HasValue)
+                {
+                    return ScheduleType.Weekly;
+                }
+
+                var calEvent = GetICalEvent();
+
+                if(calEvent != null)
+                {
+                    if(calEvent.RecurrenceRules.Any())
+                    {
+                        var frequencyType = calEvent.RecurrenceRules[0].Frequency;
+
+                        switch (frequencyType)
+                        {
+                            case FrequencyType.Daily: return ScheduleType.Daily;
+                            case FrequencyType.Weekly: return ScheduleType.Weekly;
+                            case FrequencyType.Monthly: return ScheduleType.Monthly;
+                        }
+                    }
+                }
+
+                return ScheduleType.None;
+            }
+        }
 
         #endregion
 
@@ -106,14 +133,19 @@ namespace ChurchManager.Persistence.Models.Groups
         None = 0,
 
         /// <summary>
-        /// Weekly
+        /// Daily
         /// </summary>
         Daily = 1,
 
         /// <summary>
-        /// Custom
+        /// Weekly
         /// </summary>
         Weekly = 2,
+
+        /// <summary>
+        /// Monthly
+        /// </summary>
+        Monthly = 3,
 
         /// <summary>
         /// Custom
