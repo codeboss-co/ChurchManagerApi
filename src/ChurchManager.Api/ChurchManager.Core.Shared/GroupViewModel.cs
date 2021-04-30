@@ -9,9 +9,6 @@ namespace ChurchManager.Core.Shared
         public int? ChurchId { get; set; }
         public int? ParentGroupId { get; set; }
         public int GroupTypeId { get; set; }
-
-        public GeneralViewModel GroupType { get; set; }
-        public ChurchViewModel Church { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public string Address { get; set; }

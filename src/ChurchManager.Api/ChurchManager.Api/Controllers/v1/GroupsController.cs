@@ -5,6 +5,7 @@ using ChurchManager.Application.Features.Groups.Queries.BrowsePersonsGroups;
 using ChurchManager.Application.Features.Groups.Queries.GroupMembers;
 using ChurchManager.Application.Features.Groups.Queries.GroupsForChurch;
 using ChurchManager.Application.Features.Groups.Queries.GroupsForPerson;
+using ChurchManager.Application.Features.Groups.Queries.GroupsWithChildren;
 using ChurchManager.Domain;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -63,6 +64,12 @@ namespace ChurchManager.Api.Controllers.v1
         {
             await Mediator.Send(command, token);
             return Accepted();
+        }
+
+        [HttpGet("tree")]
+        public async Task<IActionResult> GetGroupsWithChildrenTree(CancellationToken token)
+        {
+            return Ok(await Mediator.Send(new GroupsWithChildrenQuery(), token));
         }
     }
 }

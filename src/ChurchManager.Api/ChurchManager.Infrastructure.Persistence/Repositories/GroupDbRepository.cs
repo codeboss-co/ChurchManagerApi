@@ -105,10 +105,15 @@ namespace ChurchManager.Infrastructure.Persistence.Repositories
 
             Expression<Func<Group, GroupViewModel>> result = group => new GroupViewModel
             {
+                Id = group.Id,
                 Name = group.Name,
                 Description = group.Description,
+                StartDate = group.StartDate,
+                ChurchId = group.ChurchId,
+                IsOnline = group.IsOnline,
+                CreatedDate = group.CreatedDate,
                 Groups = currentDepth == maxDepth
-                    ? new List<GroupViewModel>() // Reached maximum depth so stop
+                    ? new List<GroupViewModel>(0) // Reached maximum depth so stop
                     : group.Groups.AsQueryable()
                         .Select(GroupProjection(maxDepth, currentDepth))
                         .ToList()

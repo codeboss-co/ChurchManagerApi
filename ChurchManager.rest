@@ -137,6 +137,12 @@ GET {{api}}/v1/cellministry/charts
 Content-Type: application/json
 Authorization: Bearer {{accessToken}}
 
+# ============== GROUPS ==================== #
+# Groups with Children
+GET {{api}}/v1/groups/tree
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
 # ============== DISCIPLESHIP ==================== #
 # Discipleship for Person
 POST {{api}}/v1/discipleship/person/programs
