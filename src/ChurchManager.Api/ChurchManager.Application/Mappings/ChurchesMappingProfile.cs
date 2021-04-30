@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using ChurchManager.Application.Features.Churches.Queries.RetrieveChurches;
+using ChurchManager.Core.Shared;
 using ChurchManager.Domain.Model;
 using ChurchManager.Persistence.Models.Churches;
 

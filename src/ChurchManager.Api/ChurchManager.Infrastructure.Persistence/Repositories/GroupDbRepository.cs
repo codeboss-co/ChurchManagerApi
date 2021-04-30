@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
+using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 using ChurchManager.Core.Shared;
@@ -24,11 +25,8 @@ namespace ChurchManager.Infrastructure.Persistence.Repositories
     {
         private readonly IDataShapeHelper<Group> _dataShaper;
     
-        public GroupDbRepository(
-            ChurchManagerDbContext dbContext,
-            IDataShapeHelper<Group> dataShaper) : base(dbContext)
+        public GroupDbRepository(ChurchManagerDbContext dbContext) : base(dbContext)
         {
-            _dataShaper = dataShaper;
         }
 
         public async Task<IEnumerable<GroupDomain>> AllPersonsGroups(int personId, RecordStatus recordStatus, CancellationToken ct = default)
@@ -85,6 +83,38 @@ namespace ChurchManager.Infrastructure.Persistence.Repositories
                 .Select(x => x.GroupMemberRole)
                 .Distinct()
                 .ToListAsync(ct);
+        }
+
+        public async Task<IEnumerable<GroupViewModel>> GroupsWithChildrenAsync(int maxDepth, CancellationToken ct = default)
+        {
+            var query = Queryable()
+                .AsNoTracking()
+                .Where(x => x.ParentGroupId == null) // Exclude children\
+                .Select(GroupProjection(maxDepth))
+                ;
+
+            return await query.ToListAsync(ct);
+        }
+
+        /// <summary>
+        /// https://michaelceber.medium.com/implementing-a-recursive-projection-query-in-c-and-entity-framework-core-240945122be6
+        /// </summary>
+        private Expression<Func<Group, GroupViewModel>> GroupProjection(int maxDepth, int currentDepth = 0)
+        {
+            currentDepth++;
+
+            Expression<Func<Group, GroupViewModel>> result = group => new GroupViewModel
+            {
+                Name = group.Name,
+                Description = group.Description,
+                Groups = currentDepth == maxDepth
+                    ? new List<GroupViewModel>() // Reached maximum depth so stop
+                    : group.Groups.AsQueryable()
+                        .Select(GroupProjection(maxDepth, currentDepth))
+                        .ToList()
+            };
+
+            return result;
         }
 
         private IQueryable<Group> FilterByColumn(IQueryable<Group> queryable, string search)

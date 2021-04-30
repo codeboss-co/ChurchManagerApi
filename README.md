@@ -13,10 +13,10 @@
 1. In `Package manager console` change to `ChurchManager.Infrastructure.Persistence` project
 
 2.
-	- `Add-Migration InitialDbMigration -Context ChurchManagerDbContext -o Migrations` 
+	- `Add-Migration InitialDbMigration -Context ChurchManagerDbContext -o Migrations -StartupProject ChurchManager.Api` 
 
 3. 
-	- `Update-Database -Context ChurchManagerDbContext`
+	- `Update-Database -Context ChurchManagerDbContext -StartupProject ChurchManager.Api`
 
 #### Troubleshooting
 

@@ -273,7 +273,11 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                     GroupCapacity = table.Column<int>(type: "integer", nullable: true),
                     IsOnline = table.Column<bool>(type: "boolean", nullable: true),
                     RecordStatus = table.Column<string>(type: "text", nullable: true),
-                    InactiveDateTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: true)
+                    InactiveDateTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
+                    CreatedBy = table.Column<string>(type: "text", nullable: true),
+                    CreatedDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    ModifiedBy = table.Column<string>(type: "text", nullable: true),
+                    ModifiedDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: true)
                 },
                 constraints: table =>
                 {

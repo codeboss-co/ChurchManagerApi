@@ -1,6 +1,4 @@
-﻿using ChurchManager.Core.Shared;
-
-namespace ChurchManager.Application.Features.Churches.Queries.RetrieveChurches
+﻿namespace ChurchManager.Core.Shared
 {
     public record ChurchViewModel : SelectItemViewModel
     {

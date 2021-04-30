@@ -11,7 +11,7 @@ namespace ChurchManager.Persistence.Models.Groups
 {
     [Table("Group")]
 
-    public class Group : Entity<int>, IAggregateRoot<int>
+    public class Group : AuditableEntity<int>, IAggregateRoot<int>
     {
         public int? ParentGroupId { get; set; }
         public int GroupTypeId { get; set; }
