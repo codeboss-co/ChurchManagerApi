@@ -8,10 +8,9 @@ using ChurchManager.Persistence.Models.Churches;
 using ChurchManager.Persistence.Models.Groups;
 using ChurchManager.Persistence.Models.People;
 using CodeBoss.Extensions;
+using Ical.Net.Serialization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Logging.Console;
-using Microsoft.Extensions.Options;
 using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
 
@@ -23,6 +22,8 @@ namespace ChurchManager.DataImporter
         private const int CellGroupsSheet = 1;
         private const int FamiliesSheet = 2;
         private const int PeopleSheet = 3;
+
+        public static readonly CalendarSerializer CalendarSerializer = new();
 
         static ILoggerFactory _loggerFactory = LoggerFactory.Create(builder => { builder.AddConsole(); });
 
@@ -57,6 +58,28 @@ namespace ChurchManager.DataImporter
 
             using (var dbContext = new ChurchManagerDbContext(_options))
             {
+
+                // Cell Group Type
+                var  cellGroupType = new GroupType { Name = "Cell", Description = "Cell Ministry" };
+                if(!dbContext.GroupType.Any())
+                {
+                    dbContext.Add(cellGroupType);
+                    dbContext.SaveChanges();
+                }
+
+                // Cell Group Roles
+                if(!dbContext.GroupMemberRole.Any())
+                {
+                    var cellLeaderRole = new GroupMemberRole { Name = "Leader", Description = "Cell Leader", IsLeader = true };
+                    var cellAssistantRole = new GroupMemberRole { Name = "Assistant", Description = "Cell Assistant" };
+                    var cellMemberRole = new GroupMemberRole { Name = "Member", Description = "Cell Member" };
+
+                   dbContext.GroupMemberRole.Add(cellLeaderRole);
+                   dbContext.GroupMemberRole.Add(cellAssistantRole);
+                   dbContext.GroupMemberRole.Add(cellMemberRole);
+                   dbContext.SaveChanges();
+                }
+
                 if(!dbContext.Church.Any())
                 {
                     dbContext.AddRange(churches);
@@ -208,6 +231,9 @@ namespace ChurchManager.DataImporter
                 bool? isOnline = row.GetCell(3)?.StringCellValue != null && row.GetCell(3)?.StringCellValue == "Yes";
                 string parentGroup = row.GetCell(4)?.StringCellValue;
                 string church = row.GetCell(5)?.StringCellValue;
+                DateTime? startDate = row.GetCell(6)?.DateCellValue;
+                string meetingDay = row.GetCell(7)?.StringCellValue;
+                string meetingTime = row.GetCell(8)?.StringCellValue;
 
                 var group = new CellGroupImport
                 {
@@ -217,6 +243,9 @@ namespace ChurchManager.DataImporter
                     IsOnline = isOnline,
                     ParentGroupName = parentGroup,
                     Church = church,
+                    StartDate = startDate,
+                    MeetingDay = meetingDay,
+                    MeetingTime = meetingTime
                 };
 
                 groups.Add(group);

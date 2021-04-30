@@ -150,6 +150,27 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Schedule",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Name = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: true),
+                    Description = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
+                    StartDate = table.Column<DateTime>(type: "Date", nullable: true),
+                    EndDate = table.Column<DateTime>(type: "Date", nullable: true),
+                    iCalendarContent = table.Column<string>(type: "text", nullable: true),
+                    WeeklyDayOfWeek = table.Column<int>(type: "integer", nullable: true),
+                    WeeklyTimeOfDay = table.Column<TimeSpan>(type: "interval", nullable: true),
+                    RecordStatus = table.Column<string>(type: "text", nullable: true),
+                    InactiveDateTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Schedule", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "ChurchAttendance",
                 columns: table => new
                 {
@@ -244,6 +265,7 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                     ParentGroupId = table.Column<int>(type: "integer", nullable: true),
                     GroupTypeId = table.Column<int>(type: "integer", nullable: false),
                     ChurchId = table.Column<int>(type: "integer", nullable: true),
+                    ScheduleId = table.Column<int>(type: "integer", nullable: true),
                     Name = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
                     Description = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
                     Address = table.Column<string>(type: "text", nullable: true),
@@ -274,6 +296,12 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                         principalTable: "GroupType",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Group_Schedule_ScheduleId",
+                        column: x => x.ScheduleId,
+                        principalTable: "Schedule",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -625,6 +653,11 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                 column: "ParentGroupId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Group_ScheduleId",
+                table: "Group",
+                column: "ScheduleId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_GroupAttendance_GroupId",
                 table: "GroupAttendance",
                 column: "GroupId");
@@ -750,6 +783,9 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
 
             migrationBuilder.DropTable(
                 name: "GroupType");
+
+            migrationBuilder.DropTable(
+                name: "Schedule");
 
             migrationBuilder.DropTable(
                 name: "Church");

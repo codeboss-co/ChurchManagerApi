@@ -40,7 +40,7 @@ namespace ChurchManager.Domain.Shared
             return calendarEvent;
         }
 
-        public static Calendar CalendarWithWeeklyRecurrence(DateTime? startDateTime = null, DateTime? endDateTime = null, int? occurrenceCount = null)
+        public static Calendar CalendarWithWeeklyRecurrence(DateTime? startDateTime = null, DateTime? endDateTime = null, TimeSpan? meetingTime = null, int? occurrenceCount = null)
         {
             var today = DateTime.UtcNow;
 
@@ -59,8 +59,8 @@ namespace ChurchManager.Domain.Shared
 
             var recurrencePattern = new RecurrencePattern(pattern);
 
-            int startTimeHour = startDateTime?.Hour ?? today.Hour;
-            int startTimeMinutes = startDateTime?.Minute ?? today.Minute;
+            int startTimeHour = meetingTime?.Hours ?? today.Hour;
+            int startTimeMinutes = meetingTime?.Minutes ?? today.Minute;
 
             var calendar = new Calendar
             {
@@ -75,6 +75,11 @@ namespace ChurchManager.Domain.Shared
             };
 
             return calendar;
+        }
+
+        public static Calendar CalendarWithWeeklyRecurrence(TimeSpan? meetingTime, int? occurrenceCount = null)
+        {
+            return CalendarWithWeeklyRecurrence(null, null, meetingTime, occurrenceCount);
         }
     }
 }

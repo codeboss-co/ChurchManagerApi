@@ -16,6 +16,7 @@ namespace ChurchManager.Persistence.Models.Groups
         public int? ParentGroupId { get; set; }
         public int GroupTypeId { get; set; }
         public int? ChurchId { get; set; }
+        public int? ScheduleId { get; set; }
 
         [Required, MaxLength(50)]
         public string Name { get; set; }

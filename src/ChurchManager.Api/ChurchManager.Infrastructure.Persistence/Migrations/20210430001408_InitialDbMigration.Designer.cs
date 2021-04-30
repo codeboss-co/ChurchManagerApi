@@ -11,7 +11,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ChurchManager.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(ChurchManagerDbContext))]
-    [Migration("20210428141720_InitialDbMigration")]
+    [Migration("20210430001408_InitialDbMigration")]
     partial class InitialDbMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -365,6 +365,9 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                     b.Property<string>("RecordStatus")
                         .HasColumnType("text");
 
+                    b.Property<int?>("ScheduleId")
+                        .HasColumnType("integer");
+
                     b.Property<DateTimeOffset?>("StartDate")
                         .HasColumnType("timestamp with time zone");
 
@@ -375,6 +378,8 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                     b.HasIndex("GroupTypeId");
 
                     b.HasIndex("ParentGroupId");
+
+                    b.HasIndex("ScheduleId");
 
                     b.ToTable("Group");
                 });
@@ -586,6 +591,47 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("GroupType");
+                });
+
+            modelBuilder.Entity("ChurchManager.Persistence.Models.Groups.Schedule", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<DateTime?>("EndDate")
+                        .HasColumnType("Date");
+
+                    b.Property<DateTime?>("InactiveDateTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<string>("RecordStatus")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("StartDate")
+                        .HasColumnType("Date");
+
+                    b.Property<int?>("WeeklyDayOfWeek")
+                        .HasColumnType("integer");
+
+                    b.Property<TimeSpan?>("WeeklyTimeOfDay")
+                        .HasColumnType("interval");
+
+                    b.Property<string>("iCalendarContent")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Schedule");
                 });
 
             modelBuilder.Entity("ChurchManager.Persistence.Models.People.Family", b =>
@@ -902,11 +948,17 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                         .WithMany("Groups")
                         .HasForeignKey("ParentGroupId");
 
+                    b.HasOne("ChurchManager.Persistence.Models.Groups.Schedule", "Schedule")
+                        .WithMany()
+                        .HasForeignKey("ScheduleId");
+
                     b.Navigation("Church");
 
                     b.Navigation("GroupType");
 
                     b.Navigation("ParentGroup");
+
+                    b.Navigation("Schedule");
                 });
 
             modelBuilder.Entity("ChurchManager.Persistence.Models.Groups.GroupAttendance", b =>
