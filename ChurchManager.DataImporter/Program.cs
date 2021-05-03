@@ -60,7 +60,7 @@ namespace ChurchManager.DataImporter
             {
 
                 // Cell Group Type
-                var  cellGroupType = new GroupType { Name = "Cell", Description = "Cell Ministry" };
+                var  cellGroupType = new GroupType { Name = "Cell", Description = "Cell Ministry", IconCssClass = "heroicons_outline:share" };
                 if(!dbContext.GroupType.Any())
                 {
                     dbContext.Add(cellGroupType);
@@ -70,9 +70,9 @@ namespace ChurchManager.DataImporter
                 // Cell Group Roles
                 if(!dbContext.GroupMemberRole.Any())
                 {
-                    var cellLeaderRole = new GroupMemberRole { Name = "Leader", Description = "Cell Leader", IsLeader = true };
-                    var cellAssistantRole = new GroupMemberRole { Name = "Assistant", Description = "Cell Assistant" };
-                    var cellMemberRole = new GroupMemberRole { Name = "Member", Description = "Cell Member" };
+                    var cellLeaderRole = new GroupMemberRole { Name = "Leader", Description = "Leader of the Group", IsLeader = true };
+                    var cellAssistantRole = new GroupMemberRole { Name = "Assistant", Description = "Assistant Leader" };
+                    var cellMemberRole = new GroupMemberRole { Name = "Member", Description = "Group Member" };
 
                    dbContext.GroupMemberRole.Add(cellLeaderRole);
                    dbContext.GroupMemberRole.Add(cellAssistantRole);

@@ -59,11 +59,14 @@ namespace ChurchManager.Infrastructure.Persistence
                 // Development / Test -  Seeding
                 else
                 {
-                    services.AddInitializer<ChurchesFakeDbSeedInitializer>();
+                    services.AddInitializer<ChurchesDbSeedInitializer>();
+                    services.AddInitializer<PeopleDbSeedInitializer>();
+                    services.AddInitializer<GroupsDbSeedInitializer>();
+                    /*services.AddInitializer<ChurchesFakeDbSeedInitializer>();
                     services.AddInitializer<PeopleFakeDbSeedInitializer>();
                     services.AddInitializer<GroupsFakeDbSeedInitializer>();
                     services.AddInitializer<ChurchAttendanceFakeDbInitializer>();
-                    services.AddInitializer<GroupAttendanceFakeDbSeedInitializer>();
+                    services.AddInitializer<GroupAttendanceFakeDbSeedInitializer>();*/
                 }
             }
 

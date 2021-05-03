@@ -89,6 +89,7 @@ namespace ChurchManager.Infrastructure.Persistence.Repositories
         {
             var query = Queryable()
                 .AsNoTracking()
+                .Include(x => x.GroupType)
                 .Where(x => x.ParentGroupId == null) // Exclude children\
                 .Select(GroupProjection(maxDepth))
                 ;
@@ -110,11 +111,24 @@ namespace ChurchManager.Infrastructure.Persistence.Repositories
                 Description = group.Description,
                 StartDate = group.StartDate,
                 ChurchId = group.ChurchId,
+                ParentGroupId = group.ParentGroupId,
+                ParentGroupName = group.ParentGroup.Name,
                 IsOnline = group.IsOnline,
+                GroupType = new GroupTypeViewModel
+                {
+                    Id = group.GroupType.Id,
+                    Name = group.GroupType.Name,
+                    Description = group.GroupType.Description,
+                    GroupMemberTerm = group.GroupType.GroupMemberTerm,
+                    GroupTerm = group.GroupType.GroupTerm,
+                    TakesAttendance = group.GroupType.TakesAttendance,
+                    IconCssClass = group.GroupType.IconCssClass,
+                },
                 CreatedDate = group.CreatedDate,
                 Groups = currentDepth == maxDepth
                     ? new List<GroupViewModel>(0) // Reached maximum depth so stop
                     : group.Groups.AsQueryable()
+                        .Include(x => x.GroupType)
                         .Select(GroupProjection(maxDepth, currentDepth))
                         .ToList()
             };
