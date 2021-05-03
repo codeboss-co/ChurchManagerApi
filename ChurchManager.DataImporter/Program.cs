@@ -5,6 +5,7 @@ using System.Linq;
 using ChurchManager.DataImporter.Models;
 using ChurchManager.Infrastructure.Persistence.Contexts;
 using ChurchManager.Persistence.Models.Churches;
+using ChurchManager.Persistence.Models.Discipleship;
 using ChurchManager.Persistence.Models.Groups;
 using ChurchManager.Persistence.Models.People;
 using CodeBoss.Extensions;
@@ -56,8 +57,39 @@ namespace ChurchManager.DataImporter
             var families = FamiliesImported(workbook.GetSheetAt(FamiliesSheet), skipFistRow);
             var people = PeopleImported(workbook.GetSheetAt(PeopleSheet), skipFistRow);
 
+            IList<Church> churchDbList = new List<Church>(churches.Count);
+
             using (var dbContext = new ChurchManagerDbContext(_options))
             {
+
+                if(!dbContext.DiscipleshipProgram.Any())
+                {
+                    var foundationSchoolStepDefinition = new DiscipleshipStepDefinition
+                    {
+                        Name = "Foundation School",
+                        Description = "Basics of our Faith and Doctrine",
+                        IconCssClass = "heroicons-solid:academic-cap",
+                        Order = 0
+                    };
+                    var baptismClassStepDefinition = new DiscipleshipStepDefinition
+                    {
+                        Name = "Baptism Class",
+                        Description = "Understanding Baptism",
+                        AllowMultiple = false,
+                        Order = 1
+                    };
+
+                    var newConvertsDiscipleshipProgram = new DiscipleshipProgram
+                    {
+                        Name = "New Christians Program",
+                        Description = "Discipleship for New Converts",
+                        Category = "New Christians",
+                        StepDefinitions = new List<DiscipleshipStepDefinition>(2) { foundationSchoolStepDefinition, baptismClassStepDefinition }
+                    };
+
+                    dbContext.Add(newConvertsDiscipleshipProgram);
+                    dbContext.SaveChanges();
+                }
 
                 // Cell Group Type
                 var  cellGroupType = new GroupType { Name = "Cell", Description = "Cell Ministry", IconCssClass = "heroicons_outline:share" };
@@ -99,7 +131,7 @@ namespace ChurchManager.DataImporter
                     Console.WriteLine();
                     Console.WriteLine("*** Groups ***");
 
-                    var churchDbList = dbContext.Church.ToList();
+                    churchDbList = dbContext.Church.ToList();
 
                     // First insert all root parent groups i.e. they have no parents
                     var parentGroups = groups
@@ -139,7 +171,60 @@ namespace ChurchManager.DataImporter
 
                 if(!dbContext.GroupMember.Any())
                 {
+                    churchDbList = dbContext.Church.ToList();
 
+                    // Get all the cell groups in the database
+                    var cellGroups = dbContext.Group
+                        .Include(x => x.GroupType)
+                        .Where(x => x.GroupType.Name == "Cell")
+                        .ToList();
+
+                    var groupRoles = dbContext.GroupMemberRole.ToList();
+                    var familyDbList = dbContext.Family.ToList();
+
+                    // First we add members of groups
+                    var groupMembers = people
+                        .Where(x => !string.IsNullOrEmpty(x.CellGroupName))
+                        .Select(x =>
+                        {
+                            var group = cellGroups.FirstOrDefault(g => g.Name == x.CellGroupName) ?? throw new ArgumentNullException(nameof(x.CellGroupName));
+                            var groupRole = groupRoles.FirstOrDefault(r => r.Name == x.CellGroupRole) ?? throw new ArgumentNullException(nameof(x.CellGroupRole));
+                            var church = churchDbList.FirstOrDefault(c => c.Name == x.ChurchName) ?? throw new ArgumentNullException(nameof(x.ChurchName));
+                            var family = familyDbList.FirstOrDefault(c => c.Name == x.FamilyName) ?? throw new ArgumentNullException(nameof(x.FamilyName));
+
+                            return new GroupMember
+                            {
+                                CommunicationPreference = x.CommunicationPreference,
+                                FirstVisitDate = x.FirstVisitDate,
+                                GroupId = group.Id,
+                                GroupMemberRoleId = groupRole.Id,
+                                Person = new Person
+                                {
+                                    AgeClassification = x.AgeClassification,
+                                    BaptismStatus = x.Baptism,
+                                    AnniversaryDate = x.AnniversaryDate,
+                                    BirthDate = x.BirthDate,
+                                    ChurchId = church.Id,
+                                    CommunicationPreference = x.CommunicationPreference,
+                                    ConnectionStatus = x.ConnectionStatus,
+                                    Email = new Email {IsActive = true, Address = x.Email},
+                                    FamilyId = family.Id,
+                                    FirstVisitDate = x.FirstVisitDate,
+                                    Gender = x.Gender,
+                                    MaritalStatus = x.MaritalStatus,
+                                    Occupation = x.Occupation,
+                                    FullName = x.FullName,
+                                    PhoneNumbers = new List<PhoneNumber>() { new () { CountryCode = "+27", Number = x.PhoneNumber} },
+                                    PhotoUrl = x.PhotoUrl,
+                                    Source = x.Source,
+                                    ReceivedHolySpirit = x.ReceivedHolySpirit
+                                }
+                            };
+                        }).ToList();
+
+                    dbContext.Add(groupMembers);
+                    var inserted = dbContext.SaveChanges();
+                    Console.WriteLine($"\t > Group Members added: {inserted}");
                 }
             }
             
@@ -357,6 +442,7 @@ namespace ChurchManager.DataImporter
                     },
                     ConnectionStatus = connectionStatus,
                     AgeClassification = ageClassification,
+
                     Gender = gender,
                     BirthDate = new BirthDate
                     {
@@ -393,6 +479,34 @@ namespace ChurchManager.DataImporter
             }
 
             return data;
+        }
+
+        private static void AddFoundationSchoolStepsToPeopleAsync(
+            ChurchManagerDbContext dbContext,
+            DiscipleshipStepDefinition foundationSchoolStepDef,
+            DiscipleshipStepDefinition baptismClassStepDef,
+            FoundationSchool foundationSchool,
+            Baptism baptism,
+            Person person
+        )
+        {
+            var personFoundationSchoolStep = new DiscipleshipStep
+            {
+                Definition = foundationSchoolStepDef,
+                CompletionDate = DateTime.Today.AddYears(-15),
+                Status = foundationSchool.IsComplete.HasValue && foundationSchool.IsComplete.Value ? "Completed" : "Not Completed",
+                Person = person
+            };
+            var baptismClassStep = new DiscipleshipStep
+            {
+                Definition = baptismClassStepDef,
+                StartDateTime = DateTime.Today.AddYears(-15),
+                Status = baptism.IsBaptised.HasValue && baptism.IsBaptised.Value ? "Completed" : "Not Completed",
+                Person = person
+            };
+
+            dbContext.Add(personFoundationSchoolStep);
+            dbContext.Add(baptismClassStep);
         }
     }
 }
