@@ -1,4 +1,6 @@
-﻿namespace ChurchManager.Core.Shared
+﻿using System;
+
+namespace ChurchManager.Core.Shared
 {
     public record GroupMemberViewModel
     {
@@ -9,5 +11,9 @@
         public string LastName { get; set; }
         public string Gender { get; set; }
         public string PhotoUrl { get; set; }
+        public int GroupMemberRoleId { get; set; }
+        public string GroupMemberRole { get; set; }
+        public bool IsLeader { get; set; }
+        public DateTime? FirstVisitDate { get; set; }
     }
 }

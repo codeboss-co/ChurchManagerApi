@@ -26,6 +26,7 @@ namespace ChurchManager.DataImporter.Models
         public string ChurchName { get; set; }
         public string CellGroupName { get; set; }
         public string CellGroupRole { get; set; }
+        public string UserLoginId { get; set; }
     }
 
     public record FoundationSchool

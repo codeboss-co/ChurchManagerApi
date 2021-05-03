@@ -61,17 +61,18 @@ namespace ChurchManager.DataImporter
 
             using (var dbContext = new ChurchManagerDbContext(_options))
             {
-
+                DiscipleshipStepDefinition foundationSchoolStepDefinition;
+                DiscipleshipStepDefinition baptismClassStepDefinition;
                 if(!dbContext.DiscipleshipProgram.Any())
                 {
-                    var foundationSchoolStepDefinition = new DiscipleshipStepDefinition
+                    foundationSchoolStepDefinition = new DiscipleshipStepDefinition
                     {
                         Name = "Foundation School",
                         Description = "Basics of our Faith and Doctrine",
                         IconCssClass = "heroicons-solid:academic-cap",
                         Order = 0
                     };
-                    var baptismClassStepDefinition = new DiscipleshipStepDefinition
+                    baptismClassStepDefinition = new DiscipleshipStepDefinition
                     {
                         Name = "Baptism Class",
                         Description = "Understanding Baptism",
@@ -89,6 +90,11 @@ namespace ChurchManager.DataImporter
 
                     dbContext.Add(newConvertsDiscipleshipProgram);
                     dbContext.SaveChanges();
+                }
+                else
+                {
+                    foundationSchoolStepDefinition = dbContext.DiscipleshipStepDefinition.First(x => x.Name == "Foundation School");
+                    baptismClassStepDefinition = dbContext.DiscipleshipStepDefinition.First(x => x.Name == "Baptism Class");
                 }
 
                 // Cell Group Type
@@ -169,7 +175,7 @@ namespace ChurchManager.DataImporter
                     }
                 }
 
-                if(!dbContext.GroupMember.Any())
+                if(!dbContext.Person.Any())
                 {
                     churchDbList = dbContext.Church.ToList();
 
@@ -181,6 +187,9 @@ namespace ChurchManager.DataImporter
 
                     var groupRoles = dbContext.GroupMemberRole.ToList();
                     var familyDbList = dbContext.Family.ToList();
+                    
+                    // We need this map later for discipleship imports
+                    var personMap = new Dictionary<PersonImport, Person>(people.Count);
 
                     // First we add members of groups
                     var groupMembers = people
@@ -192,39 +201,60 @@ namespace ChurchManager.DataImporter
                             var church = churchDbList.FirstOrDefault(c => c.Name == x.ChurchName) ?? throw new ArgumentNullException(nameof(x.ChurchName));
                             var family = familyDbList.FirstOrDefault(c => c.Name == x.FamilyName) ?? throw new ArgumentNullException(nameof(x.FamilyName));
 
+                            List<PhoneNumber> phoneNumbers = null;
+                            if (!string.IsNullOrEmpty(x.PhoneNumber))
+                            {
+                                phoneNumbers = new List<PhoneNumber> {new() {CountryCode = "+27", Number = x.PhoneNumber}};
+                            }
+
+                            var person = new Person
+                            {
+                                AgeClassification = x.AgeClassification,
+                                BaptismStatus = x.Baptism,
+                                AnniversaryDate = x.AnniversaryDate,
+                                BirthDate = x.BirthDate,
+                                ChurchId = church.Id,
+                                CommunicationPreference = x.CommunicationPreference,
+                                ConnectionStatus = x.ConnectionStatus,
+                                Email = new Email {IsActive = true, Address = x.Email},
+                                FamilyId = family.Id,
+                                FirstVisitDate = x.FirstVisitDate,
+                                Gender = x.Gender,
+                                MaritalStatus = x.MaritalStatus,
+                                Occupation = x.Occupation,
+                                FullName = x.FullName,
+                                PhoneNumbers = phoneNumbers,
+                                PhotoUrl = x.PhotoUrl,
+                                Source = x.Source,
+                                ReceivedHolySpirit = x.ReceivedHolySpirit
+                            };
+
+                            // We need to keep this mapping
+                            personMap.Add(x, person);
+
                             return new GroupMember
                             {
                                 CommunicationPreference = x.CommunicationPreference,
                                 FirstVisitDate = x.FirstVisitDate,
                                 GroupId = group.Id,
                                 GroupMemberRoleId = groupRole.Id,
-                                Person = new Person
-                                {
-                                    AgeClassification = x.AgeClassification,
-                                    BaptismStatus = x.Baptism,
-                                    AnniversaryDate = x.AnniversaryDate,
-                                    BirthDate = x.BirthDate,
-                                    ChurchId = church.Id,
-                                    CommunicationPreference = x.CommunicationPreference,
-                                    ConnectionStatus = x.ConnectionStatus,
-                                    Email = new Email {IsActive = true, Address = x.Email},
-                                    FamilyId = family.Id,
-                                    FirstVisitDate = x.FirstVisitDate,
-                                    Gender = x.Gender,
-                                    MaritalStatus = x.MaritalStatus,
-                                    Occupation = x.Occupation,
-                                    FullName = x.FullName,
-                                    PhoneNumbers = new List<PhoneNumber>() { new () { CountryCode = "+27", Number = x.PhoneNumber} },
-                                    PhotoUrl = x.PhotoUrl,
-                                    Source = x.Source,
-                                    ReceivedHolySpirit = x.ReceivedHolySpirit
-                                }
+                                Person = person
                             };
                         }).ToList();
 
-                    dbContext.Add(groupMembers);
-                    var inserted = dbContext.SaveChanges();
-                    Console.WriteLine($"\t > Group Members added: {inserted}");
+                    dbContext.GroupMember.AddRange(groupMembers);
+                    dbContext.SaveChanges();
+                    Console.WriteLine($"\t > Group Members added: {groupMembers.Count}");
+
+                    // Add Discipleship program and steps
+                    foreach (var importAndPerson in personMap)
+                    {
+                        AddDiscipleshipStepsToPerson(dbContext, foundationSchoolStepDefinition,
+                            baptismClassStepDefinition, importAndPerson.Key, importAndPerson.Value);
+                    }
+                    Console.WriteLine($"\t > Discipleship Steps added.");
+                    dbContext.SaveChanges();
+
                 }
             }
             
@@ -427,6 +457,7 @@ namespace ChurchManager.DataImporter
                 string church = row.GetCell(27)?.StringCellValue;
                 string cellGroup = row.GetCell(28)?.StringCellValue;
                 string cellGroupRole = row.GetCell(29)?.StringCellValue;
+                string userLoginId = row.GetCell(30)?.StringCellValue;
 
                 var item = new PersonImport
                 {
@@ -481,26 +512,28 @@ namespace ChurchManager.DataImporter
             return data;
         }
 
-        private static void AddFoundationSchoolStepsToPeopleAsync(
+        private static void AddDiscipleshipStepsToPerson(
             ChurchManagerDbContext dbContext,
             DiscipleshipStepDefinition foundationSchoolStepDef,
             DiscipleshipStepDefinition baptismClassStepDef,
-            FoundationSchool foundationSchool,
-            Baptism baptism,
+            PersonImport import,
             Person person
         )
         {
+            var foundationSchool = import.FoundationSchool;
+            var baptism = import.Baptism;
+
             var personFoundationSchoolStep = new DiscipleshipStep
             {
                 Definition = foundationSchoolStepDef,
-                CompletionDate = DateTime.Today.AddYears(-15),
+                CompletionDate = foundationSchool.CompletionDate,
                 Status = foundationSchool.IsComplete.HasValue && foundationSchool.IsComplete.Value ? "Completed" : "Not Completed",
                 Person = person
             };
             var baptismClassStep = new DiscipleshipStep
             {
                 Definition = baptismClassStepDef,
-                StartDateTime = DateTime.Today.AddYears(-15),
+                StartDateTime = baptism.BaptismDate,
                 Status = baptism.IsBaptised.HasValue && baptism.IsBaptised.Value ? "Completed" : "Not Completed",
                 Person = person
             };

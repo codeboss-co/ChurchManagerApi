@@ -69,7 +69,11 @@ namespace ChurchManager.Infrastructure.Persistence.Repositories
                     MiddleName = x.Person.FullName.MiddleName,
                     LastName = x.Person.FullName.LastName,
                     Gender = x.Person.Gender,
-                    PhotoUrl = x.Person.PhotoUrl
+                    PhotoUrl = x.Person.PhotoUrl,
+                    GroupMemberRoleId = x.GroupMemberRoleId,
+                    GroupMemberRole = x.GroupMemberRole.Name,
+                    IsLeader = x.GroupMemberRole.IsLeader,
+                    FirstVisitDate = x.FirstVisitDate
                 })
                 .ToArrayAsync(ct);
 
