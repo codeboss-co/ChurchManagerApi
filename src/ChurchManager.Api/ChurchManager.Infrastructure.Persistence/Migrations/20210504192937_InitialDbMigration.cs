@@ -100,21 +100,6 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "GroupMemberRole",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Name = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: true),
-                    Description = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
-                    IsLeader = table.Column<bool>(type: "boolean", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_GroupMemberRole", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "GroupType",
                 columns: table => new
                 {
@@ -125,7 +110,8 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                     GroupTerm = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: true),
                     GroupMemberTerm = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: true),
                     TakesAttendance = table.Column<bool>(type: "boolean", nullable: false),
-                    IsSystem = table.Column<bool>(type: "boolean", nullable: false)
+                    IsSystem = table.Column<bool>(type: "boolean", nullable: false),
+                    IconCssClass = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -254,6 +240,31 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                         principalTable: "DiscipleshipProgram",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "GroupRole",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Name = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: true),
+                    Description = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
+                    IsLeader = table.Column<bool>(type: "boolean", nullable: false),
+                    CanView = table.Column<bool>(type: "boolean", nullable: false),
+                    CanEdit = table.Column<bool>(type: "boolean", nullable: false),
+                    CanManageMembers = table.Column<bool>(type: "boolean", nullable: false),
+                    GroupTypeId = table.Column<int>(type: "integer", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_GroupRole", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_GroupRole_GroupType_GroupTypeId",
+                        column: x => x.GroupTypeId,
+                        principalTable: "GroupType",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -464,7 +475,7 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     GroupId = table.Column<int>(type: "integer", nullable: false),
                     PersonId = table.Column<int>(type: "integer", nullable: false),
-                    GroupMemberRoleId = table.Column<int>(type: "integer", nullable: false),
+                    GroupRoleId = table.Column<int>(type: "integer", nullable: false),
                     FirstVisitDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
                     ArchiveStatus_IsArchived = table.Column<bool>(type: "boolean", nullable: true),
                     ArchiveStatus_ArchivedDateTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
@@ -482,9 +493,9 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_GroupMember_GroupMemberRole_GroupMemberRoleId",
-                        column: x => x.GroupMemberRoleId,
-                        principalTable: "GroupMemberRole",
+                        name: "FK_GroupMember_GroupRole_GroupRoleId",
+                        column: x => x.GroupRoleId,
+                        principalTable: "GroupRole",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -672,9 +683,9 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                 column: "GroupId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_GroupMember_GroupMemberRoleId",
+                name: "IX_GroupMember_GroupRoleId",
                 table: "GroupMember",
-                column: "GroupMemberRoleId");
+                column: "GroupRoleId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_GroupMember_PersonId",
@@ -695,6 +706,11 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                 name: "IX_GroupMemberAttendance_GroupMemberId",
                 table: "GroupMemberAttendance",
                 column: "GroupMemberId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_GroupRole_GroupTypeId",
+                table: "GroupRole",
+                column: "GroupTypeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_GroupsFeatures_GroupsId",
@@ -780,16 +796,16 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                 name: "Group");
 
             migrationBuilder.DropTable(
-                name: "GroupMemberRole");
+                name: "GroupRole");
 
             migrationBuilder.DropTable(
                 name: "Person");
 
             migrationBuilder.DropTable(
-                name: "GroupType");
+                name: "Schedule");
 
             migrationBuilder.DropTable(
-                name: "Schedule");
+                name: "GroupType");
 
             migrationBuilder.DropTable(
                 name: "Church");

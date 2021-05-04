@@ -18,9 +18,9 @@ namespace ChurchManager.Infrastructure.Persistence.Repositories
         /// </summary>
         public IQueryable<GroupMember> GetByGroupId(int groupId)
         {
-            return Queryable("Person,GroupMemberRole")
+            return Queryable("Person,GroupRole")
                 .Where(t => t.GroupId == groupId)
-                .OrderBy(g => g.GroupMemberRole.Name);
+                .OrderBy(g => g.GroupRole.Name);
         }
 
         /// <summary>
@@ -32,7 +32,7 @@ namespace ChurchManager.Infrastructure.Persistence.Repositories
                 .AsNoTracking()
                 .Where(t =>
                     t.RecordStatus == RecordStatus.Active &&
-                    t.GroupMemberRole.IsLeader);
+                    t.GroupRole.IsLeader);
         }
     }
 }

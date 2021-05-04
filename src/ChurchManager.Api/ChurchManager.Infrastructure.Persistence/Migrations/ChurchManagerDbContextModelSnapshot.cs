@@ -477,7 +477,7 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                     b.Property<int>("GroupId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("GroupMemberRoleId")
+                    b.Property<int>("GroupRoleId")
                         .HasColumnType("integer");
 
                     b.Property<DateTime?>("InactiveDateTime")
@@ -493,7 +493,7 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("GroupId");
 
-                    b.HasIndex("GroupMemberRoleId");
+                    b.HasIndex("GroupRoleId");
 
                     b.HasIndex("PersonId");
 
@@ -546,29 +546,6 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                     b.ToTable("GroupMemberAttendance");
                 });
 
-            modelBuilder.Entity("ChurchManager.Persistence.Models.Groups.GroupMemberRole", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<string>("Description")
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
-
-                    b.Property<bool>("IsLeader")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("GroupMemberRole");
-                });
-
             modelBuilder.Entity("ChurchManager.Persistence.Models.Groups.GroupType", b =>
                 {
                     b.Property<int>("Id")
@@ -604,6 +581,43 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("GroupType");
+                });
+
+            modelBuilder.Entity("ChurchManager.Persistence.Models.Groups.GroupTypeRole", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<bool>("CanEdit")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("CanManageMembers")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("CanView")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<int?>("GroupTypeId")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("IsLeader")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GroupTypeId");
+
+                    b.ToTable("GroupRole");
                 });
 
             modelBuilder.Entity("ChurchManager.Persistence.Models.Groups.Schedule", b =>
@@ -1021,9 +1035,9 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ChurchManager.Persistence.Models.Groups.GroupMemberRole", "GroupMemberRole")
+                    b.HasOne("ChurchManager.Persistence.Models.Groups.GroupTypeRole", "GroupRole")
                         .WithMany()
-                        .HasForeignKey("GroupMemberRoleId")
+                        .HasForeignKey("GroupRoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -1058,7 +1072,7 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
 
                     b.Navigation("Group");
 
-                    b.Navigation("GroupMemberRole");
+                    b.Navigation("GroupRole");
 
                     b.Navigation("Person");
                 });
@@ -1084,6 +1098,15 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                     b.Navigation("Group");
 
                     b.Navigation("GroupMember");
+                });
+
+            modelBuilder.Entity("ChurchManager.Persistence.Models.Groups.GroupTypeRole", b =>
+                {
+                    b.HasOne("ChurchManager.Persistence.Models.Groups.GroupType", "GroupType")
+                        .WithMany()
+                        .HasForeignKey("GroupTypeId");
+
+                    b.Navigation("GroupType");
                 });
 
             modelBuilder.Entity("ChurchManager.Persistence.Models.People.Family", b =>

@@ -71,9 +71,9 @@ namespace ChurchManager.Infrastructure.Persistence.Repositories
                     LastName = x.Person.FullName.LastName,
                     Gender = x.Person.Gender,
                     PhotoUrl = x.Person.PhotoUrl,
-                    GroupMemberRoleId = x.GroupMemberRoleId,
-                    GroupMemberRole = x.GroupMemberRole.Name,
-                    IsLeader = x.GroupMemberRole.IsLeader,
+                    GroupMemberRoleId = x.GroupRoleId,
+                    GroupMemberRole = x.GroupRole.Name,
+                    IsLeader = x.GroupRole.IsLeader,
                     FirstVisitDate = x.FirstVisitDate
                 })
                 .ToArrayAsync(ct);
@@ -81,12 +81,12 @@ namespace ChurchManager.Infrastructure.Persistence.Repositories
             return groups;
         }
 
-        public async Task<IEnumerable<GroupMemberRole>> GroupRolesForGroupAsync(int groupId, CancellationToken ct)
+        public async Task<IEnumerable<GroupTypeRole>> GroupRolesForGroupAsync(int groupId, CancellationToken ct)
         {
             return await Queryable(new GroupRolesForGroupSpecification(groupId))
                 .AsNoTracking()
                 .SelectMany(x => x.Members)
-                .Select(x => x.GroupMemberRole)
+                .Select(x => x.GroupRole)
                 .Distinct()
                 .ToListAsync(ct);
         }
@@ -145,7 +145,7 @@ namespace ChurchManager.Infrastructure.Persistence.Repositories
         private IQueryable<Group> FilterByColumn(IQueryable<Group> queryable, string search)
         {
             queryable.Include("GroupType");
-            queryable.Include("Members.GroupMemberRole");
+            queryable.Include("Members.GroupRole");
             queryable.Include("Members.Person");
 
             if (string.IsNullOrEmpty(search))

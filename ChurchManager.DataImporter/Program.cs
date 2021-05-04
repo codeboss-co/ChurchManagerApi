@@ -99,23 +99,23 @@ namespace ChurchManager.DataImporter
 
                 // Cell Group Type
                 var  cellGroupType = new GroupType { Name = "Cell", Description = "Cell Ministry", IconCssClass = "heroicons_outline:share" };
+                // Cell Group Roles
+                var cellLeaderRole = new GroupTypeRole
+                {
+                    Name = "Leader", Description = "Leader of the Group", IsLeader = true, 
+                    CanView = true, CanEdit = true, CanManageMembers = true,
+                    GroupType = cellGroupType
+                };
+                var cellAssistantRole = new GroupTypeRole { Name = "Assistant", Description = "Assistant Leader", GroupType = cellGroupType };
+                var cellMemberRole = new GroupTypeRole { Name = "Member", Description = "Group Member", GroupType = cellGroupType };
+
                 if(!dbContext.GroupType.Any())
                 {
                     dbContext.Add(cellGroupType);
+                    dbContext.GroupTypeRole.Add(cellLeaderRole);
+                    dbContext.GroupTypeRole.Add(cellAssistantRole);
+                    dbContext.GroupTypeRole.Add(cellMemberRole);
                     dbContext.SaveChanges();
-                }
-
-                // Cell Group Roles
-                if(!dbContext.GroupMemberRole.Any())
-                {
-                    var cellLeaderRole = new GroupMemberRole { Name = "Leader", Description = "Leader of the Group", IsLeader = true };
-                    var cellAssistantRole = new GroupMemberRole { Name = "Assistant", Description = "Assistant Leader" };
-                    var cellMemberRole = new GroupMemberRole { Name = "Member", Description = "Group Member" };
-
-                   dbContext.GroupMemberRole.Add(cellLeaderRole);
-                   dbContext.GroupMemberRole.Add(cellAssistantRole);
-                   dbContext.GroupMemberRole.Add(cellMemberRole);
-                   dbContext.SaveChanges();
                 }
 
                 if(!dbContext.Church.Any())
@@ -185,7 +185,7 @@ namespace ChurchManager.DataImporter
                         .Where(x => x.GroupType.Name == "Cell")
                         .ToList();
 
-                    var groupRoles = dbContext.GroupMemberRole.ToList();
+                    var groupRoles = dbContext.GroupTypeRole.ToList();
                     var familyDbList = dbContext.Family.ToList();
                     
                     // We need this map later for discipleship imports
@@ -237,7 +237,7 @@ namespace ChurchManager.DataImporter
                                 CommunicationPreference = x.CommunicationPreference,
                                 FirstVisitDate = x.FirstVisitDate,
                                 GroupId = group.Id,
-                                GroupMemberRoleId = groupRole.Id,
+                                GroupRoleId = groupRole.Id,
                                 Person = person
                             };
                         }).ToList();

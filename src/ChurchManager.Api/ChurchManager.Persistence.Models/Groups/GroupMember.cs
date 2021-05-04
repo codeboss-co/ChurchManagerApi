@@ -19,7 +19,7 @@ namespace ChurchManager.Persistence.Models.Groups
         /// </summary>
         public int PersonId { get; set; }
 
-        public int GroupMemberRoleId { get; set; }
+        public int GroupRoleId { get; set; }
 
         public DateTime? FirstVisitDate { get; set; }
 
@@ -33,7 +33,7 @@ namespace ChurchManager.Persistence.Models.Groups
 
         #region Navigation
         public virtual Group Group { get; set; }
-        public virtual GroupMemberRole GroupMemberRole { get; set; }
+        public virtual GroupTypeRole GroupRole { get; set; }
         public virtual Person Person { get; set; }
 
         #endregion

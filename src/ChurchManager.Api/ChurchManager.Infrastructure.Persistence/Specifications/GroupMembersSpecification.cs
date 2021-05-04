@@ -14,7 +14,7 @@ namespace ChurchManager.Infrastructure.Persistence.Specifications
                     .Any(x => x.RecordStatus == recordStatus);
 
             IncludeStrings.Add(("Members.Person"));
-            IncludeStrings.Add(("Members.GroupMemberRole"));
+            IncludeStrings.Add(("Members.GroupRole"));
         }
     }
 }

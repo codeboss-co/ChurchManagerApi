@@ -9,7 +9,7 @@ namespace ChurchManager.Infrastructure.Persistence.Specifications
         {
             Criteria = group => group.Id == groupId;
 
-             IncludeStrings.Add("Members.GroupMemberRole");
+             IncludeStrings.Add("Members.GroupRole");
         }
     }
 }
