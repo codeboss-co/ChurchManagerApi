@@ -84,6 +84,7 @@ namespace ChurchManager.Infrastructure.Persistence.Repositories
         public async Task<IEnumerable<GroupMemberRole>> GroupRolesForGroupAsync(int groupId, CancellationToken ct)
         {
             return await Queryable(new GroupRolesForGroupSpecification(groupId))
+                .AsNoTracking()
                 .SelectMany(x => x.Members)
                 .Select(x => x.GroupMemberRole)
                 .Distinct()

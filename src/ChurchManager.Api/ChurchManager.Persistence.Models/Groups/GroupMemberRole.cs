@@ -20,5 +20,23 @@ namespace ChurchManager.Persistence.Models.Groups
         [MaxLength(100)]
         public string Description { get; set; }
         public bool IsLeader { get; set; }
+
+        public bool CanView { get; set; }
+        public bool CanEdit { get; set; }
+        public bool CanManageMembers { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Id of the <see cref="GroupType"/> that this GroupRole belongs to. This property is required.
+        /// </summary>
+        public int? GroupTypeId { get; set; }
+
+        #region Virtual Properties
+
+        /// <summary>
+        /// Gets or sets the <see cref="GroupType"/> that this GroupRole belongs to.
+        /// </summary>
+        public virtual GroupType GroupType { get; set; }
+
+        #endregion
     }
 }

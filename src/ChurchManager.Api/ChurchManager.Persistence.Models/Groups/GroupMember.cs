@@ -4,12 +4,13 @@ using System.ComponentModel.DataAnnotations.Schema;
 using ChurchManager.Persistence.Models.People;
 using Microsoft.EntityFrameworkCore;
 using ChurchManager.Persistence.Shared;
+using Codeboss.Types;
 
 namespace ChurchManager.Persistence.Models.Groups
 {
     [Table("GroupMember")]
 
-    public class GroupMember : Entity<int>
+    public class GroupMember : Entity<int>, IAggregateRoot<int>
     {
         public int GroupId { get; set; }
 
