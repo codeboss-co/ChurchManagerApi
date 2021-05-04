@@ -226,7 +226,8 @@ namespace ChurchManager.DataImporter
                                 PhoneNumbers = phoneNumbers,
                                 PhotoUrl = x.PhotoUrl,
                                 Source = x.Source,
-                                ReceivedHolySpirit = x.ReceivedHolySpirit
+                                ReceivedHolySpirit = x.ReceivedHolySpirit,
+                                UserLoginId = x.UserLoginId
                             };
 
                             // We need to keep this mapping

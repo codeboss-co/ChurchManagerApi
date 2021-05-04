@@ -11,7 +11,7 @@ namespace ChurchManager.Persistence.Models.Groups
     /// </summary>
     [Table("GroupRole")]
 
-    public record GroupTypeRole : IEntity<int>
+    public record GroupTypeRole : IAggregateRoot<int>
     {
         [Key]
         public int Id { get; set; }

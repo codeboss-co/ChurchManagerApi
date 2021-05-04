@@ -79,6 +79,7 @@ namespace ChurchManager.Infrastructure.Persistence
             services.AddScoped<IChurchAttendanceDbRepository, ChurchAttendanceDbRepository>();
             services.AddScoped<IDiscipleshipStepDefinitionDbRepository, DiscipleshipDbRepository>();
             services.AddScoped<IGroupMemberDbRepository, GroupMemberDbRepository>();
+            services.AddScoped<IGroupTypeRoleDbRepository, GroupTypeRoleDbRepository>();
 
             #endregion
 

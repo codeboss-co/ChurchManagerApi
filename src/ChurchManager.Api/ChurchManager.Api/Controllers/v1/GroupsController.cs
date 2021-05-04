@@ -59,10 +59,10 @@ namespace ChurchManager.Api.Controllers.v1
             return Ok(await Mediator.Send(new GroupsForChurchSelectItemQuery(churchId), token));
         }
 
-        [HttpGet("{groupId}/grouproles")]
-        public async Task<IActionResult> GetGroupsForGroup(int groupId, CancellationToken token)
+        [HttpGet("{groupTypeId}/grouproles")]
+        public async Task<IActionResult> GetGroupRolesForGroupType(int groupTypeId, CancellationToken token)
         {
-            return Ok(await Mediator.Send(new GroupRolesQuery(groupId), token));
+            return Ok(await Mediator.Send(new GroupRolesQuery(groupTypeId), token));
         }
 
         [HttpPost("{groupId}/attendance")]
