@@ -64,6 +64,7 @@ namespace ChurchManager.Infrastructure.Persistence.Repositories
                 .Select(x => new GroupMemberViewModel
                 {
                     PersonId = x.PersonId,
+                    GroupId = x.GroupId,
                     GroupMemberId = x.Id,
                     FirstName = x.Person.FullName.FirstName,
                     MiddleName = x.Person.FullName.MiddleName,
