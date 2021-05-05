@@ -3,7 +3,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using ChurchManager.Domain.Features.People.Repositories;
-using ChurchManager.Persistence.Models.People;
+using ChurchManager.Domain.Model.People;
 using CodeBoss.Extensions;
 using MediatR;
 
@@ -30,7 +30,7 @@ namespace ChurchManager.Application.Features.People.Commands.AddNewFamily
             var family = new Family
             {
                 Name = $"{command.FamilyName} Family",
-                Address = new Persistence.Models.People.Address
+                Address = new Domain.Model.People.Address
                 {
                     Street = command.Address.Street,
                     City = command.Address.City,
@@ -53,7 +53,7 @@ namespace ChurchManager.Application.Features.People.Commands.AddNewFamily
                 Gender = x.Person.Gender,
                 AgeClassification = x.Person.AgeClassification,
                 ReceivedHolySpirit = x.Person.ReceivedHolySpirit,
-                BirthDate = new Persistence.Models.People.BirthDate
+                BirthDate = new Domain.Model.People.BirthDate
                 {
                     BirthDay = x.Person.BirthDate.Day,
                     BirthMonth = x.Person.BirthDate.Month,

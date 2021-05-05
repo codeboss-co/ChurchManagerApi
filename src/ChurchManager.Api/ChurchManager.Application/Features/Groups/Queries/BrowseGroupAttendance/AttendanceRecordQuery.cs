@@ -4,8 +4,9 @@ using System.Threading.Tasks;
 using AutoMapper;
 using ChurchManager.Core.Shared;
 using ChurchManager.Domain.Features.Groups.Repositories;
+using ChurchManager.Domain.Model.Groups;
+using ChurchManager.Domain.Shared;
 using ChurchManager.Infrastructure.Persistence.Specifications;
-using ChurchManager.Persistence.Models.Groups;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 

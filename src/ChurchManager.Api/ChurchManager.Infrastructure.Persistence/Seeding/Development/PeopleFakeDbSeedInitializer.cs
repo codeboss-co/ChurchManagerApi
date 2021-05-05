@@ -5,13 +5,13 @@ using Bogus;
 using Bogus.DataSets;
 using ChurchManager.Domain;
 using ChurchManager.Domain.Features.People;
+using ChurchManager.Domain.Model.People;
 using ChurchManager.Infrastructure.Persistence.Contexts;
-using ChurchManager.Persistence.Models.People;
 using CodeBoss.AspNetCore.Startup;
 using CodeBoss.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Person = ChurchManager.Persistence.Models.People.Person;
+using Person = ChurchManager.Domain.Model.People.Person;
 
 namespace ChurchManager.Infrastructure.Persistence.Seeding.Development
 {

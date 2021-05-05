@@ -2,11 +2,11 @@
 using System.Threading;
 using System.Threading.Tasks;
 using ChurchManager.Application.Features.People.Queries;
-using ChurchManager.Core.Shared;
-using ChurchManager.Core.Shared.Parameters;
 using ChurchManager.Domain.Model;
+using ChurchManager.Domain.Model.People;
+using ChurchManager.Domain.Shared;
+using ChurchManager.Domain.Shared.Parameters;
 using ChurchManager.Infrastructure.Abstractions.Persistence;
-using ChurchManager.Persistence.Models.People;
 using Convey.CQRS.Queries;
 
 namespace ChurchManager.Domain.Features.People.Repositories

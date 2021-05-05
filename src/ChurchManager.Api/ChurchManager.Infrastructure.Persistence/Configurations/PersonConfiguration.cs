@@ -1,6 +1,6 @@
 ﻿using ChurchManager.Domain;
 using ChurchManager.Domain.Features.People;
-using ChurchManager.Persistence.Models.People;
+using ChurchManager.Domain.Model.People;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

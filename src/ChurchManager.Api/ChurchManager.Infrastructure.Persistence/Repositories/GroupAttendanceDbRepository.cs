@@ -4,13 +4,14 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using ChurchManager.Core.Shared;
-using ChurchManager.Core.Shared.Parameters;
 using ChurchManager.Domain.Common;
 using ChurchManager.Domain.Features.Groups.Repositories;
+using ChurchManager.Domain.Model.Groups;
+using ChurchManager.Domain.Shared;
+using ChurchManager.Domain.Shared.Parameters;
 using ChurchManager.Infrastructure.Persistence.Contexts;
 using ChurchManager.Infrastructure.Persistence.Extensions;
 using ChurchManager.Infrastructure.Persistence.Specifications;
-using ChurchManager.Persistence.Models.Groups;
 using Convey.CQRS.Queries;
 using Microsoft.EntityFrameworkCore;
 

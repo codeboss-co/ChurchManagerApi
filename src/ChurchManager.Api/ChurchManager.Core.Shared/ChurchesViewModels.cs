@@ -1,4 +1,6 @@
-﻿namespace ChurchManager.Core.Shared
+﻿using ChurchManager.Domain.Shared;
+
+namespace ChurchManager.Core.Shared
 {
     public record ChurchViewModel : SelectItemViewModel
     {

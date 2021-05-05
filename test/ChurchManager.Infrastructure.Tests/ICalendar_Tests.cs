@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using ChurchManager.Domain.Shared;
-using ChurchManager.Persistence.Models.Groups;
+using ChurchManager.Domain.Features.Groups;
+using ChurchManager.Domain.Model.Groups;
 using Ical.Net;
 using Ical.Net.CalendarComponents;
 using Ical.Net.DataTypes;

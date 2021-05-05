@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Linq.Expressions;
-using ChurchManager.Persistence.Models.Groups;
+using ChurchManager.Domain.Model.Groups;
 using ChurchManager.Persistence.Shared;
 using LinqKit;
 

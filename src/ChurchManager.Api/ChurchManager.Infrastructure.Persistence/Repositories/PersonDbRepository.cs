@@ -4,14 +4,16 @@ using System.Threading;
 using System.Threading.Tasks;
 using ChurchManager.Application.Features.People.Queries;
 using ChurchManager.Core.Shared;
-using ChurchManager.Core.Shared.Parameters;
+using ChurchManager.Domain;
 using ChurchManager.Domain.Features.People.Repositories;
 using ChurchManager.Domain.Model;
+using ChurchManager.Domain.Model.People;
+using ChurchManager.Domain.Shared;
+using ChurchManager.Domain.Shared.Parameters;
 using ChurchManager.Infrastructure.Abstractions;
 using ChurchManager.Infrastructure.Persistence.Contexts;
 using ChurchManager.Infrastructure.Persistence.Extensions;
 using ChurchManager.Infrastructure.Persistence.Specifications;
-using ChurchManager.Persistence.Models.People;
 using Convey.CQRS.Queries;
 using Microsoft.EntityFrameworkCore;
 

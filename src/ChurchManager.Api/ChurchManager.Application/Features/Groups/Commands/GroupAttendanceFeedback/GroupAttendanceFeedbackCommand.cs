@@ -3,7 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using ChurchManager.Domain;
 using ChurchManager.Domain.Features.Groups.Repositories;
-using ChurchManager.Persistence.Models.Groups;
+using ChurchManager.Domain.Model.Groups;
 using MediatR;
 
 namespace ChurchManager.Application.Features.Groups.Commands.AttendanceFeedback

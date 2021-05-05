@@ -4,8 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using ChurchManager.Core.Shared;
 using ChurchManager.Domain.Features.Churches.Repositories;
+using ChurchManager.Domain.Model.Churches;
+using ChurchManager.Domain.Shared;
 using ChurchManager.Infrastructure.Abstractions.Persistence;
-using ChurchManager.Persistence.Models.Churches;
 using Microsoft.EntityFrameworkCore;
 
 namespace ChurchManager.Infrastructure.Persistence.Repositories

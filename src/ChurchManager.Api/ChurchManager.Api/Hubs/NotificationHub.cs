@@ -2,8 +2,8 @@
 using System.Linq;
 using System.Threading.Tasks;
 using ChurchManager.Domain.Features.People.Repositories;
+using ChurchManager.Domain.Model.People;
 using ChurchManager.Infrastructure.Abstractions.Persistence;
-using ChurchManager.Persistence.Models.People;
 using Codeboss.Types;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;

@@ -2,9 +2,9 @@
 using System.Threading.Tasks;
 using AutoMapper;
 using ChurchManager.Application.Wrappers;
-using ChurchManager.Core.Shared.Parameters;
 using ChurchManager.Domain.Features.People.Repositories;
 using ChurchManager.Domain.Model;
+using ChurchManager.Domain.Shared.Parameters;
 using Convey.CQRS.Queries;
 using MediatR;
 

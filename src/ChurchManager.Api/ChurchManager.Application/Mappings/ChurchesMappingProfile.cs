@@ -2,7 +2,7 @@
 using ChurchManager.Application.Features.Churches.Queries.RetrieveChurches;
 using ChurchManager.Core.Shared;
 using ChurchManager.Domain.Model;
-using ChurchManager.Persistence.Models.Churches;
+using ChurchManager.Domain.Model.Churches;
 
 namespace ChurchManager.Application.Mappings
 {

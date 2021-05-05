@@ -1,5 +1,5 @@
 ﻿using ChurchManager.Domain;
-using ChurchManager.Persistence.Models.Groups;
+using ChurchManager.Domain.Model.Groups;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

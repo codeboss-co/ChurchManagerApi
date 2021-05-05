@@ -2,7 +2,8 @@
 using ChurchManager.Application.Features.People.Queries;
 using ChurchManager.Core.Shared;
 using ChurchManager.Domain.Model;
-using ChurchManager.Persistence.Models.People;
+using ChurchManager.Domain.Model.People;
+using ChurchManager.Domain.Shared;
 using Convey.CQRS.Queries;
 
 namespace ChurchManager.Application.Mappings

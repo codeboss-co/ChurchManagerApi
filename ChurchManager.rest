@@ -30,20 +30,30 @@ Authorization: Bearer {{accessToken}}
 # ============== GROUPS ==================== #
 # GetAllPersonsGroups
 @personId = 1 
-GET {{api}}/v1/groups/{{personId}}}
+GET {{api}}/v1/groups/person/{{personId}}
+Authorization: Bearer {{accessToken}}
 
 # GetAllCurrentUsersGroups
-GET {{api}}/v1/groups/current-person
+POST {{api}}/v1/groups/browse/current-user
 Content-Type: application/json
 Authorization: Bearer {{accessToken}}
 
+{    
+	"searchTerm": "",    
+    "page": 1,
+    "results": 20,
+    "orderBy": "Name",
+    "sortOrder": "DESC"
+}
+
 # BrowseGroups
-POST {{api}}/v1/groups/browse
+@personId = 1
+POST {{api}}/v1/groups/browse/person/{{personId}}
 Content-Type: application/json
 Authorization: Bearer {{accessToken}}
 
 {
-    "searchTerm": "First",    
+    "searchTerm": "",    
     "page": 1,
     "results": 20,
     "orderBy": "Name",
@@ -120,7 +130,7 @@ Authorization: Bearer {{accessToken}}
 
 # ============== CELL MINISTRY ==================== #
 # Browse Attendance
-POST {{api}}/v1/cellministry/browse
+POST {{api}}/v1/cellministry/attendance/browse
 Content-Type: application/json
 Authorization: Bearer {{accessToken}}
 

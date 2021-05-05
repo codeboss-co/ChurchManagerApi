@@ -3,7 +3,8 @@ using AutoMapper;
 using ChurchManager.Application.Features.Groups.Queries.GroupsForPerson;
 using ChurchManager.Core.Shared;
 using ChurchManager.Domain.Model;
-using ChurchManager.Persistence.Models.Groups;
+using ChurchManager.Domain.Model.Groups;
+using ChurchManager.Domain.Shared;
 using Convey.CQRS.Queries;
 
 namespace ChurchManager.Application.Mappings

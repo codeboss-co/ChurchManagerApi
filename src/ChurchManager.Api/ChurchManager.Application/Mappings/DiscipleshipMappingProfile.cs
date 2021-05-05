@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using ChurchManager.Core.Shared;
-using ChurchManager.Persistence.Models.Discipleship;
+using ChurchManager.Domain.Model.Discipleship;
+using ChurchManager.Domain.Shared;
 
 namespace ChurchManager.Application.Mappings
 {

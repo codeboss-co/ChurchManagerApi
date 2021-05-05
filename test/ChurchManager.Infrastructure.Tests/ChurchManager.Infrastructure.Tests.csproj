@@ -22,7 +22,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\ChurchManager.Api\ChurchManager.Domain.Shared\ChurchManager.Domain.Shared.csproj" />
-    <ProjectReference Include="..\..\src\ChurchManager.Api\ChurchManager.Persistence.Models\ChurchManager.Persistence.Models.csproj" />
+    <ProjectReference Include="..\..\src\ChurchManager.Api\ChurchManager.Domain\ChurchManager.Domain.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using System.Linq.Dynamic.Core;
-using ChurchManager.Core.Shared.Parameters;
+using ChurchManager.Domain.Shared.Parameters;
 using ChurchManager.Persistence.Shared;
 using Codeboss.Types;
 using Microsoft.EntityFrameworkCore;

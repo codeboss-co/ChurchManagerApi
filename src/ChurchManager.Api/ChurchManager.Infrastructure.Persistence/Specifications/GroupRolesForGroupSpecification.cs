@@ -1,4 +1,4 @@
-﻿using ChurchManager.Persistence.Models.Groups;
+﻿using ChurchManager.Domain.Model.Groups;
 using ChurchManager.Persistence.Shared;
 
 namespace ChurchManager.Infrastructure.Persistence.Specifications

@@ -1,5 +1,5 @@
-﻿using ChurchManager.Infrastructure.Abstractions.Persistence;
-using ChurchManager.Persistence.Models.Groups;
+﻿using ChurchManager.Domain.Model.Groups;
+using ChurchManager.Infrastructure.Abstractions.Persistence;
 
 namespace ChurchManager.Domain.Features.Groups.Repositories
 {

@@ -7,10 +7,10 @@ using ChurchManager.Application.Features.Groups.Commands.GroupAttendanceRecord;
 using ChurchManager.Domain;
 using ChurchManager.Domain.Features.Groups.Repositories;
 using ChurchManager.Domain.Features.People;
-using ChurchManager.Persistence.Models.Groups;
-using ChurchManager.Persistence.Models.People;
+using ChurchManager.Domain.Model.Groups;
+using ChurchManager.Domain.Model.People;
 using Microsoft.EntityFrameworkCore;
-using GroupMemberAttendance = ChurchManager.Persistence.Models.Groups.GroupMemberAttendance;
+using GroupMemberAttendance = ChurchManager.Domain.Model.Groups.GroupMemberAttendance;
 
 namespace ChurchManager.Application.Features.Groups.Services
 {

@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Bogus;
+using ChurchManager.Domain.Model.Groups;
 using ChurchManager.Infrastructure.Persistence.Contexts;
-using ChurchManager.Persistence.Models.Groups;
 using CodeBoss.AspNetCore.Startup;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
