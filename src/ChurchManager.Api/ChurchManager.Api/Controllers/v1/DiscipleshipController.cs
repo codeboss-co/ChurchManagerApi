@@ -18,10 +18,10 @@ namespace ChurchManager.Api.Controllers.v1
             _currentUser = currentUser;
         }
 
-        [HttpGet("types")]
-        public async Task<IActionResult> GetDiscipleshipTypes(CancellationToken token)
+        [HttpGet("programs")]
+        public async Task<IActionResult> GetDiscipleshipPrograms(CancellationToken token)
         {
-            return Ok(await Mediator.Send(new DiscipleshipTypesQuery(), token));
+            return Ok(await Mediator.Send(new DiscipleshipProgramsQuery(), token));
         }
 
         [HttpGet("types/{typeId}/definitions")]
@@ -31,7 +31,14 @@ namespace ChurchManager.Api.Controllers.v1
         }
 
         [HttpPost("person/programs")]
-        public async Task<IActionResult> GetDiscipleshipStepsForPerson([FromBody] DiscipleshipForPersonQuery query, CancellationToken token)
+        public async Task<IActionResult> GetDiscipleshipForPerson([FromBody] DiscipleshipForPersonQuery query, CancellationToken token)
+        {
+            query.PersonId ??= _currentUser.PersonId;
+            return Ok(await Mediator.Send(query, token));
+        }
+
+        [HttpPost("person/step")]
+        public async Task<IActionResult> GetDiscipleshipStepInfoForPerson([FromBody] DiscipleshipStepInfoForPersonQuery query, CancellationToken token)
         {
             query.PersonId ??= _currentUser.PersonId;
             return Ok(await Mediator.Send(query, token));

@@ -27,7 +27,7 @@ namespace ChurchManager.Domain.Model
         public int GroupMemberId => _entity.Id;
         public int GroupId  => _entity.GroupId;
         public RecordStatus RecordStatus => _entity.RecordStatus;
-        public bool IsLeader => _entity.GroupMemberRole.IsLeader;
+        public bool IsLeader => _entity.GroupRole.IsLeader;
         public PersonDomain Person => new(_entity.Person);
 
         public GroupMemberDomain(GroupMember entity) => _entity = entity;

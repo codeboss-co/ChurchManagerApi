@@ -1,23 +1,52 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Runtime.Serialization;
 using ChurchManager.Persistence.Models.People;
 using ChurchManager.Persistence.Shared;
+using Codeboss.Types;
 
 namespace ChurchManager.Persistence.Models.Discipleship
 {
-    [Table("DiscipleshipStep", Schema = "Discipleship")]
+    [Table("DiscipleshipStep")]
 
-    public class DiscipleshipStep : AuditableEntity<int>
+    public class DiscipleshipStep : AuditableEntity<int>, IAggregateRoot<int>
     {
+        [Required]
         public int DiscipleshipStepDefinitionId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Id of the <see cref="Person"/> that identifies the Person associated with taking this step. This property is required.
+        /// </summary>
         public int PersonId { get; set; }
-        public DateTime? CommencementDate { get; set; }
+
+        /// <summary>
+        /// Gets or sets the <see cref="DateTime"/> associated with the completion of this step.
+        /// </summary>
         public DateTime? CompletionDate { get; set; }
+
+        /// <summary>
+        /// Gets or sets the <see cref="DateTime"/> associated with the start of this step.
+        /// </summary>
+        public DateTime? StartDateTime { get; set; }
+
+        /// <summary>
+        /// Gets or sets the <see cref="DateTime"/> associated with the end of this step.
+        /// </summary>
+        public DateTime? EndDateTime { get; set; }
+
         [MaxLength(100)]
         public string Status { get; set; }
+
         [MaxLength(200)]
-        public string Notes { get; set; }
+        public string Note { get; set; }
+
+
+        /// <summary>
+        /// Indicates if this step has been completed
+        /// </summary>
+        [DataMember]
+        public virtual bool IsComplete => Status != null && Status.Equals("Completed");
 
         #region Navigation
 

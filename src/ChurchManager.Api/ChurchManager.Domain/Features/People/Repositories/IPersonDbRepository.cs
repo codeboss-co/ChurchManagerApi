@@ -1,5 +1,7 @@
-﻿using System.Threading;
+﻿using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
+using ChurchManager.Application.Features.People.Queries;
 using ChurchManager.Core.Shared;
 using ChurchManager.Core.Shared.Parameters;
 using ChurchManager.Domain.Model;
@@ -16,5 +18,10 @@ namespace ChurchManager.Domain.Features.People.Repositories
         Task<UserDetails> UserDetailsByUserLoginId(string queryUserLoginId);
         Task<PeopleAutocompleteResults> AutocompleteAsync(string searchTerm, CancellationToken ct = default);
         Task<PagedResult<PersonDomain>> BrowsePeopleAsync(SearchTermQueryParameter query, CancellationToken ct = default);
+
+        // Find People
+        Task<Person> FindPersonAsync(string firstName, string lastName, string email, bool includeDeceased = false, CancellationToken ct = default);
+        Task<Person> FindPersonAsync(PersonMatchQuery personMatchQuery, bool includeDeceased = false, CancellationToken ct = default);
+        Task<IEnumerable<Person>> FindPersonsAsync(PersonMatchQuery query, bool includeDeceased = false, CancellationToken ct = default);
     }
 }

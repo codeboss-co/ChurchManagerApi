@@ -6,16 +6,19 @@ using System.Threading.Tasks;
 using ChurchManager.Application.Exceptions;
 using ChurchManager.Application.Wrappers;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
 
 namespace ChurchManager.Api.Middlewares
 {
     public class ErrorHandlerMiddleware
     {
         private readonly RequestDelegate _next;
+        private readonly ILogger<ErrorHandlerMiddleware> _logger;
 
-        public ErrorHandlerMiddleware(RequestDelegate next)
+        public ErrorHandlerMiddleware(RequestDelegate next, ILogger<ErrorHandlerMiddleware> logger)
         {
             _next = next;
+            _logger = logger;
         }
 
         public async Task Invoke(HttpContext context)
@@ -50,8 +53,10 @@ namespace ChurchManager.Api.Middlewares
                         response.StatusCode = (int)HttpStatusCode.InternalServerError;
                         break;
                 }
-                var result = JsonSerializer.Serialize(responseModel);
 
+                _logger.LogError(error, "Application Error");
+
+                var result = JsonSerializer.Serialize(responseModel);
                 await response.WriteAsync(result);
             }
         }

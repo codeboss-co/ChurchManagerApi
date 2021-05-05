@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using AutoMapper;
 using ChurchManager.Application.Wrappers;
+using ChurchManager.Core.Shared;
 using ChurchManager.Infrastructure.Abstractions.Persistence;
 using ChurchManager.Persistence.Models.Churches;
 using MediatR;

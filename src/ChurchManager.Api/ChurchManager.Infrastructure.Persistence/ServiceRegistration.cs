@@ -1,4 +1,5 @@
 ﻿using ChurchManager.Domain.Features.Churches.Repositories;
+using ChurchManager.Domain.Features.Discipleship;
 using ChurchManager.Domain.Features.Groups.Repositories;
 using ChurchManager.Domain.Features.People.Repositories;
 using ChurchManager.Infrastructure.Abstractions;
@@ -58,11 +59,14 @@ namespace ChurchManager.Infrastructure.Persistence
                 // Development / Test -  Seeding
                 else
                 {
-                    services.AddInitializer<ChurchesFakeDbSeedInitializer>();
+                    services.AddInitializer<ChurchesDbSeedInitializer>();
+                    services.AddInitializer<PeopleDbSeedInitializer>();
+                    services.AddInitializer<GroupsDbSeedInitializer>();
+                    /*services.AddInitializer<ChurchesFakeDbSeedInitializer>();
                     services.AddInitializer<PeopleFakeDbSeedInitializer>();
                     services.AddInitializer<GroupsFakeDbSeedInitializer>();
                     services.AddInitializer<ChurchAttendanceFakeDbInitializer>();
-                    services.AddInitializer<GroupAttendanceFakeDbSeedInitializer>();
+                    services.AddInitializer<GroupAttendanceFakeDbSeedInitializer>();*/
                 }
             }
 
@@ -73,6 +77,9 @@ namespace ChurchManager.Infrastructure.Persistence
             services.AddScoped<IPersonDbRepository, PersonDbRepository>();
             services.AddScoped<IGroupAttendanceDbRepository, GroupAttendanceDbRepository>();
             services.AddScoped<IChurchAttendanceDbRepository, ChurchAttendanceDbRepository>();
+            services.AddScoped<IDiscipleshipStepDefinitionDbRepository, DiscipleshipDbRepository>();
+            services.AddScoped<IGroupMemberDbRepository, GroupMemberDbRepository>();
+            services.AddScoped<IGroupTypeRoleDbRepository, GroupTypeRoleDbRepository>();
 
             #endregion
 

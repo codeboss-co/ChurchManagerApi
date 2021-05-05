@@ -24,25 +24,25 @@ namespace ChurchManager.Infrastructure.Persistence.Seeding.Production
 
             if(!await dbContext.Church.AnyAsync())
             {
-                var group1 = new ChurchGroup { Name = "Cape Town Group", Description = "CE Cape Town Group" };
-                var group2 = new ChurchGroup { Name = "North Group", Description = "CE North Group" };
+                var group1 = new ChurchGroup { Name = "Cape Town Group", Description = "Cape Town Group" };
+                var group2 = new ChurchGroup { Name = "North Group", Description = "North Group" };
 
                 await dbContext.Church.AddAsync(new Church
                 {
-                    Name = "CE Cape Town",
+                    Name = "Cape Town",
                     Description = "CE Cape Town Church",
                     ShortCode = "CECT",
-                    PhoneNumber = "021 447 2005",
+                    PhoneNumber = "0214472005",
                     Address = "7 W Quay Rd, Victoria & Alfred Waterfront, Cape Town, 8002",
                     ChurchGroup = group1,
                 });
 
                 await dbContext.Church.AddAsync(new Church
                 {
-                    Name = "CE North",
+                    Name = "North",
                     Description = "CE Cape Town North Church",
-                    ShortCode = "CECT",
-                    PhoneNumber = "074 535 9808",
+                    ShortCode = "CECN",
+                    PhoneNumber = "0745359808",
                     Address = "6 Viro Cres, Stikland Industrial, Cape Town, 7530",
                     ChurchGroup = group2,
                 });

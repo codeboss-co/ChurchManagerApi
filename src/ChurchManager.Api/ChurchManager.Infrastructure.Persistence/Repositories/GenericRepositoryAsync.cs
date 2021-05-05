@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using ChurchManager.Infrastructure.Abstractions.Persistence;
@@ -36,6 +38,8 @@ namespace ChurchManager.Infrastructure.Persistence.Repositories
         }
         #endregion
 
+        #region Queryable
+
         public IQueryable<T> Queryable() => ObjectSet;
 
         public virtual IQueryable<T> Queryable(ISpecification<T> specification)
@@ -62,6 +66,36 @@ namespace ChurchManager.Infrastructure.Persistence.Repositories
 
             return secondaryResult;
         }
+
+        /// <summary>
+        /// Gets an <see cref="IQueryable{T}"/> list of all models
+        /// with eager loading of the comma-delimited properties specified in includes
+        /// </summary>
+        /// <returns></returns>
+        public virtual IQueryable<T> Queryable(string includes)
+        {
+            return QueryableIncludes(ObjectSet, includes);
+        }
+
+        /// <summary>
+        /// Applies a comma-delimited list of includes to the Queryable
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <param name="includes">The includes.</param>
+        /// <returns></returns>
+        private IQueryable<T> QueryableIncludes(IQueryable<T> query, string includes)
+        {
+            if(!string.IsNullOrEmpty(includes))
+            {
+                foreach(var include in SplitDelimitedValues(includes))
+                {
+                    query = query.Include(include);
+                }
+            }
+            return query;
+        } 
+
+        #endregion
 
         public virtual async Task<T> GetByIdAsync(int id) => await ObjectSet.FindAsync(id);
         public async Task<IEnumerable<T>> GetAllAsync() => await ObjectSet.AsNoTracking().ToListAsync();
@@ -124,6 +158,27 @@ namespace ChurchManager.Infrastructure.Persistence.Repositories
         {
             var results = await Queryable(specification).PaginateAsync(query);
             return results;
+        }
+
+
+
+        /// <summary>
+        /// Returns a string array that contains the substrings in this string that are delimited by any combination of whitespace, comma, semi-colon, or pipe characters.
+        /// </summary>
+        /// <param name="str">The string.</param>
+        /// <param name="whitespace">if set to <c>true</c> whitespace will be treated as a delimiter</param>
+        /// <returns></returns>
+        private static string[] SplitDelimitedValues(string str, bool whitespace = true)
+        {
+            if(str == null)
+            {
+                return new string[0];
+            }
+
+            string regex = whitespace ? @"[\s\|,;]+" : @"[\|,;]+";
+
+            char[] delimiter = new char[] { ',' };
+            return Regex.Replace(str, regex, ",").Split(delimiter, StringSplitOptions.RemoveEmptyEntries);
         }
     }
 }

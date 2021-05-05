@@ -5,7 +5,7 @@ using Codeboss.Types;
 
 namespace ChurchManager.Persistence.Models.Churches
 {
-    [Table("ChurchAttendance", Schema = "Churches")]
+    [Table("ChurchAttendance")]
 
     public class ChurchAttendance : IAggregateRoot<int>
     {

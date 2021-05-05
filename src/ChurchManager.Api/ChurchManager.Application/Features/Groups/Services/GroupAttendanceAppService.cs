@@ -78,7 +78,7 @@ namespace ChurchManager.Application.Features.Groups.Services
                             GroupMember = new GroupMember
                             {
                                 GroupId = command.GroupId,
-                                GroupMemberRole = groupMemberRoles.First(x => !x.IsLeader),
+                                GroupRole = groupMemberRoles.First(x => !x.IsLeader),
                                 Person = new Person
                                 {
                                     FullName = new FullName { FirstName = x.FirstName, LastName = x.LastName},

@@ -33,8 +33,8 @@ namespace ChurchManager.Application.Features.Groups.Queries.BrowsePersonsGroups
 
         public GroupMemberViewModel(GroupMember entity)
         {
-            GroupMemberRole = entity.GroupMemberRole.Name;
-            IsLeader = entity.GroupMemberRole.IsLeader;
+            GroupMemberRole = entity.GroupRole.Name;
+            IsLeader = entity.GroupRole.IsLeader;
         }
     }
 

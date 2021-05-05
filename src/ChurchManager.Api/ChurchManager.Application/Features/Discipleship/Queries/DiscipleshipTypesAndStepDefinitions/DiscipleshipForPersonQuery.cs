@@ -30,26 +30,28 @@ namespace ChurchManager.Application.Features.Discipleship.Queries.DiscipleshipTy
         public async Task<ApiResponse> Handle(DiscipleshipForPersonQuery query, CancellationToken ct)
         {
             var vm = await _dbRepository.Queryable()
-                .Include(x => x.DiscipleshipSteps)
-                  .ThenInclude(x => x.Definition)
-                    .ThenInclude(x => x.DiscipleshipType)
-                .Where(x => x.DiscipleshipSteps.Any(s => s.PersonId == query.PersonId))
-                .Select(x => new DiscipleshipForPersonViewModel
+                .Include(program => program.StepDefinitions)
+                  .ThenInclude(definition => definition.Steps)
+                .Where(program => program.StepDefinitions.Any(definition => definition.Steps.Any(step => step.PersonId == query.PersonId)))
+                .Select(program => new DiscipleshipForPersonViewModel
                 {
-                    Program = new GeneralViewModel {Name = x.Name, Id = x.Id, Description = x.Description},
-                    Steps = x.DiscipleshipSteps.Select(x => new DiscipleshipStepsViewModel
+                    Program = new DiscipleshipProgramViewModel
+                    {
+                        Id = program.Id, 
+                        Name = program.Name, 
+                        Description = program.Description,
+                        Category = program.Category,
+                        Order = program.Order
+                    },
+                    Steps = program.StepDefinitions.SelectMany(definition => definition.Steps).Select(x => new DiscipleshipStepViewModel
                     {
                         CompletionDate = x.CompletionDate,
                         Status = x.Status,
+                        IsComplete = x.IsComplete,
                         StepDefinition = new StepDefinitionViewModel {Order = x.Definition.Order, Id = x.Definition.Id, Description = x.Definition.Description, Name = x.Definition.Name},
-                        DiscipleshipType = new GeneralViewModel
-                        {
-                            Id = x.Definition.DiscipleshipType.Id,
-                            Description = x.Definition.DiscipleshipType.Description,
-                            Name = x.Definition.DiscipleshipType.Name
-                        }
                     })
                 })
+                .OrderBy(x => x.Program.Order)
                 .ToListAsync(ct);
 
             // Ordering

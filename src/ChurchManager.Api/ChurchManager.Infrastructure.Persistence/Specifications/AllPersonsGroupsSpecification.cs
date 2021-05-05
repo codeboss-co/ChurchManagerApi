@@ -13,11 +13,11 @@ namespace ChurchManager.Infrastructure.Persistence.Specifications
                 x.Members
                     .Any(x => 
                         x.PersonId == personId && 
-                        x.GroupMemberRole.IsLeader &&
+                        x.GroupRole.IsLeader &&
                         x.RecordStatus == recordStatus);
 
             Includes.Add(x => x.GroupType);
-            IncludeStrings.Add(("Members.GroupMemberRole"));
+            IncludeStrings.Add(("Members.GroupRole"));
         }
     }
 }

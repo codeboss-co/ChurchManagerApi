@@ -7,19 +7,28 @@ using Codeboss.Types;
 
 namespace ChurchManager.Persistence.Models.Discipleship
 {
-    [Table("DiscipleshipProgram", Schema = "Discipleship")]
+    [Table("DiscipleshipProgram")]
 
     public class DiscipleshipProgram : AuditableEntity<int>, IAggregateRoot<int>
     {
         [MaxLength(100)]
+        [Required]
         public string Name { get; set; }
 
         [MaxLength(200)]
         public string Description { get; set; }
 
+        [MaxLength(100)]
+        public string Category { get; set; }
+
+        /// <summary>
+        /// Gets or sets the order.
+        /// </summary>
+        public int Order { get; set; }
+
         #region Navigation
 
-        public virtual ICollection<DiscipleshipStep> DiscipleshipSteps { get; set; } = new Collection<DiscipleshipStep>();
+        public virtual ICollection<DiscipleshipStepDefinition> StepDefinitions { get; set; } = new Collection<DiscipleshipStepDefinition>();
 
         #endregion
     }

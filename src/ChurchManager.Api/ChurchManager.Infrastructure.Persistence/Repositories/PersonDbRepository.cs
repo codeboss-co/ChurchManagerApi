@@ -1,6 +1,8 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using ChurchManager.Application.Features.People.Queries;
 using ChurchManager.Core.Shared;
 using ChurchManager.Core.Shared.Parameters;
 using ChurchManager.Domain.Features.People.Repositories;
@@ -103,6 +105,54 @@ namespace ChurchManager.Infrastructure.Persistence.Repositories
                 pagedResult.ResultsPerPage,
                 pagedResult.TotalPages,
                 pagedResult.TotalResults);
+        }
+
+        /// <summary>
+        /// Looks for a single exact match based on the critieria provided. If more than one person is found it will return null (consider using FindPersonsAsync).
+        /// </summary>
+        /// <param name="firstName">The first name.</param>
+        /// <param name="lastName">The last name.</param>
+        /// <param name="email">The email.</param>
+        /// <param name="updatePrimaryEmail">if set to <c>true</c> the person's primary email will be updated to the search value if it was found as a person search key (alternate lookup address).</param>
+        /// <param name="includeDeceased">if set to <c>true</c> include deceased individuals.</param>
+        /// <param name="includeBusinesses">if set to <c>true</c> include businesses records.</param>
+        /// <returns></returns>
+        public Task<Person> FindPersonAsync(string firstName, string lastName, string email, bool includeDeceased = false, CancellationToken ct = default)
+        {
+            return FindPersonAsync(new PersonMatchQuery(firstName, lastName, email, string.Empty), includeDeceased, ct);
+        }
+
+        /// <summary>
+        /// Finds the person.
+        /// </summary>
+        /// <param name="personMatchQuery">The person match query.</param>
+
+        /// <returns></returns>
+        public async Task<Person> FindPersonAsync(PersonMatchQuery personMatchQuery, bool includeDeceased = false, CancellationToken ct = default)
+        {
+            var matches = await FindPersonsAsync(personMatchQuery, includeDeceased, ct);
+
+            var match = matches.FirstOrDefault();
+
+            return match;
+        }
+
+        /// <summary>
+        /// Finds people who are considered to be good matches based on the query provided.
+        /// </summary>
+        /// <returns>A IEnumerable of person, ordered by the likelihood they are a good match for the query.</returns>
+        public async Task<IEnumerable<Person>> FindPersonsAsync(PersonMatchQuery query, bool includeDeceased = false, CancellationToken ct = default)
+        {
+            var queryable = Queryable()
+                .AsNoTracking()
+                .Where(x =>
+                    EF.Functions.ILike(x.FullName.FirstName, $"%{query.FirstName}%") &&
+                    EF.Functions.ILike(x.FullName.LastName, $"%{query.LastName}%") &&
+                    x.Email != null && x.Email.Address != null &&
+                    EF.Functions.ILike(x.Email.Address, $"%{query.LastName}%")
+                );
+
+            return await queryable.ToListAsync(ct);
         }
     }
 }

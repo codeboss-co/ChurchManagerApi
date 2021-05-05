@@ -14,7 +14,7 @@ namespace ChurchManager.Infrastructure.Persistence.Specifications
             // The groups this person is the leader of
             Expression<Func<Group, bool>> leadersGroupsFilter = g =>
                 g.Members
-                    .Any(m => m.PersonId == personId && m.GroupMemberRole.IsLeader);
+                    .Any(m => m.PersonId == personId && m.GroupRole.IsLeader);
 
             Criteria = leadersGroupsFilter;
 
@@ -28,7 +28,7 @@ namespace ChurchManager.Infrastructure.Persistence.Specifications
             }
 
             Includes.Add(x => x.GroupType);
-            IncludeStrings.Add("Members.GroupMemberRole");
+            IncludeStrings.Add("Members.GroupRole");
         }
     }
 }

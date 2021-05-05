@@ -15,11 +15,11 @@ namespace ChurchManager.Infrastructure.Persistence.Configurations
                     v => v.ToString(),
                     v => new RecordStatus(v));
 
-            // GroupFeatures (Many-to-Many)
+            // GroupFeatures (Many-to-Many) : Only needed because I added a schema (since removed)
             builder
                 .HasMany(p => p.Features)
                 .WithMany(p => p.Groups)
-                .UsingEntity(j => j.ToTable("GroupFeatures", "Groups"));
+                .UsingEntity(j => j.ToTable("GroupsFeatures"));
         }
     }
 }

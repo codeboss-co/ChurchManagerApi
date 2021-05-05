@@ -30,7 +30,7 @@ namespace ChurchManager.Domain.Model
         public string Occupation => _entity.Occupation;
         public string Source => _entity.Source;
         public bool? ReceivedHolySpirit => _entity.ReceivedHolySpirit;
-        public DiscipleshipStepViewModel FoundationSchool { get; }
+        public DiscipleshipStepViewModel FoundationSchool { get; set; }
         public string UserLoginId => _entity.UserLoginId;
 
         // Gets the persons family members excluding them
@@ -44,7 +44,7 @@ namespace ChurchManager.Domain.Model
         {
             _entity = entity;
 
-            var newConvertsDiscipleshipProgram =
+            /*var newConvertsDiscipleshipProgram =
                 _entity.DiscipleshipPrograms.FirstOrDefault(x => x.Name == "New Converts Program");
             var foundationSchoolStep = newConvertsDiscipleshipProgram?.DiscipleshipSteps.FirstOrDefault();
 
@@ -53,7 +53,7 @@ namespace ChurchManager.Domain.Model
                 IsCompleted = foundationSchoolStep != null && foundationSchoolStep.Status == "Completed",
                 Status = foundationSchoolStep?.Status,
                 CompletionDate = foundationSchoolStep?.CompletionDate
-            };
+            };*/
         }
     }
     

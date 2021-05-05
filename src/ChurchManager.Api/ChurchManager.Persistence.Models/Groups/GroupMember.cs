@@ -4,12 +4,13 @@ using System.ComponentModel.DataAnnotations.Schema;
 using ChurchManager.Persistence.Models.People;
 using Microsoft.EntityFrameworkCore;
 using ChurchManager.Persistence.Shared;
+using Codeboss.Types;
 
 namespace ChurchManager.Persistence.Models.Groups
 {
-    [Table("GroupMember", Schema = "Groups")]
+    [Table("GroupMember")]
 
-    public class GroupMember : Entity<int>
+    public class GroupMember : Entity<int>, IAggregateRoot<int>
     {
         public int GroupId { get; set; }
 
@@ -18,7 +19,7 @@ namespace ChurchManager.Persistence.Models.Groups
         /// </summary>
         public int PersonId { get; set; }
 
-        public int GroupMemberRoleId { get; set; }
+        public int GroupRoleId { get; set; }
 
         public DateTime? FirstVisitDate { get; set; }
 
@@ -32,7 +33,7 @@ namespace ChurchManager.Persistence.Models.Groups
 
         #region Navigation
         public virtual Group Group { get; set; }
-        public virtual GroupMemberRole GroupMemberRole { get; set; }
+        public virtual GroupTypeRole GroupRole { get; set; }
         public virtual Person Person { get; set; }
 
         #endregion

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -8,19 +9,21 @@ using Codeboss.Types;
 
 namespace ChurchManager.Persistence.Models.Groups
 {
-    [Table("Group", Schema = "Groups")]
+    [Table("Group")]
 
-    public class Group : Entity<int>, IAggregateRoot<int>
+    public class Group : AuditableEntity<int>, IAggregateRoot<int>
     {
         public int? ParentGroupId { get; set; }
         public int GroupTypeId { get; set; }
         public int? ChurchId { get; set; }
+        public int? ScheduleId { get; set; }
 
         [Required, MaxLength(50)]
         public string Name { get; set; }
         [MaxLength(100)]
         public string Description { get; set; }
-
+        public string Address { get; set; }
+        public DateTimeOffset? StartDate { get; set; }
         public int? GroupCapacity { get; set; }
         public bool? IsOnline { get; set; }
 
@@ -29,6 +32,7 @@ namespace ChurchManager.Persistence.Models.Groups
         public virtual Group ParentGroup { get; set; }
         public virtual GroupType GroupType { get; set; }
         public virtual Church Church { get; set; }
+        public virtual Schedule Schedule { get; set; }
 
         /// <summary>
         /// Gets or sets a collection the Groups that are children of this group.

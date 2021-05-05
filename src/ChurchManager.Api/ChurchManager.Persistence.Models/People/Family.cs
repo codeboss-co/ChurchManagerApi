@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ChurchManager.Persistence.Models.People
 {
-    [Table("Family", Schema = "People")]
+    [Table("Family")]
 
     public class Family : Entity<int>
     {

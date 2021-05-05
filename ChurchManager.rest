@@ -136,3 +136,29 @@ Authorization: Bearer {{accessToken}}
 GET {{api}}/v1/cellministry/charts
 Content-Type: application/json
 Authorization: Bearer {{accessToken}}
+
+# ============== GROUPS ==================== #
+# Groups with Children
+GET {{api}}/v1/groups/tree
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
+# ============== DISCIPLESHIP ==================== #
+# Discipleship for Person
+POST {{api}}/v1/discipleship/person/programs
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
+{
+    "personId": 1
+}
+
+# Discipleship Step Info for Person (Foundation School)
+POST {{api}}/v1/discipleship/person/step
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
+{
+    "personId": 1,
+	"DiscipleshipStepDefinitionId" : 1
+}

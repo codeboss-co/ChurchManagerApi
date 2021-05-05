@@ -31,13 +31,13 @@ namespace ChurchManager.Infrastructure.Persistence.Seeding.Development
             using var scope = _scopeFactory.CreateScope();
             _dbContext = scope.ServiceProvider.GetRequiredService<ChurchManagerDbContext>();
 
-            if (!await _dbContext.GroupMemberRole.AnyAsync())
+            if (!await _dbContext.GroupTypeRole.AnyAsync())
             {
-                var cellLeaderRole = new GroupMemberRole { Name = "Leader", Description = "Cell Leader", IsLeader = true };
-                var cellMemberRole = new GroupMemberRole { Name = "Member", Description = "Cell Member" };
+                var cellLeaderRole = new GroupTypeRole { Name = "Leader", Description = "Cell Leader", IsLeader = true };
+                var cellMemberRole = new GroupTypeRole { Name = "Member", Description = "Cell Member" };
 
-                await _dbContext.GroupMemberRole.AddAsync(cellLeaderRole);
-                await _dbContext.GroupMemberRole.AddAsync(cellMemberRole);
+                await _dbContext.GroupTypeRole.AddAsync(cellLeaderRole);
+                await _dbContext.GroupTypeRole.AddAsync(cellMemberRole);
 
                 await _dbContext.SaveChangesAsync();
             }
@@ -57,11 +57,11 @@ namespace ChurchManager.Infrastructure.Persistence.Seeding.Development
 
                 var cellLeader = new Faker<GroupMember>()
                     .RuleFor(u => u.PersonId, f => 1)
-                    .RuleFor(u => u.GroupMemberRoleId, f => 1);
+                    .RuleFor(u => u.GroupRoleId, f => 1);
 
                 var cellMember = new Faker<GroupMember>()
                 .RuleFor(u => u.PersonId, f => personId++)
-                .RuleFor(u => u.GroupMemberRoleId, f => 2);
+                .RuleFor(u => u.GroupRoleId, f => 2);
                 
                 for(int i = 0; i < 20; i++)
                 {
@@ -88,11 +88,11 @@ namespace ChurchManager.Infrastructure.Persistence.Seeding.Development
 
             var cellLeader = new Faker<GroupMember>()
                 .RuleFor(u => u.PersonId, f => random.Next(2, 200)) // The personIds generated
-                .RuleFor(u => u.GroupMemberRoleId, f => 1);
+                .RuleFor(u => u.GroupRoleId, f => 1);
 
             var cellMember = new Faker<GroupMember>()
                 .RuleFor(u => u.PersonId, f => random.Next(201, 378))
-                .RuleFor(u => u.GroupMemberRoleId, f => 2);
+                .RuleFor(u => u.GroupRoleId, f => 2);
 
             var cellGroupMembers = cellMember.Generate(random.Next(1, 30));
 

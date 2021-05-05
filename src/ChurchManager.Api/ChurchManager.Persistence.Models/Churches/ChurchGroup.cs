@@ -7,7 +7,7 @@ using ChurchManager.Persistence.Shared;
 
 namespace ChurchManager.Persistence.Models.Churches
 {
-    [Table("ChurchGroup", Schema = "Churches")]
+    [Table("ChurchGroup")]
 
     public class ChurchGroup : Entity<int>
     {

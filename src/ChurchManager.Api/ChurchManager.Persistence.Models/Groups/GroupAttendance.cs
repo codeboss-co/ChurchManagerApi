@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ChurchManager.Persistence.Models.Groups
 {
-    [Table("GroupAttendance", Schema = "Groups")]
+    [Table("GroupAttendance")]
 
     public class GroupAttendance : IAggregateRoot<int>
     {

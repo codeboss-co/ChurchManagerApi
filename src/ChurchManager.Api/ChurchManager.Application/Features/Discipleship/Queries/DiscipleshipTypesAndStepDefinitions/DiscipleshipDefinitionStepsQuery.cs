@@ -31,7 +31,7 @@ namespace ChurchManager.Application.Features.Discipleship.Queries.DiscipleshipTy
             var vm = await _mapper
                 .ProjectTo<GeneralViewModel>(
                     _dbRepository
-                                .Queryable().Where(x => x.DiscipleshipTypeId == query.DiscipleshipTypeId)
+                                .Queryable().Where(x => x.DiscipleshipProgramId == query.DiscipleshipTypeId)
                                 .AsNoTracking())
                 .ToListAsync(ct);
 
