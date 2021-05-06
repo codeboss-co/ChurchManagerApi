@@ -12,6 +12,7 @@ namespace ChurchManager.Infrastructure.Abstractions.Persistence
     {
         IChurchManagerDbContext DbContext { get; }
         IQueryable<T> Queryable();
+        IQueryable<T> Queryable(string includes);
         IQueryable<T> Queryable(ISpecification<T> specification);
         Task<T> GetByIdAsync(int id);
         Task<IEnumerable<T>> GetAllAsync();
