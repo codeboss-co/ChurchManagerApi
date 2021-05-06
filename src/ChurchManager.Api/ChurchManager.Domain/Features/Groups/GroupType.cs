@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using Codeboss.Types;
 
-namespace ChurchManager.Domain.Model.Groups
+namespace ChurchManager.Domain.Features.Groups
 {
     [Table("GroupType")]
 

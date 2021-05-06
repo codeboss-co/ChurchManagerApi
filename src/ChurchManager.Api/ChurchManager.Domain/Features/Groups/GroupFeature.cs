@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using ChurchManager.Persistence.Shared;
 
-namespace ChurchManager.Domain.Model.Groups
+namespace ChurchManager.Domain.Features.Groups
 {
     [Table("GroupFeature")]
     public class GroupFeature : Entity<int>

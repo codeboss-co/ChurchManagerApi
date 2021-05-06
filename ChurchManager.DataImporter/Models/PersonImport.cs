@@ -1,5 +1,5 @@
 ﻿using System;
-using ChurchManager.Domain.Model.People;
+using ChurchManager.Domain.Features.People;
 
 namespace ChurchManager.DataImporter.Models
 {

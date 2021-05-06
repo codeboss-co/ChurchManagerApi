@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using ChurchManager.Domain.Model.Groups;
+using ChurchManager.Domain.Common;
+using ChurchManager.Domain.Features.Groups;
 
 namespace ChurchManager.Domain.Model
 {

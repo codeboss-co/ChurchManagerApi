@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using ChurchManager.Domain.Model.Churches;
+using ChurchManager.Domain.Features.Churches;
 using ChurchManager.Persistence.Shared;
 using Codeboss.Types;
 
-namespace ChurchManager.Domain.Model.Groups
+namespace ChurchManager.Domain.Features.Groups
 {
     [Table("Group")]
 

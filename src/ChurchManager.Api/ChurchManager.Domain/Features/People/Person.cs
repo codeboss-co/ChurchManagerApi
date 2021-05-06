@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations.Schema;
-using ChurchManager.Domain.Model.Churches;
-using ChurchManager.Domain.Model.People.Notes;
+using ChurchManager.Domain.Features.Churches;
+using ChurchManager.Domain.Features.People.Notes;
 using ChurchManager.Persistence.Shared;
 using Codeboss.Types;
 using Microsoft.EntityFrameworkCore;
 
-namespace ChurchManager.Domain.Model.People
+namespace ChurchManager.Domain.Features.People
 {
     [Table("Person")]
     public class Person : Entity<int>, IAggregateRoot<int>

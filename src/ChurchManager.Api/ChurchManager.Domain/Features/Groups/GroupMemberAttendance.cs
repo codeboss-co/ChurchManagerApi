@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Codeboss.Types;
 
-namespace ChurchManager.Domain.Model.Groups
+namespace ChurchManager.Domain.Features.Groups
 {
     /// <summary>
     /// Represents an instance where a <see cref="GroupMember"/> attended (or was scheduled to attend) a group/location/schedule.

@@ -7,7 +7,7 @@ using System.Linq;
 using Codeboss.Types;
 using Microsoft.EntityFrameworkCore;
 
-namespace ChurchManager.Domain.Model.Groups
+namespace ChurchManager.Domain.Features.Groups
 {
     [Table("GroupAttendance")]
 

@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using ChurchManager.Persistence.Shared;
 using Microsoft.EntityFrameworkCore;
 
-namespace ChurchManager.Domain.Model.People
+namespace ChurchManager.Domain.Features.People
 {
     [Table("Family")]
 

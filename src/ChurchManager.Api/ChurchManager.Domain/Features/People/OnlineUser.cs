@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Codeboss.Types;
 
-namespace ChurchManager.Domain.Model.People
+namespace ChurchManager.Domain.Features.People
 {
     [Table("OnlineUser")]
 

@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using ChurchManager.Application.Features.Discipleship.Queries.DiscipleshipTypesAndStepDefinitions;
 using ChurchManager.Domain;
+using ChurchManager.Domain.Common;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

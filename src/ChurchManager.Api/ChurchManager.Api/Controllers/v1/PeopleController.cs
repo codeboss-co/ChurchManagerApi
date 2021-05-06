@@ -5,6 +5,7 @@ using ChurchManager.Application.Features.People.Commands.UpdatePerson;
 using ChurchManager.Application.Features.People.Queries.BrowsePeople;
 using ChurchManager.Application.Features.People.Queries.PeopleAutocomplete;
 using ChurchManager.Domain;
+using ChurchManager.Domain.Common;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;

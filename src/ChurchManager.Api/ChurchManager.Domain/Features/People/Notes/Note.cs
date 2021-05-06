@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using ChurchManager.Persistence.Shared;
 
-namespace ChurchManager.Domain.Model.People.Notes
+namespace ChurchManager.Domain.Features.People.Notes
 {
     [Table("Note")]
     public class Note : AuditableEntity<int>

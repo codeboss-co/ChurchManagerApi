@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using ChurchManager.Persistence.Shared;
 
-namespace ChurchManager.Domain.Model.People
+namespace ChurchManager.Domain.Features.People
 {
     [Table("SocialNetwork")]
 

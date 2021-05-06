@@ -1,7 +1,7 @@
 ﻿using ChurchManager.Domain.Model;
 using ChurchManager.Infrastructure.Abstractions.Security;
 
-namespace ChurchManager.Domain
+namespace ChurchManager.Domain.Common
 {
     // Marker for easy reference
     public interface ICognitoCurrentUser : ICognitoCurrentUser<PersonDomain>

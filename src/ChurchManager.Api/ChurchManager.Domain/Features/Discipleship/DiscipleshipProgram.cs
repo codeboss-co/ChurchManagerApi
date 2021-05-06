@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using ChurchManager.Persistence.Shared;
 using Codeboss.Types;
 
-namespace ChurchManager.Domain.Model.Discipleship
+namespace ChurchManager.Domain.Features.Discipleship
 {
     [Table("DiscipleshipProgram")]
 

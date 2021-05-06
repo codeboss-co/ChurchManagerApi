@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using ChurchManager.Application.Features.Churches.Queries.RetrieveChurches;
 using ChurchManager.Domain;
+using ChurchManager.Domain.Common;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

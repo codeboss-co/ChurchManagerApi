@@ -1,9 +1,9 @@
 ﻿using ChurchManager.Domain.Features.Churches.Repositories;
 using ChurchManager.Domain.Features.Discipleship;
+using ChurchManager.Domain.Features.Groups;
 using ChurchManager.Domain.Features.Groups.Repositories;
+using ChurchManager.Domain.Features.People;
 using ChurchManager.Domain.Features.People.Repositories;
-using ChurchManager.Domain.Model.Groups;
-using ChurchManager.Domain.Model.People;
 using ChurchManager.Infrastructure.Abstractions;
 using ChurchManager.Infrastructure.Abstractions.Persistence;
 using ChurchManager.Infrastructure.Persistence.Contexts;

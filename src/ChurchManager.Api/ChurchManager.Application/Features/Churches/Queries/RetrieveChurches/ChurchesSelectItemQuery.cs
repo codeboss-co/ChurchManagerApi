@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using ChurchManager.Application.Wrappers;
 using ChurchManager.Core.Shared;
-using ChurchManager.Domain.Model.Churches;
+using ChurchManager.Domain.Features.Churches;
 using ChurchManager.Infrastructure.Abstractions.Persistence;
 using MediatR;
 using Microsoft.EntityFrameworkCore;

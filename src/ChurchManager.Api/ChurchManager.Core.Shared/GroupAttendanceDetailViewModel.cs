@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using ChurchManager.Domain.Model.Groups;
+using ChurchManager.Domain.Features.Groups;
 using ChurchManager.Domain.Shared;
 
 namespace ChurchManager.Core.Shared

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using ChurchManager.Domain.Model.Discipleship;
+using ChurchManager.Domain.Features.Discipleship;
 using ChurchManager.Infrastructure.Persistence.Contexts;
 using CodeBoss.AspNetCore.Startup;
 using Microsoft.EntityFrameworkCore;

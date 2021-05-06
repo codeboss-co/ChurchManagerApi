@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using ChurchManager.Domain;
+using ChurchManager.Domain.Common;
 using ChurchManager.Domain.Features.People;
-using ChurchManager.Domain.Model.People;
 using ChurchManager.Infrastructure.Persistence.Contexts;
 using CodeBoss.AspNetCore.Startup;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Person = ChurchManager.Domain.Model.People.Person;
+using Person = ChurchManager.Domain.Features.People.Person;
 
 namespace ChurchManager.Infrastructure.Persistence.Seeding.Production
 {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using ChurchManager.Application.Features.Churches.Queries.RetrieveChurches;
 using ChurchManager.Core.Shared;
-using ChurchManager.Domain.Model.People;
+using ChurchManager.Domain.Features.People;
 using ChurchManager.Domain.Shared;
 
 namespace ChurchManager.Application.Features.People.Queries

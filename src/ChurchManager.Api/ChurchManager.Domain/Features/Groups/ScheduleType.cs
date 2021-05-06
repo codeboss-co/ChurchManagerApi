@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ChurchManager.Domain.Model.Groups
+namespace ChurchManager.Domain.Features.Groups
 {
     #region Enumerations
 

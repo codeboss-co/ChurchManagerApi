@@ -1,4 +1,4 @@
-﻿using ChurchManager.Domain.Model.Groups;
+﻿using ChurchManager.Domain.Features.Groups;
 using Microsoft.EntityFrameworkCore;
 
 namespace ChurchManager.Infrastructure.Persistence.Contexts

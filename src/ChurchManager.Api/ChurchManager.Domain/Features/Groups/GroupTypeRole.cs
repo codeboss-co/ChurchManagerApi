@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using Codeboss.Types;
 
-namespace ChurchManager.Domain.Model.Groups
+namespace ChurchManager.Domain.Features.Groups
 {
     /// <summary>
     /// Represents a role that a <see cref="GroupMember"/> can have in a <see cref="Group"/>.  In Rock each member of a group has one 

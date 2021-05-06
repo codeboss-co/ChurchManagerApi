@@ -5,16 +5,16 @@ using ChurchManager.Domain.Model;
 namespace ChurchManager.Application.Features.People.Services
 {
 
-    public interface IPersonAppService
+    public interface IPersonService
     {
         Task<PersonDomain> PersonByUserLoginId(string userLoginId);
     }
 
-    public class PersonAppService : IPersonAppService
+    public class PersonService : IPersonService
     {
         private readonly IPersonDbRepository _dbRepository;
 
-        public PersonAppService(IPersonDbRepository dbRepository)
+        public PersonService(IPersonDbRepository dbRepository)
         {
             _dbRepository = dbRepository;
         }

@@ -1,5 +1,6 @@
 ﻿using ChurchManager.Domain;
-using ChurchManager.Domain.Model.People;
+using ChurchManager.Domain.Common;
+using ChurchManager.Domain.Features.People;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using ChurchManager.Domain.Model.Discipleship;
+using ChurchManager.Domain.Features.Discipleship;
 using ChurchManager.Persistence.Shared;
 
 namespace ChurchManager.Infrastructure.Persistence.Specifications

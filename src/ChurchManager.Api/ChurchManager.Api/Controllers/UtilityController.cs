@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using ChurchManager.Application.Features.Groups.Queries.GroupsForPerson;
 using ChurchManager.Domain;
+using ChurchManager.Domain.Common;
 using ChurchManager.Infrastructure.Abstractions.Persistence;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;

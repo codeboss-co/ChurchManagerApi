@@ -2,8 +2,8 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using ChurchManager.Domain.Features.People;
 using ChurchManager.Domain.Features.People.Repositories;
-using ChurchManager.Domain.Model.People;
 using CodeBoss.Extensions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -52,7 +52,7 @@ namespace ChurchManager.Application.Features.People.Commands.UpdatePerson
 
             if (person.BirthDate is null)
             {
-                person.BirthDate = new Domain.Model.People.BirthDate
+                person.BirthDate = new Domain.Features.People.BirthDate
                 {
                     BirthDay = command.BirthDate.Day,
                     BirthMonth = command.BirthDate.Month,

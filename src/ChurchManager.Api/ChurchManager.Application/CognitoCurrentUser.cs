@@ -3,6 +3,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using ChurchManager.Application.Features.People.Services;
 using ChurchManager.Domain;
+using ChurchManager.Domain.Common;
 using ChurchManager.Domain.Model;
 using Codeboss.Types;
 
@@ -11,11 +12,11 @@ namespace ChurchManager.Application
     public class CognitoCurrentUser : ICognitoCurrentUser
     {
         private readonly ICurrentPrincipalAccessor _principalAccessor;
-        private readonly IPersonAppService _applicationService;
+        private readonly IPersonService _applicationService;
 
         internal const string ClaimTypeUsername = "Username";
 
-        public CognitoCurrentUser(ICurrentPrincipalAccessor principalAccessor, IPersonAppService applicationService)
+        public CognitoCurrentUser(ICurrentPrincipalAccessor principalAccessor, IPersonService applicationService)
         {
             _principalAccessor = principalAccessor;
             _applicationService = applicationService;

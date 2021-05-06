@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using ChurchManager.Domain;
-using ChurchManager.Domain.Model.Groups;
+using ChurchManager.Domain.Common;
+using ChurchManager.Domain.Features.Groups;
 using ChurchManager.Persistence.Shared;
 
 namespace ChurchManager.Infrastructure.Persistence.Specifications

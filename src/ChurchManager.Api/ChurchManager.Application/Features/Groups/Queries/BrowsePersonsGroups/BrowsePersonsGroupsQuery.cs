@@ -4,6 +4,7 @@ using AutoMapper;
 using ChurchManager.Application.Features.Groups.Queries.GroupsForPerson;
 using ChurchManager.Application.Wrappers;
 using ChurchManager.Domain;
+using ChurchManager.Domain.Common;
 using ChurchManager.Domain.Features.Groups.Repositories;
 using ChurchManager.Domain.Shared.Parameters;
 using ChurchManager.Infrastructure.Abstractions;

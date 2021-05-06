@@ -3,6 +3,7 @@ using ChurchManager.Application.Behaviours;
 using ChurchManager.Application.Features.Groups.Services;
 using ChurchManager.Application.Features.People.Services;
 using ChurchManager.Domain;
+using ChurchManager.Domain.Common;
 using ChurchManager.Infrastructure.Abstractions;
 using ChurchManager.Infrastructure.Shared;
 using CodeBoss.AspNetCore;
@@ -25,7 +26,7 @@ namespace ChurchManager.Application
 
             #region Application Services
 
-            services.AddScoped<IPersonAppService, PersonAppService>(); 
+            services.AddScoped<IPersonService, PersonService>(); 
             services.AddScoped<IGroupAttendanceAppService, GroupAttendanceAppService>(); 
 
             #endregion

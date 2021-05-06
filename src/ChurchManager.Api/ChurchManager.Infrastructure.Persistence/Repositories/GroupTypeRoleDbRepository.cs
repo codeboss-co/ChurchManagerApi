@@ -1,6 +1,6 @@
 ﻿using System.Linq;
+using ChurchManager.Domain.Features.Groups;
 using ChurchManager.Domain.Features.Groups.Repositories;
-using ChurchManager.Domain.Model.Groups;
 using ChurchManager.Infrastructure.Abstractions.Persistence;
 
 namespace ChurchManager.Infrastructure.Persistence.Repositories

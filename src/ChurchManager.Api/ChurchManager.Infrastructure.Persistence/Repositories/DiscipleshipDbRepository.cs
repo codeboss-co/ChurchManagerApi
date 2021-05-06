@@ -4,7 +4,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using ChurchManager.Core.Shared;
 using ChurchManager.Domain.Features.Discipleship;
-using ChurchManager.Domain.Model.Discipleship;
 using ChurchManager.Domain.Shared;
 using ChurchManager.Infrastructure.Abstractions.Persistence;
 using Microsoft.EntityFrameworkCore;

@@ -1,6 +1,5 @@
 ﻿using System;
 using ChurchManager.Domain.Features.People;
-using ChurchManager.Domain.Model.People;
 using CodeBoss.Extensions;
 
 namespace ChurchManager.Application.Features.People.Queries

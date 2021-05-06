@@ -1,7 +1,8 @@
 ﻿using System.Linq;
 using ChurchManager.Domain;
+using ChurchManager.Domain.Common;
+using ChurchManager.Domain.Features.Groups;
 using ChurchManager.Domain.Features.Groups.Repositories;
-using ChurchManager.Domain.Model.Groups;
 using ChurchManager.Infrastructure.Abstractions.Persistence;
 using Microsoft.EntityFrameworkCore;
 

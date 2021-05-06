@@ -5,12 +5,12 @@ using System.Threading;
 using System.Threading.Tasks;
 using ChurchManager.Application.Features.Groups.Commands.GroupAttendanceRecord;
 using ChurchManager.Domain;
+using ChurchManager.Domain.Common;
+using ChurchManager.Domain.Features.Groups;
 using ChurchManager.Domain.Features.Groups.Repositories;
 using ChurchManager.Domain.Features.People;
-using ChurchManager.Domain.Model.Groups;
-using ChurchManager.Domain.Model.People;
 using Microsoft.EntityFrameworkCore;
-using GroupMemberAttendance = ChurchManager.Domain.Model.Groups.GroupMemberAttendance;
+using GroupMemberAttendance = ChurchManager.Domain.Features.Groups.GroupMemberAttendance;
 
 namespace ChurchManager.Application.Features.Groups.Services
 {

@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using ChurchManager.Domain.Model.Groups;
+using ChurchManager.Domain.Features.Groups;
 using ChurchManager.Infrastructure.Persistence.Contexts;
 using ChurchManager.Infrastructure.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;

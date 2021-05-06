@@ -1,10 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using ChurchManager.Domain.Model.People;
+using ChurchManager.Domain.Features.People;
 using ChurchManager.Persistence.Shared;
 using Codeboss.Types;
 
-namespace ChurchManager.Domain.Model.Churches
+namespace ChurchManager.Domain.Features.Churches
 {
     [Table("Church")]
 

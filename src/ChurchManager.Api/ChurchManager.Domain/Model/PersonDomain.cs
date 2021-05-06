@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using ChurchManager.Domain.Common;
 using ChurchManager.Domain.Features.People;
-using ChurchManager.Domain.Model.People;
 using ChurchManager.Domain.Shared;
 
 namespace ChurchManager.Domain.Model

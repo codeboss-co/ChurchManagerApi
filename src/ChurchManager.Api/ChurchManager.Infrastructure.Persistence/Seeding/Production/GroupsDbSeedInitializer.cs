@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using ChurchManager.Domain.Model.Groups;
+using ChurchManager.Domain.Features.Groups;
 using ChurchManager.Infrastructure.Persistence.Contexts;
 using CodeBoss.AspNetCore.Startup;
 using Microsoft.EntityFrameworkCore;

@@ -1,4 +1,4 @@
-﻿namespace ChurchManager.Domain
+﻿namespace ChurchManager.Domain.Common
 {
     public record UserDetails
     {

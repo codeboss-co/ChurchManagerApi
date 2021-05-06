@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using ChurchManager.Domain.Common;
 using ChurchManager.Domain.Model;
-using ChurchManager.Domain.Model.Groups;
 using ChurchManager.Domain.Shared;
 using ChurchManager.Domain.Shared.Parameters;
 using ChurchManager.Infrastructure.Abstractions.Persistence;

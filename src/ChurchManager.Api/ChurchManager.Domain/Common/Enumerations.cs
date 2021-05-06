@@ -1,6 +1,6 @@
 ﻿using Codeboss.Types;
 
-namespace ChurchManager.Domain
+namespace ChurchManager.Domain.Common
 {
     public class RecordStatus : Enumeration<RecordStatus, string>
     {

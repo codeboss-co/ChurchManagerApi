@@ -1,4 +1,4 @@
-﻿using ChurchManager.Domain.Model.Discipleship;
+﻿using ChurchManager.Domain.Features.Discipleship;
 using Microsoft.EntityFrameworkCore;
 
 namespace ChurchManager.Infrastructure.Persistence.Contexts

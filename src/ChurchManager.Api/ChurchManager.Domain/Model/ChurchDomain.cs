@@ -1,4 +1,4 @@
-﻿using ChurchManager.Domain.Model.Churches;
+﻿using ChurchManager.Domain.Features.Churches;
 
 namespace ChurchManager.Domain.Model
 {
