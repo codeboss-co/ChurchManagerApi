@@ -6,7 +6,6 @@ using ChurchManager.Domain.Common;
 using ChurchManager.Domain.Features.People;
 using ChurchManager.Domain.Features.People.Queries;
 using ChurchManager.Domain.Features.People.Repositories;
-using ChurchManager.Domain.Model;
 using ChurchManager.Domain.Shared;
 using ChurchManager.Domain.Shared.Parameters;
 using ChurchManager.Domain.Specifications;
@@ -94,30 +93,14 @@ namespace ChurchManager.Infrastructure.Persistence.Repositories
             return new PeopleAutocompleteResults(autocomplete);
         }
 
-        public async Task<PagedResult<PersonDomain>> BrowsePeopleAsync(SearchTermQueryParameter query, CancellationToken ct = default)
+        public async Task<PagedResult<Person>> BrowsePeopleAsync(SearchTermQueryParameter query, CancellationToken ct = default)
         {
             // Paging
             var pagedResult = await Queryable()
                 .Specify(new BrowsePeopleSpecification(query.SearchTerm))
-                /*.Select(x => new PersonBrowseViewModel
-                {
-                    PersonId = x.Id,
-                    FullName = x.FullName,
-                    AgeClassification = x.AgeClassification,
-                    ConnectionStatus = x.ConnectionStatus,
-                    Gender = x.Gender,
-                    BirthDate = x.BirthDate,
-                    Church = x.Church.Name
-                    
-                })*/
                 .PaginateAsync(query);
 
-            return PagedResult<PersonDomain>.Create(
-                pagedResult.Items.Select(entity => new PersonDomain(entity)),
-                pagedResult.CurrentPage,
-                pagedResult.ResultsPerPage,
-                pagedResult.TotalPages,
-                pagedResult.TotalResults);
+            return PagedResult<Person>.From(pagedResult, pagedResult.Items);
         }
 
         /// <summary>

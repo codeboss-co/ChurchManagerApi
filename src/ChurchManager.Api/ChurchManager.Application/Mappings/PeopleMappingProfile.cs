@@ -32,7 +32,7 @@ namespace ChurchManager.Application.Mappings
                 ;
 
 
-            CreateMap<PagedResult<PersonDomain>, PagedResult<PersonViewModel>>()
+            CreateMap<PagedResult<Person>, PagedResult<PersonViewModel>>()
                 .ForMember(d => d.Items,
                     opt => opt.MapFrom(src => src.Items));
 

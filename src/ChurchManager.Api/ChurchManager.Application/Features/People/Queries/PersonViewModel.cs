@@ -30,6 +30,7 @@ namespace ChurchManager.Application.Features.People.Queries
         public bool? ReceivedHolySpirit { get; set; } = false;
         public DiscipleshipStepViewModel FoundationSchool { get; set; }
         public ICollection<FamilyMembersViewModel> FamilyMembers { get; set; } = new Collection<FamilyMembersViewModel>();
+        public string RecordStatus { get; set; }
     }
 
     public record FamilyMembersViewModel
