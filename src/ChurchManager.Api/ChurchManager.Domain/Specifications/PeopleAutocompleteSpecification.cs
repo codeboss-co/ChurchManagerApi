@@ -4,7 +4,7 @@ using CodeBoss.Extensions;
 using Microsoft.EntityFrameworkCore;
 
 // https://www.npgsql.org/efcore/misc/collations-and-case-sensitivity.html?tabs=data-annotations#ilike
-namespace ChurchManager.Infrastructure.Persistence.Specifications
+namespace ChurchManager.Domain.Specifications
 {
     public class PeopleAutocompleteSpecification : Specification<Person>
     {

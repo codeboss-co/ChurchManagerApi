@@ -43,17 +43,6 @@ namespace ChurchManager.Domain.Model
         public PersonDomain(Person entity)
         {
             _entity = entity;
-
-            /*var newConvertsDiscipleshipProgram =
-                _entity.DiscipleshipPrograms.FirstOrDefault(x => x.Name == "New Converts Program");
-            var foundationSchoolStep = newConvertsDiscipleshipProgram?.DiscipleshipSteps.FirstOrDefault();
-
-            FoundationSchool = new()
-            {
-                IsCompleted = foundationSchoolStep != null && foundationSchoolStep.Status == "Completed",
-                Status = foundationSchoolStep?.Status,
-                CompletionDate = foundationSchoolStep?.CompletionDate
-            };*/
         }
     }
     

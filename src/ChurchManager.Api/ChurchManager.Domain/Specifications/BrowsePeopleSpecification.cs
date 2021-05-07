@@ -2,7 +2,7 @@
 using ChurchManager.Persistence.Shared;
 using Microsoft.EntityFrameworkCore;
 
-namespace ChurchManager.Infrastructure.Persistence.Specifications
+namespace ChurchManager.Domain.Specifications
 {
     public class BrowsePeopleSpecification : Specification<Person>
     {

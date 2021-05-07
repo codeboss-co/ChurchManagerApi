@@ -5,7 +5,7 @@ using ChurchManager.Domain.Features.Groups;
 using ChurchManager.Persistence.Shared;
 using LinqKit;
 
-namespace ChurchManager.Infrastructure.Persistence.Specifications
+namespace ChurchManager.Domain.Specifications
 {
     public class BrowsePersonsGroupsSpecification : Specification<Group>
     {

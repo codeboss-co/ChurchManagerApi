@@ -1,6 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
+using ChurchManager.Application.Common;
 using ChurchManager.Application.Wrappers;
 using ChurchManager.Core.Shared;
 using ChurchManager.Domain;

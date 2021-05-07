@@ -6,7 +6,7 @@ using ChurchManager.Core.Shared;
 using ChurchManager.Domain.Features.Groups;
 using ChurchManager.Domain.Features.Groups.Repositories;
 using ChurchManager.Domain.Shared;
-using ChurchManager.Infrastructure.Persistence.Specifications;
+using ChurchManager.Domain.Specifications;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 

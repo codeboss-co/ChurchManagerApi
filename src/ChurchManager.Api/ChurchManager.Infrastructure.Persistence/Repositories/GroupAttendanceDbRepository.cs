@@ -9,9 +9,9 @@ using ChurchManager.Domain.Features.Groups;
 using ChurchManager.Domain.Features.Groups.Repositories;
 using ChurchManager.Domain.Shared;
 using ChurchManager.Domain.Shared.Parameters;
+using ChurchManager.Domain.Specifications;
 using ChurchManager.Infrastructure.Persistence.Contexts;
 using ChurchManager.Infrastructure.Persistence.Extensions;
-using ChurchManager.Infrastructure.Persistence.Specifications;
 using Convey.CQRS.Queries;
 using Microsoft.EntityFrameworkCore;
 

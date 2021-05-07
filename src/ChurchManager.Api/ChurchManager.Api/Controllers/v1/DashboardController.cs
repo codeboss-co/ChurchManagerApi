@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using ChurchManager.Application;
+using ChurchManager.Application.Common;
 using ChurchManager.Application.Features.Churches.Queries.RetrieveChurches;
 using ChurchManager.Domain;
 using ChurchManager.Domain.Common;
 using ChurchManager.Domain.Features.Churches.Repositories;
+using ChurchManager.Domain.Shared;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

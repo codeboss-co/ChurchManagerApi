@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations.Schema;
+using ChurchManager.Domain.Common;
 using ChurchManager.Domain.Features.Churches;
 using ChurchManager.Domain.Features.People.Notes;
 using ChurchManager.Persistence.Shared;
@@ -14,10 +15,10 @@ namespace ChurchManager.Domain.Features.People
     public class Person : Entity<int>, IAggregateRoot<int>
     {
         public FullName FullName { get; set; }
-        public string ConnectionStatus { get; set; }
+        public ConnectionStatus ConnectionStatus { get; set; }
         public DeceasedStatus DeceasedStatus { get; set; }
-        public string AgeClassification { get; set; }
-        public string Gender { get; set; }
+        public AgeClassification AgeClassification { get; set; }
+        public Gender Gender { get; set; }
         public BirthDate BirthDate { get; set; }
 
         /// <summary>
@@ -33,7 +34,7 @@ namespace ChurchManager.Domain.Features.People
 
         public Email Email { get; set; }
         public ICollection<PhoneNumber> PhoneNumbers { get; set; } = new Collection<PhoneNumber>();
-        public string CommunicationPreference { get; set; }
+        public CommunicationType CommunicationPreference { get; set; }
 
         public string PhotoUrl { get; set; }
         public string Occupation { get; set; }

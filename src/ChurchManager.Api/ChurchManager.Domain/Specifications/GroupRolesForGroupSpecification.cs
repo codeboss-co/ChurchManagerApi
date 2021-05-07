@@ -1,7 +1,7 @@
 ﻿using ChurchManager.Domain.Features.Groups;
 using ChurchManager.Persistence.Shared;
 
-namespace ChurchManager.Infrastructure.Persistence.Specifications
+namespace ChurchManager.Domain.Specifications
 {
     public class GroupRolesForGroupSpecification : Specification<Group>
     {

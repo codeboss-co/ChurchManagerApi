@@ -2,7 +2,7 @@
 using ChurchManager.Domain.Features.Discipleship;
 using ChurchManager.Persistence.Shared;
 
-namespace ChurchManager.Infrastructure.Persistence.Specifications
+namespace ChurchManager.Domain.Specifications
 {
     public class DiscipleshipProgramsSpecification : Specification<DiscipleshipStepDefinition>
     {

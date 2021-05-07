@@ -11,10 +11,10 @@ using ChurchManager.Domain.Features.People.Repositories;
 using ChurchManager.Domain.Model;
 using ChurchManager.Domain.Shared;
 using ChurchManager.Domain.Shared.Parameters;
+using ChurchManager.Domain.Specifications;
 using ChurchManager.Infrastructure.Abstractions;
 using ChurchManager.Infrastructure.Persistence.Contexts;
 using ChurchManager.Infrastructure.Persistence.Extensions;
-using ChurchManager.Infrastructure.Persistence.Specifications;
 using Convey.CQRS.Queries;
 using Microsoft.EntityFrameworkCore;
 
@@ -31,14 +31,9 @@ namespace ChurchManager.Infrastructure.Persistence.Repositories
             _dataShaper = dataShaper;
         }
 
-        public async Task<PersonDomain> ProfileByUserLoginId(string userLoginId)
+        public IQueryable<Person> ProfileByUserLoginId(string userLoginId)
         {
-            var entity = await Queryable(new ProfileByUserLoginSpecification(userLoginId))
-                .FirstOrDefaultAsync();
-
-            return entity is not null
-                ? new PersonDomain(entity)
-                : null;
+            return Queryable(new ProfileByUserLoginSpecification(userLoginId)).AsNoTracking();
         }
 
         public async Task<PersonDomain> ProfileByPersonId(int personId, bool condensed = false)

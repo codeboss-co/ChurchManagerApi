@@ -1,10 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Threading;
 using System.Threading.Tasks;
+using ChurchManager.Application.Common;
 using ChurchManager.Domain;
 using ChurchManager.Domain.Common;
 using ChurchManager.Domain.Features.Groups;
 using ChurchManager.Domain.Features.Groups.Repositories;
+using ChurchManager.Domain.Shared;
 using MediatR;
 
 namespace ChurchManager.Application.Features.Groups.Commands.AttendanceFeedback

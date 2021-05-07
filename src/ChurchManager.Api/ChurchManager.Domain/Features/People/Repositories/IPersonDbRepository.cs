@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using ChurchManager.Application.Features.People.Queries;
@@ -13,7 +14,7 @@ namespace ChurchManager.Domain.Features.People.Repositories
 {
     public interface IPersonDbRepository : IGenericRepositoryAsync<Person>
     {
-        Task<PersonDomain> ProfileByUserLoginId(string userLoginId);
+        IQueryable<Person> ProfileByUserLoginId(string userLoginId);
         Task<PersonDomain> ProfileByPersonId(int personId, bool condensed = false);
         Task<UserDetails> UserDetailsByUserLoginId(string queryUserLoginId);
         Task<PeopleAutocompleteResults> AutocompleteAsync(string searchTerm, CancellationToken ct = default);

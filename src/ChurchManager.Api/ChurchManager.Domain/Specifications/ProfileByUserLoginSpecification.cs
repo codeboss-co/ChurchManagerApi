@@ -1,7 +1,7 @@
 ﻿using ChurchManager.Domain.Features.People;
 using ChurchManager.Persistence.Shared;
 
-namespace ChurchManager.Infrastructure.Persistence.Specifications
+namespace ChurchManager.Domain.Specifications
 {
     public class ProfileByUserLoginSpecification : Specification<Person>
     {

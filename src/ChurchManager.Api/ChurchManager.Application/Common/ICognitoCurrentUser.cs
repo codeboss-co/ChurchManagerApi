@@ -1,10 +1,10 @@
-﻿using ChurchManager.Domain.Model;
+﻿using ChurchManager.Application.Features.People.Queries;
 using ChurchManager.Infrastructure.Abstractions.Security;
 
-namespace ChurchManager.Domain.Common
+namespace ChurchManager.Application.Common
 {
     // Marker for easy reference
-    public interface ICognitoCurrentUser : ICognitoCurrentUser<PersonDomain>
+    public interface ICognitoCurrentUser : ICognitoCurrentUser<PersonViewModel>
     {
         public string Username { get; }
         public int PersonId { get; }
