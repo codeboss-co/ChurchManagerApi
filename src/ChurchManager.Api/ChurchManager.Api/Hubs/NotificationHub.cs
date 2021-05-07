@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
-using ChurchManager.Application.Features.People.Services;
+using ChurchManager.Application.Features.Profile.Services;
 using ChurchManager.Domain.Features.People;
 using ChurchManager.Infrastructure.Abstractions.Persistence;
 using Codeboss.Types;
@@ -15,13 +15,13 @@ namespace ChurchManager.Api.Hubs
     [Authorize]
     public class NotificationHub : Hub
     {
-        private readonly IPersonService _service;
+        private readonly IProfileService _service;
         private readonly IGenericRepositoryAsync<OnlineUser> _onlineUserRepository;
         private readonly IDateTimeProvider _dateTime;
         private readonly ILogger<NotificationHub> _logger;
 
         public NotificationHub(
-            IPersonService service,
+            IProfileService service,
             IGenericRepositoryAsync<OnlineUser> onlineUserRepository,
             IDateTimeProvider dateTime,
             ILogger<NotificationHub> logger)
@@ -40,7 +40,7 @@ namespace ChurchManager.Api.Hubs
         {
             _logger.LogDebug("[√] NotificationHub Connected for {user}", Context.UserIdentifier);
 
-            var person = await _service.PersonByUserLoginId(Context.UserIdentifier) 
+            var person = await _service.ProfileByUserLoginId(Context.UserIdentifier) 
                          ?? throw new ArgumentNullException("person", "Person not found with UserLoginId");
             var notification = new
             {

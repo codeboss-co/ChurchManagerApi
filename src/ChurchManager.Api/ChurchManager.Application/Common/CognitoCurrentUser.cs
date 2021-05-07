@@ -2,7 +2,7 @@
 using System.Security.Claims;
 using System.Threading.Tasks;
 using ChurchManager.Application.Features.People.Queries;
-using ChurchManager.Application.Features.People.Services;
+using ChurchManager.Application.Features.Profile.Services;
 using Codeboss.Types;
 
 namespace ChurchManager.Application.Common
@@ -10,11 +10,11 @@ namespace ChurchManager.Application.Common
     public class CognitoCurrentUser : ICognitoCurrentUser
     {
         private readonly ICurrentPrincipalAccessor _principalAccessor;
-        private readonly IPersonService _applicationService;
+        private readonly IProfileService _applicationService;
 
         internal const string ClaimTypeUsername = "Username";
 
-        public CognitoCurrentUser(ICurrentPrincipalAccessor principalAccessor, IPersonService applicationService)
+        public CognitoCurrentUser(ICurrentPrincipalAccessor principalAccessor, IProfileService applicationService)
         {
             _principalAccessor = principalAccessor;
             _applicationService = applicationService;
@@ -28,6 +28,6 @@ namespace ChurchManager.Application.Common
         /// <summary>
         /// Loads the Current User using the
         /// </summary>
-        public Lazy<Task<PersonViewModel>> CurrentPerson => new(async () => await _applicationService.PersonByUserLoginId(Id));
+        public Lazy<Task<PersonViewModel>> CurrentPerson => new(async () => await _applicationService.ProfileByUserLoginId(Id));
     }
 }

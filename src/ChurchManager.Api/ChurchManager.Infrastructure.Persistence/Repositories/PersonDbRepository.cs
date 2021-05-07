@@ -2,8 +2,6 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using ChurchManager.Core.Shared;
-using ChurchManager.Domain;
 using ChurchManager.Domain.Common;
 using ChurchManager.Domain.Features.People;
 using ChurchManager.Domain.Features.People.Queries;
@@ -57,14 +55,10 @@ namespace ChurchManager.Infrastructure.Persistence.Repositories
                 .FirstOrDefaultAsync(ct);
         }
 
-        public async Task<PersonDomain> ProfileByPersonId(int personId, bool condensed = false, CancellationToken ct = default)
+        public Task<Person> ProfileByPersonId(int personId, bool condensed = false, CancellationToken ct = default)
         {
-            var entity = await Queryable(new ProfileByPersonSpecification(personId, condensed))
-                .FirstOrDefaultAsync();
-
-            return entity is not null
-                ? new PersonDomain(entity)
-                : null;
+            return Queryable(new ProfileByPersonSpecification(personId, condensed))
+                .FirstOrDefaultAsync(ct);
         }
 
         public Task<UserDetails> UserDetailsByUserLoginId(string userLoginId, CancellationToken ct = default)

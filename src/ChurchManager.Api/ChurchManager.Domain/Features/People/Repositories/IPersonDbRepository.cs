@@ -14,7 +14,7 @@ namespace ChurchManager.Domain.Features.People.Repositories
     public interface IPersonDbRepository : IGenericRepositoryAsync<Person>
     {
         Task<Person> ProfileByUserLoginId(string userLoginId, CancellationToken ct = default);
-        Task<PersonDomain> ProfileByPersonId(int personId, bool condensed = false, CancellationToken ct = default);
+        Task<Person> ProfileByPersonId(int personId, bool condensed = false, CancellationToken ct = default);
         Task<UserDetails> UserDetailsByUserLoginId(string queryUserLoginId, CancellationToken ct = default);
         Task<PeopleAutocompleteResults> AutocompleteAsync(string searchTerm, CancellationToken ct = default);
         Task<PagedResult<PersonDomain>> BrowsePeopleAsync(SearchTermQueryParameter query, CancellationToken ct = default);
