@@ -1,8 +1,7 @@
 ﻿using System;
-using ChurchManager.Domain.Features.People;
 using CodeBoss.Extensions;
 
-namespace ChurchManager.Application.Features.People.Queries
+namespace ChurchManager.Domain.Features.People.Queries
 {
     /// <summary>
     /// Contains the properties that can be searched for when performing a GetBestMatch query

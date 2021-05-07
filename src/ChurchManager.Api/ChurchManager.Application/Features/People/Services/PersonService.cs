@@ -1,11 +1,8 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
-using AutoMapper.QueryableExtensions;
 using ChurchManager.Application.Features.People.Queries;
 using ChurchManager.Domain.Features.People.Repositories;
-using ChurchManager.Domain.Model;
-using Microsoft.EntityFrameworkCore;
 
 namespace ChurchManager.Application.Features.People.Services
 {
@@ -28,9 +25,9 @@ namespace ChurchManager.Application.Features.People.Services
 
         public async Task<PersonViewModel> PersonByUserLoginId(string userLoginId, CancellationToken ct)
         {
-            var vm = await _dbRepository.ProfileByUserLoginId(userLoginId)
-                .ProjectTo<PersonViewModel>(_mapper.ConfigurationProvider)
-                .FirstOrDefaultAsync(ct);
+            var entity = await _dbRepository.ProfileByUserLoginId(userLoginId, ct);
+
+            var vm = _mapper.Map<PersonViewModel>(entity);
 
             return vm;
         }

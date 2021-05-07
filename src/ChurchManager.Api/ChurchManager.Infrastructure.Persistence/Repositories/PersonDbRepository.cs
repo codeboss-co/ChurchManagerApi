@@ -2,11 +2,11 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using ChurchManager.Application.Features.People.Queries;
 using ChurchManager.Core.Shared;
 using ChurchManager.Domain;
 using ChurchManager.Domain.Common;
 using ChurchManager.Domain.Features.People;
+using ChurchManager.Domain.Features.People.Queries;
 using ChurchManager.Domain.Features.People.Repositories;
 using ChurchManager.Domain.Model;
 using ChurchManager.Domain.Shared;
@@ -31,12 +31,33 @@ namespace ChurchManager.Infrastructure.Persistence.Repositories
             _dataShaper = dataShaper;
         }
 
-        public IQueryable<Person> ProfileByUserLoginId(string userLoginId)
+        #region Queryable
+        /// <summary>
+        /// Returns a queryable collection of <see cref="Rock.Model.Person"/> entities (not including Deceased or Nameless records)
+        /// </summary>
+        /// <returns>A queryable collection of <see cref="Rock.Model.Person"/> entities.</returns>
+        public override IQueryable<Person> Queryable()
         {
-            return Queryable(new ProfileByUserLoginSpecification(userLoginId)).AsNoTracking();
+            return Queryable(new PersonQueryOptions());
         }
 
-        public async Task<PersonDomain> ProfileByPersonId(int personId, bool condensed = false)
+        /// <summary>
+        /// Returns a queryable collection of <see cref="Person"/> entities 
+        /// using the options specified the <see cref="PersonQueryOptions"/> (default is to exclude deceased people and pending person records)
+        /// </summary>
+        public IQueryable<Person> Queryable(PersonQueryOptions personQueryOptions)
+        {
+            return Queryable(null, personQueryOptions);
+        } 
+        #endregion
+
+        public Task<Person> ProfileByUserLoginId(string userLoginId, CancellationToken ct = default)
+        {
+            return Queryable(new ProfileByUserLoginSpecification(userLoginId))
+                .FirstOrDefaultAsync(ct);
+        }
+
+        public async Task<PersonDomain> ProfileByPersonId(int personId, bool condensed = false, CancellationToken ct = default)
         {
             var entity = await Queryable(new ProfileByPersonSpecification(personId, condensed))
                 .FirstOrDefaultAsync();
@@ -46,7 +67,7 @@ namespace ChurchManager.Infrastructure.Persistence.Repositories
                 : null;
         }
 
-        public Task<UserDetails> UserDetailsByUserLoginId(string userLoginId)
+        public Task<UserDetails> UserDetailsByUserLoginId(string userLoginId, CancellationToken ct = default)
         {
             return Queryable()
                 .AsNoTracking()
@@ -151,6 +172,31 @@ namespace ChurchManager.Infrastructure.Persistence.Repositories
                 );
 
             return await queryable.ToListAsync(ct);
+        }
+
+
+        /// <summary>
+        /// Returns a queryable collection of <see cref="Person"/> entities 
+        /// using the options specified the <see cref="PersonQueryOptions"/> (default is to exclude deceased people and pending person records)
+        /// </summary>
+        private IQueryable<Person> Queryable(string includes, PersonQueryOptions personQueryOptions)
+        {
+            var qry = Queryable(includes);
+
+            personQueryOptions ??= new PersonQueryOptions();
+
+            if(personQueryOptions.IncludeDeceased == false)
+            {
+                qry = qry.Where(p => p.DeceasedStatus == null || 
+                                     (p.DeceasedStatus != null && p.DeceasedStatus.IsDeceased == false));
+            }
+
+            if(personQueryOptions.IncludePendingStatus ==  false)
+            {
+                qry = qry.Where(p => p.RecordStatus == RecordStatus.Active);
+            }
+
+            return qry;
         }
     }
 }

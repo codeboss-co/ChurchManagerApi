@@ -40,7 +40,7 @@ namespace ChurchManager.Application.Features.Profile.Queries.RetrieveProfile
 
         public async Task<ApiResponse> Handle(ProfileByUserLoginIdQuery query, CancellationToken ct)
         {
-            var domain = await _service.PersonByUserLoginId(query.UserLoginId);
+            var domain = await _service.PersonByUserLoginId(query.UserLoginId, ct);
 
             // Foundation School status
             if(domain is not null)
