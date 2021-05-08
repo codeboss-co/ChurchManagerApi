@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ChurchManager.Domain.Shared
+namespace ChurchManager.Application.Abstractions
 {
-    public class GroupViewModel
+    public record GroupViewModel
     {
         public int Id { get; set; }
         public GroupTypeViewModel GroupType { get; set; }

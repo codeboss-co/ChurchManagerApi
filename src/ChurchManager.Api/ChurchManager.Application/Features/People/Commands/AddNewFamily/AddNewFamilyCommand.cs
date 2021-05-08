@@ -55,9 +55,9 @@ namespace ChurchManager.Application.Features.People.Commands.AddNewFamily
                 ReceivedHolySpirit = x.Person.ReceivedHolySpirit,
                 BirthDate = new Domain.Features.People.BirthDate
                 {
-                    BirthDay = x.Person.BirthDate.Day,
-                    BirthMonth = x.Person.BirthDate.Month,
-                    BirthYear = x.Person.BirthDate.Year
+                    BirthDay = x.Person.BirthDate?.Day,
+                    BirthMonth = x.Person.BirthDate?.Month,
+                    BirthYear = x.Person.BirthDate?.Year
                 },
                 ChurchId = x.ChurchId,
                 Email = !x.Person.EmailAddress.IsNullOrEmpty() ? new Email {Address = x.Person.EmailAddress, IsActive = true} : null,

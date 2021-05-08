@@ -1,4 +1,4 @@
-﻿using ChurchManager.Domain.Shared;
+﻿using ChurchManager.Application.Abstractions;
 
 namespace ChurchManager.Core.Shared
 {

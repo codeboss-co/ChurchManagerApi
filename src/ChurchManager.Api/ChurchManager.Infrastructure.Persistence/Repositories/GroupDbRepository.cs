@@ -5,11 +5,10 @@ using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
+using ChurchManager.Application.Abstractions;
 using ChurchManager.Domain.Common;
 using ChurchManager.Domain.Features.Groups;
 using ChurchManager.Domain.Features.Groups.Repositories;
-using ChurchManager.Domain.Model;
-using ChurchManager.Domain.Shared;
 using ChurchManager.Domain.Shared.Parameters;
 using ChurchManager.Domain.Specifications;
 using ChurchManager.Infrastructure.Abstractions;
@@ -30,10 +29,9 @@ namespace ChurchManager.Infrastructure.Persistence.Repositories
         {
         }
 
-        public async Task<IEnumerable<GroupDomain>> AllPersonsGroups(int personId, RecordStatus recordStatus, CancellationToken ct = default)
+        public async Task<IEnumerable<Group>> AllPersonsGroups(int personId, RecordStatus recordStatus, CancellationToken ct = default)
         {
             var groups = await Queryable(new AllPersonsGroupsSpecification(personId, recordStatus))
-                .Select( x => new GroupDomain(x))
                 .ToListAsync(ct);
 
             return groups;

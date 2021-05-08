@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ChurchManager.Domain.Shared
+namespace ChurchManager.Application.Abstractions
 {
     public record GroupAttendanceViewModel
     {

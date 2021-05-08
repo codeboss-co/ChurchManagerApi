@@ -1,7 +1,10 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 using ChurchManager.Persistence.Shared;
+using Ical.Net;
+using Ical.Net.CalendarComponents;
 
 namespace ChurchManager.Domain.Features.Groups
 {
@@ -41,5 +44,53 @@ namespace ChurchManager.Domain.Features.Groups
         public DayOfWeek? WeeklyDayOfWeek { get; set; }
 
         public TimeSpan? WeeklyTimeOfDay { get; set; }
+
+        #region Methods
+
+        /// <summary>
+        /// Gets the Schedule's iCalender Event.
+        /// </summary>
+        /// <value>
+        /// A <see cref="CalendarEvent"/> representing the iCalendar event for this Schedule.
+        /// </value>
+        public virtual CalendarEvent GetICalEvent() => InetCalendarHelper.CreateCalendarEvent(iCalendarContent);
+
+        /// <summary>
+        /// Gets the type of the schedule.
+        /// </summary>
+        public virtual ScheduleType ScheduleType
+        {
+            get
+            {
+                if(WeeklyDayOfWeek.HasValue)
+                {
+                    return ScheduleType.Weekly;
+                }
+
+                var calEvent = GetICalEvent();
+
+                if(calEvent != null)
+                {
+                    if(calEvent.RecurrenceRules.Any())
+                    {
+                        var frequencyType = calEvent.RecurrenceRules[0].Frequency;
+
+                        switch(frequencyType)
+                        {
+                            case FrequencyType.Daily:
+                                return ScheduleType.Daily;
+                            case FrequencyType.Weekly:
+                                return ScheduleType.Weekly;
+                            case FrequencyType.Monthly:
+                                return ScheduleType.Monthly;
+                        }
+                    }
+                }
+
+                return ScheduleType.None;
+            }
+        }
+
+        #endregion
     }
 }

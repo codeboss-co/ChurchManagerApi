@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using ChurchManager.Application.Abstractions;
 using ChurchManager.Domain.Common;
 using ChurchManager.Domain.Features.People.Queries;
-using ChurchManager.Domain.Shared;
 using ChurchManager.Domain.Shared.Parameters;
 using ChurchManager.Infrastructure.Abstractions.Persistence;
 using Convey.CQRS.Queries;

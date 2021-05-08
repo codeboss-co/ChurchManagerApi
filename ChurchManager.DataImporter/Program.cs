@@ -528,14 +528,14 @@ namespace ChurchManager.DataImporter
             {
                 Definition = foundationSchoolStepDef,
                 CompletionDate = foundationSchool.CompletionDate,
-                Status = foundationSchool.IsComplete.HasValue && foundationSchool.IsComplete.Value ? "Completed" : "Not Completed",
+                Status = foundationSchool.IsComplete.HasValue && foundationSchool.IsComplete.Value ? "Completed" : "Not Started",
                 Person = person
             };
             var baptismClassStep = new DiscipleshipStep
             {
                 Definition = baptismClassStepDef,
                 StartDateTime = baptism.BaptismDate,
-                Status = baptism.IsBaptised.HasValue && baptism.IsBaptised.Value ? "Completed" : "Not Completed",
+                Status = baptism.IsBaptised.HasValue && baptism.IsBaptised.Value ? "Completed" : "Not Started",
                 Person = person
             };
 

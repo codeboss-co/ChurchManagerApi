@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
+using ChurchManager.Application.Abstractions;
 using ChurchManager.Domain.Features.Groups;
-using ChurchManager.Domain.Shared;
 
 namespace ChurchManager.Core.Shared
 {

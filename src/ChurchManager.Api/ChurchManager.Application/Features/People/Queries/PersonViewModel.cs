@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using ChurchManager.Application.Abstractions;
 using ChurchManager.Core.Shared;
 using ChurchManager.Domain.Features.People;
-using ChurchManager.Domain.Shared;
 
 namespace ChurchManager.Application.Features.People.Queries
 {

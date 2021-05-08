@@ -2,10 +2,10 @@
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
+using ChurchManager.Application.Abstractions;
 using ChurchManager.Application.Features.Profile.Services;
 using ChurchManager.Application.Wrappers;
 using ChurchManager.Domain.Features.Discipleship;
-using ChurchManager.Domain.Shared;
 using MediatR;
 
 namespace ChurchManager.Application.Features.Profile.Queries.RetrieveProfile

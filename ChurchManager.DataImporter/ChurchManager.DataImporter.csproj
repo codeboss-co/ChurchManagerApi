@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -12,7 +12,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\src\ChurchManager.Api\ChurchManager.Infrastructure.Persistence\ChurchManager.Infrastructure.Persistence.csproj" />
-    <ProjectReference Include="..\src\ChurchManager.Api\ChurchManager.Persistence.Models\ChurchManager.Persistence.Models.csproj" />
   </ItemGroup>
 
   <ItemGroup>

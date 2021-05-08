@@ -1,14 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
-using ConveyPaging = Convey.CQRS.Queries;
 using System.Threading;
 using System.Threading.Tasks;
+using ChurchManager.Application.Abstractions;
 using ChurchManager.Domain.Common;
 using ChurchManager.Domain.Features.People;
 using ChurchManager.Domain.Features.People.Queries;
 using ChurchManager.Domain.Features.People.Repositories;
-using ChurchManager.Domain.Shared;
 using ChurchManager.Domain.Shared.Parameters;
 using ChurchManager.Domain.Specifications;
 using ChurchManager.Infrastructure.Abstractions;
@@ -16,6 +15,7 @@ using ChurchManager.Infrastructure.Persistence.Contexts;
 using ChurchManager.Infrastructure.Persistence.Extensions;
 using CodeBoss.Extensions;
 using Microsoft.EntityFrameworkCore;
+using ConveyPaging = Convey.CQRS.Queries;
 
 namespace ChurchManager.Infrastructure.Persistence.Repositories
 {

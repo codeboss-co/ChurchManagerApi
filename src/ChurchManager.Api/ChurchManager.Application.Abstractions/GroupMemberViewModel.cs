@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ChurchManager.Domain.Shared
+namespace ChurchManager.Application.Abstractions
 {
     public record GroupMemberViewModel
     {

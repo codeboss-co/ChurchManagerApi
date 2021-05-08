@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace ChurchManager.Domain.Shared
+namespace ChurchManager.Application.Abstractions
 {
     public record AutocompleteViewModel(int Id, string Label) { }
 

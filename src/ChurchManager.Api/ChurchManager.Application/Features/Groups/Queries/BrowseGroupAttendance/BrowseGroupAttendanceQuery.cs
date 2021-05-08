@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using ChurchManager.Application.Abstractions;
 using ChurchManager.Application.Wrappers;
 using ChurchManager.Domain.Features.Groups.Repositories;
-using ChurchManager.Domain.Shared;
 using ChurchManager.Domain.Shared.Parameters;
 using MediatR;
 

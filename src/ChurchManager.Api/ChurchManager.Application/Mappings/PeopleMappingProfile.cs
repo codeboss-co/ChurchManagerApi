@@ -1,14 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Security;
 using AutoMapper;
-using AutoMapper.QueryableExtensions;
+using ChurchManager.Application.Abstractions;
 using ChurchManager.Application.Features.People.Queries;
-using ChurchManager.Core.Shared;
 using ChurchManager.Domain.Common;
 using ChurchManager.Domain.Features.People;
-using ChurchManager.Domain.Model;
-using ChurchManager.Domain.Shared;
 using Convey.CQRS.Queries;
 
 namespace ChurchManager.Application.Mappings
@@ -17,9 +13,13 @@ namespace ChurchManager.Application.Mappings
     {
         public PeopleMappingProfile()
         {
-            CreateMap<PersonDomain, PersonViewModel>();
+            CreateMap<Person, PersonViewModel>()
+                .ForMember(d => d.PersonId, opt => opt.MapFrom(src => src.Id))
+                ;
 
-            CreateMap<FamilyMemberDomain, FamilyMembersViewModel>();
+            CreateMap<Person, FamilyMembersViewModel>()
+                .ForMember(d => d.PersonId, opt => opt.MapFrom(src => src.Id))
+                ;
 
             CreateMap<Person, GroupMemberViewModel>()
                 .ForMember(d => d.FirstName,
@@ -48,7 +48,7 @@ namespace ChurchManager.Application.Mappings
                 .ForMember(d => d.CommunicationPreference, o => o.MapFrom(src => src.CommunicationPreference == null ? CommunicationType.None.Value : src.CommunicationPreference.Value ))
                 // Gets the persons family members excluding them
                 .ForMember(d => d.FamilyMembers, o => o.MapFrom(src 
-                    => src.Family == null ? null :
+                    => src.Family == null ? new List<FamilyMembersViewModel>(0) :
                         src.Family.FamilyMembers
                             .Where(x => x.Id != src.Id)
                             .Select(x => new FamilyMembersViewModel
