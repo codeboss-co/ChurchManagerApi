@@ -17,7 +17,6 @@ namespace ChurchManager.Domain.Features.People.Repositories
         Task<UserDetails> UserDetailsByUserLoginId(string queryUserLoginId, CancellationToken ct = default);
         Task<PeopleAutocompleteResults> AutocompleteAsync(string searchTerm, CancellationToken ct = default);
         Task<PagedResult<Person>> BrowsePeopleAsync(SearchTermQueryParameter query, CancellationToken ct = default);
-
         // Find People
         Task<Person> FindPersonAsync(string firstName, string lastName, string email, bool includeDeceased = false, CancellationToken ct = default);
         Task<Person> FindPersonAsync(PersonMatchQuery personMatchQuery, bool includeDeceased = false, CancellationToken ct = default);

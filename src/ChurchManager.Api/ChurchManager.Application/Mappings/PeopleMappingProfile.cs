@@ -1,5 +1,8 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Security;
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using ChurchManager.Application.Features.People.Queries;
 using ChurchManager.Core.Shared;
 using ChurchManager.Domain.Common;
@@ -30,12 +33,13 @@ namespace ChurchManager.Application.Mappings
                 .ForMember(d => d.PersonId,
                     opt => opt.MapFrom(src => src.Id))
                 ;
-
+            
 
             CreateMap<PagedResult<Person>, PagedResult<PersonViewModel>>()
                 .ForMember(d => d.Items,
                     opt => opt.MapFrom(src => src.Items));
 
+           
             CreateMap<Person, PersonViewModel>()
                 .ForMember(d => d.PersonId, opt => opt.MapFrom(src => src.Id))
                 .ForMember(d => d.ConnectionStatus, o => o.MapFrom(src => src.ConnectionStatus == null ? ConnectionStatus.Unknown.Value : src.ConnectionStatus.Value ))

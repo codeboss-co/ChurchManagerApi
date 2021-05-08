@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Dynamic.Core;
+using ConveyPaging = Convey.CQRS.Queries;
 using System.Threading;
 using System.Threading.Tasks;
 using ChurchManager.Domain.Common;
@@ -12,7 +14,7 @@ using ChurchManager.Domain.Specifications;
 using ChurchManager.Infrastructure.Abstractions;
 using ChurchManager.Infrastructure.Persistence.Contexts;
 using ChurchManager.Infrastructure.Persistence.Extensions;
-using Convey.CQRS.Queries;
+using CodeBoss.Extensions;
 using Microsoft.EntityFrameworkCore;
 
 namespace ChurchManager.Infrastructure.Persistence.Repositories
@@ -73,7 +75,7 @@ namespace ChurchManager.Infrastructure.Persistence.Repositories
                     Email = x.Email.Address,
                     PhotoUrl = x.PhotoUrl
                 })
-                .FirstOrDefaultAsync();
+                .FirstOrDefaultAsync(ct);
         }
 
         // https://www.npgsql.org/efcore/misc/collations-and-case-sensitivity.html?tabs=data-annotations#ilike
@@ -93,14 +95,23 @@ namespace ChurchManager.Infrastructure.Persistence.Repositories
             return new PeopleAutocompleteResults(autocomplete);
         }
 
-        public async Task<PagedResult<Person>> BrowsePeopleAsync(SearchTermQueryParameter query, CancellationToken ct = default)
+        public async Task<ConveyPaging.PagedResult<Person>> BrowsePeopleAsync(SearchTermQueryParameter query, CancellationToken ct = default)
         {
-            // Paging
-            var pagedResult = await Queryable()
-                .Specify(new BrowsePeopleSpecification(query.SearchTerm))
-                .PaginateAsync(query);
+            var queryable = Queryable()
+                .AsNoTracking()
+                .Specify(new BrowsePeopleSpecification(query.SearchTerm));
 
-            return PagedResult<Person>.From(pagedResult, pagedResult.Items);
+            if (!query.OrderBy.IsNullOrEmpty())
+            {
+                queryable = queryable.OrderBy($"{query.OrderBy} {query.SortOrder ?? "ascending"}");
+            }
+
+            // Paging
+            var pagedQuery = queryable
+                .Page(query.Page, query.Results)
+                .PageResult(query.Page, query.Results);
+
+            return await pagedQuery.Map(ct);
         }
 
         /// <summary>
@@ -109,9 +120,7 @@ namespace ChurchManager.Infrastructure.Persistence.Repositories
         /// <param name="firstName">The first name.</param>
         /// <param name="lastName">The last name.</param>
         /// <param name="email">The email.</param>
-        /// <param name="updatePrimaryEmail">if set to <c>true</c> the person's primary email will be updated to the search value if it was found as a person search key (alternate lookup address).</param>
         /// <param name="includeDeceased">if set to <c>true</c> include deceased individuals.</param>
-        /// <param name="includeBusinesses">if set to <c>true</c> include businesses records.</param>
         /// <returns></returns>
         public Task<Person> FindPersonAsync(string firstName, string lastName, string email, bool includeDeceased = false, CancellationToken ct = default)
         {

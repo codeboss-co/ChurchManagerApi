@@ -110,7 +110,7 @@ Authorization: Bearer {{accessToken}}
  	"searchTerm": "",    
     "page": 1,
     "results": 20,
-    "orderBy": "FullName.LastName",
+    "orderBy": "FullName.FirstName",
     "sortOrder": "DESC"
 }
 

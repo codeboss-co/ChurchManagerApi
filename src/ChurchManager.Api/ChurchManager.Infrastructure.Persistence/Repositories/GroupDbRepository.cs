@@ -5,8 +5,6 @@ using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
-using ChurchManager.Core.Shared;
-using ChurchManager.Domain;
 using ChurchManager.Domain.Common;
 using ChurchManager.Domain.Features.Groups;
 using ChurchManager.Domain.Features.Groups.Repositories;
@@ -17,6 +15,7 @@ using ChurchManager.Domain.Specifications;
 using ChurchManager.Infrastructure.Abstractions;
 using ChurchManager.Infrastructure.Persistence.Contexts;
 using ChurchManager.Infrastructure.Persistence.Extensions;
+using CodeBoss.Extensions;
 using LinqKit;
 using Microsoft.EntityFrameworkCore;
 using ConveyPaging = Convey.CQRS.Queries;
@@ -40,23 +39,23 @@ namespace ChurchManager.Infrastructure.Persistence.Repositories
             return groups;
         }
 
-        public async Task<ConveyPaging.PagedResult<GroupDomain>> BrowsePersonsGroups(int personId, string search, QueryParameter query, CancellationToken ct = default)
+        public async Task<ConveyPaging.PagedResult<Group>> BrowsePersonsGroups(int personId, string search, QueryParameter query, CancellationToken ct = default)
         {
+            var queryable = Queryable()
+                .AsNoTracking()
+                .Specify(new BrowsePersonsGroupsSpecification(personId, search));
+
+            if(!query.OrderBy.IsNullOrEmpty())
+            {
+                queryable = queryable.OrderBy($"{query.OrderBy} {query.SortOrder ?? "ascending"}");
+            }
+
             // Paging
-            var pagedResult = await Queryable()
-                .Specify(new BrowsePersonsGroupsSpecification(personId, search))
-                //.FieldLimit(query)
-                .PaginateAsync(query);
-            
-            // Shaping
-            //var shapedData =  await _dataShaper.ShapeDataAsync(pagedResult.Items, query.Fields);
-            
-            return ConveyPaging.PagedResult<GroupDomain>.Create(
-                pagedResult.Items.Select(x => new GroupDomain(x)),
-                pagedResult.CurrentPage,
-                pagedResult.ResultsPerPage, 
-                pagedResult.TotalPages, 
-                pagedResult.TotalResults);
+            var pagedQuery = queryable
+                .Page(query.Page, query.Results)
+                .PageResult(query.Page, query.Results);
+
+            return await pagedQuery.Map(ct);
         }
 
         public async Task<IEnumerable<GroupMemberViewModel>> GroupMembersAsync(int groupId, CancellationToken ct)

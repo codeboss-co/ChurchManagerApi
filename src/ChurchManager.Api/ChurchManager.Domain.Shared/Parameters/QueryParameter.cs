@@ -7,7 +7,7 @@ namespace ChurchManager.Domain.Shared.Parameters
     {
         public virtual string OrderBy { get; set; }
         public virtual string Fields { get; set; }
-        public virtual string SortOrder { get; set; }
+        public virtual string SortOrder { get; set; } = "ascending";
     }
 
     public record SearchTermQueryParameter: QueryParameter

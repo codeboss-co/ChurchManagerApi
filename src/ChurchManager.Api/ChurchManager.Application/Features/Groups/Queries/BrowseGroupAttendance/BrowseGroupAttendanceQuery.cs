@@ -39,7 +39,9 @@ namespace ChurchManager.Application.Features.Groups.Queries.BrowseGroupAttendanc
                 query.WithFeedBack,
                 query.From, query.To, ct);
 
-            return new PagedResponse<GroupAttendanceViewModel>(results);
+            // TODO: Fix pagination using new dynamic
+            //return new PagedResponse<GroupAttendanceViewModel>(results);
+            return new PagedResponse<GroupAttendanceViewModel>(null);
         }
     }
 
