@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using ChurchManager.Core.Shared;
-using ChurchManager.Persistence.Models.Discipleship;
+using ChurchManager.Application.Abstractions;
+using ChurchManager.Domain.Features.Discipleship;
 
 namespace ChurchManager.Application.Mappings
 {
@@ -9,7 +9,6 @@ namespace ChurchManager.Application.Mappings
         public DiscipleshipMappingProfile()
         {
             CreateMap<DiscipleshipProgram, GeneralViewModel>().ReverseMap();
-            CreateMap<DiscipleshipType, GeneralViewModel>().ReverseMap();
             CreateMap<DiscipleshipStepDefinition, GeneralViewModel>().ReverseMap();
         }
     }

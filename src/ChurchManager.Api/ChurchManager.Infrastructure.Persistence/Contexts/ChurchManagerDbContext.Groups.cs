@@ -1,4 +1,4 @@
-﻿using ChurchManager.Persistence.Models.Groups;
+﻿using ChurchManager.Domain.Features.Groups;
 using Microsoft.EntityFrameworkCore;
 
 namespace ChurchManager.Infrastructure.Persistence.Contexts
@@ -10,6 +10,6 @@ namespace ChurchManager.Infrastructure.Persistence.Contexts
         public DbSet<GroupAttendance> GroupAttendance { get; set; }
         public DbSet<GroupMember> GroupMember { get; set; }
         public DbSet<GroupMemberAttendance> GroupMemberAttendance { get; set; }
-        public DbSet<GroupMemberRole> GroupMemberRole { get; set; }
+        public DbSet<GroupTypeRole> GroupTypeRole { get; set; }
     }
 }

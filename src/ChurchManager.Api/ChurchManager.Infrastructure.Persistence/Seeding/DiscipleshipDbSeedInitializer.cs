@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using ChurchManager.Domain.Features.Discipleship;
 using ChurchManager.Infrastructure.Persistence.Contexts;
-using ChurchManager.Persistence.Models.Discipleship;
 using CodeBoss.AspNetCore.Startup;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -22,25 +22,32 @@ namespace ChurchManager.Infrastructure.Persistence.Seeding
             using var scope = _scopeFactory.CreateScope();
             var dbContext = scope.ServiceProvider.GetRequiredService<ChurchManagerDbContext>();
 
-            if (!await dbContext.DiscipleshipType.AnyAsync())
+            if (!await dbContext.DiscipleshipProgram.AnyAsync())
             {
-                var newConvertsDiscipleshipType = new DiscipleshipType { Name = "New Converts" };
                 var foundationSchoolStepDefinition = new DiscipleshipStepDefinition
                 {
                     Name = "Foundation School",
                     Description = "Basics of our Faith and Doctrine",
-                    DiscipleshipType = newConvertsDiscipleshipType
+                    IconCssClass = "heroicons-solid:academic-cap",
+                    Order = 0
                 };
                 var baptismClassStepDefinition = new DiscipleshipStepDefinition
                 {
                     Name = "Baptism Class",
                     Description = "Understanding Baptism",
-                    DiscipleshipType = newConvertsDiscipleshipType
+                    AllowMultiple = false,
+                    Order = 1
                 };
 
+                var newConvertsDiscipleshipProgram = new DiscipleshipProgram
+                {
+                    Name = "New Christians Program",
+                    Description = "Discipleship for New Converts",
+                    Category = "New Christians",
+                    StepDefinitions = new List<DiscipleshipStepDefinition>(1) { foundationSchoolStepDefinition, baptismClassStepDefinition }
+                };
 
-                await dbContext.AddAsync(foundationSchoolStepDefinition);
-                await dbContext.AddAsync(baptismClassStepDefinition);
+                await dbContext.AddAsync(newConvertsDiscipleshipProgram);
 
                 await AddFoundationSchoolStepsToPeopleAsync(dbContext, foundationSchoolStepDefinition, baptismClassStepDefinition);
 
@@ -65,22 +72,13 @@ namespace ChurchManager.Infrastructure.Persistence.Seeding
             var baptismClassStep = new DiscipleshipStep
             {
                 Definition = baptismClass,
-                CommencementDate = DateTime.Today.AddYears(-15),
+                StartDateTime = DateTime.Today.AddYears(-15),
                 Status = "In Progress",
                 Person = dillan
             };
-
-            var newConvertsDiscipleshipProgram = new DiscipleshipProgram
-            {
-                Name = "New Converts Program",
-                Description = "Discipleship for New Converts",
-                DiscipleshipSteps = new List<DiscipleshipStep>(1) { personFoundationSchoolStep, baptismClassStep }
-            };
-
-            dillan.DiscipleshipPrograms.Add(newConvertsDiscipleshipProgram);
-
+            
             await dbContext.AddAsync(personFoundationSchoolStep);
-            await dbContext.AddAsync(newConvertsDiscipleshipProgram);
+            await dbContext.AddAsync(baptismClassStep);
         }
     }
 }

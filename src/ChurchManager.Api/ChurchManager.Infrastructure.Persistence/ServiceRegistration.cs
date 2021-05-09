@@ -1,5 +1,8 @@
 ﻿using ChurchManager.Domain.Features.Churches.Repositories;
+using ChurchManager.Domain.Features.Discipleship;
+using ChurchManager.Domain.Features.Groups;
 using ChurchManager.Domain.Features.Groups.Repositories;
+using ChurchManager.Domain.Features.People;
 using ChurchManager.Domain.Features.People.Repositories;
 using ChurchManager.Infrastructure.Abstractions;
 using ChurchManager.Infrastructure.Abstractions.Persistence;
@@ -9,8 +12,6 @@ using ChurchManager.Infrastructure.Persistence.Seeding;
 using ChurchManager.Infrastructure.Persistence.Seeding.Development;
 using ChurchManager.Infrastructure.Persistence.Seeding.Production;
 using ChurchManager.Infrastructure.Shared;
-using ChurchManager.Persistence.Models.Groups;
-using ChurchManager.Persistence.Models.People;
 using ChurchManager.Persistence.Shared;
 using CodeBoss.AspNetCore.Startup;
 using Convey;
@@ -58,11 +59,14 @@ namespace ChurchManager.Infrastructure.Persistence
                 // Development / Test -  Seeding
                 else
                 {
-                    services.AddInitializer<ChurchesFakeDbSeedInitializer>();
+                    services.AddInitializer<ChurchesDbSeedInitializer>();
+                    services.AddInitializer<PeopleDbSeedInitializer>();
+                    services.AddInitializer<GroupsDbSeedInitializer>();
+                    /*services.AddInitializer<ChurchesFakeDbSeedInitializer>();
                     services.AddInitializer<PeopleFakeDbSeedInitializer>();
                     services.AddInitializer<GroupsFakeDbSeedInitializer>();
                     services.AddInitializer<ChurchAttendanceFakeDbInitializer>();
-                    services.AddInitializer<GroupAttendanceFakeDbSeedInitializer>();
+                    services.AddInitializer<GroupAttendanceFakeDbSeedInitializer>();*/
                 }
             }
 
@@ -73,6 +77,9 @@ namespace ChurchManager.Infrastructure.Persistence
             services.AddScoped<IPersonDbRepository, PersonDbRepository>();
             services.AddScoped<IGroupAttendanceDbRepository, GroupAttendanceDbRepository>();
             services.AddScoped<IChurchAttendanceDbRepository, ChurchAttendanceDbRepository>();
+            services.AddScoped<IDiscipleshipStepDefinitionDbRepository, DiscipleshipDbRepository>();
+            services.AddScoped<IGroupMemberDbRepository, GroupMemberDbRepository>();
+            services.AddScoped<IGroupTypeRoleDbRepository, GroupTypeRoleDbRepository>();
 
             #endregion
 

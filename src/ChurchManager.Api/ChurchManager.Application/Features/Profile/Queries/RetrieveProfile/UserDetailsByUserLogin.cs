@@ -1,10 +1,13 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
+using ChurchManager.Application.Common;
 using ChurchManager.Application.Wrappers;
 using ChurchManager.Core.Shared;
 using ChurchManager.Domain;
+using ChurchManager.Domain.Common;
 using ChurchManager.Domain.Features.People.Repositories;
+using ChurchManager.Domain.Shared;
 using MediatR;
 
 namespace ChurchManager.Application.Features.Profile.Queries.RetrieveProfile

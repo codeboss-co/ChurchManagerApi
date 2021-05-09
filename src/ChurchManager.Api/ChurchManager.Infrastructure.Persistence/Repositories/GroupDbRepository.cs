@@ -2,18 +2,19 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
+using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
-using ChurchManager.Core.Shared;
-using ChurchManager.Core.Shared.Parameters;
-using ChurchManager.Domain;
+using ChurchManager.Application.Abstractions;
+using ChurchManager.Domain.Common;
+using ChurchManager.Domain.Features.Groups;
 using ChurchManager.Domain.Features.Groups.Repositories;
-using ChurchManager.Domain.Model;
+using ChurchManager.Domain.Shared.Parameters;
+using ChurchManager.Domain.Specifications;
 using ChurchManager.Infrastructure.Abstractions;
 using ChurchManager.Infrastructure.Persistence.Contexts;
 using ChurchManager.Infrastructure.Persistence.Extensions;
-using ChurchManager.Infrastructure.Persistence.Specifications;
-using ChurchManager.Persistence.Models.Groups;
+using CodeBoss.Extensions;
 using LinqKit;
 using Microsoft.EntityFrameworkCore;
 using ConveyPaging = Convey.CQRS.Queries;
@@ -24,39 +25,35 @@ namespace ChurchManager.Infrastructure.Persistence.Repositories
     {
         private readonly IDataShapeHelper<Group> _dataShaper;
     
-        public GroupDbRepository(
-            ChurchManagerDbContext dbContext,
-            IDataShapeHelper<Group> dataShaper) : base(dbContext)
+        public GroupDbRepository(ChurchManagerDbContext dbContext) : base(dbContext)
         {
-            _dataShaper = dataShaper;
         }
 
-        public async Task<IEnumerable<GroupDomain>> AllPersonsGroups(int personId, RecordStatus recordStatus, CancellationToken ct = default)
+        public async Task<IEnumerable<Group>> AllPersonsGroups(int personId, RecordStatus recordStatus, CancellationToken ct = default)
         {
             var groups = await Queryable(new AllPersonsGroupsSpecification(personId, recordStatus))
-                .Select( x => new GroupDomain(x))
                 .ToListAsync(ct);
 
             return groups;
         }
 
-        public async Task<ConveyPaging.PagedResult<GroupDomain>> BrowsePersonsGroups(int personId, string search, QueryParameter query, CancellationToken ct = default)
+        public async Task<ConveyPaging.PagedResult<Group>> BrowsePersonsGroups(int personId, string search, QueryParameter query, CancellationToken ct = default)
         {
+            var queryable = Queryable()
+                .AsNoTracking()
+                .Specify(new BrowsePersonsGroupsSpecification(personId, search));
+
+            if(!query.OrderBy.IsNullOrEmpty())
+            {
+                queryable = queryable.OrderBy($"{query.OrderBy} {query.SortOrder ?? "ascending"}");
+            }
+
             // Paging
-            var pagedResult = await Queryable()
-                .Specify(new BrowsePersonsGroupsSpecification(personId, search))
-                //.FieldLimit(query)
-                .PaginateAsync(query);
-            
-            // Shaping
-            //var shapedData =  await _dataShaper.ShapeDataAsync(pagedResult.Items, query.Fields);
-            
-            return ConveyPaging.PagedResult<GroupDomain>.Create(
-                pagedResult.Items.Select(x => new GroupDomain(x)),
-                pagedResult.CurrentPage,
-                pagedResult.ResultsPerPage, 
-                pagedResult.TotalPages, 
-                pagedResult.TotalResults);
+            var pagedQuery = queryable
+                .Page(query.Page, query.Results)
+                .PageResult(query.Page, query.Results);
+
+            return await pagedQuery.Map(ct);
         }
 
         public async Task<IEnumerable<GroupMemberViewModel>> GroupMembersAsync(int groupId, CancellationToken ct)
@@ -66,31 +63,88 @@ namespace ChurchManager.Infrastructure.Persistence.Repositories
                 .Select(x => new GroupMemberViewModel
                 {
                     PersonId = x.PersonId,
+                    GroupId = x.GroupId,
                     GroupMemberId = x.Id,
                     FirstName = x.Person.FullName.FirstName,
                     MiddleName = x.Person.FullName.MiddleName,
                     LastName = x.Person.FullName.LastName,
                     Gender = x.Person.Gender,
-                    PhotoUrl = x.Person.PhotoUrl
+                    PhotoUrl = x.Person.PhotoUrl,
+                    GroupMemberRoleId = x.GroupRoleId,
+                    GroupMemberRole = x.GroupRole.Name,
+                    IsLeader = x.GroupRole.IsLeader,
+                    FirstVisitDate = x.FirstVisitDate
                 })
                 .ToArrayAsync(ct);
 
             return groups;
         }
 
-        public async Task<IEnumerable<GroupMemberRole>> GroupRolesForGroupAsync(int groupId, CancellationToken ct)
+        public async Task<IEnumerable<GroupTypeRole>> GroupRolesForGroupAsync(int groupId, CancellationToken ct)
         {
             return await Queryable(new GroupRolesForGroupSpecification(groupId))
+                .AsNoTracking()
                 .SelectMany(x => x.Members)
-                .Select(x => x.GroupMemberRole)
+                .Select(x => x.GroupRole)
                 .Distinct()
                 .ToListAsync(ct);
+        }
+
+        public async Task<IEnumerable<GroupViewModel>> GroupsWithChildrenAsync(int maxDepth, CancellationToken ct = default)
+        {
+            var query = Queryable()
+                .AsNoTracking()
+                .Include(x => x.GroupType)
+                .Where(x => x.ParentGroupId == null) // Exclude children\
+                .Select(GroupProjection(maxDepth))
+                ;
+
+            return await query.ToListAsync(ct);
+        }
+
+        /// <summary>
+        /// https://michaelceber.medium.com/implementing-a-recursive-projection-query-in-c-and-entity-framework-core-240945122be6
+        /// </summary>
+        private Expression<Func<Group, GroupViewModel>> GroupProjection(int maxDepth, int currentDepth = 0)
+        {
+            currentDepth++;
+
+            Expression<Func<Group, GroupViewModel>> result = group => new GroupViewModel
+            {
+                Id = group.Id,
+                Name = group.Name,
+                Description = group.Description,
+                StartDate = group.StartDate,
+                ChurchId = group.ChurchId,
+                ParentGroupId = group.ParentGroupId,
+                ParentGroupName = group.ParentGroup.Name,
+                IsOnline = group.IsOnline,
+                GroupType = new GroupTypeViewModel
+                {
+                    Id = group.GroupType.Id,
+                    Name = group.GroupType.Name,
+                    Description = group.GroupType.Description,
+                    GroupMemberTerm = group.GroupType.GroupMemberTerm,
+                    GroupTerm = group.GroupType.GroupTerm,
+                    TakesAttendance = group.GroupType.TakesAttendance,
+                    IconCssClass = group.GroupType.IconCssClass,
+                },
+                CreatedDate = group.CreatedDate,
+                Groups = currentDepth == maxDepth
+                    ? new List<GroupViewModel>(0) // Reached maximum depth so stop
+                    : group.Groups.AsQueryable()
+                        .Include(x => x.GroupType)
+                        .Select(GroupProjection(maxDepth, currentDepth))
+                        .ToList()
+            };
+
+            return result;
         }
 
         private IQueryable<Group> FilterByColumn(IQueryable<Group> queryable, string search)
         {
             queryable.Include("GroupType");
-            queryable.Include("Members.GroupMemberRole");
+            queryable.Include("Members.GroupRole");
             queryable.Include("Members.Person");
 
             if (string.IsNullOrEmpty(search))

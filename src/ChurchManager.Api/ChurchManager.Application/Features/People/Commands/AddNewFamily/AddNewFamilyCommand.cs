@@ -2,8 +2,8 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using ChurchManager.Domain.Features.People;
 using ChurchManager.Domain.Features.People.Repositories;
-using ChurchManager.Persistence.Models.People;
 using CodeBoss.Extensions;
 using MediatR;
 
@@ -30,7 +30,7 @@ namespace ChurchManager.Application.Features.People.Commands.AddNewFamily
             var family = new Family
             {
                 Name = $"{command.FamilyName} Family",
-                Address = new Persistence.Models.People.Address
+                Address = new Domain.Features.People.Address
                 {
                     Street = command.Address.Street,
                     City = command.Address.City,
@@ -53,11 +53,11 @@ namespace ChurchManager.Application.Features.People.Commands.AddNewFamily
                 Gender = x.Person.Gender,
                 AgeClassification = x.Person.AgeClassification,
                 ReceivedHolySpirit = x.Person.ReceivedHolySpirit,
-                BirthDate = new Persistence.Models.People.BirthDate
+                BirthDate = new Domain.Features.People.BirthDate
                 {
-                    BirthDay = x.Person.BirthDate.Day,
-                    BirthMonth = x.Person.BirthDate.Month,
-                    BirthYear = x.Person.BirthDate.Year
+                    BirthDay = x.Person.BirthDate?.Day,
+                    BirthMonth = x.Person.BirthDate?.Month,
+                    BirthYear = x.Person.BirthDate?.Year
                 },
                 ChurchId = x.ChurchId,
                 Email = !x.Person.EmailAddress.IsNullOrEmpty() ? new Email {Address = x.Person.EmailAddress, IsActive = true} : null,

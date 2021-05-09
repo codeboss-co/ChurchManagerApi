@@ -5,12 +5,12 @@ using System.Threading;
 using System.Threading.Tasks;
 using ChurchManager.Application.Features.Groups.Commands.GroupAttendanceRecord;
 using ChurchManager.Domain;
+using ChurchManager.Domain.Common;
+using ChurchManager.Domain.Features.Groups;
 using ChurchManager.Domain.Features.Groups.Repositories;
 using ChurchManager.Domain.Features.People;
-using ChurchManager.Persistence.Models.Groups;
-using ChurchManager.Persistence.Models.People;
 using Microsoft.EntityFrameworkCore;
-using GroupMemberAttendance = ChurchManager.Persistence.Models.Groups.GroupMemberAttendance;
+using GroupMemberAttendance = ChurchManager.Domain.Features.Groups.GroupMemberAttendance;
 
 namespace ChurchManager.Application.Features.Groups.Services
 {
@@ -78,7 +78,7 @@ namespace ChurchManager.Application.Features.Groups.Services
                             GroupMember = new GroupMember
                             {
                                 GroupId = command.GroupId,
-                                GroupMemberRole = groupMemberRoles.First(x => !x.IsLeader),
+                                GroupRole = groupMemberRoles.First(x => !x.IsLeader),
                                 Person = new Person
                                 {
                                     FullName = new FullName { FirstName = x.FirstName, LastName = x.LastName},

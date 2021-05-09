@@ -1,9 +1,11 @@
-﻿using System.Threading;
+﻿using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
-using ChurchManager.Application.Features.People.Queries;
+using ChurchManager.Application.Abstractions;
+using ChurchManager.Application.Features.Profile.Services;
 using ChurchManager.Application.Wrappers;
-using ChurchManager.Domain.Features.People.Repositories;
+using ChurchManager.Domain.Features.Discipleship;
 using MediatR;
 
 namespace ChurchManager.Application.Features.Profile.Queries.RetrieveProfile
@@ -19,22 +21,37 @@ namespace ChurchManager.Application.Features.Profile.Queries.RetrieveProfile
 
     public class ProfileByPerson : IRequestHandler<ProfileByPersonIdQuery, ApiResponse>
     {
-        private readonly IPersonDbRepository _personDbRepository;
-        private readonly IMapper _mapper;
+        private readonly IProfileService _service;
+        private readonly IDiscipleshipStepDefinitionDbRepository _stepsDbRepository;
 
-        public ProfileByPerson(IPersonDbRepository personDbRepository, IMapper mapper)
+        public ProfileByPerson(
+            IProfileService service,
+            IDiscipleshipStepDefinitionDbRepository stepsDbRepository,
+            IMapper mapper)
         {
-            _personDbRepository = personDbRepository;
-            _mapper = mapper;
+            _service = service;
+            _stepsDbRepository = stepsDbRepository;
         }
 
-        public async Task<ApiResponse> Handle(ProfileByPersonIdQuery query, CancellationToken cancellationToken)
+        public async Task<ApiResponse> Handle(ProfileByPersonIdQuery query, CancellationToken ct)
         {
-            var domain = await _personDbRepository.ProfileByPersonId(query.PersonId, query.Condensed);
-            
-            return domain is null 
+            var vm = await _service.ProfileByPersonId(query.PersonId, query.Condensed, ct);
+
+            // Foundation School status
+            if(vm is not null)
+            {
+                var foundationSchoolStep = await _stepsDbRepository.DiscipleshipStepInfoForPersonAsync(vm.PersonId, 1, ct);
+
+                vm.FoundationSchool = foundationSchoolStep.FirstOrDefault() ?? new DiscipleshipStepViewModel
+                {
+                    IsComplete = false,
+                    Status = "Not Started"
+                };
+            }
+
+            return vm is null 
                 ? new ApiResponse("No matching user login Id found")
-                : new ApiResponse(_mapper.Map<PersonViewModel>(domain));
+                : new ApiResponse(vm);
         }
     }
 }

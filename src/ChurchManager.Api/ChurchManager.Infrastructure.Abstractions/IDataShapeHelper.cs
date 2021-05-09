@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using ChurchManager.Core.Shared;
+using ChurchManager.Domain.Shared;
 
 namespace ChurchManager.Infrastructure.Abstractions
 {

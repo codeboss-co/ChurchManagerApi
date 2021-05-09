@@ -1,11 +1,17 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
+using ChurchManager.Application;
+using ChurchManager.Application.Common;
 using ChurchManager.Application.Features.Groups.Commands.GroupAttendanceRecord;
 using ChurchManager.Application.Features.Groups.Queries.BrowsePersonsGroups;
 using ChurchManager.Application.Features.Groups.Queries.GroupMembers;
+using ChurchManager.Application.Features.Groups.Queries.GroupRoles;
 using ChurchManager.Application.Features.Groups.Queries.GroupsForChurch;
 using ChurchManager.Application.Features.Groups.Queries.GroupsForPerson;
+using ChurchManager.Application.Features.Groups.Queries.GroupsWithChildren;
 using ChurchManager.Domain;
+using ChurchManager.Domain.Common;
+using ChurchManager.Domain.Shared;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -57,12 +63,24 @@ namespace ChurchManager.Api.Controllers.v1
             return Ok(await Mediator.Send(new GroupsForChurchSelectItemQuery(churchId), token));
         }
 
+        [HttpGet("{groupTypeId}/grouproles")]
+        public async Task<IActionResult> GetGroupRolesForGroupType(int groupTypeId, CancellationToken token)
+        {
+            return Ok(await Mediator.Send(new GroupRolesQuery(groupTypeId), token));
+        }
+
         [HttpPost("{groupId}/attendance")]
         public async Task<IActionResult> PostGroupAttendanceRecord([FromBody] GroupAttendanceRecordCommand command,
             CancellationToken token)
         {
             await Mediator.Send(command, token);
             return Accepted();
+        }
+
+        [HttpGet("tree")]
+        public async Task<IActionResult> GetGroupsWithChildrenTree(CancellationToken token)
+        {
+            return Ok(await Mediator.Send(new GroupsWithChildrenQuery(), token));
         }
     }
 }

@@ -13,10 +13,19 @@
 1. In `Package manager console` change to `ChurchManager.Infrastructure.Persistence` project
 
 2.
-	- `Add-Migration InitialDbMigration -Context ChurchManagerDbContext -o Migrations` 
+	- `Add-Migration InitialDbMigration -Context ChurchManagerDbContext -o Migrations -StartupProject ChurchManager.Api` 
 
 3. 
-	- `Update-Database -Context ChurchManagerDbContext`
+	- `Update-Database -Context ChurchManagerDbContext -StartupProject ChurchManager.Api`
+
+#### Troubleshooting
+
+`Cannot delete because connections are not closed`
+	
+	- in the docker container execute:   `psql -U admin`
+	- `SELECT * FROM pg_stat_activity WHERE pg_stat_activity.datname='churchmanager_db';`  shows open connections
+	- `SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE datname = 'churchmanager_db';`   close open connections
+	- `DROP DATABASE churchmanager_db;`
 
 ## Environment settings
 
@@ -52,3 +61,5 @@ docker tag church-manager-ui:latest 977844596384.dkr.ecr.us-east-1.amazonaws.com
 4. Push the image
 
 `docker push 977844596384.dkr.ecr.us-east-1.amazonaws.com/frontend-angular:local`
+
+
