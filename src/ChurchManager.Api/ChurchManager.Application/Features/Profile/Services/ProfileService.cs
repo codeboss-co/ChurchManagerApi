@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using ChurchManager.Application.Features.People.Queries;
 using ChurchManager.Domain.Features.People.Repositories;
+using ChurchManager.Domain.Features.People.Specifications;
 
 namespace ChurchManager.Application.Features.Profile.Services
 {
@@ -15,10 +16,10 @@ namespace ChurchManager.Application.Features.Profile.Services
 
     public class ProfileService : IProfileService
     {
-        private readonly IPersonDbRepository _dbRepository;
+        private readonly IPersonDbRepository2 _dbRepository;
         private readonly IMapper _mapper;
 
-        public ProfileService(IPersonDbRepository dbRepository, IMapper mapper)
+        public ProfileService(IPersonDbRepository2 dbRepository, IMapper mapper)
         {
             _dbRepository = dbRepository;
             _mapper = mapper;
@@ -26,7 +27,9 @@ namespace ChurchManager.Application.Features.Profile.Services
 
         public async Task<PersonViewModel> ProfileByUserLoginId(string userLoginId, CancellationToken ct)
         {
-            var entity = await _dbRepository.ProfileByUserLoginId(userLoginId, ct);
+            var spec = new ProfileByUserLoginSpecification(userLoginId);
+
+            var entity = await _dbRepository.GetBySpecAsync(spec, ct);
 
             var vm = _mapper.Map<PersonViewModel>(entity);
 
@@ -35,7 +38,9 @@ namespace ChurchManager.Application.Features.Profile.Services
 
         public async Task<PersonViewModel> ProfileByPersonId(int personId, bool condensed, CancellationToken ct)
         {
-            var entity = await _dbRepository.ProfileByPersonId(personId, condensed, ct);
+            var spec = new ProfileByPersonSpecification(personId, condensed);
+
+            var entity = await _dbRepository.GetBySpecAsync(spec, ct);
 
             var vm = _mapper.Map<PersonViewModel>(entity);
 

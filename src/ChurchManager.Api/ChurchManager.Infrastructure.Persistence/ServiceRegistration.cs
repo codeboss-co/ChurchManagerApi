@@ -39,6 +39,7 @@ namespace ChurchManager.Infrastructure.Persistence
                 .AddDbContextCheck<ChurchManagerDbContext>();
 
             services.AddScoped<IChurchManagerDbContext>(s => s.GetService<ChurchManagerDbContext>());
+            services.AddScoped<DbContext>(s => s.GetService<ChurchManagerDbContext>());
 
             // Migrate database
             services.AddHostedService<DbMigrationHostedService<ChurchManagerDbContext>>();
@@ -80,6 +81,9 @@ namespace ChurchManager.Infrastructure.Persistence
             services.AddScoped<IDiscipleshipStepDefinitionDbRepository, DiscipleshipDbRepository>();
             services.AddScoped<IGroupMemberDbRepository, GroupMemberDbRepository>();
             services.AddScoped<IGroupTypeRoleDbRepository, GroupTypeRoleDbRepository>();
+
+            services.AddScoped(typeof(IGenericDbRepository<>), typeof(GenericRepositoryBase<>));
+            services.AddScoped<IPersonDbRepository2, PersonDbRepository2>();
 
             #endregion
 

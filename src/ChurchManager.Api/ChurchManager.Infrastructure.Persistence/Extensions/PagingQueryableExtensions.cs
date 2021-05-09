@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using System.Linq.Dynamic.Core;
-using Dynamic = System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
@@ -9,6 +8,7 @@ using Ardalis.GuardClauses;
 using Convey.CQRS.Queries;
 using Microsoft.EntityFrameworkCore;
 using ConveyPaging = Convey.CQRS.Queries;
+using Dynamic = System.Linq.Dynamic.Core;
 
 namespace ChurchManager.Infrastructure.Persistence.Extensions
 {
@@ -86,8 +86,28 @@ namespace ChurchManager.Infrastructure.Persistence.Extensions
 
             return ConveyPaging.PagedResult<T>.Create(data, page, resultsPerPage, totalPages, totalResults);
         }
-        
-        private static Expression<Func<T, object>> ToLambda<T>(string propertyName)
+
+
+        /// <summary>
+        /// Orders the by.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="source">The source.</param>
+        /// <param name="propertyName">Name of the property.</param>
+        /// https://entityframework.net/knowledge-base/60870285/how-to-conditionally-the-column-in-linq-orderbydescending-for-orderby-in-csharp-
+        /// <returns></returns>
+        public static IQueryable<T> OrderBy<T>(this IQueryable<T> source, string propertyName)
+        {
+            return source.OrderBy(ToLambda<T>(propertyName));
+        }
+
+        /// <summary>
+        /// Converts to lambda.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="propertyName">Name of the property.</param>
+        /// <returns></returns>
+        public static Expression<Func<T, object>> ToLambda<T>(this string propertyName)
         {
             var parameter = Expression.Parameter(typeof(T));
             var property = Expression.Property(parameter, propertyName);
