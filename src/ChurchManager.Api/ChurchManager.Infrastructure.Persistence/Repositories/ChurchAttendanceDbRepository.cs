@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using ChurchManager.Core.Shared;
+using ChurchManager.Application.Abstractions;
+using ChurchManager.Domain.Features.Churches;
 using ChurchManager.Domain.Features.Churches.Repositories;
 using ChurchManager.Infrastructure.Abstractions.Persistence;
-using ChurchManager.Persistence.Models.Churches;
 using Microsoft.EntityFrameworkCore;
 
 namespace ChurchManager.Infrastructure.Persistence.Repositories

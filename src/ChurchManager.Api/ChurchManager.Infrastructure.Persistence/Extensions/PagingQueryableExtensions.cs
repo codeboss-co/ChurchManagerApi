@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Linq.Dynamic.Core;
+using Dynamic = System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
@@ -93,6 +94,21 @@ namespace ChurchManager.Infrastructure.Persistence.Extensions
             var propAsObject = Expression.Convert(property, typeof(object));
 
             return Expression.Lambda<Func<T, object>>(propAsObject, parameter);
+        }
+
+        /// <summary>
+        /// Wraps Dynamic code  PagedResults into Convey Paged result
+        /// </summary>
+        public static async Task<ConveyPaging.PagedResult<T>> Map<T>(this Dynamic.PagedResult<T> pagedQuery, CancellationToken ct = default)
+        {
+            var convey = ConveyPaging.PagedResult<T>.Create(
+                await pagedQuery.Queryable.ToListAsync(ct),
+                pagedQuery.CurrentPage,
+                pagedQuery.PageSize,
+                pagedQuery.PageCount,
+                pagedQuery.RowCount);
+
+            return convey;
         }
     }
 }

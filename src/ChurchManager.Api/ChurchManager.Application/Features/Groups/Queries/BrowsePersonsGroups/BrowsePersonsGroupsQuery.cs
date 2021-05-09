@@ -1,11 +1,11 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
+using ChurchManager.Application.Common;
 using ChurchManager.Application.Features.Groups.Queries.GroupsForPerson;
 using ChurchManager.Application.Wrappers;
-using ChurchManager.Core.Shared.Parameters;
-using ChurchManager.Domain;
 using ChurchManager.Domain.Features.Groups.Repositories;
+using ChurchManager.Domain.Shared.Parameters;
 using ChurchManager.Infrastructure.Abstractions;
 using Convey.CQRS.Queries;
 using MediatR;

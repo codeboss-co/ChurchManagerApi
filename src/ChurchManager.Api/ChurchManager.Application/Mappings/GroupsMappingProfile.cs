@@ -1,9 +1,8 @@
-﻿using System.Collections.Generic;
-using AutoMapper;
+﻿using AutoMapper;
+using ChurchManager.Application.Abstractions;
 using ChurchManager.Application.Features.Groups.Queries.GroupsForPerson;
 using ChurchManager.Core.Shared;
-using ChurchManager.Domain.Model;
-using ChurchManager.Persistence.Models.Groups;
+using ChurchManager.Domain.Features.Groups;
 using Convey.CQRS.Queries;
 
 namespace ChurchManager.Application.Mappings
@@ -12,11 +11,14 @@ namespace ChurchManager.Application.Mappings
     {
         public GroupsMappingProfile()
         {
-            CreateMap<GroupDomain, GroupSummaryViewModel>()
-                .ForMember(d => d.MembersCount, 
-                    opt => opt.MapFrom(src => src.Members.Count));
+            CreateMap<Group, GroupSummaryViewModel>()
+                .ForMember(d => d.GroupId, opt => opt.MapFrom(src => src.Id))
+                .ForMember(d => d.GroupType, opt => opt.MapFrom(src => src.GroupType.Name))
+                .ForMember(d => d.TakesAttendance, opt => opt.MapFrom(src => src.GroupType.TakesAttendance))
+                .ForMember(d => d.MembersCount, opt => opt.MapFrom(src => src.Members.Count))
+                ;
 
-            CreateMap<PagedResult<GroupDomain>, PagedResult<GroupSummaryViewModel>>()
+            CreateMap<PagedResult<Group>, PagedResult<GroupSummaryViewModel>>()
                 .ForMember(d => d.Items,
                     opt => opt.MapFrom(src => src.Items));
 

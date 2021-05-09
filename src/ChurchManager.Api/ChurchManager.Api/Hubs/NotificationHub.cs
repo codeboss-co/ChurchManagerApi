@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
-using ChurchManager.Domain.Features.People.Repositories;
+using ChurchManager.Application.Features.Profile.Services;
+using ChurchManager.Domain.Features.People;
 using ChurchManager.Infrastructure.Abstractions.Persistence;
-using ChurchManager.Persistence.Models.People;
 using Codeboss.Types;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
@@ -15,18 +15,18 @@ namespace ChurchManager.Api.Hubs
     [Authorize]
     public class NotificationHub : Hub
     {
-        private readonly IPersonDbRepository _dbRepository;
+        private readonly IProfileService _service;
         private readonly IGenericRepositoryAsync<OnlineUser> _onlineUserRepository;
         private readonly IDateTimeProvider _dateTime;
         private readonly ILogger<NotificationHub> _logger;
 
         public NotificationHub(
-            IPersonDbRepository dbRepository,
+            IProfileService service,
             IGenericRepositoryAsync<OnlineUser> onlineUserRepository,
             IDateTimeProvider dateTime,
             ILogger<NotificationHub> logger)
         {
-            _dbRepository = dbRepository;
+            _service = service;
             _onlineUserRepository = onlineUserRepository;
             _dateTime = dateTime;
             _logger = logger;
@@ -40,7 +40,7 @@ namespace ChurchManager.Api.Hubs
         {
             _logger.LogDebug("[√] NotificationHub Connected for {user}", Context.UserIdentifier);
 
-            var person = await _dbRepository.ProfileByUserLoginId(Context.UserIdentifier) 
+            var person = await _service.ProfileByUserLoginId(Context.UserIdentifier) 
                          ?? throw new ArgumentNullException("person", "Person not found with UserLoginId");
             var notification = new
             {

@@ -1,4 +1,4 @@
-﻿using ChurchManager.Persistence.Models.People;
+﻿using ChurchManager.Domain.Features.People;
 
 namespace ChurchManager.Core.Shared
 {

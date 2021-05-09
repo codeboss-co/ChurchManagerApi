@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using ChurchManager.Core.Shared;
+using ChurchManager.Application.Abstractions;
 using ChurchManager.Infrastructure.Abstractions.Persistence;
-using ChurchManager.Persistence.Models.Discipleship;
 
 namespace ChurchManager.Domain.Features.Discipleship
 {

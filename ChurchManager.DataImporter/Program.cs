@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using ChurchManager.DataImporter.Models;
+using ChurchManager.Domain.Features.Churches;
+using ChurchManager.Domain.Features.Discipleship;
+using ChurchManager.Domain.Features.Groups;
+using ChurchManager.Domain.Features.People;
 using ChurchManager.Infrastructure.Persistence.Contexts;
-using ChurchManager.Persistence.Models.Churches;
-using ChurchManager.Persistence.Models.Discipleship;
-using ChurchManager.Persistence.Models.Groups;
-using ChurchManager.Persistence.Models.People;
 using CodeBoss.Extensions;
 using Ical.Net.Serialization;
 using Microsoft.EntityFrameworkCore;
@@ -528,14 +528,14 @@ namespace ChurchManager.DataImporter
             {
                 Definition = foundationSchoolStepDef,
                 CompletionDate = foundationSchool.CompletionDate,
-                Status = foundationSchool.IsComplete.HasValue && foundationSchool.IsComplete.Value ? "Completed" : "Not Completed",
+                Status = foundationSchool.IsComplete.HasValue && foundationSchool.IsComplete.Value ? "Completed" : "Not Started",
                 Person = person
             };
             var baptismClassStep = new DiscipleshipStep
             {
                 Definition = baptismClassStepDef,
                 StartDateTime = baptism.BaptismDate,
-                Status = baptism.IsBaptised.HasValue && baptism.IsBaptised.Value ? "Completed" : "Not Completed",
+                Status = baptism.IsBaptised.HasValue && baptism.IsBaptised.Value ? "Completed" : "Not Started",
                 Person = person
             };
 

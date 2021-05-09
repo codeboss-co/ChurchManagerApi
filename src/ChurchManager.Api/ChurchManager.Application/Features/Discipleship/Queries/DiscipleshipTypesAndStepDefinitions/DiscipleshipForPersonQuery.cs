@@ -2,10 +2,10 @@
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
+using ChurchManager.Application.Abstractions;
 using ChurchManager.Application.Wrappers;
-using ChurchManager.Core.Shared;
+using ChurchManager.Domain.Features.Discipleship;
 using ChurchManager.Infrastructure.Abstractions.Persistence;
-using ChurchManager.Persistence.Models.Discipleship;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,10 +18,10 @@ namespace ChurchManager.Application.Features.Discipleship.Queries.DiscipleshipTy
 
     public class DiscipleshipForPersonHandler : IRequestHandler<DiscipleshipForPersonQuery, ApiResponse>
     {
-        private readonly IGenericRepositoryAsync<DiscipleshipProgram> _dbRepository;
+        private readonly IGenericRepositoryAsync<DiscipleshipStep> _dbRepository;
         private readonly IMapper _mapper;
 
-        public DiscipleshipForPersonHandler(IGenericRepositoryAsync<DiscipleshipProgram> dbRepository, IMapper mapper)
+        public DiscipleshipForPersonHandler(IGenericRepositoryAsync<DiscipleshipStep> dbRepository, IMapper mapper)
         {
             _dbRepository = dbRepository;
             _mapper = mapper;
@@ -29,38 +29,69 @@ namespace ChurchManager.Application.Features.Discipleship.Queries.DiscipleshipTy
 
         public async Task<ApiResponse> Handle(DiscipleshipForPersonQuery query, CancellationToken ct)
         {
-            var vm = await _dbRepository.Queryable()
-                .Include(program => program.StepDefinitions)
-                  .ThenInclude(definition => definition.Steps)
-                .Where(program => program.StepDefinitions.Any(definition => definition.Steps.Any(step => step.PersonId == query.PersonId)))
-                .Select(program => new DiscipleshipForPersonViewModel
+            var vm = await _dbRepository.Queryable("Definition.DiscipleshipProgram")
+                .Where(program => program.PersonId == query.PersonId)
+                .Select(step => new
                 {
                     Program = new DiscipleshipProgramViewModel
                     {
-                        Id = program.Id, 
-                        Name = program.Name, 
+                        Id = step.Definition.DiscipleshipProgram.Id,
+                        Name = step.Definition.DiscipleshipProgram.Name,
+                        Description = step.Definition.DiscipleshipProgram.Description,
+                        Category = step.Definition.DiscipleshipProgram.Category,
+                        Order = step.Definition.DiscipleshipProgram.Order
+                    },
+                    Step = new DiscipleshipStepViewModel
+                    {
+                        CompletionDate = step.CompletionDate,
+                        Status = step.Status,
+                        IsComplete = step.IsComplete,
+                        StepDefinition = new StepDefinitionViewModel
+                        {
+                            Order = step.Definition.Order, Id = step.Definition.Id,
+                            Description = step.Definition.Description, Name = step.Definition.Name
+                        },
+                    }
+                })
+                .OrderBy(x => x.Step.StepDefinition.Order)
+                .ToListAsync(ct);
+                
+            // This is done in memory
+            var grouping = vm.GroupBy(x => x.Program.Id);
+
+            var programs = grouping.Select(x =>
+            {
+                var program = x.FirstOrDefault()?.Program;
+                var steps = x.Select(definition => definition?.Step);
+
+                if (program is null) return new DiscipleshipForPersonViewModel();
+
+                return new DiscipleshipForPersonViewModel
+                {
+                    Program = new DiscipleshipProgramViewModel
+                    {
+                        Id = program.Id,
+                        Name = program.Name,
                         Description = program.Description,
                         Category = program.Category,
                         Order = program.Order
                     },
-                    Steps = program.StepDefinitions.SelectMany(definition => definition.Steps).Select(x => new DiscipleshipStepViewModel
-                    {
-                        CompletionDate = x.CompletionDate,
-                        Status = x.Status,
-                        IsComplete = x.IsComplete,
-                        StepDefinition = new StepDefinitionViewModel {Order = x.Definition.Order, Id = x.Definition.Id, Description = x.Definition.Description, Name = x.Definition.Name},
-                    })
-                })
-                .OrderBy(x => x.Program.Order)
-                .ToListAsync(ct);
-
-            // Ordering
-            vm.ForEach(x =>
-            {
-                x.Steps = x.Steps.OrderBy(s => s.StepDefinition.Order);
+                    Steps = steps.Select(x =>
+                        new DiscipleshipStepViewModel
+                        {
+                            CompletionDate = x.CompletionDate,
+                            Status = x.Status,
+                            IsComplete = x.IsComplete,
+                            StepDefinition = new StepDefinitionViewModel
+                            {
+                                Order = x.StepDefinition.Order, Id = x.StepDefinition.Id,
+                                Description = x.StepDefinition.Description, Name = x.StepDefinition.Name
+                            },
+                        })
+                };
             });
 
-            return new ApiResponse(vm);
+            return new ApiResponse(programs);
         }
     }
 }

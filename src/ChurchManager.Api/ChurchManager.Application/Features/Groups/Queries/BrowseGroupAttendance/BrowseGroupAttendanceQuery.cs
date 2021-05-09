@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using ChurchManager.Application.Abstractions;
 using ChurchManager.Application.Wrappers;
-using ChurchManager.Core.Shared;
-using ChurchManager.Core.Shared.Parameters;
 using ChurchManager.Domain.Features.Groups.Repositories;
+using ChurchManager.Domain.Shared.Parameters;
 using MediatR;
 
 namespace ChurchManager.Application.Features.Groups.Queries.BrowseGroupAttendance
@@ -39,7 +39,9 @@ namespace ChurchManager.Application.Features.Groups.Queries.BrowseGroupAttendanc
                 query.WithFeedBack,
                 query.From, query.To, ct);
 
-            return new PagedResponse<GroupAttendanceViewModel>(results);
+            // TODO: Fix pagination using new dynamic
+            //return new PagedResponse<GroupAttendanceViewModel>(results);
+            return new PagedResponse<GroupAttendanceViewModel>(null);
         }
     }
 

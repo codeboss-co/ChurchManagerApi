@@ -40,7 +40,7 @@ namespace ChurchManager.Infrastructure.Persistence.Repositories
 
         #region Queryable
 
-        public IQueryable<T> Queryable() => ObjectSet;
+        public virtual IQueryable<T> Queryable() => ObjectSet;
 
         public virtual IQueryable<T> Queryable(ISpecification<T> specification)
         {

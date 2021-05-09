@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using ChurchManager.Domain.Shared;
-using ChurchManager.Persistence.Models.Churches;
-using ChurchManager.Persistence.Models.Groups;
+using ChurchManager.Domain.Features.Churches;
+using ChurchManager.Domain.Features.Groups;
 
 namespace ChurchManager.DataImporter.Models
 {

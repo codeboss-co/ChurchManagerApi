@@ -5,16 +5,16 @@ using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
-using ChurchManager.Core.Shared;
-using ChurchManager.Core.Shared.Parameters;
-using ChurchManager.Domain;
+using ChurchManager.Application.Abstractions;
+using ChurchManager.Domain.Common;
+using ChurchManager.Domain.Features.Groups;
 using ChurchManager.Domain.Features.Groups.Repositories;
-using ChurchManager.Domain.Model;
+using ChurchManager.Domain.Shared.Parameters;
+using ChurchManager.Domain.Specifications;
 using ChurchManager.Infrastructure.Abstractions;
 using ChurchManager.Infrastructure.Persistence.Contexts;
 using ChurchManager.Infrastructure.Persistence.Extensions;
-using ChurchManager.Infrastructure.Persistence.Specifications;
-using ChurchManager.Persistence.Models.Groups;
+using CodeBoss.Extensions;
 using LinqKit;
 using Microsoft.EntityFrameworkCore;
 using ConveyPaging = Convey.CQRS.Queries;
@@ -29,32 +29,31 @@ namespace ChurchManager.Infrastructure.Persistence.Repositories
         {
         }
 
-        public async Task<IEnumerable<GroupDomain>> AllPersonsGroups(int personId, RecordStatus recordStatus, CancellationToken ct = default)
+        public async Task<IEnumerable<Group>> AllPersonsGroups(int personId, RecordStatus recordStatus, CancellationToken ct = default)
         {
             var groups = await Queryable(new AllPersonsGroupsSpecification(personId, recordStatus))
-                .Select( x => new GroupDomain(x))
                 .ToListAsync(ct);
 
             return groups;
         }
 
-        public async Task<ConveyPaging.PagedResult<GroupDomain>> BrowsePersonsGroups(int personId, string search, QueryParameter query, CancellationToken ct = default)
+        public async Task<ConveyPaging.PagedResult<Group>> BrowsePersonsGroups(int personId, string search, QueryParameter query, CancellationToken ct = default)
         {
+            var queryable = Queryable()
+                .AsNoTracking()
+                .Specify(new BrowsePersonsGroupsSpecification(personId, search));
+
+            if(!query.OrderBy.IsNullOrEmpty())
+            {
+                queryable = queryable.OrderBy($"{query.OrderBy} {query.SortOrder ?? "ascending"}");
+            }
+
             // Paging
-            var pagedResult = await Queryable()
-                .Specify(new BrowsePersonsGroupsSpecification(personId, search))
-                //.FieldLimit(query)
-                .PaginateAsync(query);
-            
-            // Shaping
-            //var shapedData =  await _dataShaper.ShapeDataAsync(pagedResult.Items, query.Fields);
-            
-            return ConveyPaging.PagedResult<GroupDomain>.Create(
-                pagedResult.Items.Select(x => new GroupDomain(x)),
-                pagedResult.CurrentPage,
-                pagedResult.ResultsPerPage, 
-                pagedResult.TotalPages, 
-                pagedResult.TotalResults);
+            var pagedQuery = queryable
+                .Page(query.Page, query.Results)
+                .PageResult(query.Page, query.Results);
+
+            return await pagedQuery.Map(ct);
         }
 
         public async Task<IEnumerable<GroupMemberViewModel>> GroupMembersAsync(int groupId, CancellationToken ct)

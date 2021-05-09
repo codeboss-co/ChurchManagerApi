@@ -1,9 +1,13 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
+using ChurchManager.Application;
+using ChurchManager.Application.Common;
 using ChurchManager.Application.Features.Groups.Commands.AttendanceFeedback;
 using ChurchManager.Application.Features.Groups.Queries.BrowseGroupAttendance;
 using ChurchManager.Application.Features.Groups.Queries.Charts.WeeklyComparison;
 using ChurchManager.Domain;
+using ChurchManager.Domain.Common;
+using ChurchManager.Domain.Shared;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

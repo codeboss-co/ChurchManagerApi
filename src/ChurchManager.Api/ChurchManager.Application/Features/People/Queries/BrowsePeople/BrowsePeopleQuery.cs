@@ -2,10 +2,8 @@
 using System.Threading.Tasks;
 using AutoMapper;
 using ChurchManager.Application.Wrappers;
-using ChurchManager.Core.Shared.Parameters;
 using ChurchManager.Domain.Features.People.Repositories;
-using ChurchManager.Domain.Model;
-using Convey.CQRS.Queries;
+using ChurchManager.Domain.Shared.Parameters;
 using MediatR;
 
 namespace ChurchManager.Application.Features.People.Queries.BrowsePeople
@@ -31,9 +29,11 @@ namespace ChurchManager.Application.Features.People.Queries.BrowsePeople
 
             try
             {
-                var vm = _mapper.Map<PagedResult<PersonViewModel>>(pagedResult);
+                var vm = _mapper.Map<Convey.CQRS.Queries.PagedResult<PersonViewModel>>(pagedResult);
 
                 return new PagedResponse<PersonViewModel>(vm);
+
+                return null;
             }
             catch(System.Exception ex)
             {

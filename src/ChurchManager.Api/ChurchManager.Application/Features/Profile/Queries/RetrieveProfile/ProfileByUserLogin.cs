@@ -2,11 +2,11 @@
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
+using ChurchManager.Application.Abstractions;
 using ChurchManager.Application.Features.People.Queries;
+using ChurchManager.Application.Features.Profile.Services;
 using ChurchManager.Application.Wrappers;
-using ChurchManager.Core.Shared;
 using ChurchManager.Domain.Features.Discipleship;
-using ChurchManager.Domain.Features.People.Repositories;
 using MediatR;
 
 namespace ChurchManager.Application.Features.Profile.Queries.RetrieveProfile
@@ -22,23 +22,23 @@ namespace ChurchManager.Application.Features.Profile.Queries.RetrieveProfile
 
     public class ProfileByUserLogin : IRequestHandler<ProfileByUserLoginIdQuery, ApiResponse>
     {
-        private readonly IPersonDbRepository _personDbRepository;
+        private readonly IProfileService _service;
         private readonly IDiscipleshipStepDefinitionDbRepository _stepsDbRepository;
         private readonly IMapper _mapper;
 
         public ProfileByUserLogin(
-            IPersonDbRepository personDbRepository,
+            IProfileService service,
             IDiscipleshipStepDefinitionDbRepository stepsDbRepository,
             IMapper mapper)
         {
-            _personDbRepository = personDbRepository;
+            _service = service;
             _stepsDbRepository = stepsDbRepository;
             _mapper = mapper;
         }
 
         public async Task<ApiResponse> Handle(ProfileByUserLoginIdQuery query, CancellationToken ct)
         {
-            var domain = await _personDbRepository.ProfileByUserLoginId(query.UserLoginId);
+            var domain = await _service.ProfileByUserLoginId(query.UserLoginId, ct);
 
             // Foundation School status
             if(domain is not null)

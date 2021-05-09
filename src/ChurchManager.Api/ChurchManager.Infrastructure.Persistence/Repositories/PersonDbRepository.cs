@@ -1,19 +1,21 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Dynamic.Core;
 using System.Threading;
 using System.Threading.Tasks;
-using ChurchManager.Application.Features.People.Queries;
-using ChurchManager.Core.Shared;
-using ChurchManager.Core.Shared.Parameters;
+using ChurchManager.Application.Abstractions;
+using ChurchManager.Domain.Common;
+using ChurchManager.Domain.Features.People;
+using ChurchManager.Domain.Features.People.Queries;
 using ChurchManager.Domain.Features.People.Repositories;
-using ChurchManager.Domain.Model;
+using ChurchManager.Domain.Shared.Parameters;
+using ChurchManager.Domain.Specifications;
 using ChurchManager.Infrastructure.Abstractions;
 using ChurchManager.Infrastructure.Persistence.Contexts;
 using ChurchManager.Infrastructure.Persistence.Extensions;
-using ChurchManager.Infrastructure.Persistence.Specifications;
-using ChurchManager.Persistence.Models.People;
-using Convey.CQRS.Queries;
+using CodeBoss.Extensions;
 using Microsoft.EntityFrameworkCore;
+using ConveyPaging = Convey.CQRS.Queries;
 
 namespace ChurchManager.Infrastructure.Persistence.Repositories
 {
@@ -28,27 +30,39 @@ namespace ChurchManager.Infrastructure.Persistence.Repositories
             _dataShaper = dataShaper;
         }
 
-        public async Task<PersonDomain> ProfileByUserLoginId(string userLoginId)
+        #region Queryable
+        /// <summary>
+        /// Returns a queryable collection of <see cref="Rock.Model.Person"/> entities (not including Deceased or Nameless records)
+        /// </summary>
+        /// <returns>A queryable collection of <see cref="Rock.Model.Person"/> entities.</returns>
+        public override IQueryable<Person> Queryable()
         {
-            var entity = await Queryable(new ProfileByUserLoginSpecification(userLoginId))
-                .FirstOrDefaultAsync();
-
-            return entity is not null
-                ? new PersonDomain(entity)
-                : null;
+            return Queryable(new PersonQueryOptions());
         }
 
-        public async Task<PersonDomain> ProfileByPersonId(int personId, bool condensed = false)
+        /// <summary>
+        /// Returns a queryable collection of <see cref="Person"/> entities 
+        /// using the options specified the <see cref="PersonQueryOptions"/> (default is to exclude deceased people and pending person records)
+        /// </summary>
+        public IQueryable<Person> Queryable(PersonQueryOptions personQueryOptions)
         {
-            var entity = await Queryable(new ProfileByPersonSpecification(personId, condensed))
-                .FirstOrDefaultAsync();
+            return Queryable(null, personQueryOptions);
+        } 
+        #endregion
 
-            return entity is not null
-                ? new PersonDomain(entity)
-                : null;
+        public Task<Person> ProfileByUserLoginId(string userLoginId, CancellationToken ct = default)
+        {
+            return Queryable(new ProfileByUserLoginSpecification(userLoginId))
+                .FirstOrDefaultAsync(ct);
         }
 
-        public Task<UserDetails> UserDetailsByUserLoginId(string userLoginId)
+        public Task<Person> ProfileByPersonId(int personId, bool condensed = false, CancellationToken ct = default)
+        {
+            return Queryable(new ProfileByPersonSpecification(personId, condensed))
+                .FirstOrDefaultAsync(ct);
+        }
+
+        public Task<UserDetails> UserDetailsByUserLoginId(string userLoginId, CancellationToken ct = default)
         {
             return Queryable()
                 .AsNoTracking()
@@ -61,7 +75,7 @@ namespace ChurchManager.Infrastructure.Persistence.Repositories
                     Email = x.Email.Address,
                     PhotoUrl = x.PhotoUrl
                 })
-                .FirstOrDefaultAsync();
+                .FirstOrDefaultAsync(ct);
         }
 
         // https://www.npgsql.org/efcore/misc/collations-and-case-sensitivity.html?tabs=data-annotations#ilike
@@ -81,30 +95,23 @@ namespace ChurchManager.Infrastructure.Persistence.Repositories
             return new PeopleAutocompleteResults(autocomplete);
         }
 
-        public async Task<PagedResult<PersonDomain>> BrowsePeopleAsync(SearchTermQueryParameter query, CancellationToken ct = default)
+        public async Task<ConveyPaging.PagedResult<Person>> BrowsePeopleAsync(SearchTermQueryParameter query, CancellationToken ct = default)
         {
-            // Paging
-            var pagedResult = await Queryable()
-                .Specify(new BrowsePeopleSpecification(query.SearchTerm))
-                /*.Select(x => new PersonBrowseViewModel
-                {
-                    PersonId = x.Id,
-                    FullName = x.FullName,
-                    AgeClassification = x.AgeClassification,
-                    ConnectionStatus = x.ConnectionStatus,
-                    Gender = x.Gender,
-                    BirthDate = x.BirthDate,
-                    Church = x.Church.Name
-                    
-                })*/
-                .PaginateAsync(query);
+            var queryable = Queryable()
+                .AsNoTracking()
+                .Specify(new BrowsePeopleSpecification(query.SearchTerm));
 
-            return PagedResult<PersonDomain>.Create(
-                pagedResult.Items.Select(entity => new PersonDomain(entity)),
-                pagedResult.CurrentPage,
-                pagedResult.ResultsPerPage,
-                pagedResult.TotalPages,
-                pagedResult.TotalResults);
+            if (!query.OrderBy.IsNullOrEmpty())
+            {
+                queryable = queryable.OrderBy($"{query.OrderBy} {query.SortOrder ?? "ascending"}");
+            }
+
+            // Paging
+            var pagedQuery = queryable
+                .Page(query.Page, query.Results)
+                .PageResult(query.Page, query.Results);
+
+            return await pagedQuery.Map(ct);
         }
 
         /// <summary>
@@ -113,9 +120,7 @@ namespace ChurchManager.Infrastructure.Persistence.Repositories
         /// <param name="firstName">The first name.</param>
         /// <param name="lastName">The last name.</param>
         /// <param name="email">The email.</param>
-        /// <param name="updatePrimaryEmail">if set to <c>true</c> the person's primary email will be updated to the search value if it was found as a person search key (alternate lookup address).</param>
         /// <param name="includeDeceased">if set to <c>true</c> include deceased individuals.</param>
-        /// <param name="includeBusinesses">if set to <c>true</c> include businesses records.</param>
         /// <returns></returns>
         public Task<Person> FindPersonAsync(string firstName, string lastName, string email, bool includeDeceased = false, CancellationToken ct = default)
         {
@@ -153,6 +158,31 @@ namespace ChurchManager.Infrastructure.Persistence.Repositories
                 );
 
             return await queryable.ToListAsync(ct);
+        }
+
+
+        /// <summary>
+        /// Returns a queryable collection of <see cref="Person"/> entities 
+        /// using the options specified the <see cref="PersonQueryOptions"/> (default is to exclude deceased people and pending person records)
+        /// </summary>
+        private IQueryable<Person> Queryable(string includes, PersonQueryOptions personQueryOptions)
+        {
+            var qry = Queryable(includes);
+
+            personQueryOptions ??= new PersonQueryOptions();
+
+            if(personQueryOptions.IncludeDeceased == false)
+            {
+                qry = qry.Where(p => p.DeceasedStatus == null || 
+                                     (p.DeceasedStatus != null && p.DeceasedStatus.IsDeceased == false));
+            }
+
+            if(personQueryOptions.IncludePendingStatus ==  false)
+            {
+                qry = qry.Where(p => p.RecordStatus == RecordStatus.Active);
+            }
+
+            return qry;
         }
     }
 }

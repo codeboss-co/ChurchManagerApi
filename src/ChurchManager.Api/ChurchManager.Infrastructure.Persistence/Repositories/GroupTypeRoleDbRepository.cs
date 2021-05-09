@@ -1,7 +1,7 @@
 ﻿using System.Linq;
+using ChurchManager.Domain.Features.Groups;
 using ChurchManager.Domain.Features.Groups.Repositories;
 using ChurchManager.Infrastructure.Abstractions.Persistence;
-using ChurchManager.Persistence.Models.Groups;
 
 namespace ChurchManager.Infrastructure.Persistence.Repositories
 {

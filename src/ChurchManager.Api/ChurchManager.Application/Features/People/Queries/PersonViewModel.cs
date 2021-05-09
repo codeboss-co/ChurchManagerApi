@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using ChurchManager.Application.Features.Churches.Queries.RetrieveChurches;
+using ChurchManager.Application.Abstractions;
 using ChurchManager.Core.Shared;
-using ChurchManager.Persistence.Models.People;
+using ChurchManager.Domain.Features.People;
 
 namespace ChurchManager.Application.Features.People.Queries
 {
@@ -30,6 +30,7 @@ namespace ChurchManager.Application.Features.People.Queries
         public bool? ReceivedHolySpirit { get; set; } = false;
         public DiscipleshipStepViewModel FoundationSchool { get; set; }
         public ICollection<FamilyMembersViewModel> FamilyMembers { get; set; } = new Collection<FamilyMembersViewModel>();
+        public string RecordStatus { get; set; }
     }
 
     public record FamilyMembersViewModel
