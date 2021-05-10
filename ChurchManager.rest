@@ -166,6 +166,12 @@ GET {{api}}/v1/groups/tree
 Content-Type: application/json
 Authorization: Bearer {{accessToken}}
 
+# Get Group Members
+@groupId = 3
+GET {{api}}/v1/groups/{{groupId}}/members?recordStatus=Active
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
 # ============== DISCIPLESHIP ==================== #
 # Discipleship for Person
 POST {{api}}/v1/discipleship/person/programs

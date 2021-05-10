@@ -47,13 +47,14 @@ namespace ChurchManager.Api.Controllers.v1
         {
             query.PersonId = _currentUser.PersonId; // Reset to current person
             return Ok(await Mediator.Send(query, token));
-        } 
+        }
         #endregion
 
+        // http://localhost/Groups/1/members?recordStatus=Pending
         [HttpGet("{groupId}/members")]
-        public async Task<IActionResult> GetGroupMembers(int groupId, CancellationToken token)
+        public async Task<IActionResult> GetGroupMembers(int groupId, [FromQuery] string recordStatus = "Active", CancellationToken token = default)
         {
-            return Ok(await Mediator.Send(new GroupMembersQuery(groupId), token));
+            return Ok(await Mediator.Send(new GroupMembersQuery(groupId){RecordStatus = recordStatus }, token));
         }
 
         [HttpGet("church/{churchId}")]

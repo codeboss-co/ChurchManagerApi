@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Ardalis.Specification;
 
 namespace ChurchManager.Domain.Features.Groups.Specifications
 {
-    public class GroupRolesForGroupSpecification
+    public class GroupRolesForGroupSpecification : Specification<GroupTypeRole>
     {
-        
+        public GroupRolesForGroupSpecification(int groupId)
+        {
+            
+        }
     }
 }
