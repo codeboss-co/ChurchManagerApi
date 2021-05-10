@@ -3,14 +3,12 @@ using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Threading;
 using System.Threading.Tasks;
-using ChurchManager.Application.Abstractions;
 using ChurchManager.Domain.Common;
 using ChurchManager.Domain.Features.People;
 using ChurchManager.Domain.Features.People.Queries;
 using ChurchManager.Domain.Features.People.Repositories;
-using ChurchManager.Domain.Shared.Parameters;
+using ChurchManager.Domain.Parameters;
 using ChurchManager.Domain.Specifications;
-using ChurchManager.Infrastructure.Abstractions;
 using ChurchManager.Infrastructure.Persistence.Contexts;
 using ChurchManager.Infrastructure.Persistence.Extensions;
 using CodeBoss.Extensions;
@@ -21,13 +19,9 @@ namespace ChurchManager.Infrastructure.Persistence.Repositories
 {
     public class PersonDbRepository : GenericRepositoryAsync<Person>, IPersonDbRepository
     {
-        private readonly IDataShapeHelper<Person> _dataShaper;
 
-        public PersonDbRepository(
-            ChurchManagerDbContext dbContext,
-            IDataShapeHelper<Person> dataShaper) : base(dbContext)
+        public PersonDbRepository(ChurchManagerDbContext dbContext) : base(dbContext)
         {
-            _dataShaper = dataShaper;
         }
 
         #region Queryable

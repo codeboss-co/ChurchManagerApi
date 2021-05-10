@@ -109,9 +109,9 @@ Authorization: Bearer {{accessToken}}
 {
  	"searchTerm": "",    
     "page": 1,
-    "results": 20,
+    "results": 2,
     "orderBy": "FullName.FirstName",
-    "sortOrder": "DESC"
+    "sortOrder": "ASC"
 }
 
 # ============== PROFILES ==================== #

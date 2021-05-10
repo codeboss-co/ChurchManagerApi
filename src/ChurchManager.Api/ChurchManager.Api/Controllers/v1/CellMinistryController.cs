@@ -7,7 +7,6 @@ using ChurchManager.Application.Features.Groups.Queries.BrowseGroupAttendance;
 using ChurchManager.Application.Features.Groups.Queries.Charts.WeeklyComparison;
 using ChurchManager.Domain;
 using ChurchManager.Domain.Common;
-using ChurchManager.Domain.Shared;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

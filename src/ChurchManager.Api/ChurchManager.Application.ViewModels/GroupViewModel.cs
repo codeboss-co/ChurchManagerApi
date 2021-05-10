@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
-using ChurchManager.Application.Features.People.Queries;
 using ChurchManager.Domain.Features.Groups;
 
 // https://anthonygiretti.com/2020/06/17/introducing-c-9-records/#:~:text=Constructors%20and%20deconstructors%20are%20allowed,That%27s%20good%20!&text=As%20you%20may%20noticed%2C%20this,is%20determined%20by%20their%20position.
-namespace ChurchManager.Application.Features.Groups.Queries.BrowsePersonsGroups
+namespace ChurchManager.Application.ViewModels
 {
     public record GroupViewModel : RecordStatusViewModel
     {

@@ -8,7 +8,6 @@ using ChurchManager.Application.Features.People.Queries.BrowsePeople;
 using ChurchManager.Application.Features.People.Queries.PeopleAutocomplete;
 using ChurchManager.Domain;
 using ChurchManager.Domain.Common;
-using ChurchManager.Domain.Shared;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;

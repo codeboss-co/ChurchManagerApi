@@ -1,8 +1,8 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
+using ChurchManager.Application.ViewModels;
 using ChurchManager.Application.Wrappers;
-using ChurchManager.Core.Shared;
 using ChurchManager.Domain.Features.Churches;
 using ChurchManager.Infrastructure.Abstractions.Persistence;
 using MediatR;

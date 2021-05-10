@@ -1,7 +1,7 @@
 ﻿
 using Convey.CQRS.Queries;
 
-namespace ChurchManager.Domain.Shared.Parameters
+namespace ChurchManager.Domain.Parameters
 {
     public record QueryParameter : PagingParameter, IPagedQuery
     {

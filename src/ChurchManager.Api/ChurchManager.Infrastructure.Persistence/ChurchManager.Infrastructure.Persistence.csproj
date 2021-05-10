@@ -25,9 +25,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ChurchManager.Application.Abstractions\ChurchManager.Application.Abstractions.csproj" />
-    <ProjectReference Include="..\ChurchManager.Core.Shared\ChurchManager.Core.Shared.csproj" />
     <ProjectReference Include="..\ChurchManager.Domain\ChurchManager.Domain.csproj" />
-    <ProjectReference Include="..\ChurchManager.Infrastructure.Shared\ChurchManager.Infrastructure.Shared.csproj" />
   </ItemGroup>
 
   <ItemGroup>

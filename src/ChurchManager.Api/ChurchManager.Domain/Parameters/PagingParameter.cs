@@ -1,4 +1,4 @@
-﻿namespace ChurchManager.Domain.Shared.Parameters
+﻿namespace ChurchManager.Domain.Parameters
 {
     public record PagingParameter
     {

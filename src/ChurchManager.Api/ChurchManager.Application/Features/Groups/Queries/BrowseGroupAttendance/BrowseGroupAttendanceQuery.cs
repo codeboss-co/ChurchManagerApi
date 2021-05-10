@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using ChurchManager.Application.Abstractions;
 using ChurchManager.Application.Wrappers;
 using ChurchManager.Domain.Features.Groups.Repositories;
-using ChurchManager.Domain.Shared.Parameters;
+using ChurchManager.Domain.Parameters;
+using ChurchManager.Domain.Shared;
 using MediatR;
 
 namespace ChurchManager.Application.Features.Groups.Queries.BrowseGroupAttendance

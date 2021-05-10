@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using ChurchManager.Application.Abstractions;
+using ChurchManager.Application.Abstractions.Services;
 using ChurchManager.Application.Features.Profile.Services;
 using ChurchManager.Domain.Features.People;
 using ChurchManager.Infrastructure.Abstractions.Persistence;

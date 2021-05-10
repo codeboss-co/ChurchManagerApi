@@ -5,26 +5,27 @@ using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
-using ChurchManager.Application.Abstractions;
+using ChurchManager.Application.ViewModels;
 using ChurchManager.Domain.Common;
 using ChurchManager.Domain.Features.Groups;
 using ChurchManager.Domain.Features.Groups.Repositories;
-using ChurchManager.Domain.Shared.Parameters;
+using ChurchManager.Domain.Parameters;
+using ChurchManager.Domain.Shared;
 using ChurchManager.Domain.Specifications;
-using ChurchManager.Infrastructure.Abstractions;
 using ChurchManager.Infrastructure.Persistence.Contexts;
 using ChurchManager.Infrastructure.Persistence.Extensions;
 using CodeBoss.Extensions;
 using LinqKit;
 using Microsoft.EntityFrameworkCore;
 using ConveyPaging = Convey.CQRS.Queries;
+using GroupMemberViewModel = ChurchManager.Domain.Shared.GroupMemberViewModel;
+using GroupTypeViewModel = ChurchManager.Domain.Shared.GroupTypeViewModel;
+using GroupViewModel = ChurchManager.Domain.Shared.GroupViewModel;
 
 namespace ChurchManager.Infrastructure.Persistence.Repositories
 {
     public class GroupDbRepository : GenericRepositoryAsync<Group>, IGroupDbRepository
     {
-        private readonly IDataShapeHelper<Group> _dataShaper;
-    
         public GroupDbRepository(ChurchManagerDbContext dbContext) : base(dbContext)
         {
         }

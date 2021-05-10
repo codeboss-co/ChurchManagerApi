@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -6,6 +7,7 @@ using Ardalis.Specification;
 using Ardalis.Specification.EntityFrameworkCore;
 using ChurchManager.Infrastructure.Abstractions.Persistence;
 using Codeboss.Types;
+using Convey.CQRS.Queries;
 using Microsoft.EntityFrameworkCore;
 
 namespace ChurchManager.Infrastructure.Persistence.Repositories
@@ -46,6 +48,17 @@ namespace ChurchManager.Infrastructure.Persistence.Repositories
             await ObjectSet.AddRangeAsync(entities, cancellationToken);
 
             await SaveChangesAsync(cancellationToken);
+        }
+
+        public virtual async Task<PagedResult<T>> BrowseAsync(IPagedQuery query, ISpecification<T> specification, CancellationToken ct = default)
+        {
+            var list = await ListAsync(specification, ct);
+            var totalResults = await CountAsync(specification, ct);
+            var totalPages = (int)Math.Ceiling((decimal)totalResults / query.Results);
+
+            var pagedResult = PagedResult<T>.Create(list, query.Page, query.Results, totalPages, totalResults);
+
+            return pagedResult;
         }
 
         /// <summary>

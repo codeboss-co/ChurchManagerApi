@@ -1,6 +1,6 @@
 ﻿using ChurchManager.Domain.Features.People;
 
-namespace ChurchManager.Core.Shared
+namespace ChurchManager.Application.ViewModels
 {
     public record PersonBrowseViewModel
     {

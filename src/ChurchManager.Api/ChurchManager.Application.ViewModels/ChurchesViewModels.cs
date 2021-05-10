@@ -1,6 +1,6 @@
-﻿using ChurchManager.Application.Abstractions;
+﻿using ChurchManager.Domain.Shared;
 
-namespace ChurchManager.Core.Shared
+namespace ChurchManager.Application.ViewModels
 {
     public record ChurchViewModel : SelectItemViewModel
     {

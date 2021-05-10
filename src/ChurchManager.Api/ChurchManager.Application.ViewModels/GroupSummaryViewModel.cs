@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace ChurchManager.Application.Features.Groups.Queries.GroupsForPerson
+namespace ChurchManager.Application.ViewModels
 {
     public record GroupSummaryViewModel
     {

@@ -2,10 +2,9 @@
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
-using ChurchManager.Core.Shared;
+using ChurchManager.Application.ViewModels;
 using ChurchManager.Domain.Features.Groups;
 using ChurchManager.Domain.Features.Groups.Repositories;
-using ChurchManager.Domain.Shared;
 using ChurchManager.Domain.Specifications;
 using MediatR;
 using Microsoft.EntityFrameworkCore;

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace ChurchManager.Application.Abstractions
+namespace ChurchManager.Domain.Shared
 {
     public record GeneralViewModel : SelectItemViewModel
     {

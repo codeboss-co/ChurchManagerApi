@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using ChurchManager.Application.Abstractions;
 using ChurchManager.Domain.Common;
-using ChurchManager.Domain.Shared.Parameters;
+using ChurchManager.Domain.Parameters;
+using ChurchManager.Domain.Shared;
 using ChurchManager.Infrastructure.Abstractions.Persistence;
 using Convey.CQRS.Queries;
 

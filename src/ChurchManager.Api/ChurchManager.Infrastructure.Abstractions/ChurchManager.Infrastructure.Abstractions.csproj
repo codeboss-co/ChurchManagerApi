@@ -12,7 +12,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ChurchManager.Domain.Shared\ChurchManager.Domain.Shared.csproj" />
     <ProjectReference Include="..\ChurchManager.Persistence.Shared\ChurchManager.Persistence.Shared.csproj" />
   </ItemGroup>
 

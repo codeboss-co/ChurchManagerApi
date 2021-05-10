@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using ChurchManager.Application.Wrappers;
 using ChurchManager.Domain.Features.People.Repositories;
-using ChurchManager.Domain.Shared.Parameters;
+using ChurchManager.Domain.Parameters;
 using MediatR;
 
 namespace ChurchManager.Application.Features.People.Queries.PeopleAutocomplete

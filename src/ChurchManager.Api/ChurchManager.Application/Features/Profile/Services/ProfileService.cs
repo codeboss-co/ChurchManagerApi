@@ -1,19 +1,13 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
-using ChurchManager.Application.Features.People.Queries;
+using ChurchManager.Application.Abstractions.Services;
+using ChurchManager.Application.ViewModels;
 using ChurchManager.Domain.Features.People.Repositories;
 using ChurchManager.Domain.Features.People.Specifications;
 
 namespace ChurchManager.Application.Features.Profile.Services
 {
-
-    public interface IProfileService
-    {
-        Task<PersonViewModel> ProfileByUserLoginId(string userLoginId, CancellationToken ct = default);
-        Task<PersonViewModel> ProfileByPersonId(int personId, bool condensed, CancellationToken ct);
-    }
-
     public class ProfileService : IProfileService
     {
         private readonly IPersonDbRepository2 _dbRepository;

@@ -1,17 +1,12 @@
 ﻿using ChurchManager.Domain.Features.Churches.Repositories;
 using ChurchManager.Domain.Features.Discipleship;
-using ChurchManager.Domain.Features.Groups;
 using ChurchManager.Domain.Features.Groups.Repositories;
-using ChurchManager.Domain.Features.People;
 using ChurchManager.Domain.Features.People.Repositories;
-using ChurchManager.Infrastructure.Abstractions;
 using ChurchManager.Infrastructure.Abstractions.Persistence;
 using ChurchManager.Infrastructure.Persistence.Contexts;
 using ChurchManager.Infrastructure.Persistence.Repositories;
 using ChurchManager.Infrastructure.Persistence.Seeding;
-using ChurchManager.Infrastructure.Persistence.Seeding.Development;
 using ChurchManager.Infrastructure.Persistence.Seeding.Production;
-using ChurchManager.Infrastructure.Shared;
 using ChurchManager.Persistence.Shared;
 using CodeBoss.AspNetCore.Startup;
 using Convey;
@@ -86,9 +81,6 @@ namespace ChurchManager.Infrastructure.Persistence
             services.AddScoped<IPersonDbRepository2, PersonDbRepository2>();
 
             #endregion
-
-            services.AddScoped<IDataShapeHelper<Group>, DataShapeHelper<Group>>();
-            services.AddScoped<IDataShapeHelper<Person>, DataShapeHelper<Person>>();
         }
     }
 }
