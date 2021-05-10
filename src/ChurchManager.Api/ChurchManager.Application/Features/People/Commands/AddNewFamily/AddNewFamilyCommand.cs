@@ -18,9 +18,9 @@ namespace ChurchManager.Application.Features.People.Commands.AddNewFamily
 
     public class AddNewFamilyHandler : IRequestHandler<AddNewFamilyCommand>
     {
-        private readonly IPersonDbRepository2 _dbRepository;
+        private readonly IPersonDbRepository _dbRepository;
 
-        public AddNewFamilyHandler(IPersonDbRepository2 dbRepository)
+        public AddNewFamilyHandler(IPersonDbRepository dbRepository)
         {
             _dbRepository = dbRepository;
         }

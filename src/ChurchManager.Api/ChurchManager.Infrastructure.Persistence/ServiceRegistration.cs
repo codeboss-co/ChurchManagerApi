@@ -70,7 +70,6 @@ namespace ChurchManager.Infrastructure.Persistence
 
             services.AddScoped(typeof(IGenericRepositoryAsync<>), typeof(GenericRepositoryAsync<>));
             services.AddScoped<IGroupDbRepository, GroupDbRepository>();
-            services.AddScoped<IPersonDbRepository, PersonDbRepository>();
             services.AddScoped<IGroupAttendanceDbRepository, GroupAttendanceDbRepository>();
             services.AddScoped<IChurchAttendanceDbRepository, ChurchAttendanceDbRepository>();
             services.AddScoped<IDiscipleshipStepDefinitionDbRepository, DiscipleshipDbRepository>();
@@ -78,7 +77,7 @@ namespace ChurchManager.Infrastructure.Persistence
             services.AddScoped<IGroupTypeRoleDbRepository, GroupTypeRoleDbRepository>();
 
             services.AddScoped(typeof(IGenericDbRepository<>), typeof(GenericRepositoryBase<>));
-            services.AddScoped<IPersonDbRepository2, PersonDbRepository2>();
+            services.AddScoped<IPersonDbRepository, PersonDbRepository>();
 
             #endregion
         }

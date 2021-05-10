@@ -12,10 +12,10 @@ namespace ChurchManager.Application.Features.Profile.Services
 {
     public class PersonService : IPersonService
     {
-        private readonly IPersonDbRepository2 _dbRepository;
+        private readonly IPersonDbRepository _dbRepository;
         private readonly IMapper _mapper;
 
-        public PersonService(IPersonDbRepository2 dbRepository, IMapper mapper)
+        public PersonService(IPersonDbRepository dbRepository, IMapper mapper)
         {
             _dbRepository = dbRepository;
             _mapper = mapper;

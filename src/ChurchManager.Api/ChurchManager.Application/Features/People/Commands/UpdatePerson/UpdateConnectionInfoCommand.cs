@@ -17,9 +17,9 @@ namespace ChurchManager.Application.Features.People.Commands.UpdatePerson
 
     public class UpdateConnectionInfoHandler : IRequestHandler<UpdateConnectionInfoCommand>
     {
-        private readonly IPersonDbRepository2 _dbRepository;
+        private readonly IPersonDbRepository _dbRepository;
 
-        public UpdateConnectionInfoHandler(IPersonDbRepository2 dbRepository)
+        public UpdateConnectionInfoHandler(IPersonDbRepository dbRepository)
         {
             _dbRepository = dbRepository;
         }

@@ -24,9 +24,9 @@ namespace ChurchManager.Application.Features.People.Commands.UpdatePerson
 
     public class UpdateGeneralInfoCommandHandler : IRequestHandler<UpdateGeneralInfoCommand>
     {
-        private readonly IPersonDbRepository2 _dbRepository;
+        private readonly IPersonDbRepository _dbRepository;
 
-        public UpdateGeneralInfoCommandHandler(IPersonDbRepository2 dbRepository)
+        public UpdateGeneralInfoCommandHandler(IPersonDbRepository dbRepository)
         {
             _dbRepository = dbRepository;
         }

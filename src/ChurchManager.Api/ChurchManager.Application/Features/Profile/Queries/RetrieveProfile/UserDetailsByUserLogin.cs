@@ -3,9 +3,9 @@ using System.Threading.Tasks;
 using AutoMapper;
 using ChurchManager.Application.Common;
 using ChurchManager.Application.Wrappers;
-using ChurchManager.Domain;
 using ChurchManager.Domain.Common;
 using ChurchManager.Domain.Features.People.Repositories;
+using ChurchManager.Domain.Features.People.Specifications;
 using MediatR;
 
 namespace ChurchManager.Application.Features.Profile.Queries.RetrieveProfile
@@ -35,9 +35,11 @@ namespace ChurchManager.Application.Features.Profile.Queries.RetrieveProfile
             _mapper = mapper;
         }
 
-        public async Task<ApiResponse> Handle(UserDetailsByUserLoginQuery query, CancellationToken cancellationToken)
+        public async Task<ApiResponse> Handle(UserDetailsByUserLoginQuery query, CancellationToken ct)
         {
-            UserDetails user = await _personDbRepository.UserDetailsByUserLoginId(query.UserLoginId);
+            var spec = new UserDetailsSpecification(query.UserLoginId);
+
+            var user = await _personDbRepository.GetBySpecAsync<UserDetails>(spec, ct);
 
             if (user is null)
             {
