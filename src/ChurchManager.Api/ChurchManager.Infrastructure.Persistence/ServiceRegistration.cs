@@ -78,6 +78,7 @@ namespace ChurchManager.Infrastructure.Persistence
 
             services.AddScoped(typeof(IGenericDbRepository<>), typeof(GenericRepositoryBase<>));
             services.AddScoped<IPersonDbRepository, PersonDbRepository>();
+            services.AddScoped<IGroupDbRepository2, GroupDbRepository2>();
 
             #endregion
         }

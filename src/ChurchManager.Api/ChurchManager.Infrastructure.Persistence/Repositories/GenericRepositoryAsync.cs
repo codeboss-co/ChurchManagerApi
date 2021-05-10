@@ -5,6 +5,7 @@ using System.Linq.Dynamic.Core;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
+using ChurchManager.Domain.Common.Extensions;
 using ChurchManager.Infrastructure.Abstractions.Persistence;
 using ChurchManager.Infrastructure.Persistence.Extensions;
 using ChurchManager.Persistence.Shared;
