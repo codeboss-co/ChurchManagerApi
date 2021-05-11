@@ -1,16 +1,15 @@
 ﻿using System.Linq;
-using ChurchManager.Domain;
 using ChurchManager.Domain.Common;
 using ChurchManager.Domain.Features.Groups;
 using ChurchManager.Domain.Features.Groups.Repositories;
-using ChurchManager.Infrastructure.Abstractions.Persistence;
+using ChurchManager.Infrastructure.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
 
 namespace ChurchManager.Infrastructure.Persistence.Repositories
 {
-    public class GroupMemberDbRepository: GenericRepositoryAsync<GroupMember>, IGroupMemberDbRepository
+    public class GroupMemberDbRepository: GenericRepositoryBase<GroupMember>, IGroupMemberDbRepository
     {
-        public GroupMemberDbRepository(IChurchManagerDbContext dbContext) : base(dbContext)
+        public GroupMemberDbRepository(ChurchManagerDbContext dbContext) : base(dbContext)
         {
         }
 

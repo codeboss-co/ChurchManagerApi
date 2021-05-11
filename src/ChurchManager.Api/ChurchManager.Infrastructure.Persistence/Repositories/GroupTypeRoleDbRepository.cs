@@ -1,16 +1,16 @@
 ﻿using System.Linq;
 using ChurchManager.Domain.Features.Groups;
 using ChurchManager.Domain.Features.Groups.Repositories;
-using ChurchManager.Infrastructure.Abstractions.Persistence;
+using ChurchManager.Infrastructure.Persistence.Contexts;
 
 namespace ChurchManager.Infrastructure.Persistence.Repositories
 {
     /// <summary>
     /// The data access/service class for <see cref="GroupTypeRole"/> entity object types.
     /// </summary>
-    public class GroupTypeRoleDbRepository : GenericRepositoryAsync<GroupTypeRole>, IGroupTypeRoleDbRepository
+    public class GroupTypeRoleDbRepository : GenericRepositoryBase<GroupTypeRole>, IGroupTypeRoleDbRepository
     {
-        public GroupTypeRoleDbRepository(IChurchManagerDbContext dbContext) : base(dbContext)
+        public GroupTypeRoleDbRepository(ChurchManagerDbContext dbContext) : base(dbContext)
         {
         }
 

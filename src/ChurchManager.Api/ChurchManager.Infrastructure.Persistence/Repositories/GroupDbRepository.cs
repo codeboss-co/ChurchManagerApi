@@ -9,13 +9,14 @@ using ChurchManager.Domain.Features.Groups;
 using ChurchManager.Domain.Features.Groups.Repositories;
 using ChurchManager.Domain.Features.Groups.Specifications;
 using ChurchManager.Domain.Shared;
+using ChurchManager.Infrastructure.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
 
 namespace ChurchManager.Infrastructure.Persistence.Repositories
 {
     public class GroupDbRepository : GenericRepositoryBase<Group>, IGroupDbRepository
     {
-        public GroupDbRepository(DbContext dbContext) : base(dbContext)
+        public GroupDbRepository(ChurchManagerDbContext dbContext) : base(dbContext)
         {
         }
 

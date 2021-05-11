@@ -14,6 +14,8 @@ namespace ChurchManager.Domain.Features.Groups.Specifications
                              x.Members
                                  .Any(x => x.RecordStatus == recordStatus));
 
+            Query.OrderBy(x => x.Name);
+
             Query.Include("Members.Person");
             Query.Include("Members.GroupRole");
         }

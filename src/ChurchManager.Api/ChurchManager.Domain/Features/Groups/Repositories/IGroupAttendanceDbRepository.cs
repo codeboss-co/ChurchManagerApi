@@ -9,7 +9,7 @@ using Convey.CQRS.Queries;
 
 namespace ChurchManager.Domain.Features.Groups.Repositories
 {
-    public interface IGroupAttendanceDbRepository : IGenericRepositoryAsync<GroupAttendance>
+    public interface IGroupAttendanceDbRepository : IGenericDbRepository<GroupAttendance>
     {
         Task<PagedResult<GroupAttendanceViewModel>> BrowseGroupAttendance(
             QueryParameter query, 

@@ -1,12 +1,12 @@
 ﻿using ChurchManager.Domain.Features.People;
 using ChurchManager.Domain.Features.People.Repositories;
-using Microsoft.EntityFrameworkCore;
+using ChurchManager.Infrastructure.Persistence.Contexts;
 
 namespace ChurchManager.Infrastructure.Persistence.Repositories
 {
     public class PersonDbRepository : GenericRepositoryBase<Person>, IPersonDbRepository
     {
-        public PersonDbRepository(DbContext dbContext) : base(dbContext)
+        public PersonDbRepository(ChurchManagerDbContext dbContext) : base(dbContext)
         {
         }
     }

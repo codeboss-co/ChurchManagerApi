@@ -16,10 +16,10 @@ namespace ChurchManager.Application.Features.Churches.Queries.RetrieveChurches
 
     public class AllChurchQueryHandler : IRequestHandler<ChurchesQuery, ApiResponse>
     {
-        private readonly IGenericRepositoryAsync<Church> _dbRepository;
+        private readonly IGenericDbRepository<Church> _dbRepository;
         private readonly IMapper _mapper;
 
-        public AllChurchQueryHandler(IGenericRepositoryAsync<Church> dbRepository, IMapper mapper)
+        public AllChurchQueryHandler(IGenericDbRepository<Church> dbRepository, IMapper mapper)
         {
             _dbRepository = dbRepository;
             _mapper = mapper;

@@ -50,6 +50,7 @@ namespace ChurchManager.Infrastructure.Persistence.Repositories
             await SaveChangesAsync(cancellationToken);
         }
 
+        /// <inheritdoc/>
         public virtual async Task<PagedResult<T>> BrowseAsync(IPagedQuery query, ISpecification<T> specification, CancellationToken ct = default)
         {
             var list = await ListAsync(specification, ct);
@@ -57,6 +58,18 @@ namespace ChurchManager.Infrastructure.Persistence.Repositories
             var totalPages = (int)Math.Ceiling((decimal)totalResults / query.Results);
 
             var pagedResult = PagedResult<T>.Create(list, query.Page, query.Results, totalPages, totalResults);
+
+            return pagedResult;
+        }
+
+        /// <inheritdoc/>
+        public virtual async Task<PagedResult<TResult>> BrowseAsync<TResult>(IPagedQuery query, ISpecification<T, TResult> specification, CancellationToken ct = default)
+        {
+            var list = await ListAsync<TResult>(specification, ct);
+            var totalResults = await CountAsync(specification, ct);
+            var totalPages = (int)Math.Ceiling((decimal)totalResults / query.Results);
+
+            var pagedResult = PagedResult<TResult>.Create(list, query.Page, query.Results, totalPages, totalResults);
 
             return pagedResult;
         }

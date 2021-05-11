@@ -2,7 +2,7 @@
 
 namespace ChurchManager.Domain.Features.Groups.Repositories
 {
-    public interface IGroupMemberDbRepository : IGenericRepositoryAsync<GroupMember>
+    public interface IGroupMemberDbRepository : IGenericDbRepository<GroupMember>
     {
         
     }

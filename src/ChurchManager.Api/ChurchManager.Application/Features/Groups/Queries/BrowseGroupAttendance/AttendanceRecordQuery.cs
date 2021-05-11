@@ -5,7 +5,7 @@ using AutoMapper;
 using ChurchManager.Application.ViewModels;
 using ChurchManager.Domain.Features.Groups;
 using ChurchManager.Domain.Features.Groups.Repositories;
-using ChurchManager.Domain.Specifications;
+using ChurchManager.Domain.Features.Groups.Specifications;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -28,10 +28,9 @@ namespace ChurchManager.Application.Features.Groups.Queries.BrowseGroupAttendanc
 
         public async Task<GroupAttendanceDetailViewModel> Handle(AttendanceRecordQuery query, CancellationToken ct)
         {
-            GroupAttendance entity = await _dbRepository
-                .Queryable(new GroupAttendanceSpecification(query.AttendanceRecordId))
-                .FirstOrDefaultAsync(ct);
-
+            var spec = new GroupAttendanceSpecification(query.AttendanceRecordId);
+            GroupAttendance entity = await _dbRepository.GetBySpecAsync(spec, ct);
+            
             try
             {
                 var vm = _mapper.Map<GroupAttendanceDetailViewModel>(entity);

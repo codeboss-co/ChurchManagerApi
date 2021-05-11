@@ -5,13 +5,14 @@ using System.Threading.Tasks;
 using ChurchManager.Domain.Features.Discipleship;
 using ChurchManager.Domain.Features.Discipleship.Repositories;
 using ChurchManager.Domain.Shared;
+using ChurchManager.Infrastructure.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
 
 namespace ChurchManager.Infrastructure.Persistence.Repositories
 {
     public class DiscipleshipDbRepository : GenericRepositoryBase<DiscipleshipStepDefinition>, IDiscipleshipStepDefinitionDbRepository
     {
-        public DiscipleshipDbRepository(DbContext dbContext): base(dbContext)
+        public DiscipleshipDbRepository(ChurchManagerDbContext dbContext): base(dbContext)
         {
         }
 

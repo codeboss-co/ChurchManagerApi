@@ -18,10 +18,10 @@ namespace ChurchManager.Application.Features.Discipleship.Queries.DiscipleshipTy
 
     public class DiscipleshipForPersonHandler : IRequestHandler<DiscipleshipForPersonQuery, ApiResponse>
     {
-        private readonly IGenericRepositoryAsync<DiscipleshipStep> _dbRepository;
+        private readonly IGenericDbRepository<DiscipleshipStep> _dbRepository;
         private readonly IMapper _mapper;
 
-        public DiscipleshipForPersonHandler(IGenericRepositoryAsync<DiscipleshipStep> dbRepository, IMapper mapper)
+        public DiscipleshipForPersonHandler(IGenericDbRepository<DiscipleshipStep> dbRepository, IMapper mapper)
         {
             _dbRepository = dbRepository;
             _mapper = mapper;
