@@ -6,6 +6,7 @@ using ChurchManager.Application.Abstractions.Services;
 using ChurchManager.Domain.Shared;
 using ChurchManager.Application.Wrappers;
 using ChurchManager.Domain.Features.Discipleship;
+using ChurchManager.Domain.Features.Discipleship.Repositories;
 using MediatR;
 
 namespace ChurchManager.Application.Features.Profile.Queries.RetrieveProfile

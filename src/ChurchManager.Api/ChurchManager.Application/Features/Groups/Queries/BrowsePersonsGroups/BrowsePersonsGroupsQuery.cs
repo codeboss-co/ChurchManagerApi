@@ -21,12 +21,12 @@ namespace ChurchManager.Application.Features.Groups.Queries.BrowsePersonsGroups
     public class BrowsePersonsGroupsHandler : IRequestHandler<BrowsePersonsGroupsQuery, PagedResponse<GroupSummaryViewModel>>
     {
         private readonly ICognitoCurrentUser _currentUser;
-        private readonly IGroupDbRepository2 _groupDbRepository;
+        private readonly IGroupDbRepository _groupDbRepository;
         private readonly IMapper _mapper;
 
         public BrowsePersonsGroupsHandler(
             ICognitoCurrentUser currentUser,
-            IGroupDbRepository2 groupDbRepository,
+            IGroupDbRepository groupDbRepository,
             IMapper mapper)
         {
             _currentUser = currentUser;

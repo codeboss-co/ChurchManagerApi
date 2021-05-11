@@ -16,12 +16,12 @@ namespace ChurchManager.Application.Features.Groups.Services
 {
     public class GroupAttendanceAppService : IGroupAttendanceAppService
     {
-        private readonly IGroupDbRepository2 _groupDb;
+        private readonly IGroupDbRepository _groupDb;
         private readonly IGroupsService _service;
         private readonly IGroupAttendanceDbRepository _attendanceDbRepository;
 
         public GroupAttendanceAppService(
-            IGroupDbRepository2 groupDb,
+            IGroupDbRepository groupDb,
             IGroupsService service,
             IGroupAttendanceDbRepository attendanceDbRepository)
         {

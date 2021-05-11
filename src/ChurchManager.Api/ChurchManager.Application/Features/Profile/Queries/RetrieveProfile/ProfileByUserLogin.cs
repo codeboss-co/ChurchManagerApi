@@ -6,6 +6,7 @@ using ChurchManager.Application.Abstractions.Services;
 using ChurchManager.Application.ViewModels;
 using ChurchManager.Application.Wrappers;
 using ChurchManager.Domain.Features.Discipleship;
+using ChurchManager.Domain.Features.Discipleship.Repositories;
 using ChurchManager.Domain.Shared;
 using MediatR;
 

@@ -7,7 +7,7 @@ using ChurchManager.Infrastructure.Abstractions.Persistence;
 
 namespace ChurchManager.Domain.Features.Groups.Repositories
 {
-    public interface IGroupDbRepository2 : IGenericDbRepository<Group>
+    public interface IGroupDbRepository : IGenericDbRepository<Group>
     {
         Task<IEnumerable<GroupMemberViewModel>> GroupMembersAsync(int groupId, RecordStatus status,CancellationToken ct = default);
         Task<IEnumerable<GroupViewModel>> GroupsWithChildrenAsync(int maxDepth, CancellationToken ct = default);

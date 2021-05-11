@@ -4,9 +4,9 @@ using System.Threading.Tasks;
 using ChurchManager.Domain.Shared;
 using ChurchManager.Infrastructure.Abstractions.Persistence;
 
-namespace ChurchManager.Domain.Features.Discipleship
+namespace ChurchManager.Domain.Features.Discipleship.Repositories
 {
-    public interface IDiscipleshipStepDefinitionDbRepository : IGenericRepositoryAsync<DiscipleshipStepDefinition>
+    public interface IDiscipleshipStepDefinitionDbRepository : IGenericDbRepository<DiscipleshipStepDefinition>
     {
         Task<IEnumerable<DiscipleshipStepViewModel>> DiscipleshipStepInfoForPersonAsync(int personId, int discipleshipStepDefinitionId, CancellationToken ct = default);
     }

@@ -1,5 +1,6 @@
 ﻿using ChurchManager.Domain.Features.Churches.Repositories;
 using ChurchManager.Domain.Features.Discipleship;
+using ChurchManager.Domain.Features.Discipleship.Repositories;
 using ChurchManager.Domain.Features.Groups.Repositories;
 using ChurchManager.Domain.Features.People.Repositories;
 using ChurchManager.Infrastructure.Abstractions.Persistence;
@@ -77,7 +78,7 @@ namespace ChurchManager.Infrastructure.Persistence
 
             services.AddScoped(typeof(IGenericDbRepository<>), typeof(GenericRepositoryBase<>));
             services.AddScoped<IPersonDbRepository, PersonDbRepository>();
-            services.AddScoped<IGroupDbRepository2, GroupDbRepository2>();
+            services.AddScoped<IGroupDbRepository, GroupDbRepository>();
 
             #endregion
         }

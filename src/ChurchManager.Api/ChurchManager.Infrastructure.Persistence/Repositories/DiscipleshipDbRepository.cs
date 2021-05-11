@@ -3,15 +3,15 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using ChurchManager.Domain.Features.Discipleship;
+using ChurchManager.Domain.Features.Discipleship.Repositories;
 using ChurchManager.Domain.Shared;
-using ChurchManager.Infrastructure.Abstractions.Persistence;
 using Microsoft.EntityFrameworkCore;
 
 namespace ChurchManager.Infrastructure.Persistence.Repositories
 {
-    public class DiscipleshipDbRepository : GenericRepositoryAsync<DiscipleshipStepDefinition>, IDiscipleshipStepDefinitionDbRepository
+    public class DiscipleshipDbRepository : GenericRepositoryBase<DiscipleshipStepDefinition>, IDiscipleshipStepDefinitionDbRepository
     {
-        public DiscipleshipDbRepository(IChurchManagerDbContext dbContext): base(dbContext)
+        public DiscipleshipDbRepository(DbContext dbContext): base(dbContext)
         {
         }
 

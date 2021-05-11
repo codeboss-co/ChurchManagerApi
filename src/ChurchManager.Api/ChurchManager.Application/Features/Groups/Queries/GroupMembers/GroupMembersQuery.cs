@@ -14,10 +14,10 @@ namespace ChurchManager.Application.Features.Groups.Queries.GroupMembers
 
     public class GroupMembersHandler : IRequestHandler<GroupMembersQuery, ApiResponse>
     {
-        private readonly IGroupDbRepository2 _groupDbRepository;
+        private readonly IGroupDbRepository _groupDbRepository;
         private readonly IMapper _mapper;
 
-        public GroupMembersHandler(IGroupDbRepository2 groupDbRepository, IMapper mapper)
+        public GroupMembersHandler(IGroupDbRepository groupDbRepository, IMapper mapper)
         {
             _groupDbRepository = groupDbRepository;
             _mapper = mapper;
