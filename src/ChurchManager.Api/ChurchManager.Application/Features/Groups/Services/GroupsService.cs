@@ -11,9 +11,9 @@ namespace ChurchManager.Application.Features.Groups.Services
 {
     public class GroupsService : IGroupsService
     {
-        private readonly IGroupDbRepository2 _groupDb;
+        private readonly IGroupDbRepository _groupDb;
 
-        public GroupsService(IGroupDbRepository2 groupDb)
+        public GroupsService(IGroupDbRepository groupDb)
         {
             _groupDb = groupDb;
         }

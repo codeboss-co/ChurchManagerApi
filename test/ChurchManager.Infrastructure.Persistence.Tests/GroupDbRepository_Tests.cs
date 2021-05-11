@@ -31,7 +31,7 @@ namespace ChurchManager.Infrastructure.Persistence.Tests
         {
             using (var dbContext = new ChurchManagerDbContext(_options))
             {
-                var dbRepository = new GroupDbRepository2(dbContext);
+                var dbRepository = new GroupDbRepository(dbContext);
 
                 // This is bad
                 var groups = await dbRepository.Queryable()
@@ -51,7 +51,7 @@ namespace ChurchManager.Infrastructure.Persistence.Tests
         {
             using(var dbContext = new ChurchManagerDbContext(_options))
             {
-                var dbRepository = new GroupDbRepository2(dbContext);
+                var dbRepository = new GroupDbRepository(dbContext);
                 var service = new GroupsService(dbRepository);
 
                 // This is bad
