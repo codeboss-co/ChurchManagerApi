@@ -23,6 +23,8 @@ namespace ChurchManager.Application
             #region Application Services
 
             services.AddScoped<IProfileService, ProfileService>(); 
+            services.AddScoped<IPersonService, PersonService>(); 
+            services.AddScoped<IGroupsService, GroupsService>();
             services.AddScoped<IGroupAttendanceAppService, GroupAttendanceAppService>(); 
 
             #endregion

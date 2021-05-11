@@ -13,10 +13,10 @@ namespace ChurchManager.Application.Features.Groups.Queries.GroupsForChurch
 
     public class GroupsForChurchSelectItemHandler : IRequestHandler<GroupsForChurchSelectItemQuery, ApiResponse>
     {
-        private readonly IGroupDbRepository _dbRepository;
+        private readonly IGroupDbRepository2 _dbRepository;
         private readonly IMapper _mapper;
 
-        public GroupsForChurchSelectItemHandler(IGroupDbRepository dbRepository, IMapper mapper)
+        public GroupsForChurchSelectItemHandler(IGroupDbRepository2 dbRepository, IMapper mapper)
         {
             _dbRepository = dbRepository;
             _mapper = mapper;

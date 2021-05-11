@@ -2,19 +2,14 @@
 using System.Threading;
 using System.Threading.Tasks;
 using ChurchManager.Domain.Common;
-using ChurchManager.Domain.Parameters;
 using ChurchManager.Domain.Shared;
 using ChurchManager.Infrastructure.Abstractions.Persistence;
-using Convey.CQRS.Queries;
 
 namespace ChurchManager.Domain.Features.Groups.Repositories
 {
-    public interface IGroupDbRepository : IGenericRepositoryAsync<Group>
+    public interface IGroupDbRepository2 : IGenericDbRepository<Group>
     {
-        Task<IEnumerable<Group>> AllPersonsGroups(int personId, RecordStatus recordStatus, CancellationToken ct = default);
-        Task<PagedResult<Group>> BrowsePersonsGroups(int personId, string search, QueryParameter query, CancellationToken ct = default);
-        Task<IEnumerable<GroupMemberViewModel>> GroupMembersAsync(int groupId, CancellationToken ct = default);
-        Task<IEnumerable<GroupTypeRole>> GroupRolesForGroupAsync(int groupId, CancellationToken ct = default);
+        Task<IEnumerable<GroupMemberViewModel>> GroupMembersAsync(int groupId, RecordStatus status,CancellationToken ct = default);
         Task<IEnumerable<GroupViewModel>> GroupsWithChildrenAsync(int maxDepth, CancellationToken ct = default);
     }
 }

@@ -13,10 +13,10 @@ namespace ChurchManager.Application.Features.Groups.Queries.GroupsWithChildren
 
     public class GroupsWithChildrenHandler : IRequestHandler<GroupsWithChildrenQuery, ApiResponse>
     {
-        private readonly IGroupDbRepository _dbRepository;
+        private readonly IGroupDbRepository2 _dbRepository;
         private readonly IMapper _mapper;
 
-        public GroupsWithChildrenHandler(IGroupDbRepository dbRepository, IMapper mapper)
+        public GroupsWithChildrenHandler(IGroupDbRepository2 dbRepository, IMapper mapper)
         {
             _dbRepository = dbRepository;
             _mapper = mapper;
