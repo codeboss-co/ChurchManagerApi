@@ -98,6 +98,7 @@ namespace ChurchManager.DataImporter
                 }
 
                 // Cell Group Type
+                var  sectionGroupType = new GroupType { Name = "Section", Description = "Group Section", IconCssClass = "heroicons_outline:collection" };
                 var  cellGroupType = new GroupType { Name = "Cell", Description = "Cell Ministry", IconCssClass = "heroicons_outline:share" };
                 // Cell Group Roles
                 var cellLeaderRole = new GroupTypeRole
@@ -111,6 +112,7 @@ namespace ChurchManager.DataImporter
 
                 if(!dbContext.GroupType.Any())
                 {
+                    dbContext.Add(sectionGroupType);
                     dbContext.Add(cellGroupType);
                     dbContext.GroupTypeRole.Add(cellLeaderRole);
                     dbContext.GroupTypeRole.Add(cellAssistantRole);
@@ -139,12 +141,24 @@ namespace ChurchManager.DataImporter
 
                     churchDbList = dbContext.Church.ToList();
 
+                    // Cell Groups Section
+                    var cellSectionParentGroup = new Group
+                    {
+                        GroupTypeId = dbContext.GroupType.Single(x => x.Name == "Section").Id,
+                        Name = "Cell Groups", Description = "Grouping section for cell groups", CreatedDate = DateTime.UtcNow,
+                        // Use the first groups church - we assume its the same church
+                        ChurchId = churchDbList.FirstOrDefault(x => x.Name == groups.First().Church)?.Id
+                    };
+
                     // First insert all root parent groups i.e. they have no parents
                     var parentGroups = groups
                         .Where(import => import.ParentGroupName.IsNullOrEmpty())
                         .Select(x => CellGroupImport.ToEntity(x, churchDbList))
                         .ToList();
+                    // Make all the root (parent) groups part of the section group
+                    parentGroups.ForEach(parent => parent.ParentGroup = cellSectionParentGroup);
 
+                    dbContext.Add(cellSectionParentGroup);
                     dbContext.AddRange(parentGroups);
                     var inserted = dbContext.SaveChanges();
                     Console.WriteLine($"\t > Root Groups added: {inserted}");
