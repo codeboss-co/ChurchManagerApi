@@ -7,7 +7,6 @@ using ChurchManager.Domain.Features.Groups;
 using ChurchManager.Domain.Features.Groups.Repositories;
 using ChurchManager.Domain.Features.Groups.Specifications;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 
 namespace ChurchManager.Application.Features.Groups.Queries.BrowseGroupAttendance
 {

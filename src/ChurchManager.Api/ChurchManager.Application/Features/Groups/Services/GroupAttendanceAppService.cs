@@ -82,7 +82,7 @@ namespace ChurchManager.Application.Features.Groups.Services
                                     ConnectionStatus = ConnectionStatus.FirstTimer,
                                     RecordStatus = RecordStatus.Pending,
                                     PhoneNumbers = new List<PhoneNumber>() { new() { CountryCode = "+27" , Number = x.PhoneNumber } },
-                                    Source = $"{group.GroupType.Name} {group.GroupType.GroupTerm}"
+                                    Source = $"{group.GroupType.Name}"
                                 }
                             },
                             AttendanceDate = command.AttendanceDate,
@@ -104,7 +104,8 @@ namespace ChurchManager.Application.Features.Groups.Services
                         FirstTimerCount = command.FirstTimers.Count(),
                         NewConvertCount = attendees.Where(x =>x.IsNewConvert.HasValue).Count(x => x.IsNewConvert.Value),
                         ReceivedHolySpiritCount = attendees.Where(x => x.ReceivedHolySpirit.HasValue).Count(x => x.ReceivedHolySpirit.Value),
-                        Attendees = attendees
+                        Attendees = attendees,
+                        Notes = command.Notes
                     };
                 }
 

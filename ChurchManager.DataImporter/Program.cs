@@ -106,7 +106,7 @@ namespace ChurchManager.DataImporter
                     CanView = true, CanEdit = true, CanManageMembers = true,
                     GroupType = cellGroupType
                 };
-                var cellAssistantRole = new GroupTypeRole { Name = "Assistant", Description = "Assistant Leader", GroupType = cellGroupType };
+                var cellAssistantRole = new GroupTypeRole { Name = "Assistant", Description = "Assistant Leader", GroupType = cellGroupType, IsLeader = true};
                 var cellMemberRole = new GroupTypeRole { Name = "Member", Description = "Group Member", GroupType = cellGroupType };
 
                 if(!dbContext.GroupType.Any())
