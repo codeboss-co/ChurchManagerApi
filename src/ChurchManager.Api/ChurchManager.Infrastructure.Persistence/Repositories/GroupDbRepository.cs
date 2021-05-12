@@ -47,13 +47,25 @@ namespace ChurchManager.Infrastructure.Persistence.Repositories
             return members;
         }
 
-        public async Task<IEnumerable<GroupViewModel>> GroupsWithChildrenAsync(int maxDepth, CancellationToken ct = default)
+        public async Task<IEnumerable<GroupViewModel>> GroupsWithChildrenAsync(int? parentGroupId = null, int maxDepth = 10, CancellationToken ct = default)
         {
             var query = Queryable()
                 .AsNoTracking()
                 .Include(x => x.GroupType)
-                .Where(x => x.ParentGroupId == null) // Exclude children\
+                .Where(x => x.ParentGroupId == parentGroupId) // null will start at the root of the tree
                 .Select(GroupProjection(maxDepth))
+                ;
+
+            return await query.ToListAsync(ct);
+        }
+
+        public async Task<IEnumerable<GroupViewModel>> GroupWithChildrenAsync(int groupId, int maxDepth = 10, CancellationToken ct = default)
+        {
+            var query = Queryable()
+                    .AsNoTracking()
+                    .Include(x => x.GroupType)
+                    .Where(x => x.Id == groupId) 
+                    .Select(GroupProjection(maxDepth))
                 ;
 
             return await query.ToListAsync(ct);

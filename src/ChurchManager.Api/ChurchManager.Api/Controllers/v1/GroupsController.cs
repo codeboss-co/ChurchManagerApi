@@ -82,5 +82,17 @@ namespace ChurchManager.Api.Controllers.v1
         {
             return Ok(await Mediator.Send(new GroupsWithChildrenQuery(), token));
         }
+
+        [HttpGet("parent/{parentGroupId}/tree")]
+        public async Task<IActionResult> GetGroupWithChildrenByParentTree(int parentGroupId, CancellationToken token)
+        {
+            return Ok(await Mediator.Send(new GroupsWithChildrenQuery{ParentGroupId = parentGroupId }, token));
+        }
+
+        [HttpGet("{groupId}/tree")]
+        public async Task<IActionResult> GetGroupWithChildrenTree(int groupId, CancellationToken token)
+        {
+            return Ok(await Mediator.Send(new GroupWithChildrenQuery(groupId), token));
+        }
     }
 }
