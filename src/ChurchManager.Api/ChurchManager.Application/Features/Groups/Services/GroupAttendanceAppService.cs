@@ -3,32 +3,30 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using ChurchManager.Application.Abstractions.Services;
 using ChurchManager.Application.Features.Groups.Commands.GroupAttendanceRecord;
-using ChurchManager.Domain;
 using ChurchManager.Domain.Common;
 using ChurchManager.Domain.Features.Groups;
 using ChurchManager.Domain.Features.Groups.Repositories;
+using ChurchManager.Domain.Features.Groups.Specifications;
 using ChurchManager.Domain.Features.People;
-using Microsoft.EntityFrameworkCore;
 using GroupMemberAttendance = ChurchManager.Domain.Features.Groups.GroupMemberAttendance;
 
 namespace ChurchManager.Application.Features.Groups.Services
 {
-    public interface IGroupAttendanceAppService
-    {
-        Task RecordAttendanceAsync(GroupAttendanceRecordCommand command, CancellationToken ct = default);
-    }
-
     public class GroupAttendanceAppService : IGroupAttendanceAppService
     {
-        private readonly IGroupDbRepository _groupDbRepository;
+        private readonly IGroupDbRepository _groupDb;
+        private readonly IGroupsService _service;
         private readonly IGroupAttendanceDbRepository _attendanceDbRepository;
 
         public GroupAttendanceAppService(
-            IGroupDbRepository groupDbRepository,
+            IGroupDbRepository groupDb,
+            IGroupsService service,
             IGroupAttendanceDbRepository attendanceDbRepository)
         {
-            _groupDbRepository = groupDbRepository;
+            _groupDb = groupDb;
+            _service = service;
             _attendanceDbRepository = attendanceDbRepository;
         }
 
@@ -52,12 +50,9 @@ namespace ChurchManager.Application.Features.Groups.Services
                 }
                 else
                 {
-                    var groupMemberRoles = await _groupDbRepository.GroupRolesForGroupAsync(command.GroupId, ct);
-                    var group = await _groupDbRepository
-                        .Queryable()
-                        .AsNoTracking()
-                        .Include(x => x.GroupType)
-                        .SingleAsync(x => x.Id == command.GroupId, ct);
+                    var groupMemberRoles = await _service.GroupRolesForGroupAsync(command.GroupId, ct);
+                    var spec = new GroupWithTypeSpecification(command.GroupId);
+                    var group = await _groupDb.GetBySpecAsync(spec, ct);
 
                     var members = command.Members
                         .Select(x => new GroupMemberAttendance
@@ -87,7 +82,7 @@ namespace ChurchManager.Application.Features.Groups.Services
                                     ConnectionStatus = ConnectionStatus.FirstTimer,
                                     RecordStatus = RecordStatus.Pending,
                                     PhoneNumbers = new List<PhoneNumber>() { new() { CountryCode = "+27" , Number = x.PhoneNumber } },
-                                    Source = $"{group.GroupType.Name} {group.GroupType.GroupTerm}"
+                                    Source = $"{group.GroupType.Name}"
                                 }
                             },
                             AttendanceDate = command.AttendanceDate,
@@ -97,7 +92,7 @@ namespace ChurchManager.Application.Features.Groups.Services
                             ReceivedHolySpirit = x.ReceivedHolySpirit
                         }
                         ).ToList();
-
+                    // Attendees = Members + First Timers
                     var attendees = members.Concat(firstTimers).ToList();
 
                     groupAttendance = new GroupAttendance
@@ -109,7 +104,8 @@ namespace ChurchManager.Application.Features.Groups.Services
                         FirstTimerCount = command.FirstTimers.Count(),
                         NewConvertCount = attendees.Where(x =>x.IsNewConvert.HasValue).Count(x => x.IsNewConvert.Value),
                         ReceivedHolySpiritCount = attendees.Where(x => x.ReceivedHolySpirit.HasValue).Count(x => x.ReceivedHolySpirit.Value),
-                        Attendees = attendees
+                        Attendees = attendees,
+                        Notes = command.Notes
                     };
                 }
 

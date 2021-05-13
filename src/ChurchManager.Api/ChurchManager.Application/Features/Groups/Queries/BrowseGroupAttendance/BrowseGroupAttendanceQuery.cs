@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using ChurchManager.Application.Abstractions;
 using ChurchManager.Application.Wrappers;
 using ChurchManager.Domain.Features.Groups.Repositories;
-using ChurchManager.Domain.Shared.Parameters;
+using ChurchManager.Domain.Parameters;
+using ChurchManager.Domain.Shared;
 using MediatR;
 
 namespace ChurchManager.Application.Features.Groups.Queries.BrowseGroupAttendance
@@ -12,7 +12,7 @@ namespace ChurchManager.Application.Features.Groups.Queries.BrowseGroupAttendanc
     public record BrowseGroupAttendanceQuery
         : QueryParameter, IRequest<PagedResponse<GroupAttendanceViewModel>>
     {
-        public int GroupTypeId { get; set; } = 1; // Cell Ministry is 1
+        public int GroupTypeId { get; set; } = DomainConstants.GROUP_TYPE_CELL_MINISTRY;
         public int? ChurchId { get; set; }
         public int? GroupId { get; set; }
         public bool WithFeedBack { get; set; }
@@ -39,9 +39,7 @@ namespace ChurchManager.Application.Features.Groups.Queries.BrowseGroupAttendanc
                 query.WithFeedBack,
                 query.From, query.To, ct);
 
-            // TODO: Fix pagination using new dynamic
-            //return new PagedResponse<GroupAttendanceViewModel>(results);
-            return new PagedResponse<GroupAttendanceViewModel>(null);
+            return new PagedResponse<GroupAttendanceViewModel>(results);
         }
     }
 

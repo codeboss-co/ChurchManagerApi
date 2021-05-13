@@ -9,6 +9,7 @@ namespace ChurchManager.Application.Features.Groups.Queries.GroupsWithChildren
 {
     public record GroupsWithChildrenQuery : IRequest<ApiResponse>
     {
+        public int? ParentGroupId { get; set; } = null;
     }
 
     public class GroupsWithChildrenHandler : IRequestHandler<GroupsWithChildrenQuery, ApiResponse>
@@ -25,7 +26,7 @@ namespace ChurchManager.Application.Features.Groups.Queries.GroupsWithChildren
 
         public async Task<ApiResponse> Handle(GroupsWithChildrenQuery request, CancellationToken ct)
         {
-            var groups = await _dbRepository.GroupsWithChildrenAsync(10, ct);
+            var groups = await _dbRepository.GroupsWithChildrenAsync(ct: ct);
 
             return new ApiResponse(groups);
         }

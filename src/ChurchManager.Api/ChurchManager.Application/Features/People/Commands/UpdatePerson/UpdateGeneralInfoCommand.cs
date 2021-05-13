@@ -1,12 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using ChurchManager.Domain.Features.People;
 using ChurchManager.Domain.Features.People.Repositories;
+using ChurchManager.Domain.Features.People.Specifications;
 using CodeBoss.Extensions;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using BirthDate = ChurchManager.Application.Features.People.Commands.AddNewFamily.BirthDate;
 
 namespace ChurchManager.Application.Features.People.Commands.UpdatePerson
@@ -32,10 +33,10 @@ namespace ChurchManager.Application.Features.People.Commands.UpdatePerson
 
         public async Task<Unit> Handle(UpdateGeneralInfoCommand command, CancellationToken ct)
         {
-            var person = await _dbRepository.Queryable()
-                .Include(x => x.PhoneNumbers)
-                .FirstOrDefaultAsync(x => x.Id == command.PersonId, ct);
+            var spec = new PersonWithPhonesSpecification(command.PersonId);
 
+            var person = await _dbRepository.GetBySpecAsync(spec, ct) ?? throw new ArgumentNullException(nameof(Person));
+            
             if (person.PhoneNumbers.Any())
             {
                 var phoneNumber = person.PhoneNumbers.First();
@@ -70,7 +71,7 @@ namespace ChurchManager.Application.Features.People.Commands.UpdatePerson
             person.Email = new Email {Address = command.Email, IsActive = !command.Email.IsNullOrEmpty()};
             person.MaritalStatus = command.MaritalStatus;
 
-            await _dbRepository.SaveChangesAsync();
+            await _dbRepository.SaveChangesAsync(ct);
 
             return new Unit();
         }

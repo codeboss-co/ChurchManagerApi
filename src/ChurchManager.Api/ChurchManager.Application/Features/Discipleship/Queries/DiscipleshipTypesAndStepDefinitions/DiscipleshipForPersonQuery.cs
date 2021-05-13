@@ -2,9 +2,9 @@
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
-using ChurchManager.Application.Abstractions;
 using ChurchManager.Application.Wrappers;
 using ChurchManager.Domain.Features.Discipleship;
+using ChurchManager.Domain.Shared;
 using ChurchManager.Infrastructure.Abstractions.Persistence;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -18,10 +18,10 @@ namespace ChurchManager.Application.Features.Discipleship.Queries.DiscipleshipTy
 
     public class DiscipleshipForPersonHandler : IRequestHandler<DiscipleshipForPersonQuery, ApiResponse>
     {
-        private readonly IGenericRepositoryAsync<DiscipleshipStep> _dbRepository;
+        private readonly IGenericDbRepository<DiscipleshipStep> _dbRepository;
         private readonly IMapper _mapper;
 
-        public DiscipleshipForPersonHandler(IGenericRepositoryAsync<DiscipleshipStep> dbRepository, IMapper mapper)
+        public DiscipleshipForPersonHandler(IGenericDbRepository<DiscipleshipStep> dbRepository, IMapper mapper)
         {
             _dbRepository = dbRepository;
             _mapper = mapper;

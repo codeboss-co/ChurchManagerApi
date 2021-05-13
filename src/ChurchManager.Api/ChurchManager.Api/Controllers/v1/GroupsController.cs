@@ -11,7 +11,6 @@ using ChurchManager.Application.Features.Groups.Queries.GroupsForPerson;
 using ChurchManager.Application.Features.Groups.Queries.GroupsWithChildren;
 using ChurchManager.Domain;
 using ChurchManager.Domain.Common;
-using ChurchManager.Domain.Shared;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -48,13 +47,14 @@ namespace ChurchManager.Api.Controllers.v1
         {
             query.PersonId = _currentUser.PersonId; // Reset to current person
             return Ok(await Mediator.Send(query, token));
-        } 
+        }
         #endregion
 
+        // http://localhost/Groups/1/members?recordStatus=Pending
         [HttpGet("{groupId}/members")]
-        public async Task<IActionResult> GetGroupMembers(int groupId, CancellationToken token)
+        public async Task<IActionResult> GetGroupMembers(int groupId, [FromQuery] string recordStatus = "Active", CancellationToken token = default)
         {
-            return Ok(await Mediator.Send(new GroupMembersQuery(groupId), token));
+            return Ok(await Mediator.Send(new GroupMembersQuery(groupId){RecordStatus = recordStatus }, token));
         }
 
         [HttpGet("church/{churchId}")]
@@ -81,6 +81,18 @@ namespace ChurchManager.Api.Controllers.v1
         public async Task<IActionResult> GetGroupsWithChildrenTree(CancellationToken token)
         {
             return Ok(await Mediator.Send(new GroupsWithChildrenQuery(), token));
+        }
+
+        [HttpGet("parent/{parentGroupId}/tree")]
+        public async Task<IActionResult> GetGroupWithChildrenByParentTree(int parentGroupId, CancellationToken token)
+        {
+            return Ok(await Mediator.Send(new GroupsWithChildrenQuery{ParentGroupId = parentGroupId }, token));
+        }
+
+        [HttpGet("{groupId}/tree")]
+        public async Task<IActionResult> GetGroupWithChildrenTree(int groupId, CancellationToken token)
+        {
+            return Ok(await Mediator.Send(new GroupWithChildrenQuery(groupId), token));
         }
     }
 }

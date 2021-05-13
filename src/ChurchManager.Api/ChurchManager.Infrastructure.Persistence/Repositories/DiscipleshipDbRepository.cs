@@ -2,16 +2,17 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using ChurchManager.Application.Abstractions;
 using ChurchManager.Domain.Features.Discipleship;
-using ChurchManager.Infrastructure.Abstractions.Persistence;
+using ChurchManager.Domain.Features.Discipleship.Repositories;
+using ChurchManager.Domain.Shared;
+using ChurchManager.Infrastructure.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
 
 namespace ChurchManager.Infrastructure.Persistence.Repositories
 {
-    public class DiscipleshipDbRepository : GenericRepositoryAsync<DiscipleshipStepDefinition>, IDiscipleshipStepDefinitionDbRepository
+    public class DiscipleshipDbRepository : GenericRepositoryBase<DiscipleshipStepDefinition>, IDiscipleshipStepDefinitionDbRepository
     {
-        public DiscipleshipDbRepository(IChurchManagerDbContext dbContext): base(dbContext)
+        public DiscipleshipDbRepository(ChurchManagerDbContext dbContext): base(dbContext)
         {
         }
 

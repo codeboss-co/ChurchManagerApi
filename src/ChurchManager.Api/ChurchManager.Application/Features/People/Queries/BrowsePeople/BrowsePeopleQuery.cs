@@ -1,9 +1,10 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
+using ChurchManager.Application.Abstractions.Services;
+using ChurchManager.Application.ViewModels;
 using ChurchManager.Application.Wrappers;
-using ChurchManager.Domain.Features.People.Repositories;
-using ChurchManager.Domain.Shared.Parameters;
+using ChurchManager.Domain.Parameters;
 using MediatR;
 
 namespace ChurchManager.Application.Features.People.Queries.BrowsePeople
@@ -14,26 +15,24 @@ namespace ChurchManager.Application.Features.People.Queries.BrowsePeople
 
     public class BrowsePeopleHandler : IRequestHandler<BrowsePeopleQuery, PagedResponse<PersonViewModel>>
     {
-        private readonly IPersonDbRepository _dbRepository;
+        private readonly IPersonService _service;
         private readonly IMapper _mapper;
 
-        public BrowsePeopleHandler(IPersonDbRepository dbRepository, IMapper mapper)
+        public BrowsePeopleHandler(IPersonService service, IMapper mapper)
         {
-            _dbRepository = dbRepository;
+            _service = service;
             _mapper = mapper;
         }
 
         public async Task<PagedResponse<PersonViewModel>> Handle(BrowsePeopleQuery query, CancellationToken ct)
         {
-            var pagedResult = await _dbRepository.BrowsePeopleAsync(query, ct);
+            var pagedResult = await _service.BrowseAsync(query, ct);
 
             try
             {
                 var vm = _mapper.Map<Convey.CQRS.Queries.PagedResult<PersonViewModel>>(pagedResult);
 
                 return new PagedResponse<PersonViewModel>(vm);
-
-                return null;
             }
             catch(System.Exception ex)
             {

@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Linq;
 using System.Threading.Tasks;
-using ChurchManager.Application.Features.Profile.Services;
+using ChurchManager.Application.Abstractions.Services;
 using ChurchManager.Domain.Features.People;
+using ChurchManager.Domain.Features.People.Specifications;
 using ChurchManager.Infrastructure.Abstractions.Persistence;
 using Codeboss.Types;
 using Microsoft.AspNetCore.Authorization;
@@ -16,13 +16,13 @@ namespace ChurchManager.Api.Hubs
     public class NotificationHub : Hub
     {
         private readonly IProfileService _service;
-        private readonly IGenericRepositoryAsync<OnlineUser> _onlineUserRepository;
+        private readonly IGenericDbRepository<OnlineUser> _onlineUserRepository;
         private readonly IDateTimeProvider _dateTime;
         private readonly ILogger<NotificationHub> _logger;
 
         public NotificationHub(
             IProfileService service,
-            IGenericRepositoryAsync<OnlineUser> onlineUserRepository,
+            IGenericDbRepository<OnlineUser> onlineUserRepository,
             IDateTimeProvider dateTime,
             ILogger<NotificationHub> logger)
         {
@@ -40,8 +40,7 @@ namespace ChurchManager.Api.Hubs
         {
             _logger.LogDebug("[√] NotificationHub Connected for {user}", Context.UserIdentifier);
 
-            var person = await _service.ProfileByUserLoginId(Context.UserIdentifier) 
-                         ?? throw new ArgumentNullException("person", "Person not found with UserLoginId");
+            var person = await _service.ProfileByUserLoginId(Context.UserIdentifier) ?? throw new ArgumentNullException("person", "Person not found with UserLoginId");
             var notification = new
             {
                 Type = "info",
@@ -55,10 +54,8 @@ namespace ChurchManager.Api.Hubs
             // Extra
             var connectionId = Context.ConnectionId;
             var userId = Context.UserIdentifier;
-            var onlineUser = await _onlineUserRepository
-                .Queryable()
-                .Include(x => x.Person)
-                .FirstOrDefaultAsync(p => p.Person.UserLoginId == userId);
+            var spec = new OnlineUserSpecification(userId);
+            var onlineUser = await _onlineUserRepository.GetBySpecAsync(spec);
 
             // Create new online user
             if (onlineUser is null)
@@ -75,22 +72,9 @@ namespace ChurchManager.Api.Hubs
             }
             await _onlineUserRepository.SaveChangesAsync();
 
-            var onlineUsers = await _onlineUserRepository
-                .Queryable()
-                .AsNoTracking()
-                .Include(x => x.Person)
-                //.Where(x => x.Status == "online")
-                .Select(x => new
-                {
-                    Id = userId,
-                    Name = $"{x.Person.FullName.FirstName} {x.Person.FullName.LastName}",
-                    Avatar = x.Person.PhotoUrl,
-                    x.Status,
-                    Unread = 2,
-                    LastOnline = _dateTime.ConvertFromUtc(x.LastOnlineDateTime.UtcDateTime)
-                })
-                .ToListAsync();
-            
+            var onlineUsersSpec = new OnlineUsersSpecification(_dateTime);
+            var onlineUsers = await _onlineUserRepository.ListAsync(onlineUsersSpec);
+
             await Clients.All.SendAsync("OnlineUsers", onlineUsers);
 
             await base.OnConnectedAsync();
@@ -111,21 +95,8 @@ namespace ChurchManager.Api.Hubs
                 onlineUser.GoOffline();
                 await _onlineUserRepository.SaveChangesAsync();
 
-                var onlineUsers = await _onlineUserRepository
-                    .Queryable()
-                    .AsNoTracking()
-                    .Include(x => x.Person)
-                    //.Where(x => x.Status == "online")
-                    .Select(x => new
-                    {
-                        Id = userId,
-                        Name = $"{x.Person.FullName.FirstName} {x.Person.FullName.LastName}",
-                        Avatar = x.Person.PhotoUrl,
-                        x.Status,
-                        Unread = 2,
-                        LastOnline = _dateTime.ConvertFromUtc(x.LastOnlineDateTime.UtcDateTime)
-                    })
-                    .ToListAsync();
+                var onlineUsersSpec = new OnlineUsersSpecification(_dateTime);
+                var onlineUsers = await _onlineUserRepository.ListAsync(onlineUsersSpec);
 
                 await Clients.All.SendAsync("OnlineUsers", onlineUsers);
             }

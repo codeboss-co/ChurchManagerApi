@@ -1,4 +1,4 @@
-﻿using ChurchManager.Application.Features.People.Queries;
+﻿using ChurchManager.Application.ViewModels;
 using ChurchManager.Infrastructure.Abstractions.Security;
 
 namespace ChurchManager.Application.Common

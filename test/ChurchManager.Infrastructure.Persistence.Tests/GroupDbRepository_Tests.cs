@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ChurchManager.Application.Features.Groups.Services;
 using ChurchManager.Domain.Features.Groups;
 using ChurchManager.Infrastructure.Persistence.Contexts;
 using ChurchManager.Infrastructure.Persistence.Repositories;
@@ -42,6 +43,21 @@ namespace ChurchManager.Infrastructure.Persistence.Tests
 
                 // This is better
                 var better = await dbRepository.GroupsWithChildrenAsync(10);
+            }
+        }
+
+        [Fact]
+        public async Task Should_return_group_roles_for_group_GroupService()
+        {
+            using(var dbContext = new ChurchManagerDbContext(_options))
+            {
+                var dbRepository = new GroupDbRepository(dbContext);
+                var service = new GroupsService(dbRepository);
+
+                // This is bad
+                var roles = await service.GroupRolesForGroupAsync(1);
+
+                Assert.NotEmpty(roles);
             }
         }
 

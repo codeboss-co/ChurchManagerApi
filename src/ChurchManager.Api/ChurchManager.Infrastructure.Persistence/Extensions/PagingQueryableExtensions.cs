@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using System.Linq.Dynamic.Core;
-using Dynamic = System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
@@ -9,6 +8,7 @@ using Ardalis.GuardClauses;
 using Convey.CQRS.Queries;
 using Microsoft.EntityFrameworkCore;
 using ConveyPaging = Convey.CQRS.Queries;
+using Dynamic = System.Linq.Dynamic.Core;
 
 namespace ChurchManager.Infrastructure.Persistence.Extensions
 {
@@ -85,15 +85,6 @@ namespace ChurchManager.Infrastructure.Persistence.Extensions
             var data = await queryable.ToListAsync(ct);
 
             return ConveyPaging.PagedResult<T>.Create(data, page, resultsPerPage, totalPages, totalResults);
-        }
-        
-        private static Expression<Func<T, object>> ToLambda<T>(string propertyName)
-        {
-            var parameter = Expression.Parameter(typeof(T));
-            var property = Expression.Property(parameter, propertyName);
-            var propAsObject = Expression.Convert(property, typeof(object));
-
-            return Expression.Lambda<Func<T, object>>(propAsObject, parameter);
         }
 
         /// <summary>

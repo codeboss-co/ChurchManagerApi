@@ -17,7 +17,7 @@ namespace ChurchManager.Application.Features.Groups.Commands.GroupAttendanceReco
         public bool? DidNotOccur { get; set; }
         public IEnumerable<GroupMemberAttendance> Members { get; set; }
         public IEnumerable<FirstTimerAttendance> FirstTimers { get; set; }
-        public string Note { get; set; }
+        public string Notes { get; set; }
     }
 
     public class GroupAttendanceHandler : IRequestHandler<GroupAttendanceRecordCommand>

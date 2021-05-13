@@ -21,7 +21,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\ChurchManager.Api\ChurchManager.Domain.Shared\ChurchManager.Domain.Shared.csproj" />
     <ProjectReference Include="..\..\src\ChurchManager.Api\ChurchManager.Domain\ChurchManager.Domain.csproj" />
   </ItemGroup>
 

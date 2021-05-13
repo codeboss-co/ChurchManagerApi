@@ -21,6 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\src\ChurchManager.Api\ChurchManager.Application\ChurchManager.Application.csproj" />
     <ProjectReference Include="..\..\src\ChurchManager.Api\ChurchManager.Infrastructure.Persistence\ChurchManager.Infrastructure.Persistence.csproj" />
   </ItemGroup>
 

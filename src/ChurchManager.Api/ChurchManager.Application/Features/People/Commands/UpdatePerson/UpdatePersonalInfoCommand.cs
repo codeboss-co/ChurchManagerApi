@@ -1,5 +1,7 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
+using ChurchManager.Domain.Features.People;
 using ChurchManager.Domain.Features.People.Repositories;
 using MediatR;
 
@@ -24,9 +26,9 @@ namespace ChurchManager.Application.Features.People.Commands.UpdatePerson
             _dbRepository = dbRepository;
         }
 
-        public async Task<Unit> Handle(UpdatePersonalInfoCommand command, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(UpdatePersonalInfoCommand command, CancellationToken ct)
         {
-            var person = await _dbRepository.GetByIdAsync(command.PersonId);
+            var person = await _dbRepository.GetByIdAsync(command.PersonId, ct) ?? throw new ArgumentNullException(nameof(Person));
             person.FullName.FirstName = command.FirstName;
             person.FullName.MiddleName = command.MiddleName;
             person.FullName.LastName = command.LastName;
@@ -34,7 +36,7 @@ namespace ChurchManager.Application.Features.People.Commands.UpdatePerson
             person.AgeClassification = command.AgeClassification;
 
 
-            await _dbRepository.SaveChangesAsync();
+            await _dbRepository.SaveChangesAsync(ct);
 
             return new Unit();
         }

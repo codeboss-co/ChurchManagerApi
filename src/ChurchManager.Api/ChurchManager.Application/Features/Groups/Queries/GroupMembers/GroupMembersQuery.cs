@@ -7,7 +7,10 @@ using MediatR;
 
 namespace ChurchManager.Application.Features.Groups.Queries.GroupMembers
 {
-    public record GroupMembersQuery(int GroupId) : IRequest<ApiResponse>;
+    public record GroupMembersQuery(int GroupId) : IRequest<ApiResponse>
+    {
+        public string RecordStatus { get; set; } = "Active";
+    }
 
     public class GroupMembersHandler : IRequestHandler<GroupMembersQuery, ApiResponse>
     {
@@ -22,7 +25,7 @@ namespace ChurchManager.Application.Features.Groups.Queries.GroupMembers
 
         public async Task<ApiResponse> Handle(GroupMembersQuery query, CancellationToken ct)
         {
-            var members = await _groupDbRepository.GroupMembersAsync(query.GroupId, ct);
+            var members = await _groupDbRepository.GroupMembersAsync(query.GroupId, query.RecordStatus, ct);
 
             return new ApiResponse(members);
         }

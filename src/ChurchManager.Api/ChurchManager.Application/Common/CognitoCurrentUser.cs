@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using ChurchManager.Application.Features.People.Queries;
-using ChurchManager.Application.Features.Profile.Services;
+using ChurchManager.Application.Abstractions.Services;
+using ChurchManager.Application.ViewModels;
 using Codeboss.Types;
 
 namespace ChurchManager.Application.Common

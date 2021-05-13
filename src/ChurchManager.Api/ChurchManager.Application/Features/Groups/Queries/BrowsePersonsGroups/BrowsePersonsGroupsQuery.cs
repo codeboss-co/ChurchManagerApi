@@ -2,11 +2,11 @@
 using System.Threading.Tasks;
 using AutoMapper;
 using ChurchManager.Application.Common;
-using ChurchManager.Application.Features.Groups.Queries.GroupsForPerson;
+using ChurchManager.Application.ViewModels;
 using ChurchManager.Application.Wrappers;
 using ChurchManager.Domain.Features.Groups.Repositories;
-using ChurchManager.Domain.Shared.Parameters;
-using ChurchManager.Infrastructure.Abstractions;
+using ChurchManager.Domain.Features.Groups.Specifications;
+using ChurchManager.Domain.Parameters;
 using Convey.CQRS.Queries;
 using MediatR;
 
@@ -22,24 +22,23 @@ namespace ChurchManager.Application.Features.Groups.Queries.BrowsePersonsGroups
     {
         private readonly ICognitoCurrentUser _currentUser;
         private readonly IGroupDbRepository _groupDbRepository;
-        private readonly IModelHelper _modelHelper;
         private readonly IMapper _mapper;
 
         public BrowsePersonsGroupsHandler(
             ICognitoCurrentUser currentUser,
             IGroupDbRepository groupDbRepository,
-            IModelHelper modelHelper,
             IMapper mapper)
         {
             _currentUser = currentUser;
             _groupDbRepository = groupDbRepository;
-            _modelHelper = modelHelper;
             _mapper = mapper;
         }
 
         public async Task<PagedResponse<GroupSummaryViewModel>> Handle(BrowsePersonsGroupsQuery query, CancellationToken ct)
         {
-            var pagedResult = await _groupDbRepository.BrowsePersonsGroups(query.PersonId, query.SearchTerm, query, ct);
+            var spec = new BrowsePersonsGroupsSpecification(query.PersonId, query);
+
+            var pagedResult = await _groupDbRepository.BrowseAsync(query, spec, ct);
 
             var viewModels = _mapper.Map<PagedResult<GroupSummaryViewModel>>(pagedResult);
 

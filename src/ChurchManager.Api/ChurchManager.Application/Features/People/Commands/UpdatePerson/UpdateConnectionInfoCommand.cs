@@ -24,15 +24,19 @@ namespace ChurchManager.Application.Features.People.Commands.UpdatePerson
             _dbRepository = dbRepository;
         }
 
-        public async Task<Unit> Handle(UpdateConnectionInfoCommand command, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(UpdateConnectionInfoCommand command, CancellationToken ct)
         {
-            var person = await _dbRepository.GetByIdAsync(command.PersonId);
-            person.ChurchId = command.ChurchId;
-            person.ConnectionStatus = command.ConnectionStatus;
-            person.FirstVisitDate = command.FirstVisitDate;
-            person.Source = command.Source;
+            var person = await _dbRepository.GetByIdAsync(command.PersonId, ct);
 
-            await _dbRepository.SaveChangesAsync();
+            if (person is not null)
+            {
+                person.ChurchId = command.ChurchId;
+                person.ConnectionStatus = command.ConnectionStatus;
+                person.FirstVisitDate = command.FirstVisitDate;
+                person.Source = command.Source;
+
+                await _dbRepository.SaveChangesAsync(ct);
+            }
 
             return new Unit();
         }

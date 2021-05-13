@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using ChurchManager.Core.Shared;
+using ChurchManager.Application.ViewModels;
 using ChurchManager.Domain.Features.Churches;
 
 namespace ChurchManager.Application.Mappings
