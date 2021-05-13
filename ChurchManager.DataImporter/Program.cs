@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using ChurchManager.DataImporter.Models;
+using ChurchManager.Domain.Common;
 using ChurchManager.Domain.Features.Churches;
 using ChurchManager.Domain.Features.Discipleship;
 using ChurchManager.Domain.Features.Groups;
@@ -36,16 +37,16 @@ namespace ChurchManager.DataImporter
         static void Main(string[] args)
         {
             string path = args != null && args.Any() ? args[0] : "./churchmanager_db_data_import.xlsx";
-            var data = Process(path);
+            Process(path);
         }
 
-        public static IEnumerable<IEnumerable<object>> Process(string path)
+        public static bool Process(string path)
         {
             using var file = new FileStream(path, FileMode.Open, FileAccess.Read);
             return ImportExcel(file, true);
         }
 
-        public static IEnumerable<IEnumerable<object>> ImportExcel(Stream stream, bool skipFistRow)
+        public static bool ImportExcel(Stream stream, bool skipFistRow)
         {
             ISheet sheet;
 
@@ -98,6 +99,7 @@ namespace ChurchManager.DataImporter
                 }
 
                 // Cell Group Type
+                var  sectionGroupType = new GroupType { Name = "Section", Description = "Group Section", IconCssClass = "heroicons_outline:collection" };
                 var  cellGroupType = new GroupType { Name = "Cell", Description = "Cell Ministry", IconCssClass = "heroicons_outline:share" };
                 // Cell Group Roles
                 var cellLeaderRole = new GroupTypeRole
@@ -106,11 +108,12 @@ namespace ChurchManager.DataImporter
                     CanView = true, CanEdit = true, CanManageMembers = true,
                     GroupType = cellGroupType
                 };
-                var cellAssistantRole = new GroupTypeRole { Name = "Assistant", Description = "Assistant Leader", GroupType = cellGroupType };
+                var cellAssistantRole = new GroupTypeRole { Name = "Assistant", Description = "Assistant Leader", GroupType = cellGroupType, IsLeader = true};
                 var cellMemberRole = new GroupTypeRole { Name = "Member", Description = "Group Member", GroupType = cellGroupType };
 
                 if(!dbContext.GroupType.Any())
                 {
+                    dbContext.Add(sectionGroupType);
                     dbContext.Add(cellGroupType);
                     dbContext.GroupTypeRole.Add(cellLeaderRole);
                     dbContext.GroupTypeRole.Add(cellAssistantRole);
@@ -139,14 +142,27 @@ namespace ChurchManager.DataImporter
 
                     churchDbList = dbContext.Church.ToList();
 
+                    // Cell Groups Section
+                    var cellSectionParentGroup = new Group
+                    {
+                        GroupTypeId = dbContext.GroupType.Single(x => x.Name == "Section").Id,
+                        Name = "Cell Groups", Description = "Grouping section for cell groups", CreatedDate = DateTime.UtcNow,
+                        // Use the first groups church - we assume its the same church
+                        ChurchId = churchDbList.FirstOrDefault(x => x.Name == groups.First().Church)?.Id
+                    };
+
                     // First insert all root parent groups i.e. they have no parents
                     var parentGroups = groups
                         .Where(import => import.ParentGroupName.IsNullOrEmpty())
                         .Select(x => CellGroupImport.ToEntity(x, churchDbList))
                         .ToList();
+                    // Make all the root (parent) groups part of the section group
+                    parentGroups.ForEach(parent => parent.ParentGroup = cellSectionParentGroup);
 
+                    dbContext.Add(cellSectionParentGroup);
                     dbContext.AddRange(parentGroups);
                     var inserted = dbContext.SaveChanges();
+                    Console.WriteLine($"\t > Group Section Type added.");
                     Console.WriteLine($"\t > Root Groups added: {inserted}");
 
                     var children = new List<Group>(0);
@@ -209,17 +225,17 @@ namespace ChurchManager.DataImporter
 
                             var person = new Person
                             {
-                                AgeClassification = x.AgeClassification,
+                                AgeClassification = new AgeClassification(x.AgeClassification),
                                 BaptismStatus = x.Baptism,
                                 AnniversaryDate = x.AnniversaryDate,
                                 BirthDate = x.BirthDate,
                                 ChurchId = church.Id,
-                                CommunicationPreference = x.CommunicationPreference,
-                                ConnectionStatus = x.ConnectionStatus,
+                                CommunicationPreference = x.CommunicationPreference!= null ? new CommunicationType(x.CommunicationPreference) : null,
+                                ConnectionStatus = new ConnectionStatus(x.ConnectionStatus),
                                 Email = new Email {IsActive = true, Address = x.Email},
                                 FamilyId = family.Id,
                                 FirstVisitDate = x.FirstVisitDate,
-                                Gender = x.Gender,
+                                Gender = new Gender(x.Gender),
                                 MaritalStatus = x.MaritalStatus,
                                 Occupation = x.Occupation,
                                 FullName = x.FullName,
@@ -258,35 +274,8 @@ namespace ChurchManager.DataImporter
 
                 }
             }
-            
 
-            var rowIndex = skipFistRow ? 1 : 0;
-            var firstRow = sheet.GetRow(rowIndex); //Get Header Row
-            var cellCount = firstRow.LastCellNum;
-            var data = new List<List<string>>();
-
-            for(int i = rowIndex; i <= sheet.LastRowNum; i++) //Read Excel File
-            {
-                var row = sheet.GetRow(i);
-
-                if(row == null)
-                    continue;
-                if(row.Cells.All(d => d.CellType == CellType.Blank))
-                    continue;
-
-                var rowData = new List<string>();
-
-                for(int j = row.FirstCellNum; j < cellCount; j++)
-                {
-                    var value = row.GetCell(j)?.ToString() ?? string.Empty;
-
-                    rowData.Add(value);
-                }
-
-                data.Add(rowData);
-            }
-
-            return data;
+            return true;
         }
 
 
@@ -504,7 +493,8 @@ namespace ChurchManager.DataImporter
                     Occupation = occupation,
                     ChurchName = church,
                     CellGroupName = cellGroup,
-                    CellGroupRole = cellGroupRole
+                    CellGroupRole = cellGroupRole,
+                    UserLoginId = userLoginId
                 };
 
                 data.Add(item);

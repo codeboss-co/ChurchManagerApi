@@ -2,17 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using ChurchManager.Application.Abstractions;
 using ChurchManager.Domain.Features.Churches;
 using ChurchManager.Domain.Features.Churches.Repositories;
-using ChurchManager.Infrastructure.Abstractions.Persistence;
+using ChurchManager.Domain.Shared;
+using ChurchManager.Infrastructure.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
 
 namespace ChurchManager.Infrastructure.Persistence.Repositories
 {
-    public class ChurchAttendanceDbRepository : GenericRepositoryAsync<ChurchAttendance>, IChurchAttendanceDbRepository
+    public class ChurchAttendanceDbRepository : GenericRepositoryBase<ChurchAttendance>, IChurchAttendanceDbRepository
     {
-        public ChurchAttendanceDbRepository(IChurchManagerDbContext dbContext) : base(dbContext)
+        public ChurchAttendanceDbRepository(ChurchManagerDbContext dbContext) : base(dbContext)
         {
         }
 

@@ -1,8 +1,8 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
+using ChurchManager.Application.ViewModels;
 using ChurchManager.Application.Wrappers;
-using ChurchManager.Core.Shared;
 using ChurchManager.Domain.Features.Churches;
 using ChurchManager.Infrastructure.Abstractions.Persistence;
 using MediatR;
@@ -16,10 +16,10 @@ namespace ChurchManager.Application.Features.Churches.Queries.RetrieveChurches
 
     public class AllChurchQueryHandler : IRequestHandler<ChurchesQuery, ApiResponse>
     {
-        private readonly IGenericRepositoryAsync<Church> _dbRepository;
+        private readonly IGenericDbRepository<Church> _dbRepository;
         private readonly IMapper _mapper;
 
-        public AllChurchQueryHandler(IGenericRepositoryAsync<Church> dbRepository, IMapper mapper)
+        public AllChurchQueryHandler(IGenericDbRepository<Church> dbRepository, IMapper mapper)
         {
             _dbRepository = dbRepository;
             _mapper = mapper;

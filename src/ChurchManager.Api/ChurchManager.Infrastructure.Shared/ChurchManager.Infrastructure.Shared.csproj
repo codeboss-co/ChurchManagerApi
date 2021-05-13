@@ -4,9 +4,4 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\ChurchManager.Domain\ChurchManager.Domain.csproj" />
-    <ProjectReference Include="..\ChurchManager.Infrastructure.Abstractions\ChurchManager.Infrastructure.Abstractions.csproj" />
-  </ItemGroup>
-  
 </Project>

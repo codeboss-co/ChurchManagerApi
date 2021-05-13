@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using ChurchManager.Application.Abstractions;
 using ChurchManager.Domain.Common;
-using ChurchManager.Domain.Shared.Parameters;
+using ChurchManager.Domain.Parameters;
+using ChurchManager.Domain.Shared;
 using ChurchManager.Infrastructure.Abstractions.Persistence;
 using Convey.CQRS.Queries;
 
 namespace ChurchManager.Domain.Features.Groups.Repositories
 {
-    public interface IGroupAttendanceDbRepository : IGenericRepositoryAsync<GroupAttendance>
+    public interface IGroupAttendanceDbRepository : IGenericDbRepository<GroupAttendance>
     {
         Task<PagedResult<GroupAttendanceViewModel>> BrowseGroupAttendance(
             QueryParameter query, 

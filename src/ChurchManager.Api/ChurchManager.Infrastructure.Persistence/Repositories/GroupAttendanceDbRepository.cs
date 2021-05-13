@@ -2,20 +2,19 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using ChurchManager.Application.Abstractions;
 using ChurchManager.Domain.Common;
 using ChurchManager.Domain.Features.Groups;
 using ChurchManager.Domain.Features.Groups.Repositories;
-using ChurchManager.Domain.Shared.Parameters;
-using ChurchManager.Domain.Specifications;
+using ChurchManager.Domain.Features.Groups.Specifications;
+using ChurchManager.Domain.Parameters;
+using ChurchManager.Domain.Shared;
 using ChurchManager.Infrastructure.Persistence.Contexts;
-using ChurchManager.Infrastructure.Persistence.Extensions;
 using Convey.CQRS.Queries;
 using Microsoft.EntityFrameworkCore;
 
 namespace ChurchManager.Infrastructure.Persistence.Repositories
 {
-    public class GroupAttendanceDbRepository : GenericRepositoryAsync<GroupAttendance>, IGroupAttendanceDbRepository
+    public class GroupAttendanceDbRepository : GenericRepositoryBase<GroupAttendance>, IGroupAttendanceDbRepository
     {
         public GroupAttendanceDbRepository(ChurchManagerDbContext dbContext) : base(dbContext)
         {
@@ -31,28 +30,10 @@ namespace ChurchManager.Infrastructure.Persistence.Repositories
             CancellationToken ct = default)
         {
             // Paging
-            var pagedResult = await Queryable()
-                .Specify(new BrowseGroupAttendanceSpecification(groupTypeId, churchId, groupId, withFeedback, from, to))
-                .PaginateAsync(query);
+            var spec = new BrowseGroupAttendanceSpecification(query, groupTypeId, churchId, groupId, withFeedback, from, to);
+            var pagedResult = await BrowseAsync<GroupAttendanceViewModel>(query, spec, ct);
 
-            return PagedResult<GroupAttendanceViewModel>.Create(
-                pagedResult.Items.Select(x => new GroupAttendanceViewModel
-                {
-                    Id = x.Id,
-                    GroupName = x.Group.Name,
-                    AttendanceDate = x.AttendanceDate,
-                    DidNotOccur = x.DidNotOccur,
-                    AttendanceCount = x.AttendanceCount,
-                    FirstTimerCount = x.FirstTimerCount,
-                    NewConvertCount = x.NewConvertCount,
-                    ReceivedHolySpiritCount = x.ReceivedHolySpiritCount,
-                    Notes = x.Notes,
-                    PhotoUrls = x.PhotoUrls
-                }),
-                pagedResult.CurrentPage,
-                pagedResult.ResultsPerPage,
-                pagedResult.TotalPages,
-                pagedResult.TotalResults);
+            return pagedResult;
         }
 
         public  async Task<dynamic> WeeklyBreakdownForPeriodAsync(int? groupId, ReportPeriod reportPeriod, CancellationToken ct)

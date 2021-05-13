@@ -28,12 +28,12 @@ Content-Type: application/json
 Authorization: Bearer {{accessToken}}
 
 # ============== GROUPS ==================== #
-# GetAllPersonsGroups
+# Get All Persons Groups
 @personId = 1 
 GET {{api}}/v1/groups/person/{{personId}}
 Authorization: Bearer {{accessToken}}
 
-# GetAllCurrentUsersGroups
+# Get All Current Users Groups
 POST {{api}}/v1/groups/browse/current-user
 Content-Type: application/json
 Authorization: Bearer {{accessToken}}
@@ -59,6 +59,16 @@ Authorization: Bearer {{accessToken}}
     "orderBy": "Name",
     "sortOrder": "DESC"
 }
+
+# Get Group With Children Tree By Parent
+@parentGroupId = 15
+GET {{api}}/v1/groups/parent/{{parentGroupId}}/tree
+Authorization: Bearer {{accessToken}}
+
+# Group With Children Query
+@groupId = 15
+GET {{api}}/v1/groups/{{groupId}}/tree
+Authorization: Bearer {{accessToken}}
 
 # ============== PEOPLE ==================== #
 # New Family
@@ -109,9 +119,9 @@ Authorization: Bearer {{accessToken}}
 {
  	"searchTerm": "",    
     "page": 1,
-    "results": 20,
+    "results": 2,
     "orderBy": "FullName.FirstName",
-    "sortOrder": "DESC"
+    "sortOrder": "ASC"
 }
 
 # ============== PROFILES ==================== #
@@ -163,6 +173,12 @@ Authorization: Bearer {{accessToken}}
 # ============== GROUPS ==================== #
 # Groups with Children
 GET {{api}}/v1/groups/tree
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
+# Get Group Members
+@groupId = 3
+GET {{api}}/v1/groups/{{groupId}}/members?recordStatus=Active
 Content-Type: application/json
 Authorization: Bearer {{accessToken}}
 

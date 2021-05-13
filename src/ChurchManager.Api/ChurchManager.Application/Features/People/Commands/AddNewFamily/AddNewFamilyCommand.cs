@@ -25,7 +25,7 @@ namespace ChurchManager.Application.Features.People.Commands.AddNewFamily
             _dbRepository = dbRepository;
         }
 
-        public async Task<Unit> Handle(AddNewFamilyCommand command, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(AddNewFamilyCommand command, CancellationToken ct)
         {
             var family = new Family
             {
@@ -68,8 +68,7 @@ namespace ChurchManager.Application.Features.People.Commands.AddNewFamily
                 Family = family
             });
 
-            await _dbRepository.AddRangeAsync(members);
-            await _dbRepository.SaveChangesAsync();
+            await _dbRepository.AddRangeAsync(members, ct);
 
             return new Unit();
         }
