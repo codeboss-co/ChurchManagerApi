@@ -1,34 +1,39 @@
-﻿using System.Threading;
+﻿using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using ChurchManager.Application.Abstractions.Services;
+using ChurchManager.Domain;
 using ChurchManager.Domain.Common;
-using ChurchManager.Infrastructure.Shared.WebPush;
-using Microsoft.Extensions.Options;
-using WebPush;
-using PushSubscription = WebPush.PushSubscription;
+using ChurchManager.Infrastructure.Abstractions.Persistence;
+using Microsoft.EntityFrameworkCore;
 
 namespace ChurchManager.Application.Features.Communication.Services
 {
     public class WebPushPushNotification : IPushNotificationService
     {
-        private readonly PushNotificationsOptions _options;
+        private readonly IPushServiceClient _client;
+        private readonly IGenericDbRepository<PushDevice> _dbRepository;
 
-        public WebPushPushNotification(IOptions<PushNotificationsOptions> options)
+        public WebPushPushNotification(IPushServiceClient client, IGenericDbRepository<PushDevice> dbRepository)
         {
-            _options = options.Value;
+            _client = client;
+            _dbRepository = dbRepository;
         }
 
-        public async Task SendNotificationAsync(PushDevice device, string payload, CancellationToken ct = default)
+        public async Task SendNotificationToPersonAsync(int personId, string payload, CancellationToken ct = default)
         {
-            var subscription = new PushSubscription(device.Endpoint, device.P256DH, device.Auth);
-            var vapidDetails = new VapidDetails("mailto:example@example.com", _options.PublicKey, _options.PrivateKey);
+            // Get person devices
+            var devices = await _dbRepository.Queryable()
+                .Where(x => x.PersonId == personId)
+                .ToListAsync(ct);
 
             payload =
                 "{\"notification\":{\"title\":\"Web Mail Notification\",\"body\":\"New Mail Received!\",\"icon\":\"images/bell.jpg\",\"vibrate\":[100,50,100],\"requireInteraction\":true,\"data\":{\"dateOfArrival\":1620921655995},\"actions\":[{\"action\":\"inbox\",\"title\":\"Go to Web Mail\"}]}}";
 
-            var webPushClient = new WebPushClient();
-
-            await webPushClient.SendNotificationAsync(subscription, payload, vapidDetails);
+            foreach (var device in devices)
+            {
+                await _client.SendNotificationAsync(device, payload, ct);
+            }
         }
     }
 }
