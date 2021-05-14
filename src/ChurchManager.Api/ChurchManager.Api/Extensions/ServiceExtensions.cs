@@ -88,6 +88,7 @@ namespace ChurchManager.Api.Extensions
                     builder => builder
                         .WithOrigins(
                             "http://localhost:4200", // Angular App
+                            "http://localhost:8080", // Angular PWA test
                             "http://test-churchmanager.codeboss.tech", // Test
                             "https://test-churchmanager.codeboss.tech", // Test
                             "http://churchmanager.codeboss.tech", // Production
