@@ -9,6 +9,7 @@ namespace ChurchManager.Application.Features.Communication.Commands
 {
     public record SubscribeToWebPushCommand(PushSubscription Subscription) : IRequest
     {
+        public string Device { get; set; }
     }
 
     public record UnsubscribeToWebPushCommand(PushSubscription Subscription) : IRequest
@@ -28,7 +29,7 @@ namespace ChurchManager.Application.Features.Communication.Commands
 
         public async Task<Unit> Handle(SubscribeToWebPushCommand command, CancellationToken ct)
         {
-            await _push.SubscribeAsync("test", command.Subscription, _currentUser.PersonId, ct);
+            await _push.SubscribeAsync(command.Subscription, command.Device, _currentUser.PersonId, ct);
             
             return new Unit();
         }
@@ -38,10 +39,7 @@ namespace ChurchManager.Application.Features.Communication.Commands
     {
         private readonly IPushSubscriptionsService _push;
 
-        public WebPushUnsubscribeHandler(IPushSubscriptionsService push)
-        {
-            _push = push;
-        }
+        public WebPushUnsubscribeHandler(IPushSubscriptionsService push) => _push = push;
 
         public async Task<Unit> Handle(UnsubscribeToWebPushCommand command, CancellationToken ct)
         {

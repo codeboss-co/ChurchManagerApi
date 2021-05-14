@@ -1,3 +1,4 @@
+using System;
 using ChurchManager.Api.Extensions;
 using ChurchManager.Api.Hubs;
 using ChurchManager.Application;
@@ -32,10 +33,14 @@ namespace ChurchManager.Api
             services.AddApplicationLayer();
 
             services.InstallServicesInAssemblies(Configuration, Environment, typeof(Startup).Assembly);
+
+            // Add detection services container and device resolver service.
+            services.AddDetection();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseDetection();
             app.UseCors(ApiRoutes.DefaultCorsPolicy);
             app.UseSwaggerExtension();
             app.UseSerilogRequestLogging();
@@ -53,7 +58,7 @@ namespace ChurchManager.Api
 
             app.UseAuthentication();
             app.UseAuthorization();
-            
+
             app.UseErrorHandlingMiddleware();
 
             app.UseHealthChecks(ApiRoutes.HealthChecks.DefaultUrl);

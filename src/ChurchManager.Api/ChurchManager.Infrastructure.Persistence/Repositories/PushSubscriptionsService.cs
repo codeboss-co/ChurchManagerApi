@@ -20,7 +20,7 @@ namespace ChurchManager.Infrastructure.Persistence.Repositories
             throw new NotImplementedException();
         }
 
-        public async Task SubscribeAsync(string deviceType, PushSubscription subscription, int personId, CancellationToken ct = default)
+        public async Task SubscribeAsync(PushSubscription subscription, string deviceType, int personId, CancellationToken ct = default)
         {
             var device = new PushDevice
             {
