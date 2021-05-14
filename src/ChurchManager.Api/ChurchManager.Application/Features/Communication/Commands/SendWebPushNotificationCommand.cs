@@ -1,6 +1,8 @@
-﻿using System.Threading;
+﻿using System.Runtime.InteropServices;
+using System.Threading;
 using System.Threading.Tasks;
 using ChurchManager.Application.Abstractions.Services;
+using ChurchManager.Domain.Features.Communication;
 using MediatR;
 
 namespace ChurchManager.Application.Features.Communication.Commands
@@ -20,7 +22,9 @@ namespace ChurchManager.Application.Features.Communication.Commands
 
         public async Task<Unit> Handle(SendWebPushNotificationCommand command, CancellationToken ct)
         {
-            await _push.SendNotificationToPersonAsync(command.PersonId, "test message", ct);
+            var notification = new PushNotification(command.Payload);
+
+            await _push.SendNotificationToPersonAsync(command.PersonId, notification, ct);
 
             return Unit.Value;
         }

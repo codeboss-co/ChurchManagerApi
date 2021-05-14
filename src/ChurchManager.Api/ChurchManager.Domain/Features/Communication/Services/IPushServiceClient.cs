@@ -5,6 +5,6 @@ namespace ChurchManager.Domain.Features.Communication.Services
 {
     public interface IPushServiceClient
     {
-        Task SendNotificationAsync(PushDevice device, string payload, CancellationToken cancellationToken = default);
+        Task SendNotificationAsync(PushDevice device, PushNotification notification, CancellationToken cancellationToken = default);
     }
 }

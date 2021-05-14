@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using ChurchManager.Domain.Features.Communication;
 using ChurchManager.Domain.Features.Communication.Services;
 using ChurchManager.Infrastructure.Persistence.Contexts;
+using Microsoft.EntityFrameworkCore;
 
 namespace ChurchManager.Infrastructure.Persistence.Repositories
 {
@@ -22,22 +23,34 @@ namespace ChurchManager.Infrastructure.Persistence.Repositories
 
         public async Task SubscribeAsync(PushSubscription subscription, string deviceType, int personId, CancellationToken ct = default)
         {
-            var device = new PushDevice
-            {
-                Name = deviceType,
-                PersonId = personId,
-                Endpoint = subscription.Endpoint,
-                P256DH = subscription.GetKey(PushEncryptionKeyName.P256DH),
-                Auth = subscription.GetKey(PushEncryptionKeyName.Auth)
-            };
+            _ = subscription ?? throw new ArgumentNullException(nameof(subscription));
 
-            await AddAsync(device, ct);
+            var p256dh = subscription.GetKey(PushEncryptionKeyName.P256DH);
+            if (!await Queryable().AnyAsync(s => s.P256DH == p256dh, ct))
+            {
+                var device = new PushDevice
+                {
+                    Name = deviceType,
+                    PersonId = personId,
+                    Endpoint = subscription.Endpoint,
+                    P256DH = subscription.GetKey(PushEncryptionKeyName.P256DH),
+                    Auth = subscription.GetKey(PushEncryptionKeyName.Auth)
+                };
+
+                await AddAsync(device, ct);
+            }
         }
 
         public async Task UnsubscribeAsync(PushSubscription subscription,  CancellationToken ct = default)
         {
-            var device = Queryable().First(x => x.Endpoint == subscription.Endpoint);
-            await DeleteAsync(device, ct);
+            _ = subscription ?? throw new ArgumentNullException(nameof(subscription));
+
+            var p256dh = subscription.GetKey(PushEncryptionKeyName.P256DH);
+            if (await Queryable().AnyAsync(s => s.P256DH == p256dh, ct))
+            {
+                var device = Queryable().First(x => x.Endpoint == subscription.Endpoint);
+                await DeleteAsync(device, ct);
+            }
         }
     }
 }
