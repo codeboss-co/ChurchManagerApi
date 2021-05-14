@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using ChurchManager.Domain;
-using ChurchManager.Domain.Common;
+using ChurchManager.Domain.Features.Communication;
+using ChurchManager.Domain.Features.Communication.Services;
 using ChurchManager.Infrastructure.Persistence.Contexts;
-using Lib.Net.Http.WebPush;
 
 namespace ChurchManager.Infrastructure.Persistence.Repositories
 {

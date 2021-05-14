@@ -4,6 +4,8 @@ using System.Threading.Tasks;
 using ChurchManager.Application.Abstractions.Services;
 using ChurchManager.Domain;
 using ChurchManager.Domain.Common;
+using ChurchManager.Domain.Features.Communication;
+using ChurchManager.Domain.Features.Communication.Services;
 using ChurchManager.Infrastructure.Abstractions.Persistence;
 using Microsoft.EntityFrameworkCore;
 

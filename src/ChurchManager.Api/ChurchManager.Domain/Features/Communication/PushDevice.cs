@@ -1,7 +1,7 @@
 ﻿using ChurchManager.Domain.Features.People;
 using Codeboss.Types;
 
-namespace ChurchManager.Domain.Common
+namespace ChurchManager.Domain.Features.Communication
 {
     public record PushDevice : IAggregateRoot<int>
     {

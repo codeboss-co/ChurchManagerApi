@@ -2,7 +2,10 @@
 using System.Threading.Tasks;
 using ChurchManager.Domain;
 using ChurchManager.Domain.Common;
+using ChurchManager.Domain.Features.Communication;
+using ChurchManager.Domain.Features.Communication.Services;
 using WebPush;
+using PushSubscription = WebPush.PushSubscription;
 
 namespace ChurchManager.Infrastructure.Shared.WebPush
 {

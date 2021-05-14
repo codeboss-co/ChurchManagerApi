@@ -1,8 +1,8 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using ChurchManager.Application.Common;
-using ChurchManager.Domain;
-using Lib.Net.Http.WebPush;
+using ChurchManager.Domain.Features.Communication;
+using ChurchManager.Domain.Features.Communication.Services;
 using MediatR;
 
 namespace ChurchManager.Application.Features.Communication.Commands

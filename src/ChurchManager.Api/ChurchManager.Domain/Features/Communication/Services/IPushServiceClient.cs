@@ -1,8 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using ChurchManager.Domain.Common;
 
-namespace ChurchManager.Domain
+namespace ChurchManager.Domain.Features.Communication.Services
 {
     public interface IPushServiceClient
     {

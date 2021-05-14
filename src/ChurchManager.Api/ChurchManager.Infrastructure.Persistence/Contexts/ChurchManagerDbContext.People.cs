@@ -1,4 +1,5 @@
 ﻿using ChurchManager.Domain.Common;
+using ChurchManager.Domain.Features.Communication;
 using ChurchManager.Domain.Features.People;
 using Microsoft.EntityFrameworkCore;
 

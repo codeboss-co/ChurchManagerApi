@@ -1,4 +1,5 @@
 ﻿using ChurchManager.Domain;
+using ChurchManager.Domain.Features.Communication.Services;
 using ChurchManager.Infrastructure.Shared.WebPush;
 using CodeBoss.AspNetCore.DependencyInjection;
 using Microsoft.Extensions.Configuration;
