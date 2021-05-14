@@ -2,6 +2,7 @@
 using ChurchManager.Application.Abstractions.Services;
 using ChurchManager.Application.Behaviours;
 using ChurchManager.Application.Common;
+using ChurchManager.Application.Features.Communication.Services;
 using ChurchManager.Application.Features.Groups.Services;
 using ChurchManager.Application.Features.Profile.Services;
 using CodeBoss.AspNetCore;
@@ -26,6 +27,7 @@ namespace ChurchManager.Application
             services.AddScoped<IPersonService, PersonService>(); 
             services.AddScoped<IGroupsService, GroupsService>();
             services.AddScoped<IGroupAttendanceAppService, GroupAttendanceAppService>(); 
+            services.AddScoped<IPushNotificationService, WebPushPushNotification>(); 
 
             #endregion
 

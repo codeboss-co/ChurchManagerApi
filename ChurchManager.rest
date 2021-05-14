@@ -201,3 +201,13 @@ Authorization: Bearer {{accessToken}}
     "personId": 1,
 	"DiscipleshipStepDefinitionId" : 1
 }
+
+# ============== COMMUNICATIONS ==================== #
+POST {{api}}/v1/webpush/send
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
+{
+    "personId": 8,
+	"payload" : "testing webpush!"
+}

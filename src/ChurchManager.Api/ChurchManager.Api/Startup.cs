@@ -2,6 +2,7 @@ using ChurchManager.Api.Extensions;
 using ChurchManager.Api.Hubs;
 using ChurchManager.Application;
 using ChurchManager.Infrastructure.Persistence;
+using ChurchManager.Infrastructure.Shared;
 using CodeBoss.AspNetCore.DependencyInjection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -27,6 +28,7 @@ namespace ChurchManager.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddPersistenceInfrastructure(Configuration, Environment);
+            services.AddSharedInfrastructure(Configuration, Environment);
             services.AddApplicationLayer();
 
             services.InstallServicesInAssemblies(Configuration, Environment, typeof(Startup).Assembly);
