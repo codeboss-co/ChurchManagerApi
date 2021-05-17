@@ -93,7 +93,7 @@ namespace ChurchManager.Infrastructure.Persistence.Seeding.Development
                 AgeClassification = AgeClassification.Adult,
                 RecordStatus = RecordStatus.Active,
                 Gender = Gender.Female,
-                PhotoUrl = "https://samanthabernhardi.com/site/wp-content/uploads/2019/10/danielle-cagnetta-1.jpg",
+                PhotoUrl = null,
                 ConnectionStatus = ConnectionStatus.Member,
                 BaptismStatus = new Baptism { IsBaptised = true },
                 ChurchId = 1,
