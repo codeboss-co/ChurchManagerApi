@@ -8,11 +8,11 @@
 @personId = 1
 
 # ============== IDENTITY ==================== #
-POST {{api}}/authorization/login 
+POST {{api}}/v1/auth/login 
 Content-Type: application/json
 
 {
-    "username": "superuser", "password": "Password#1"
+    "username": "dillan", "password": "81118599"
 }
 
 # ============== UTILITY / TESTS ==================== #
