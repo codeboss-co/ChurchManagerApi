@@ -6,7 +6,7 @@ namespace ChurchManager.Domain.Features.Groups
 {
     [Table("GroupType")]
 
-    public record GroupType : IEntity<int>
+    public record GroupType : IAggregateRoot<int>
     {
         [Key]
         public int Id { get; set; }

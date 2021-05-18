@@ -9,6 +9,7 @@ using ChurchManager.Application.Features.Groups.Queries.GroupRoles;
 using ChurchManager.Application.Features.Groups.Queries.GroupsForChurch;
 using ChurchManager.Application.Features.Groups.Queries.GroupsForPerson;
 using ChurchManager.Application.Features.Groups.Queries.GroupsWithChildren;
+using ChurchManager.Application.Features.Groups.Queries.GroupTypes;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -98,6 +99,13 @@ namespace ChurchManager.Api.Controllers.v1
             CancellationToken token)
         {
             return Ok(await Mediator.Send(command, token));
+        }
+
+        [HttpGet("types")]
+        public async Task<IActionResult> AllGroupTypes(CancellationToken token)
+        {
+            var groups = await Mediator.Send(new GroupTypesQuery(), token);
+            return Ok(groups);
         }
     }
 }
