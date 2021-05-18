@@ -110,10 +110,20 @@ namespace ChurchManager.Infrastructure.Persistence.Seeding.Production
                 ReceivedHolySpirit = true,
             };
 
+            var dillanUserLogin = new UserLogin
+            {
+                Person = dillan,
+                Username = "dillan",
+                Password = "81118599",
+                Roles = new List<string>() { "Admin" }
+            };
+
             await _dbContext.Person.AddAsync(dillan);
             await _dbContext.Person.AddAsync(danielle);
             await _dbContext.Person.AddAsync(david);
             await _dbContext.Person.AddAsync(daniel);
+
+            await _dbContext.UserLogin.AddAsync(dillanUserLogin);
 
             await _dbContext.SaveChangesAsync();
         }

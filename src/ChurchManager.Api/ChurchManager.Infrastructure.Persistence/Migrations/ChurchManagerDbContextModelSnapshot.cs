@@ -36,7 +36,7 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                     b.Property<string>("RefreshToken")
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("RefreshTokenExpiryTime")
+                    b.Property<DateTime?>("RefreshTokenExpiryTime")
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<List<string>>("Roles")
