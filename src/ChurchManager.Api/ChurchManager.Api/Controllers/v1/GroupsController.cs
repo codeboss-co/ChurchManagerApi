@@ -1,7 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using ChurchManager.Application;
 using ChurchManager.Application.Common;
+using ChurchManager.Application.Features.Groups.Commands.AddGroupMember;
 using ChurchManager.Application.Features.Groups.Commands.GroupAttendanceRecord;
 using ChurchManager.Application.Features.Groups.Queries.BrowsePersonsGroups;
 using ChurchManager.Application.Features.Groups.Queries.GroupMembers;
@@ -9,8 +9,6 @@ using ChurchManager.Application.Features.Groups.Queries.GroupRoles;
 using ChurchManager.Application.Features.Groups.Queries.GroupsForChurch;
 using ChurchManager.Application.Features.Groups.Queries.GroupsForPerson;
 using ChurchManager.Application.Features.Groups.Queries.GroupsWithChildren;
-using ChurchManager.Domain;
-using ChurchManager.Domain.Common;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -93,6 +91,13 @@ namespace ChurchManager.Api.Controllers.v1
         public async Task<IActionResult> GetGroupWithChildrenTree(int groupId, CancellationToken token)
         {
             return Ok(await Mediator.Send(new GroupWithChildrenQuery(groupId), token));
+        }
+
+        [HttpPost("{groupId}/add-member")]
+        public async Task<IActionResult> AddGroupMember([FromBody] AddGroupMemberCommand command,
+            CancellationToken token)
+        {
+            return Ok(await Mediator.Send(command, token));
         }
     }
 }
