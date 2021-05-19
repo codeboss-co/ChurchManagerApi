@@ -107,5 +107,12 @@ namespace ChurchManager.Api.Controllers.v1
             var groups = await Mediator.Send(new GroupTypesQuery(), token);
             return Ok(groups);
         }
+
+        [HttpGet("types/{groupTypeId}")]
+        public async Task<IActionResult> GetGroupTypeById(int groupTypeId, CancellationToken token)
+        {
+            var group = await Mediator.Send(new GroupTypesQuery{GroupTypeId = groupTypeId}, token);
+            return Ok(group);
+        }
     }
 }

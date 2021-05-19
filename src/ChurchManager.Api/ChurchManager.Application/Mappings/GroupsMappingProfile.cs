@@ -26,6 +26,7 @@ namespace ChurchManager.Application.Mappings
             CreateMap<GroupType, SelectItemViewModel>().ReverseMap();
             CreateMap<Group, SelectItemViewModel>().ReverseMap();
             CreateMap<Group, GroupViewModel>();
+            CreateMap<GroupType, ChurchManager.Domain.Shared.GroupTypeViewModel>();
 
             // Attendance Records
             CreateMap<GroupMemberAttendance, GroupMemberAttendanceViewModel>().ReverseMap();
