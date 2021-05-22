@@ -1,6 +1,5 @@
-﻿using System;
-using System.Linq;
-using System.Security.Cryptography;
+﻿using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using ChurchManager.Api.Models;
 using CodeBoss.AspNetCore.DependencyInjection;
@@ -20,21 +19,23 @@ namespace ChurchManager.Api._DependencyInjection
         {
             var jwtSettings = configuration.GetOptions<JwtSettings>(nameof(JwtSettings));
 
-            // https://developerhandbook.com/aws/how-to-use-aws-cognito-with-net-core/
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            services.AddAuthentication(opt =>
+                {
+                    opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                })
                 .AddJwtBearer(options =>
                 {
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
-                        IssuerSigningKey = SigningKey(jwtSettings.Key, "AQAB"),
-                        ValidIssuer = jwtSettings.Issuer,
-                        //ValidAudience = jwtSettings.Audience,
-                        ValidateIssuerSigningKey = true,
                         ValidateIssuer = true,
-                        ValidateLifetime = false,
-                        ValidateAudience = false,   // Not provided by cognito,
-                        RoleClaimType = "cognito:groups",
-                        ClockSkew = TimeSpan.FromSeconds(5)
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+
+                        ValidIssuer = "http://codeboss.tech",
+                        ValidAudience = "http://codeboss.tech",
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey@345"))
                     };
 
                     // We have to hook the OnMessageReceived event in order to
@@ -50,19 +51,6 @@ namespace ChurchManager.Api._DependencyInjection
                     // the query string to transmit the access token.
                     options.Events = new SignalRJwtBearerEvents();
                 });
-
-            RsaSecurityKey SigningKey(string key, string expo)
-            {
-                RSA rsa = RSA.Create();
-
-                rsa.ImportParameters(new RSAParameters
-                {
-                    Modulus = Base64UrlEncoder.DecodeBytes(key),
-                    Exponent = Base64UrlEncoder.DecodeBytes(expo)
-                });
-
-                return new RsaSecurityKey(rsa);
-            }
         }
     }
 

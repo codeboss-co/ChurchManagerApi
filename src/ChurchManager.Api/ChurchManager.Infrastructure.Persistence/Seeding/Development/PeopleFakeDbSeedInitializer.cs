@@ -93,7 +93,7 @@ namespace ChurchManager.Infrastructure.Persistence.Seeding.Development
                 AgeClassification = AgeClassification.Adult,
                 RecordStatus = RecordStatus.Active,
                 Gender = Gender.Female,
-                PhotoUrl = "https://samanthabernhardi.com/site/wp-content/uploads/2019/10/danielle-cagnetta-1.jpg",
+                PhotoUrl = null,
                 ConnectionStatus = ConnectionStatus.Member,
                 BaptismStatus = new Baptism { IsBaptised = true },
                 ChurchId = 1,
@@ -137,10 +137,20 @@ namespace ChurchManager.Infrastructure.Persistence.Seeding.Development
                 ReceivedHolySpirit = true,
             };
 
+            var dillanUserLogin = new UserLogin
+            {
+                Person = dillan,
+                Username = "dillan",
+                Password = "81118599",
+                Roles = new List<string>() {"Admin"}
+            };
+
             await _dbContext.Person.AddAsync(dillan);
             await _dbContext.Person.AddAsync(danielle);
             await _dbContext.Person.AddAsync(david);
             await _dbContext.Person.AddAsync(daniel);
+
+            await _dbContext.UserLogin.AddAsync(dillanUserLogin);
 
             await _dbContext.SaveChangesAsync();
         }
