@@ -141,7 +141,7 @@ namespace ChurchManager.Infrastructure.Persistence.Seeding.Development
             {
                 Person = dillan,
                 Username = "dillan",
-                Password = "81118599",
+                Password = BCrypt.Net.BCrypt.HashPassword("81118599"),
                 Roles = new List<string>() {"Admin"}
             };
 

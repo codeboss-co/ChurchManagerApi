@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using ChurchManager.Domain;
 using ChurchManager.Domain.Common;
 using ChurchManager.Domain.Features.People;
 using ChurchManager.Infrastructure.Persistence.Contexts;
@@ -114,7 +113,7 @@ namespace ChurchManager.Infrastructure.Persistence.Seeding.Production
             {
                 Person = dillan,
                 Username = "dillan",
-                Password = "81118599",
+                Password = BCrypt.Net.BCrypt.HashPassword("81118599"),
                 Roles = new List<string>() { "Admin" }
             };
 
