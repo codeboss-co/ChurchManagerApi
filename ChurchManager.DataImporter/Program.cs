@@ -272,6 +272,41 @@ namespace ChurchManager.DataImporter
                     Console.WriteLine($"\t > Discipleship Steps added.");
                     dbContext.SaveChanges();
 
+                    // Add UserLogins
+                    foreach (var importAndPerson in personMap)
+                    {
+                        importAndPerson.Deconstruct(out PersonImport import, out Person person);
+
+                        if(!string.IsNullOrEmpty(import.UserLoginId))
+                        {
+                            if (import.FullName.FirstName.Equals("Dillan"))
+                            {
+                                dbContext.UserLogin.Add(new UserLogin
+                                {
+                                    Id = Guid.Parse(import.UserLoginId),
+                                    PersonId = person.Id,
+                                    Username ="dillan",
+                                    Password = BCrypt.Net.BCrypt.HashPassword("81118599"),
+                                    Roles = new List<string> { "Admin" },
+                                });
+                            }
+                            else
+                            {
+                                dbContext.UserLogin.Add(new UserLogin
+                                {
+                                    Id = Guid.Parse(import.UserLoginId),
+                                    PersonId = person.Id,
+                                    Username = import.Email.ToLower(),
+                                    Password = BCrypt.Net.BCrypt.HashPassword("pancake"),
+                                    Roles = new List<string> { "Cell Leader" },
+                                });
+                            }
+                        }
+                    }
+
+                    Console.WriteLine();
+                    int userLoginsAdded = dbContext.SaveChanges();
+                    Console.WriteLine($"UserLogins added: {userLoginsAdded}");
                 }
             }
 

@@ -12,7 +12,7 @@ namespace ChurchManager.Application.Common
         private readonly ICurrentPrincipalAccessor _principalAccessor;
         private readonly IProfileService _applicationService;
 
-        internal const string ClaimTypeUsername = "Username";
+        internal const string ClaimTypeUsername = ClaimTypes.Name;
 
         public CognitoCurrentUser(ICurrentPrincipalAccessor principalAccessor, IProfileService applicationService)
         {

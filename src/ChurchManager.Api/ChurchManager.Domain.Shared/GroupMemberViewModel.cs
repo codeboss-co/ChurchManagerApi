@@ -16,5 +16,7 @@ namespace ChurchManager.Domain.Shared
         public string GroupMemberRole { get; set; }
         public bool IsLeader { get; set; }
         public DateTime? FirstVisitDate { get; set; }
+        public string RecordStatus { get; set; }
+
     }
 }

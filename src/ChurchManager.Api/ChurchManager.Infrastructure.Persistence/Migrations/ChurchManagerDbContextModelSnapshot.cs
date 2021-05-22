@@ -20,7 +20,41 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                 .HasAnnotation("ProductVersion", "5.0.4")
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-            modelBuilder.Entity("ChurchManager.Persistence.Models.Churches.Church", b =>
+            modelBuilder.Entity("ChurchManager.Domain.Common.UserLogin", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Password")
+                        .HasMaxLength(128)
+                        .HasColumnType("character varying(128)");
+
+                    b.Property<int>("PersonId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("RefreshToken")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("RefreshTokenExpiryTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<List<string>>("Roles")
+                        .HasColumnType("text[]");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PersonId");
+
+                    b.ToTable("UserLogin");
+                });
+
+            modelBuilder.Entity("ChurchManager.Domain.Features.Churches.Church", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -67,7 +101,7 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                     b.ToTable("Church");
                 });
 
-            modelBuilder.Entity("ChurchManager.Persistence.Models.Churches.ChurchAttendance", b =>
+            modelBuilder.Entity("ChurchManager.Domain.Features.Churches.ChurchAttendance", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -115,7 +149,7 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                     b.ToTable("ChurchAttendance");
                 });
 
-            modelBuilder.Entity("ChurchManager.Persistence.Models.Churches.ChurchAttendanceType", b =>
+            modelBuilder.Entity("ChurchManager.Domain.Features.Churches.ChurchAttendanceType", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -136,7 +170,7 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                     b.ToTable("ChurchAttendanceType");
                 });
 
-            modelBuilder.Entity("ChurchManager.Persistence.Models.Churches.ChurchGroup", b =>
+            modelBuilder.Entity("ChurchManager.Domain.Features.Churches.ChurchGroup", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -166,7 +200,36 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                     b.ToTable("ChurchGroup");
                 });
 
-            modelBuilder.Entity("ChurchManager.Persistence.Models.Discipleship.DiscipleshipProgram", b =>
+            modelBuilder.Entity("ChurchManager.Domain.Features.Communication.PushDevice", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("Auth")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Endpoint")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.Property<string>("P256DH")
+                        .HasColumnType("text");
+
+                    b.Property<int>("PersonId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PersonId");
+
+                    b.ToTable("PushDevice");
+                });
+
+            modelBuilder.Entity("ChurchManager.Domain.Features.Discipleship.DiscipleshipProgram", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -212,7 +275,7 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                     b.ToTable("DiscipleshipProgram");
                 });
 
-            modelBuilder.Entity("ChurchManager.Persistence.Models.Discipleship.DiscipleshipStep", b =>
+            modelBuilder.Entity("ChurchManager.Domain.Features.Discipleship.DiscipleshipStep", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -269,7 +332,7 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                     b.ToTable("DiscipleshipStep");
                 });
 
-            modelBuilder.Entity("ChurchManager.Persistence.Models.Discipleship.DiscipleshipStepDefinition", b =>
+            modelBuilder.Entity("ChurchManager.Domain.Features.Discipleship.DiscipleshipStepDefinition", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -323,7 +386,7 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                     b.ToTable("DiscipleshipStepDefinition");
                 });
 
-            modelBuilder.Entity("ChurchManager.Persistence.Models.Groups.Group", b =>
+            modelBuilder.Entity("ChurchManager.Domain.Features.Groups.Group", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -394,7 +457,7 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                     b.ToTable("Group");
                 });
 
-            modelBuilder.Entity("ChurchManager.Persistence.Models.Groups.GroupAttendance", b =>
+            modelBuilder.Entity("ChurchManager.Domain.Features.Groups.GroupAttendance", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -436,7 +499,7 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                     b.ToTable("GroupAttendance");
                 });
 
-            modelBuilder.Entity("ChurchManager.Persistence.Models.Groups.GroupFeature", b =>
+            modelBuilder.Entity("ChurchManager.Domain.Features.Groups.GroupFeature", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -460,7 +523,7 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                     b.ToTable("GroupFeature");
                 });
 
-            modelBuilder.Entity("ChurchManager.Persistence.Models.Groups.GroupMember", b =>
+            modelBuilder.Entity("ChurchManager.Domain.Features.Groups.GroupMember", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -500,7 +563,7 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                     b.ToTable("GroupMember");
                 });
 
-            modelBuilder.Entity("ChurchManager.Persistence.Models.Groups.GroupMemberAttendance", b =>
+            modelBuilder.Entity("ChurchManager.Domain.Features.Groups.GroupMemberAttendance", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -546,7 +609,7 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                     b.ToTable("GroupMemberAttendance");
                 });
 
-            modelBuilder.Entity("ChurchManager.Persistence.Models.Groups.GroupType", b =>
+            modelBuilder.Entity("ChurchManager.Domain.Features.Groups.GroupType", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -583,7 +646,7 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                     b.ToTable("GroupType");
                 });
 
-            modelBuilder.Entity("ChurchManager.Persistence.Models.Groups.GroupTypeRole", b =>
+            modelBuilder.Entity("ChurchManager.Domain.Features.Groups.GroupTypeRole", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -620,7 +683,7 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                     b.ToTable("GroupRole");
                 });
 
-            modelBuilder.Entity("ChurchManager.Persistence.Models.Groups.Schedule", b =>
+            modelBuilder.Entity("ChurchManager.Domain.Features.Groups.Schedule", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -661,7 +724,7 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                     b.ToTable("Schedule");
                 });
 
-            modelBuilder.Entity("ChurchManager.Persistence.Models.People.Family", b =>
+            modelBuilder.Entity("ChurchManager.Domain.Features.People.Family", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -685,7 +748,7 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                     b.ToTable("Family");
                 });
 
-            modelBuilder.Entity("ChurchManager.Persistence.Models.People.Notes.Note", b =>
+            modelBuilder.Entity("ChurchManager.Domain.Features.People.Notes.Note", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -734,7 +797,7 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                     b.ToTable("Note");
                 });
 
-            modelBuilder.Entity("ChurchManager.Persistence.Models.People.Notes.NoteType", b =>
+            modelBuilder.Entity("ChurchManager.Domain.Features.People.Notes.NoteType", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -761,7 +824,7 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                     b.ToTable("NoteType");
                 });
 
-            modelBuilder.Entity("ChurchManager.Persistence.Models.People.OnlineUser", b =>
+            modelBuilder.Entity("ChurchManager.Domain.Features.People.OnlineUser", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -789,7 +852,7 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                     b.ToTable("OnlineUser");
                 });
 
-            modelBuilder.Entity("ChurchManager.Persistence.Models.People.Person", b =>
+            modelBuilder.Entity("ChurchManager.Domain.Features.People.Person", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -859,7 +922,7 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                     b.ToTable("Person");
                 });
 
-            modelBuilder.Entity("ChurchManager.Persistence.Models.People.PhoneNumber", b =>
+            modelBuilder.Entity("ChurchManager.Domain.Features.People.PhoneNumber", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -909,18 +972,29 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                     b.ToTable("GroupsFeatures");
                 });
 
-            modelBuilder.Entity("ChurchManager.Persistence.Models.Churches.Church", b =>
+            modelBuilder.Entity("ChurchManager.Domain.Common.UserLogin", b =>
                 {
-                    b.HasOne("ChurchManager.Persistence.Models.Churches.ChurchGroup", "ChurchGroup")
+                    b.HasOne("ChurchManager.Domain.Features.People.Person", "Person")
+                        .WithMany()
+                        .HasForeignKey("PersonId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Person");
+                });
+
+            modelBuilder.Entity("ChurchManager.Domain.Features.Churches.Church", b =>
+                {
+                    b.HasOne("ChurchManager.Domain.Features.Churches.ChurchGroup", "ChurchGroup")
                         .WithMany("Churches")
                         .HasForeignKey("ChurchGroupId");
 
                     b.Navigation("ChurchGroup");
                 });
 
-            modelBuilder.Entity("ChurchManager.Persistence.Models.Churches.ChurchAttendance", b =>
+            modelBuilder.Entity("ChurchManager.Domain.Features.Churches.ChurchAttendance", b =>
                 {
-                    b.HasOne("ChurchManager.Persistence.Models.Churches.ChurchAttendanceType", "ChurchAttendanceType")
+                    b.HasOne("ChurchManager.Domain.Features.Churches.ChurchAttendanceType", "ChurchAttendanceType")
                         .WithMany()
                         .HasForeignKey("ChurchAttendanceTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -929,15 +1003,26 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                     b.Navigation("ChurchAttendanceType");
                 });
 
-            modelBuilder.Entity("ChurchManager.Persistence.Models.Discipleship.DiscipleshipStep", b =>
+            modelBuilder.Entity("ChurchManager.Domain.Features.Communication.PushDevice", b =>
                 {
-                    b.HasOne("ChurchManager.Persistence.Models.Discipleship.DiscipleshipStepDefinition", "Definition")
+                    b.HasOne("ChurchManager.Domain.Features.People.Person", "Person")
+                        .WithMany()
+                        .HasForeignKey("PersonId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Person");
+                });
+
+            modelBuilder.Entity("ChurchManager.Domain.Features.Discipleship.DiscipleshipStep", b =>
+                {
+                    b.HasOne("ChurchManager.Domain.Features.Discipleship.DiscipleshipStepDefinition", "Definition")
                         .WithMany("Steps")
                         .HasForeignKey("DiscipleshipStepDefinitionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ChurchManager.Persistence.Models.People.Person", "Person")
+                    b.HasOne("ChurchManager.Domain.Features.People.Person", "Person")
                         .WithMany()
                         .HasForeignKey("PersonId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -948,9 +1033,9 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                     b.Navigation("Person");
                 });
 
-            modelBuilder.Entity("ChurchManager.Persistence.Models.Discipleship.DiscipleshipStepDefinition", b =>
+            modelBuilder.Entity("ChurchManager.Domain.Features.Discipleship.DiscipleshipStepDefinition", b =>
                 {
-                    b.HasOne("ChurchManager.Persistence.Models.Discipleship.DiscipleshipProgram", "DiscipleshipProgram")
+                    b.HasOne("ChurchManager.Domain.Features.Discipleship.DiscipleshipProgram", "DiscipleshipProgram")
                         .WithMany("StepDefinitions")
                         .HasForeignKey("DiscipleshipProgramId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -959,23 +1044,23 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                     b.Navigation("DiscipleshipProgram");
                 });
 
-            modelBuilder.Entity("ChurchManager.Persistence.Models.Groups.Group", b =>
+            modelBuilder.Entity("ChurchManager.Domain.Features.Groups.Group", b =>
                 {
-                    b.HasOne("ChurchManager.Persistence.Models.Churches.Church", "Church")
+                    b.HasOne("ChurchManager.Domain.Features.Churches.Church", "Church")
                         .WithMany()
                         .HasForeignKey("ChurchId");
 
-                    b.HasOne("ChurchManager.Persistence.Models.Groups.GroupType", "GroupType")
+                    b.HasOne("ChurchManager.Domain.Features.Groups.GroupType", "GroupType")
                         .WithMany()
                         .HasForeignKey("GroupTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ChurchManager.Persistence.Models.Groups.Group", "ParentGroup")
+                    b.HasOne("ChurchManager.Domain.Features.Groups.Group", "ParentGroup")
                         .WithMany("Groups")
                         .HasForeignKey("ParentGroupId");
 
-                    b.HasOne("ChurchManager.Persistence.Models.Groups.Schedule", "Schedule")
+                    b.HasOne("ChurchManager.Domain.Features.Groups.Schedule", "Schedule")
                         .WithMany()
                         .HasForeignKey("ScheduleId");
 
@@ -988,15 +1073,15 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                     b.Navigation("Schedule");
                 });
 
-            modelBuilder.Entity("ChurchManager.Persistence.Models.Groups.GroupAttendance", b =>
+            modelBuilder.Entity("ChurchManager.Domain.Features.Groups.GroupAttendance", b =>
                 {
-                    b.HasOne("ChurchManager.Persistence.Models.Groups.Group", "Group")
+                    b.HasOne("ChurchManager.Domain.Features.Groups.Group", "Group")
                         .WithMany()
                         .HasForeignKey("GroupId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.OwnsOne("ChurchManager.Persistence.Models.Groups.AttendanceReview", "AttendanceReview", b1 =>
+                    b.OwnsOne("ChurchManager.Domain.Features.Groups.AttendanceReview", "AttendanceReview", b1 =>
                         {
                             b1.Property<int>("GroupAttendanceId")
                                 .ValueGeneratedOnAdd()
@@ -1027,27 +1112,27 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                     b.Navigation("Group");
                 });
 
-            modelBuilder.Entity("ChurchManager.Persistence.Models.Groups.GroupMember", b =>
+            modelBuilder.Entity("ChurchManager.Domain.Features.Groups.GroupMember", b =>
                 {
-                    b.HasOne("ChurchManager.Persistence.Models.Groups.Group", "Group")
+                    b.HasOne("ChurchManager.Domain.Features.Groups.Group", "Group")
                         .WithMany("Members")
                         .HasForeignKey("GroupId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ChurchManager.Persistence.Models.Groups.GroupTypeRole", "GroupRole")
+                    b.HasOne("ChurchManager.Domain.Features.Groups.GroupTypeRole", "GroupRole")
                         .WithMany()
                         .HasForeignKey("GroupRoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ChurchManager.Persistence.Models.People.Person", "Person")
+                    b.HasOne("ChurchManager.Domain.Features.People.Person", "Person")
                         .WithMany()
                         .HasForeignKey("PersonId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.OwnsOne("ChurchManager.Persistence.Models.Groups.ArchiveStatus", "ArchiveStatus", b1 =>
+                    b.OwnsOne("ChurchManager.Domain.Features.Groups.ArchiveStatus", "ArchiveStatus", b1 =>
                         {
                             b1.Property<int>("GroupMemberId")
                                 .ValueGeneratedOnAdd()
@@ -1077,19 +1162,19 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                     b.Navigation("Person");
                 });
 
-            modelBuilder.Entity("ChurchManager.Persistence.Models.Groups.GroupMemberAttendance", b =>
+            modelBuilder.Entity("ChurchManager.Domain.Features.Groups.GroupMemberAttendance", b =>
                 {
-                    b.HasOne("ChurchManager.Persistence.Models.Groups.GroupAttendance", null)
+                    b.HasOne("ChurchManager.Domain.Features.Groups.GroupAttendance", null)
                         .WithMany("Attendees")
                         .HasForeignKey("GroupAttendanceId");
 
-                    b.HasOne("ChurchManager.Persistence.Models.Groups.Group", "Group")
+                    b.HasOne("ChurchManager.Domain.Features.Groups.Group", "Group")
                         .WithMany()
                         .HasForeignKey("GroupId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ChurchManager.Persistence.Models.Groups.GroupMember", "GroupMember")
+                    b.HasOne("ChurchManager.Domain.Features.Groups.GroupMember", "GroupMember")
                         .WithMany()
                         .HasForeignKey("GroupMemberId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1100,18 +1185,18 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                     b.Navigation("GroupMember");
                 });
 
-            modelBuilder.Entity("ChurchManager.Persistence.Models.Groups.GroupTypeRole", b =>
+            modelBuilder.Entity("ChurchManager.Domain.Features.Groups.GroupTypeRole", b =>
                 {
-                    b.HasOne("ChurchManager.Persistence.Models.Groups.GroupType", "GroupType")
+                    b.HasOne("ChurchManager.Domain.Features.Groups.GroupType", "GroupType")
                         .WithMany()
                         .HasForeignKey("GroupTypeId");
 
                     b.Navigation("GroupType");
                 });
 
-            modelBuilder.Entity("ChurchManager.Persistence.Models.People.Family", b =>
+            modelBuilder.Entity("ChurchManager.Domain.Features.People.Family", b =>
                 {
-                    b.OwnsOne("ChurchManager.Persistence.Models.People.Address", "Address", b1 =>
+                    b.OwnsOne("ChurchManager.Domain.Features.People.Address", "Address", b1 =>
                         {
                             b1.Property<int>("FamilyId")
                                 .ValueGeneratedOnAdd()
@@ -1144,24 +1229,24 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                     b.Navigation("Address");
                 });
 
-            modelBuilder.Entity("ChurchManager.Persistence.Models.People.Notes.Note", b =>
+            modelBuilder.Entity("ChurchManager.Domain.Features.People.Notes.Note", b =>
                 {
-                    b.HasOne("ChurchManager.Persistence.Models.People.Notes.NoteType", "NoteType")
+                    b.HasOne("ChurchManager.Domain.Features.People.Notes.NoteType", "NoteType")
                         .WithMany()
                         .HasForeignKey("NoteTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ChurchManager.Persistence.Models.People.Person", null)
+                    b.HasOne("ChurchManager.Domain.Features.People.Person", null)
                         .WithMany("Notes")
                         .HasForeignKey("PersonId");
 
                     b.Navigation("NoteType");
                 });
 
-            modelBuilder.Entity("ChurchManager.Persistence.Models.People.OnlineUser", b =>
+            modelBuilder.Entity("ChurchManager.Domain.Features.People.OnlineUser", b =>
                 {
-                    b.HasOne("ChurchManager.Persistence.Models.People.Person", "Person")
+                    b.HasOne("ChurchManager.Domain.Features.People.Person", "Person")
                         .WithMany()
                         .HasForeignKey("PersonId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1170,17 +1255,17 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                     b.Navigation("Person");
                 });
 
-            modelBuilder.Entity("ChurchManager.Persistence.Models.People.Person", b =>
+            modelBuilder.Entity("ChurchManager.Domain.Features.People.Person", b =>
                 {
-                    b.HasOne("ChurchManager.Persistence.Models.Churches.Church", "Church")
+                    b.HasOne("ChurchManager.Domain.Features.Churches.Church", "Church")
                         .WithMany()
                         .HasForeignKey("ChurchId");
 
-                    b.HasOne("ChurchManager.Persistence.Models.People.Family", "Family")
+                    b.HasOne("ChurchManager.Domain.Features.People.Family", "Family")
                         .WithMany("FamilyMembers")
                         .HasForeignKey("FamilyId");
 
-                    b.OwnsOne("ChurchManager.Persistence.Models.People.Baptism", "BaptismStatus", b1 =>
+                    b.OwnsOne("ChurchManager.Domain.Features.People.Baptism", "BaptismStatus", b1 =>
                         {
                             b1.Property<int>("PersonId")
                                 .ValueGeneratedOnAdd()
@@ -1201,7 +1286,7 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                                 .HasForeignKey("PersonId");
                         });
 
-                    b.OwnsOne("ChurchManager.Persistence.Models.People.BirthDate", "BirthDate", b1 =>
+                    b.OwnsOne("ChurchManager.Domain.Features.People.BirthDate", "BirthDate", b1 =>
                         {
                             b1.Property<int>("PersonId")
                                 .ValueGeneratedOnAdd()
@@ -1225,7 +1310,7 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                                 .HasForeignKey("PersonId");
                         });
 
-                    b.OwnsOne("ChurchManager.Persistence.Models.People.DeceasedStatus", "DeceasedStatus", b1 =>
+                    b.OwnsOne("ChurchManager.Domain.Features.People.DeceasedStatus", "DeceasedStatus", b1 =>
                         {
                             b1.Property<int>("PersonId")
                                 .ValueGeneratedOnAdd()
@@ -1246,7 +1331,7 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                                 .HasForeignKey("PersonId");
                         });
 
-                    b.OwnsOne("ChurchManager.Persistence.Models.People.Email", "Email", b1 =>
+                    b.OwnsOne("ChurchManager.Domain.Features.People.Email", "Email", b1 =>
                         {
                             b1.Property<int>("PersonId")
                                 .ValueGeneratedOnAdd()
@@ -1267,7 +1352,7 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                                 .HasForeignKey("PersonId");
                         });
 
-                    b.OwnsOne("ChurchManager.Persistence.Models.People.FullName", "FullName", b1 =>
+                    b.OwnsOne("ChurchManager.Domain.Features.People.FullName", "FullName", b1 =>
                         {
                             b1.Property<int>("PersonId")
                                 .ValueGeneratedOnAdd()
@@ -1315,61 +1400,61 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                     b.Navigation("FullName");
                 });
 
-            modelBuilder.Entity("ChurchManager.Persistence.Models.People.PhoneNumber", b =>
+            modelBuilder.Entity("ChurchManager.Domain.Features.People.PhoneNumber", b =>
                 {
-                    b.HasOne("ChurchManager.Persistence.Models.People.Person", null)
+                    b.HasOne("ChurchManager.Domain.Features.People.Person", null)
                         .WithMany("PhoneNumbers")
                         .HasForeignKey("PersonId");
                 });
 
             modelBuilder.Entity("GroupGroupFeature", b =>
                 {
-                    b.HasOne("ChurchManager.Persistence.Models.Groups.GroupFeature", null)
+                    b.HasOne("ChurchManager.Domain.Features.Groups.GroupFeature", null)
                         .WithMany()
                         .HasForeignKey("FeaturesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ChurchManager.Persistence.Models.Groups.Group", null)
+                    b.HasOne("ChurchManager.Domain.Features.Groups.Group", null)
                         .WithMany()
                         .HasForeignKey("GroupsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("ChurchManager.Persistence.Models.Churches.ChurchGroup", b =>
+            modelBuilder.Entity("ChurchManager.Domain.Features.Churches.ChurchGroup", b =>
                 {
                     b.Navigation("Churches");
                 });
 
-            modelBuilder.Entity("ChurchManager.Persistence.Models.Discipleship.DiscipleshipProgram", b =>
+            modelBuilder.Entity("ChurchManager.Domain.Features.Discipleship.DiscipleshipProgram", b =>
                 {
                     b.Navigation("StepDefinitions");
                 });
 
-            modelBuilder.Entity("ChurchManager.Persistence.Models.Discipleship.DiscipleshipStepDefinition", b =>
+            modelBuilder.Entity("ChurchManager.Domain.Features.Discipleship.DiscipleshipStepDefinition", b =>
                 {
                     b.Navigation("Steps");
                 });
 
-            modelBuilder.Entity("ChurchManager.Persistence.Models.Groups.Group", b =>
+            modelBuilder.Entity("ChurchManager.Domain.Features.Groups.Group", b =>
                 {
                     b.Navigation("Groups");
 
                     b.Navigation("Members");
                 });
 
-            modelBuilder.Entity("ChurchManager.Persistence.Models.Groups.GroupAttendance", b =>
+            modelBuilder.Entity("ChurchManager.Domain.Features.Groups.GroupAttendance", b =>
                 {
                     b.Navigation("Attendees");
                 });
 
-            modelBuilder.Entity("ChurchManager.Persistence.Models.People.Family", b =>
+            modelBuilder.Entity("ChurchManager.Domain.Features.People.Family", b =>
                 {
                     b.Navigation("FamilyMembers");
                 });
 
-            modelBuilder.Entity("ChurchManager.Persistence.Models.People.Person", b =>
+            modelBuilder.Entity("ChurchManager.Domain.Features.People.Person", b =>
                 {
                     b.Navigation("Notes");
 

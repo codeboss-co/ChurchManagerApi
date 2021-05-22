@@ -40,7 +40,8 @@ namespace ChurchManager.Infrastructure.Persistence.Repositories
                     GroupMemberRoleId = x.GroupRoleId,
                     GroupMemberRole = x.GroupRole.Name,
                     IsLeader = x.GroupRole.IsLeader,
-                    FirstVisitDate = x.FirstVisitDate
+                    FirstVisitDate = x.FirstVisitDate,
+                    RecordStatus = x.RecordStatus
                 })
                 .ToListAsync(ct);
 

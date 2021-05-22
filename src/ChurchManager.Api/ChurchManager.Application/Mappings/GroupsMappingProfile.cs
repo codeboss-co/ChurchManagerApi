@@ -23,9 +23,10 @@ namespace ChurchManager.Application.Mappings
                 .ForMember(d => d.Items,
                     opt => opt.MapFrom(src => src.Items));
 
+            CreateMap<GroupType, SelectItemViewModel>().ReverseMap();
             CreateMap<Group, SelectItemViewModel>().ReverseMap();
-
             CreateMap<Group, GroupViewModel>();
+            CreateMap<GroupType, ChurchManager.Domain.Shared.GroupTypeViewModel>();
 
             // Attendance Records
             CreateMap<GroupMemberAttendance, GroupMemberAttendanceViewModel>().ReverseMap();
@@ -42,7 +43,6 @@ namespace ChurchManager.Application.Mappings
                 .ForMember(d => d.GroupName,
                     opt => opt.MapFrom(src => src.Group.Name))
                 .ForMember(dest => dest.Attendees, opt => opt.MapFrom(src => src.Attendees));
-;
         }
     }
 }
