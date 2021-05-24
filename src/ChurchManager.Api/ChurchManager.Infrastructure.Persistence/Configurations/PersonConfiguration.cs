@@ -45,6 +45,13 @@ namespace ChurchManager.Infrastructure.Persistence.Configurations
                 .HasConversion(
                     v => v.ToString(),
                     v => new CommunicationType(v));
+
+            // https://stackoverflow.com/questions/49176801/indexes-and-owned-types
+            builder.OwnsOne(x => x.FullName, xx =>
+            {
+                xx.HasIndex(o => o.FirstName);
+                xx.HasIndex(o => o.LastName);
+            });
         }
     }
 }

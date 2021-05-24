@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using ChurchManager.Application.Common;
 using ChurchManager.Application.Features.Groups.Commands.AddGroupMember;
 using ChurchManager.Application.Features.Groups.Commands.GroupAttendanceRecord;
+using ChurchManager.Application.Features.Groups.Commands.NewGroup;
 using ChurchManager.Application.Features.Groups.Queries.BrowsePersonsGroups;
 using ChurchManager.Application.Features.Groups.Queries.GroupMembers;
 using ChurchManager.Application.Features.Groups.Queries.GroupRoles;
@@ -113,6 +114,13 @@ namespace ChurchManager.Api.Controllers.v1
         {
             var group = await Mediator.Send(new GroupTypesQuery{GroupTypeId = groupTypeId}, token);
             return Ok(group);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddGroup([FromBody] AddGroupCommand command, CancellationToken token)
+        {
+            await Mediator.Send(command, token);
+            return Accepted();
         }
     }
 }
