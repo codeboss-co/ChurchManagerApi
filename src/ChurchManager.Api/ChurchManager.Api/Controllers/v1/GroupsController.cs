@@ -119,8 +119,8 @@ namespace ChurchManager.Api.Controllers.v1
         [HttpPost]
         public async Task<IActionResult> AddGroup([FromBody] AddGroupCommand command, CancellationToken token)
         {
-            await Mediator.Send(command, token);
-            return Accepted();
+            var response = await Mediator.Send(command, token);
+            return Ok(response);
         }
     }
 }
