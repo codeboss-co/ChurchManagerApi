@@ -4,6 +4,7 @@ using ChurchManager.Application.Common;
 using ChurchManager.Application.Features.Groups.Commands.AddGroupMember;
 using ChurchManager.Application.Features.Groups.Commands.GroupAttendanceRecord;
 using ChurchManager.Application.Features.Groups.Commands.NewGroup;
+using ChurchManager.Application.Features.Groups.Commands.RemoveGroupMember;
 using ChurchManager.Application.Features.Groups.Queries.BrowsePersonsGroups;
 using ChurchManager.Application.Features.Groups.Queries.GroupMembers;
 using ChurchManager.Application.Features.Groups.Queries.GroupRoles;
@@ -97,6 +98,13 @@ namespace ChurchManager.Api.Controllers.v1
 
         [HttpPost("{groupId}/add-member")]
         public async Task<IActionResult> AddGroupMember([FromBody] AddGroupMemberCommand command,
+            CancellationToken token)
+        {
+            return Ok(await Mediator.Send(command, token));
+        }
+
+        [HttpPost("{groupId}/remove-member")]
+        public async Task<IActionResult> RemoveGroupMember([FromBody] RemoveGroupMemberCommand command,
             CancellationToken token)
         {
             return Ok(await Mediator.Send(command, token));
