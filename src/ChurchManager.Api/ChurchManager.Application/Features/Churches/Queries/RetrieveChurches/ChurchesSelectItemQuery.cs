@@ -27,7 +27,7 @@ namespace ChurchManager.Application.Features.Churches.Queries.RetrieveChurches
 
         public async Task<ApiResponse> Handle(ChurchesQuery query, CancellationToken ct)
         {
-            var vm =  await _mapper
+            var vm = await _mapper
                 .ProjectTo<ChurchViewModel>(_dbRepository.Queryable())
                 .ToListAsync(ct);
 

@@ -9,10 +9,9 @@ namespace ChurchManager.Application.Common
 {
     public class CognitoCurrentUser : ICognitoCurrentUser
     {
-        private readonly ICurrentPrincipalAccessor _principalAccessor;
-        private readonly IProfileService _applicationService;
-
         internal const string ClaimTypeUsername = ClaimTypes.Name;
+        private readonly IProfileService _applicationService;
+        private readonly ICurrentPrincipalAccessor _principalAccessor;
 
         public CognitoCurrentUser(ICurrentPrincipalAccessor principalAccessor, IProfileService applicationService)
         {
@@ -26,8 +25,9 @@ namespace ChurchManager.Application.Common
         public int PersonId => CurrentPerson.Value.GetAwaiter().GetResult().PersonId;
 
         /// <summary>
-        /// Loads the Current User using the
+        ///     Loads the Current User using the
         /// </summary>
-        public Lazy<Task<PersonViewModel>> CurrentPerson => new(async () => await _applicationService.ProfileByUserLoginId(Id));
+        public Lazy<Task<PersonViewModel>> CurrentPerson =>
+            new(async () => await _applicationService.ProfileByUserLoginId(Id));
     }
 }

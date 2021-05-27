@@ -2,8 +2,6 @@
 using System.Threading;
 using System.Threading.Tasks;
 using ChurchManager.Application.Common;
-using ChurchManager.Domain;
-using ChurchManager.Domain.Common;
 using ChurchManager.Domain.Features.Groups;
 using ChurchManager.Domain.Features.Groups.Repositories;
 using MediatR;
@@ -12,8 +10,8 @@ namespace ChurchManager.Application.Features.Groups.Commands.AttendanceFeedback
 {
     public record GroupAttendanceFeedbackCommand : IRequest
     {
-        [Required]
-        public int AttendanceId { get; set; }
+        [Required] public int AttendanceId { get; set; }
+
         public string Feedback { get; set; }
     }
 
@@ -32,7 +30,7 @@ namespace ChurchManager.Application.Features.Groups.Commands.AttendanceFeedback
 
         public async Task<Unit> Handle(GroupAttendanceFeedbackCommand command, CancellationToken ct)
         {
-            GroupAttendance attendance = await _dbRepository.GetByIdAsync(command.AttendanceId);
+            var attendance = await _dbRepository.GetByIdAsync(command.AttendanceId);
 
             if (attendance.AttendanceReview is null)
             {
@@ -40,7 +38,7 @@ namespace ChurchManager.Application.Features.Groups.Commands.AttendanceFeedback
                 {
                     IsReviewed = true,
                     Feedback = command.Feedback,
-                    ReviewedBy = _currentUser.Username,
+                    ReviewedBy = _currentUser.Username
                 };
             }
             else

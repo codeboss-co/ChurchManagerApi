@@ -11,9 +11,9 @@ using MediatR;
 namespace ChurchManager.Application.Features.Profile.Queries.RetrieveProfile
 {
     /// <summary>
-    /// ProfileByUserLoginIdQuery - handles media IRequest
-    /// BaseRequestParameter - contains paging parameters
-    /// To add filter/search parameters, add search properties to the body of this class
+    ///     ProfileByUserLoginIdQuery - handles media IRequest
+    ///     BaseRequestParameter - contains paging parameters
+    ///     To add filter/search parameters, add search properties to the body of this class
     /// </summary>
     public record UserDetailsByUserLoginQuery(string UserLoginId) : IRequest<ApiResponse>
     {
@@ -21,9 +21,9 @@ namespace ChurchManager.Application.Features.Profile.Queries.RetrieveProfile
 
     public class UserDetailsByUserLogin : IRequestHandler<UserDetailsByUserLoginQuery, ApiResponse>
     {
-        private readonly IPersonDbRepository _personDbRepository;
         private readonly ICognitoCurrentUser _currentUser;
         private readonly IMapper _mapper;
+        private readonly IPersonDbRepository _personDbRepository;
 
         public UserDetailsByUserLogin(
             IPersonDbRepository personDbRepository,
@@ -41,11 +41,8 @@ namespace ChurchManager.Application.Features.Profile.Queries.RetrieveProfile
 
             var user = await _personDbRepository.GetBySpecAsync<UserDetails>(spec, ct);
 
-            if (user is null)
-            {
-                return new ApiResponse("No matching user found");
-            }
-            
+            if (user is null) return new ApiResponse("No matching user found");
+
             // Set missing properties from the logged in user
             user.Username = _currentUser.Username;
             return new ApiResponse(user);

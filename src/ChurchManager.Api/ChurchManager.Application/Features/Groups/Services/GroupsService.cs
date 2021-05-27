@@ -18,7 +18,8 @@ namespace ChurchManager.Application.Features.Groups.Services
             _groupDb = groupDb;
         }
 
-        public async Task<IEnumerable<GroupTypeRole>> GroupRolesForGroupAsync(int groupId, CancellationToken ct = default)
+        public async Task<IEnumerable<GroupTypeRole>> GroupRolesForGroupAsync(int groupId,
+            CancellationToken ct = default)
         {
             var groupTypeSpec = new GroupTypeForGroupSpecification(groupId);
             var groupType = await _groupDb.GetBySpecAsync<GroupType>(groupTypeSpec, ct);

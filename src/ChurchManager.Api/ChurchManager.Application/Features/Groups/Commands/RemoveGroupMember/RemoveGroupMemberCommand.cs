@@ -20,22 +20,19 @@ namespace ChurchManager.Application.Features.Groups.Commands.RemoveGroupMember
         {
             _dbRepository = dbRepository;
         }
+
         public async Task<ApiResponse> Handle(RemoveGroupMemberCommand command, CancellationToken ct)
         {
             // Check they are not a group member already
-            var groupMember =  await _dbRepository
+            var groupMember = await _dbRepository
                 .Queryable()
-                .FirstOrDefaultAsync(x => 
+                .FirstOrDefaultAsync(x =>
                     x.Id == command.GroupMemberId &&
                     x.GroupId == command.GroupId, ct);
 
-            if (groupMember is not null)
-            {
-                await _dbRepository.DeleteAsync(groupMember, ct);
-            }
+            if (groupMember is not null) await _dbRepository.DeleteAsync(groupMember, ct);
 
             return new ApiResponse(true);
         }
     }
-
 }

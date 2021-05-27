@@ -18,7 +18,8 @@ namespace ChurchManager.Application.Features.Groups.Queries.BrowsePersonsGroups
         public int PersonId { get; set; }
     }
 
-    public class BrowsePersonsGroupsHandler : IRequestHandler<BrowsePersonsGroupsQuery, PagedResponse<GroupSummaryViewModel>>
+    public class
+        BrowsePersonsGroupsHandler : IRequestHandler<BrowsePersonsGroupsQuery, PagedResponse<GroupSummaryViewModel>>
     {
         private readonly ICognitoCurrentUser _currentUser;
         private readonly IGroupDbRepository _groupDbRepository;
@@ -34,7 +35,8 @@ namespace ChurchManager.Application.Features.Groups.Queries.BrowsePersonsGroups
             _mapper = mapper;
         }
 
-        public async Task<PagedResponse<GroupSummaryViewModel>> Handle(BrowsePersonsGroupsQuery query, CancellationToken ct)
+        public async Task<PagedResponse<GroupSummaryViewModel>> Handle(BrowsePersonsGroupsQuery query,
+            CancellationToken ct)
         {
             var spec = new BrowsePersonsGroupsSpecification(query.PersonId, query);
 

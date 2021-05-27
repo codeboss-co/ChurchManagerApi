@@ -10,14 +10,11 @@ namespace ChurchManager.Application.Exceptions
         {
             Errors = new List<string>();
         }
-        public List<string> Errors { get; }
+
         public ValidationException(IEnumerable<ValidationFailure> failures)
             : this()
         {
-            foreach(var failure in failures)
-            {
-                Errors.Add(failure.ErrorMessage);
-            }
+            foreach (var failure in failures) Errors.Add(failure.ErrorMessage);
         }
 
         public ValidationException(string message) : base(message)
@@ -27,5 +24,7 @@ namespace ChurchManager.Application.Exceptions
         public ValidationException(string message, Exception innerException) : base(message, innerException)
         {
         }
+
+        public List<string> Errors { get; }
     }
 }

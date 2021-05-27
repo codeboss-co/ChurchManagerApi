@@ -16,9 +16,9 @@ namespace ChurchManager.Application.Features.Groups.Services
 {
     public class GroupAttendanceAppService : IGroupAttendanceAppService
     {
+        private readonly IGroupAttendanceDbRepository _attendanceDbRepository;
         private readonly IGroupDbRepository _groupDb;
         private readonly IGroupsService _service;
-        private readonly IGroupAttendanceDbRepository _attendanceDbRepository;
 
         public GroupAttendanceAppService(
             IGroupDbRepository groupDb,
@@ -56,41 +56,42 @@ namespace ChurchManager.Application.Features.Groups.Services
 
                     var members = command.Members
                         .Select(x => new GroupMemberAttendance
-                        {
-                            GroupId = command.GroupId,
-                            GroupMemberId = x.GroupMemberId,
-                            AttendanceDate = command.AttendanceDate,
-                            DidAttend = x.GroupMemberDidAttend,
-                            IsNewConvert = x.NewConvert,
-                            ReceivedHolySpirit = x.ReceivedHolySpirit
-                        }
-                    ).ToList();
+                            {
+                                GroupId = command.GroupId,
+                                GroupMemberId = x.GroupMemberId,
+                                AttendanceDate = command.AttendanceDate,
+                                DidAttend = x.GroupMemberDidAttend,
+                                IsNewConvert = x.NewConvert,
+                                ReceivedHolySpirit = x.ReceivedHolySpirit
+                            }
+                        ).ToList();
 
                     var firstTimers = command.FirstTimers
                         .Select(x => new GroupMemberAttendance
-                        {
-                            GroupId = command.GroupId,
-                            GroupMember = new GroupMember
                             {
                                 GroupId = command.GroupId,
-                                GroupRole = groupMemberRoles.First(x => !x.IsLeader),
-                                Person = new Person
+                                GroupMember = new GroupMember
                                 {
-                                    FullName = new FullName { FirstName = x.FirstName, LastName = x.LastName},
-                                    Gender = x.Gender,
-                                    FirstVisitDate = command.AttendanceDate,
-                                    ConnectionStatus = ConnectionStatus.FirstTimer,
-                                    RecordStatus = RecordStatus.Pending,
-                                    PhoneNumbers = new List<PhoneNumber>() { new() { CountryCode = "+27" , Number = x.PhoneNumber } },
-                                    Source = $"{group.GroupType.Name}"
-                                }
-                            },
-                            AttendanceDate = command.AttendanceDate,
-                            DidAttend = true,
-                            IsFirstTime = true,
-                            IsNewConvert = x.NewConvert,
-                            ReceivedHolySpirit = x.ReceivedHolySpirit
-                        }
+                                    GroupId = command.GroupId,
+                                    GroupRole = groupMemberRoles.First(x => !x.IsLeader),
+                                    Person = new Person
+                                    {
+                                        FullName = new FullName {FirstName = x.FirstName, LastName = x.LastName},
+                                        Gender = x.Gender,
+                                        FirstVisitDate = command.AttendanceDate,
+                                        ConnectionStatus = ConnectionStatus.FirstTimer,
+                                        RecordStatus = RecordStatus.Pending,
+                                        PhoneNumbers = new List<PhoneNumber>
+                                            {new() {CountryCode = "+27", Number = x.PhoneNumber}},
+                                        Source = $"{group.GroupType.Name}"
+                                    }
+                                },
+                                AttendanceDate = command.AttendanceDate,
+                                DidAttend = true,
+                                IsFirstTime = true,
+                                IsNewConvert = x.NewConvert,
+                                ReceivedHolySpirit = x.ReceivedHolySpirit
+                            }
                         ).ToList();
                     // Attendees = Members + First Timers
                     var attendees = members.Concat(firstTimers).ToList();
@@ -100,10 +101,13 @@ namespace ChurchManager.Application.Features.Groups.Services
                         GroupId = command.GroupId,
                         AttendanceDate = command.AttendanceDate,
                         DidNotOccur = command.DidNotOccur,
-                        AttendanceCount = attendees.Where(x => x.DidAttend.HasValue).Count(x => x.DidAttend.Value) + command.FirstTimers.Count(),
+                        AttendanceCount = attendees.Where(x => x.DidAttend.HasValue).Count(x => x.DidAttend.Value) +
+                                          command.FirstTimers.Count(),
                         FirstTimerCount = command.FirstTimers.Count(),
-                        NewConvertCount = attendees.Where(x =>x.IsNewConvert.HasValue).Count(x => x.IsNewConvert.Value),
-                        ReceivedHolySpiritCount = attendees.Where(x => x.ReceivedHolySpirit.HasValue).Count(x => x.ReceivedHolySpirit.Value),
+                        NewConvertCount =
+                            attendees.Where(x => x.IsNewConvert.HasValue).Count(x => x.IsNewConvert.Value),
+                        ReceivedHolySpiritCount = attendees.Where(x => x.ReceivedHolySpirit.HasValue)
+                            .Count(x => x.ReceivedHolySpirit.Value),
                         Attendees = attendees,
                         Notes = command.Notes
                     };

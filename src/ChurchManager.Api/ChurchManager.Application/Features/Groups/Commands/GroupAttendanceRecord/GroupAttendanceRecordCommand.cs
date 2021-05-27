@@ -10,10 +10,10 @@ namespace ChurchManager.Application.Features.Groups.Commands.GroupAttendanceReco
 {
     public record GroupAttendanceRecordCommand : IRequest
     {
-        [Required]
-        public int GroupId { get; set; }
-        [Required]
-        public DateTime AttendanceDate { get; set; }
+        [Required] public int GroupId { get; set; }
+
+        [Required] public DateTime AttendanceDate { get; set; }
+
         public bool? DidNotOccur { get; set; }
         public IEnumerable<GroupMemberAttendance> Members { get; set; }
         public IEnumerable<FirstTimerAttendance> FirstTimers { get; set; }

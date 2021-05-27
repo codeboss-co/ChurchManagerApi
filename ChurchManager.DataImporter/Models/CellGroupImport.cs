@@ -22,9 +22,10 @@ namespace ChurchManager.DataImporter.Models
         {
             Schedule schedule = null;
             // set weekly schedule for newly created groups
-            if(!string.IsNullOrWhiteSpace(import.MeetingDay) && Enum.TryParse(import.MeetingDay, out DayOfWeek meetingDay))
+            if (!string.IsNullOrWhiteSpace(import.MeetingDay) &&
+                Enum.TryParse(import.MeetingDay, out DayOfWeek meetingDay))
             {
-                TimeSpan.TryParse(import.MeetingTime, out TimeSpan meetingTime);
+                TimeSpan.TryParse(import.MeetingTime, out var meetingTime);
 
                 var iCalendarContent =
                     Program.CalendarSerializer.SerializeToString(
@@ -40,7 +41,7 @@ namespace ChurchManager.DataImporter.Models
                 };
             }
 
-            return new()
+            return new Group()
             {
                 Name = import.Name,
                 Description = import.Description,

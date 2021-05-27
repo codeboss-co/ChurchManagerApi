@@ -2,8 +2,6 @@
 using System.Threading;
 using System.Threading.Tasks;
 using ChurchManager.Application.Abstractions.Services;
-using ChurchManager.Domain;
-using ChurchManager.Domain.Common;
 using ChurchManager.Domain.Features.Communication;
 using ChurchManager.Domain.Features.Communication.Services;
 using ChurchManager.Infrastructure.Abstractions.Persistence;
@@ -45,19 +43,18 @@ namespace ChurchManager.Application.Features.Communication.Services
            }
          *
          */
-        public async Task SendNotificationToPersonAsync(int personId, PushNotification notification, CancellationToken ct = default)
+        public async Task SendNotificationToPersonAsync(int personId, PushNotification notification,
+            CancellationToken ct = default)
         {
             // Get person devices
             var devices = await _dbRepository.Queryable()
                 .Where(x => x.PersonId == personId)
                 .ToListAsync(ct);
 
-            var payload = "{\"notification\":{\"title\":\"Web Mail Notification\",\"body\":\"New Mail Received!\",\"icon\":\"images/bell.jpg\",\"vibrate\":[100,50,100],\"requireInteraction\":true,\"data\":{\"dateOfArrival\":1620921655995},\"actions\":[{\"action\":\"inbox\",\"title\":\"Go to Web Mail\"}]}}";
+            var payload =
+                "{\"notification\":{\"title\":\"Web Mail Notification\",\"body\":\"New Mail Received!\",\"icon\":\"images/bell.jpg\",\"vibrate\":[100,50,100],\"requireInteraction\":true,\"data\":{\"dateOfArrival\":1620921655995},\"actions\":[{\"action\":\"inbox\",\"title\":\"Go to Web Mail\"}]}}";
 
-            foreach (var device in devices)
-            {
-                await _client.SendNotificationAsync(device, notification, ct);
-            }
+            foreach (var device in devices) await _client.SendNotificationAsync(device, notification, ct);
         }
     }
 }

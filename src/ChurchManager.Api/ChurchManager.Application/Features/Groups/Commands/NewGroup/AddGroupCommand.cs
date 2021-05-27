@@ -48,7 +48,7 @@ namespace ChurchManager.Application.Features.Groups.Commands.NewGroup
             {
                 Start = command.Start.HasValue ? new CalDateTime(command.Start.Value) : CalDateTime.Today,
                 End = command.End.HasValue ? new CalDateTime(command.End.Value) : CalDateTime.Today.AddYears(5),
-                RecurrenceRules = new List<RecurrencePattern> { rrule },
+                RecurrenceRules = new List<RecurrencePattern> {rrule}
             };
 
             var calendar = new Calendar();
@@ -81,7 +81,5 @@ namespace ChurchManager.Application.Features.Groups.Commands.NewGroup
 
             return new ApiResponse(group.Id);
         }
-
-       
     }
 }

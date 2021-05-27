@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using Ardalis.Specification;
@@ -9,7 +8,7 @@ namespace ChurchManager.Domain.Common.Extensions
     public static class OrderByExtensions
     {
         /// <summary>
-        /// Converts to lambda.
+        ///     Converts to lambda.
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="propertyName">Name of the property.</param>
@@ -28,7 +27,7 @@ namespace ChurchManager.Domain.Common.Extensions
             var param = Expression.Parameter(typeof(TEntity), "p");
             var parts = prop.Split('.');
 
-            Expression parent = parts.Aggregate<string, Expression>(param, Expression.Property);
+            var parent = parts.Aggregate<string, Expression>(param, Expression.Property);
             Expression conversion = Expression.Convert(parent, typeof(object));
 
             return Expression.Lambda<Func<TEntity, TResult>>(conversion, param);
@@ -39,7 +38,7 @@ namespace ChurchManager.Domain.Common.Extensions
             this ISpecificationBuilder<T> specificationBuilder,
             string propertyName)
         {
-            Expression<Func<T, object>> orderExpression = propertyName.ToLambda<T, object>();
+            var orderExpression = propertyName.ToLambda<T, object>();
 
             return specificationBuilder.OrderBy(orderExpression);
         }
@@ -48,7 +47,7 @@ namespace ChurchManager.Domain.Common.Extensions
             this ISpecificationBuilder<T> specificationBuilder,
             string propertyName)
         {
-            Expression<Func<T, object>> orderExpression = propertyName.ToLambda<T, object>();
+            var orderExpression = propertyName.ToLambda<T, object>();
 
             return specificationBuilder.OrderByDescending(orderExpression);
         }

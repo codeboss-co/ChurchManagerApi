@@ -28,7 +28,8 @@ namespace ChurchManager.Application.Features.People.Commands.UpdatePerson
 
         public async Task<Unit> Handle(UpdatePersonalInfoCommand command, CancellationToken ct)
         {
-            var person = await _dbRepository.GetByIdAsync(command.PersonId, ct) ?? throw new ArgumentNullException(nameof(Person));
+            var person = await _dbRepository.GetByIdAsync(command.PersonId, ct) ??
+                         throw new ArgumentNullException(nameof(Person));
             person.FullName.FirstName = command.FirstName;
             person.FullName.MiddleName = command.MiddleName;
             person.FullName.LastName = command.LastName;

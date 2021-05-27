@@ -20,14 +20,14 @@ namespace ChurchManager.Application
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
             services.AddMediatR(Assembly.GetExecutingAssembly());
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
-            
+
             #region Application Services
 
-            services.AddScoped<IProfileService, ProfileService>(); 
-            services.AddScoped<IPersonService, PersonService>(); 
+            services.AddScoped<IProfileService, ProfileService>();
+            services.AddScoped<IPersonService, PersonService>();
             services.AddScoped<IGroupsService, GroupsService>();
-            services.AddScoped<IGroupAttendanceAppService, GroupAttendanceAppService>(); 
-            services.AddScoped<IPushNotificationService, WebPushPushNotification>(); 
+            services.AddScoped<IGroupAttendanceAppService, GroupAttendanceAppService>();
+            services.AddScoped<IPushNotificationService, WebPushPushNotification>();
 
             #endregion
 
