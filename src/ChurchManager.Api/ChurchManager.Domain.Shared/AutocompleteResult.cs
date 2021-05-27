@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace ChurchManager.Domain.Common
+namespace ChurchManager.Domain.Shared
 {
     public record AutocompleteResult(int Id, string Label) { }
 

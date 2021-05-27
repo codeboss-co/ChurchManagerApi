@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using Ardalis.Specification;
 using ChurchManager.Domain.Common;
+using ChurchManager.Domain.Shared;
 using Microsoft.EntityFrameworkCore;
 
 namespace ChurchManager.Domain.Features.People.Specifications

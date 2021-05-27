@@ -52,6 +52,8 @@ namespace ChurchManager.Infrastructure.Persistence.Configurations
                 xx.HasIndex(o => o.FirstName);
                 xx.HasIndex(o => o.LastName);
             });
+
+            builder.HasIndex(o => o.ConnectionStatus);
         }
     }
 }

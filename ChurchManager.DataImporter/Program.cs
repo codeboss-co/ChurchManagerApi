@@ -37,6 +37,7 @@ namespace ChurchManager.DataImporter
 
         static void Main(string[] args)
         {
+            // "C:\Users\dilla\Downloads\churchmanager_db_data_import_updated.xlsx"
             string path = args != null && args.Any() ? args[0] : "./churchmanager_db_data_import.xlsx";
             Process(path);
         }
@@ -213,10 +214,10 @@ namespace ChurchManager.DataImporter
                         .Where(x => !string.IsNullOrEmpty(x.CellGroupName))
                         .Select(x =>
                         {
-                            var group = cellGroups.FirstOrDefault(g => g.Name == x.CellGroupName) ?? throw new ArgumentNullException(nameof(x.CellGroupName));
-                            var groupRole = groupRoles.FirstOrDefault(r => r.Name == x.CellGroupRole) ?? throw new ArgumentNullException(nameof(x.CellGroupRole));
-                            var church = churchDbList.FirstOrDefault(c => c.Name == x.ChurchName) ?? throw new ArgumentNullException(nameof(x.ChurchName));
-                            var family = familyDbList.FirstOrDefault(c => c.Name == x.FamilyName) ?? throw new ArgumentNullException(nameof(x.FamilyName));
+                            var group = cellGroups.FirstOrDefault(g => g.Name == x.CellGroupName) ?? throw new KeyNotFoundException("CellGroupName: " + x.CellGroupName);
+                            var groupRole = groupRoles.FirstOrDefault(r => r.Name == x.CellGroupRole) ?? throw new KeyNotFoundException("CellGroupRole: " + x.CellGroupRole);
+                            var church = churchDbList.FirstOrDefault(c => c.Name == x.ChurchName) ?? throw new KeyNotFoundException("ChurchName: " + x.ChurchName);
+                            var family = familyDbList.FirstOrDefault(c => c.Name == x.FamilyName) ?? throw new KeyNotFoundException("FamilyName: " + x.FamilyName);
 
                             List<PhoneNumber> phoneNumbers = null;
                             if (!string.IsNullOrEmpty(x.PhoneNumber))
@@ -280,7 +281,7 @@ namespace ChurchManager.DataImporter
 
                         if(!string.IsNullOrEmpty(import.UserLoginId))
                         {
-                            if (import.FullName.FirstName.Equals("Dillan"))
+                            if (import.FullName.FirstName.Equals("Dillan") && import.FullName.LastName.Equals("Cagnetta"))
                             {
                                 dbContext.UserLogin.Add(new UserLogin
                                 {
@@ -330,11 +331,11 @@ namespace ChurchManager.DataImporter
                 if(row.Cells.All(d => d.CellType == CellType.Blank))
                     continue;
                 
-                string name = row.GetCell(0)?.StringCellValue; // Name = Column 0
-                string description = row.GetCell(1)?.StringCellValue; // Description = Column 1
-                string address = row.GetCell(2)?.StringCellValue; // Address = Column 2
-                string shortcode = row.GetCell(3)?.StringCellValue; 
-                string phoneNumber = PhoneNumber.CleanNumber(row.GetCell(4)?.StringCellValue);
+                string name = row.GetCell(0)?.StringCellValue.Trim(); // Name = Column 0
+                string description = row.GetCell(1)?.StringCellValue.Trim(); // Description = Column 1
+                string address = row.GetCell(2)?.StringCellValue.Trim(); // Address = Column 2
+                string shortcode = row.GetCell(3)?.StringCellValue.Trim(); 
+                string phoneNumber = PhoneNumber.CleanNumber(row.GetCell(4)?.StringCellValue.Trim());
 
                 var church = new Church
                 {
@@ -366,15 +367,15 @@ namespace ChurchManager.DataImporter
                 if(row.Cells.All(d => d.CellType == CellType.Blank))
                     continue;
 
-                string name = row.GetCell(0)?.StringCellValue; // Name = Column 0
-                string description = row.GetCell(1)?.StringCellValue; // Description = Column 1
-                string address = row.GetCell(2)?.StringCellValue; // Address = Column 2
-                bool? isOnline = row.GetCell(3)?.StringCellValue != null && row.GetCell(3)?.StringCellValue == "Yes";
-                string parentGroup = row.GetCell(4)?.StringCellValue;
-                string church = row.GetCell(5)?.StringCellValue;
+                string name = row.GetCell(0)?.StringCellValue.Trim(); // Name = Column 0
+                string description = row.GetCell(1)?.StringCellValue.Trim(); // Description = Column 1
+                string address = row.GetCell(2)?.StringCellValue.Trim(); // Address = Column 2
+                bool? isOnline = row.GetCell(3)?.StringCellValue != null && row.GetCell(3)?.StringCellValue.Trim() == "Yes";
+                string parentGroup = row.GetCell(4)?.StringCellValue.Trim();
+                string church = row.GetCell(5)?.StringCellValue.Trim();
                 DateTime? startDate = row.GetCell(6)?.DateCellValue;
-                string meetingDay = row.GetCell(7)?.StringCellValue;
-                string meetingTime = row.GetCell(8)?.StringCellValue;
+                string meetingDay = row.GetCell(7)?.StringCellValue.Trim();
+                string meetingTime = row.GetCell(8)?.StringCellValue.Trim();
 
                 var group = new CellGroupImport
                 {
@@ -410,13 +411,13 @@ namespace ChurchManager.DataImporter
                 if(row.Cells.All(d => d.CellType == CellType.Blank))
                     continue;
 
-                string name = row.GetCell(0)?.StringCellValue; // Name = Column 0
-                string street = row.GetCell(1)?.StringCellValue; // Description = Column 1
-                string city = row.GetCell(2)?.StringCellValue; // Address = Column 2
-                string country = row.GetCell(3)?.StringCellValue;
-                string province = row.GetCell(4)?.StringCellValue;
+                string name = row.GetCell(0)?.StringCellValue.Trim(); // Name = Column 0
+                string street = row.GetCell(1)?.StringCellValue.Trim(); // Description = Column 1
+                string city = row.GetCell(2)?.StringCellValue.Trim(); // Address = Column 2
+                string country = row.GetCell(3)?.StringCellValue.Trim();
+                string province = row.GetCell(4)?.StringCellValue.Trim();
                 string postalCode = row.GetCell(5)?.NumericCellValue.ToString() ?? string.Empty;
-                string language = row.GetCell(6)?.StringCellValue;
+                string language = row.GetCell(6)?.StringCellValue.Trim();
 
                 var item = new Family
                 {
@@ -453,37 +454,37 @@ namespace ChurchManager.DataImporter
                 if(row.Cells.All(d => d.CellType == CellType.Blank))
                     continue;
 
-                string name = row.GetCell(0)?.StringCellValue; // Name = Column 0
-                string title = row.GetCell(1)?.StringCellValue; 
-                string firstName = row.GetCell(2)?.StringCellValue; 
-                string nickName = row.GetCell(3)?.StringCellValue;
-                string middleName = row.GetCell(4)?.StringCellValue;
-                string lastName = row.GetCell(5)?.StringCellValue;
-                string suffix = row.GetCell(6)?.StringCellValue;
-                string connectionStatus = row.GetCell(7)?.StringCellValue;
-                string ageClassification = row.GetCell(8)?.StringCellValue;
-                string gender = row.GetCell(9)?.StringCellValue;
+                string name = row.GetCell(0)?.StringCellValue.Trim(); // Name = Column 0
+                string title = row.GetCell(1)?.StringCellValue.Trim(); 
+                string firstName = row.GetCell(2)?.StringCellValue.Trim(); 
+                string nickName = row.GetCell(3)?.StringCellValue.Trim();
+                string middleName = row.GetCell(4)?.StringCellValue.Trim();
+                string lastName = row.GetCell(5)?.StringCellValue.Trim();
+                string suffix = row.GetCell(6)?.StringCellValue.Trim();
+                string connectionStatus = row.GetCell(7)?.StringCellValue.Trim();
+                string ageClassification = row.GetCell(8)?.StringCellValue.Trim();
+                string gender = row.GetCell(9)?.StringCellValue.Trim();
                 int? birthDay = (int?)row.GetCell(10)?.NumericCellValue;
                 int? birthMonth = (int?)row.GetCell(11)?.NumericCellValue;
                 int? birthYear = (int?)row.GetCell(12)?.NumericCellValue;
-                string source = row.GetCell(13)?.StringCellValue;
+                string source = row.GetCell(13)?.StringCellValue.Trim();
                 DateTime? firstVisitDate = row.GetCell(14)?.DateCellValue;
-                bool? isBaptised = row.GetCell(15)?.StringCellValue != null && row.GetCell(15)?.StringCellValue == "Yes";
+                bool? isBaptised = row.GetCell(15)?.StringCellValue != null && row.GetCell(15)?.StringCellValue.Trim() == "Yes";
                 DateTime? baptismDate = row.GetCell(16)?.DateCellValue;
-                bool? foundationSchoolComplete = row.GetCell(17)?.StringCellValue != null && row.GetCell(17)?.StringCellValue == "Yes";
+                bool? foundationSchoolComplete = row.GetCell(17)?.StringCellValue != null && row.GetCell(17)?.StringCellValue.Trim() == "Yes";
                 DateTime? foundationSchoolDate = row.GetCell(18)?.DateCellValue;
-                bool? holySpirit = row.GetCell(19)?.StringCellValue != null && row.GetCell(19)?.StringCellValue == "Yes";
-                string maritalStatus = row.GetCell(20)?.StringCellValue;
+                bool? holySpirit = row.GetCell(19)?.StringCellValue != null && row.GetCell(19)?.StringCellValue.Trim() == "Yes";
+                string maritalStatus = row.GetCell(20)?.StringCellValue.Trim();
                 DateTime? anniversary = row.GetCell(21)?.DateCellValue;
-                string phone = row.GetCell(22)?.StringCellValue;
-                string email = row.GetCell(23)?.StringCellValue;
-                string communicationPreference = row.GetCell(24)?.StringCellValue;
+                string phone = row.GetCell(22)?.StringCellValue.Trim();
+                string email = row.GetCell(23)?.StringCellValue.Trim();
+                string communicationPreference = row.GetCell(24)?.StringCellValue.Trim();
                 string photoUrl = row.GetCell(25)?.StringCellValue;
-                string occupation = row.GetCell(26)?.StringCellValue;
-                string church = row.GetCell(27)?.StringCellValue;
-                string cellGroup = row.GetCell(28)?.StringCellValue;
-                string cellGroupRole = row.GetCell(29)?.StringCellValue;
-                string userLoginId = row.GetCell(30)?.StringCellValue;
+                string occupation = row.GetCell(26)?.StringCellValue.Trim();
+                string church = row.GetCell(27)?.StringCellValue.Trim();
+                string cellGroup = row.GetCell(28)?.StringCellValue.Trim();
+                string cellGroupRole = row.GetCell(29)?.StringCellValue.Trim();
+                string userLoginId = row.GetCell(30)?.StringCellValue.Trim();
 
                 var item = new PersonImport
                 {

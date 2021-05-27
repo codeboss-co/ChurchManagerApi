@@ -19,4 +19,13 @@ namespace ChurchManager.Domain.Shared
         public string RecordStatus { get; set; }
 
     }
+
+    public record GroupMemberEditViewModel
+    {
+        public int GroupMemberId { get; set; }
+        public AutocompleteResult Person { get; set; }
+        public int GroupRole { get; set; }
+        public string CommunicationPreference { get; set; }
+        public DateTime? FirstVisitDate { get; set; }
+    }
 }
