@@ -20,6 +20,7 @@ namespace ChurchManager.Domain.Features.Groups.Specifications
                 Person = new AutocompleteResult(x.PersonId, $"{x.Person.FullName.FirstName} {x.Person.FullName.LastName}"),
                 CommunicationPreference = x.CommunicationPreference,
                 GroupRole = x.GroupRoleId,
+                RecordStatus = x.RecordStatus,
                 FirstVisitDate = x.FirstVisitDate
             });
         }

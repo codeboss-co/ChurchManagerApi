@@ -26,6 +26,7 @@ namespace ChurchManager.Domain.Shared
         public AutocompleteResult Person { get; set; }
         public int GroupRole { get; set; }
         public string CommunicationPreference { get; set; }
+        public string RecordStatus { get; set; }
         public DateTime? FirstVisitDate { get; set; }
     }
 }
