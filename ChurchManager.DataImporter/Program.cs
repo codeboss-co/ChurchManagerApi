@@ -223,13 +223,13 @@ namespace ChurchManager.DataImporter
                         .Where(x => !string.IsNullOrEmpty(x.CellGroupName))
                         .Select(x =>
                         {
-                            var group = cellGroups.FirstOrDefault(g => g.Name == x.CellGroupName) ??
+                            var group = cellGroups.FirstOrDefault(g => g.Name.ToLower() == x.CellGroupName.ToLower()) ??
                                         throw new KeyNotFoundException("CellGroupName: " + x.CellGroupName);
-                            var groupRole = groupRoles.FirstOrDefault(r => r.Name == x.CellGroupRole) ??
+                            var groupRole = groupRoles.FirstOrDefault(r => r.Name.ToLower() == x.CellGroupRole.ToLower()) ??
                                             throw new KeyNotFoundException("CellGroupRole: " + x.CellGroupRole);
-                            var church = churchDbList.FirstOrDefault(c => c.Name == x.ChurchName) ??
+                            var church = churchDbList.FirstOrDefault(c => c.Name.ToLower() == x.ChurchName.ToLower()) ??
                                          throw new KeyNotFoundException("ChurchName: " + x.ChurchName);
-                            var family = familyDbList.FirstOrDefault(c => c.Name == x.FamilyName) ??
+                            var family = familyDbList.FirstOrDefault(c => c.Name.ToLower() == x.FamilyName.ToLower()) ??
                                          throw new KeyNotFoundException("FamilyName: " + x.FamilyName);
 
                             List<PhoneNumber> phoneNumbers = null;

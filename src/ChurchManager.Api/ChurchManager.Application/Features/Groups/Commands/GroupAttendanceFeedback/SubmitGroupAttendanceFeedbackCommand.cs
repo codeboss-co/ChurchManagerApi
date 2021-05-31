@@ -49,7 +49,10 @@ namespace ChurchManager.Application.Features.Groups.Commands.GroupAttendanceFeed
                 attendance.AttendanceReview.ReviewedBy = _currentUser.Username;
             }
 
-            attendance.AddDomainEvent(new GroupAttendanceReviewedEvent(attendance.Id, attendance.GroupId));
+            attendance.AddDomainEvent(new GroupAttendanceReviewedEvent(attendance.Id, attendance.GroupId)
+            {
+                Feedback = command.Feedback
+            });
 
             await _dbRepository.SaveChangesAsync(ct);
 

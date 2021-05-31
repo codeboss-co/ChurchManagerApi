@@ -17,6 +17,12 @@ namespace ChurchManager.Domain.Features.Communication
             Body = body;
         }
 
+        public PushNotification(string title, string body)
+        {
+            Title = title;
+            Body = body;
+        }
+
         public string Title { get; set; } = "Push Demo";
         public string Lang { get; set; } = "en";
         public string Body { get; set; }
@@ -24,10 +30,10 @@ namespace ChurchManager.Domain.Features.Communication
         public string Image { get; set; }
         public string Icon { get; set; }
         public string Badge { get; set; }
-        public DateTime Timestamp { get; set; } = DateTime.Now;
+        public DateTime Timestamp { get; set; } = DateTime.UtcNow;
         public bool RequireInteraction { get; set; } = true;
         public IDictionary<string, object> Data { get; set; }
-        public List<int> Vibrate { get; set; } = new(0);
+        public List<int> Vibrate { get; set; } = new(3) { 100, 50, 200 };
         public List<NotificationAction> Actions { get; set; } = new(0);
     }
 
