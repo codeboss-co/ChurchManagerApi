@@ -1,7 +1,8 @@
 {
   "profiles": {
     "ChurchManager.DataImporter": {
-      "commandName": "Project"
+      "commandName": "Project",
+      "commandLineArgs": "\"C:\\Users\\dilla\\Downloads\\churchmanager_db_data_import_updated_pstDillan.xlsx\""
     }
   }
 }

@@ -38,7 +38,7 @@ namespace ChurchManager.DataImporter
 
         private static void Main(string[] args)
         {
-            // "C:\Users\dilla\Downloads\churchmanager_db_data_import_updated.xlsx"
+            // "C:\Users\dilla\Downloads\churchmanager_db_data_import_updated_pstDillan.xlsx"
             var path = args != null && args.Any() ? args[0] : "./churchmanager_db_data_import.xlsx";
             Process(path);
         }
@@ -287,6 +287,8 @@ namespace ChurchManager.DataImporter
                     dbContext.SaveChanges();
 
                     // Add UserLogins
+                    Console.WriteLine();
+                    Console.WriteLine("*** UserLogins ***");
                     foreach (var importAndPerson in personMap)
                     {
                         importAndPerson.Deconstruct(out var import, out var person);
@@ -315,9 +317,8 @@ namespace ChurchManager.DataImporter
                         }
                     }
 
-                    Console.WriteLine();
                     var userLoginsAdded = dbContext.SaveChanges();
-                    Console.WriteLine($"UserLogins added: {userLoginsAdded}");
+                    Console.WriteLine($"\t > UserLogins added: {userLoginsAdded}");
                 }
             }
 
@@ -478,17 +479,17 @@ namespace ChurchManager.DataImporter
                 var birthMonth = (int?) row.GetCell(11)?.NumericCellValue;
                 var birthYear = (int?) row.GetCell(12)?.NumericCellValue;
                 var source = row.GetCell(13)?.StringCellValue.Trim();
-                var firstVisitDate = row.GetCell(14)?.DateCellValue;
+                var firstVisitDate = row.GetCell(14).CellType != CellType.Blank ? row.GetCell(14)?.DateCellValue : null;
                 bool? isBaptised = row.GetCell(15)?.StringCellValue != null &&
                                    row.GetCell(15)?.StringCellValue.Trim() == "Yes";
-                var baptismDate = row.GetCell(16)?.DateCellValue;
+                var baptismDate = row.GetCell(16).CellType != CellType.Blank ? row.GetCell(16)?.DateCellValue : null;
                 bool? foundationSchoolComplete = row.GetCell(17)?.StringCellValue != null &&
                                                  row.GetCell(17)?.StringCellValue.Trim() == "Yes";
-                var foundationSchoolDate = row.GetCell(18)?.DateCellValue;
+                var foundationSchoolDate = row.GetCell(18).CellType != CellType.Blank ? row.GetCell(18)?.DateCellValue : null;
                 bool? holySpirit = row.GetCell(19)?.StringCellValue != null &&
                                    row.GetCell(19)?.StringCellValue.Trim() == "Yes";
                 var maritalStatus = row.GetCell(20)?.StringCellValue.Trim();
-                var anniversary = row.GetCell(21)?.DateCellValue;
+                var anniversary = row.GetCell(21).CellType != CellType.Blank ? row.GetCell(21)?.DateCellValue : null;
                 var phone = row.GetCell(22)?.StringCellValue.Trim();
                 var email = row.GetCell(23)?.StringCellValue.Trim();
                 var communicationPreference = row.GetCell(24)?.StringCellValue.Trim();
