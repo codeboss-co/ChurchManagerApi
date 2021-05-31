@@ -4,12 +4,12 @@ using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
 using System.Threading;
 using System.Threading.Tasks;
-using BC = BCrypt.Net.BCrypt;
 using ChurchManager.Application.ViewModels;
 using ChurchManager.Infrastructure.Abstractions.Security;
 using ChurchManager.Infrastructure.Persistence.Contexts;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using BC = BCrypt.Net.BCrypt;
 
 namespace ChurchManager.Application.Features.Auth
 {
@@ -31,11 +31,11 @@ namespace ChurchManager.Application.Features.Auth
         public async Task<TokenViewModel> Handle(LoginCommand request, CancellationToken ct)
         {
             // get account from database
-            var user =  await _dbContext.UserLogin
+            var user = await _dbContext.UserLogin
                 .FirstOrDefaultAsync(u => u.Username == request.Username, ct);
 
             // check account found and verify password
-            if(user is not null && BC.Verify(request.Password, user.Password))
+            if (user is not null && BC.Verify(request.Password, user.Password))
             {
                 var claims = new List<Claim>
                 {
@@ -53,10 +53,11 @@ namespace ChurchManager.Application.Features.Auth
 
                 await _dbContext.SaveChangesAsync(ct);
 
-                return new TokenViewModel(IsAuthenticated:true, accessToken, refreshToken);
+                return new TokenViewModel(true, accessToken, refreshToken);
             }
+
             // authentication failed
-            return new TokenViewModel(IsAuthenticated: false);
+            return new TokenViewModel(false);
         }
     }
 }

@@ -12,6 +12,6 @@ namespace ChurchManager.Infrastructure.Abstractions.Persistence
         DbSet<TEntity> Set<TEntity>() where TEntity : class;
         EntityEntry<TEntity> Entry<TEntity>(TEntity entity) where TEntity : class;
         EntityEntry<TEntity> Remove<TEntity>(TEntity entity) where TEntity : class;
-        Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
+        Task<int> SaveChangesAsync(CancellationToken ct = default);
     }
 }

@@ -18,7 +18,7 @@ namespace ChurchManager.Infrastructure.Persistence.Repositories
         /// </summary>
         public IQueryable<GroupMember> GetByGroupId(int groupId)
         {
-            return Queryable("Person,GroupRole")
+            return Queryable("Person", "GroupRole")
                 .Where(t => t.GroupId == groupId)
                 .OrderBy(g => g.GroupRole.Name);
         }

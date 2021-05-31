@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Reflection;
 using ChurchManager.Api.Hubs;
+using ChurchManager.Application.Tests;
 using CodeBoss.AspNetCore.DependencyInjection;
 using MassTransit;
 using MassTransit.Definition;
@@ -21,7 +22,7 @@ namespace ChurchManager.Api._DependencyInjection
 
             services.AddMassTransit(x =>
             {
-                x.AddConsumers(Assembly.GetExecutingAssembly());
+                x.AddConsumers(typeof(TestDomainEventConsumer).Assembly);
 
                 // ** Add Hubs Here **
                 x.AddSignalRHub<NotificationHub>();

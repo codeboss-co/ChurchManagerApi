@@ -3,7 +3,6 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using ChurchManager.Persistence.Shared;
-using Ical.Net;
 using Ical.Net.CalendarComponents;
 
 namespace ChurchManager.Domain.Features.Groups
@@ -75,15 +74,7 @@ namespace ChurchManager.Domain.Features.Groups
                     {
                         var frequencyType = calEvent.RecurrenceRules[0].Frequency;
 
-                        switch(frequencyType)
-                        {
-                            case FrequencyType.Daily:
-                                return ScheduleType.Daily;
-                            case FrequencyType.Weekly:
-                                return ScheduleType.Weekly;
-                            case FrequencyType.Monthly:
-                                return ScheduleType.Monthly;
-                        }
+                        return InetCalendarHelper.FromFrequencyType(frequencyType);
                     }
                 }
 

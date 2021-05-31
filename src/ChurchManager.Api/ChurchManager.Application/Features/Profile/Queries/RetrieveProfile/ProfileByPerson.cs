@@ -3,18 +3,17 @@ using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using ChurchManager.Application.Abstractions.Services;
-using ChurchManager.Domain.Shared;
 using ChurchManager.Application.Wrappers;
-using ChurchManager.Domain.Features.Discipleship;
 using ChurchManager.Domain.Features.Discipleship.Repositories;
+using ChurchManager.Domain.Shared;
 using MediatR;
 
 namespace ChurchManager.Application.Features.Profile.Queries.RetrieveProfile
 {
     /// <summary>
-    /// ProfileByPersonIdQuery - handles media IRequest
-    /// BaseRequestParameter - contains paging parameters
-    /// To add filter/search parameters, add search properties to the body of this class
+    ///     ProfileByPersonIdQuery - handles media IRequest
+    ///     BaseRequestParameter - contains paging parameters
+    ///     To add filter/search parameters, add search properties to the body of this class
     /// </summary>
     public record ProfileByPersonIdQuery(int PersonId, bool Condensed) : IRequest<ApiResponse>
     {
@@ -39,9 +38,10 @@ namespace ChurchManager.Application.Features.Profile.Queries.RetrieveProfile
             var vm = await _service.ProfileByPersonId(query.PersonId, query.Condensed, ct);
 
             // Foundation School status
-            if(vm is not null)
+            if (vm is not null)
             {
-                var foundationSchoolStep = await _stepsDbRepository.DiscipleshipStepInfoForPersonAsync(vm.PersonId, 1, ct);
+                var foundationSchoolStep =
+                    await _stepsDbRepository.DiscipleshipStepInfoForPersonAsync(vm.PersonId, 1, ct);
 
                 vm.FoundationSchool = foundationSchoolStep.FirstOrDefault() ?? new DiscipleshipStepViewModel
                 {
@@ -50,7 +50,7 @@ namespace ChurchManager.Application.Features.Profile.Queries.RetrieveProfile
                 };
             }
 
-            return vm is null 
+            return vm is null
                 ? new ApiResponse("No matching user login Id found")
                 : new ApiResponse(vm);
         }

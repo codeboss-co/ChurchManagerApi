@@ -35,8 +35,9 @@ namespace ChurchManager.Application.Features.People.Commands.UpdatePerson
         {
             var spec = new PersonWithPhonesSpecification(command.PersonId);
 
-            var person = await _dbRepository.GetBySpecAsync(spec, ct) ?? throw new ArgumentNullException(nameof(Person));
-            
+            var person = await _dbRepository.GetBySpecAsync(spec, ct) ??
+                         throw new ArgumentNullException(nameof(Person));
+
             if (person.PhoneNumbers.Any())
             {
                 var phoneNumber = person.PhoneNumbers.First();

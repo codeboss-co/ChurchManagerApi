@@ -1,13 +1,14 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using ChurchManager.Persistence.Shared;
 using Codeboss.Types;
 
 namespace ChurchManager.Domain.Features.People
 {
     [Table("OnlineUser")]
 
-    public class OnlineUser : IAggregateRoot<int>
+    public class OnlineUser : Entity<int>, IAggregateRoot<int>
     {
         [Key]
         public int Id { get; set; }

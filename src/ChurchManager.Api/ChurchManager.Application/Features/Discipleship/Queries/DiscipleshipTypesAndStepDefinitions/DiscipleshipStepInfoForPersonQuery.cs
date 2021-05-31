@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using AutoMapper;
 using ChurchManager.Application.Wrappers;
-using ChurchManager.Domain.Features.Discipleship;
 using ChurchManager.Domain.Features.Discipleship.Repositories;
 using MediatR;
 
@@ -14,12 +13,14 @@ namespace ChurchManager.Application.Features.Discipleship.Queries.DiscipleshipTy
         public int DiscipleshipStepDefinitionId { get; set; }
     }
 
-    public class DiscipleshipStepInfoForPersonQueryHandler : IRequestHandler<DiscipleshipStepInfoForPersonQuery, ApiResponse>
+    public class
+        DiscipleshipStepInfoForPersonQueryHandler : IRequestHandler<DiscipleshipStepInfoForPersonQuery, ApiResponse>
     {
         private readonly IDiscipleshipStepDefinitionDbRepository _dbRepository;
         private readonly IMapper _mapper;
 
-        public DiscipleshipStepInfoForPersonQueryHandler(IDiscipleshipStepDefinitionDbRepository dbRepository, IMapper mapper)
+        public DiscipleshipStepInfoForPersonQueryHandler(IDiscipleshipStepDefinitionDbRepository dbRepository,
+            IMapper mapper)
         {
             _dbRepository = dbRepository;
             _mapper = mapper;
@@ -27,8 +28,9 @@ namespace ChurchManager.Application.Features.Discipleship.Queries.DiscipleshipTy
 
         public async Task<ApiResponse> Handle(DiscipleshipStepInfoForPersonQuery query, CancellationToken ct)
         {
-            var vm = 
-                await _dbRepository.DiscipleshipStepInfoForPersonAsync(query.PersonId.Value, query.DiscipleshipStepDefinitionId, ct);
+            var vm =
+                await _dbRepository.DiscipleshipStepInfoForPersonAsync(query.PersonId.Value,
+                    query.DiscipleshipStepDefinitionId, ct);
 
             return new ApiResponse(vm);
         }

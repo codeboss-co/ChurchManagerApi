@@ -1,5 +1,4 @@
-﻿using ChurchManager.Domain;
-using ChurchManager.Domain.Common;
+﻿using ChurchManager.Domain.Common;
 using ChurchManager.Domain.Features.Groups;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;

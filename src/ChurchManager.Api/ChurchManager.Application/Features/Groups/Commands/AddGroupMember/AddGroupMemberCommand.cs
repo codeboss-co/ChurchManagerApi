@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Threading.Tasks;
 using ChurchManager.Application.Wrappers;
@@ -27,14 +26,13 @@ namespace ChurchManager.Application.Features.Groups.Commands.AddGroupMember
         {
             _dbRepository = dbRepository;
         }
+
         public async Task<ApiResponse> Handle(AddGroupMemberCommand command, CancellationToken ct)
         {
             // Check they are not a group member already
-            if (await _dbRepository.Queryable().AnyAsync(m => 
+            if (await _dbRepository.Queryable().AnyAsync(m =>
                 m.PersonId == command.PersonId && m.GroupId == command.GroupId, ct))
-            {
                 return new ApiResponse(false);
-            }
 
             var groupMember = new GroupMember
             {
@@ -49,5 +47,4 @@ namespace ChurchManager.Application.Features.Groups.Commands.AddGroupMember
             return new ApiResponse(true);
         }
     }
-
 }

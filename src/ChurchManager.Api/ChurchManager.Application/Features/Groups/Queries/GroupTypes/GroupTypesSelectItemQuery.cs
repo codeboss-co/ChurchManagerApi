@@ -34,12 +34,12 @@ namespace ChurchManager.Application.Features.Groups.Queries.GroupTypes
                 var all = await _mapper
                     .ProjectTo<SelectItemViewModel>(_dbRepository.Queryable())
                     .ToListAsync(ct);
-                
+
                 return new ApiResponse(all);
             }
 
             // Single
-            var groupType =  await _dbRepository.Queryable()
+            var groupType = await _dbRepository.Queryable()
                 .FirstOrDefaultAsync(g => g.Id == query.GroupTypeId, ct);
             var mapped = _mapper.Map<GroupTypeViewModel>(groupType);
 

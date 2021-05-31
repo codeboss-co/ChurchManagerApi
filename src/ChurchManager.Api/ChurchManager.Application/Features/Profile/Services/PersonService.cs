@@ -21,7 +21,8 @@ namespace ChurchManager.Application.Features.Profile.Services
             _mapper = mapper;
         }
 
-        public async Task<PagedResult<PersonViewModel>> BrowseAsync(SearchTermQueryParameter query, CancellationToken ct = default)
+        public async Task<PagedResult<PersonViewModel>> BrowseAsync(SearchTermQueryParameter query,
+            CancellationToken ct = default)
         {
             var spec = new BrowsePeopleSpecification(query);
 
