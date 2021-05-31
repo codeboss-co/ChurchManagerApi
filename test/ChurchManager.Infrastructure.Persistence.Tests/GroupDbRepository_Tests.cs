@@ -29,7 +29,7 @@ namespace ChurchManager.Infrastructure.Persistence.Tests
         [Fact]
         public async Task Should_construct_group_tree()
         {
-            using (var dbContext = new ChurchManagerDbContext(_options))
+            using (var dbContext = new ChurchManagerDbContext(_options, null, null))
             {
                 var dbRepository = new GroupDbRepository(dbContext);
 
@@ -49,7 +49,7 @@ namespace ChurchManager.Infrastructure.Persistence.Tests
         [Fact]
         public async Task Should_return_group_roles_for_group_GroupService()
         {
-            using (var dbContext = new ChurchManagerDbContext(_options))
+            using (var dbContext = new ChurchManagerDbContext(_options, null, null))
             {
                 var dbRepository = new GroupDbRepository(dbContext);
                 var service = new GroupsService(dbRepository);

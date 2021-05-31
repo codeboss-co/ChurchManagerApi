@@ -481,6 +481,9 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                     b.Property<int>("GroupId")
                         .HasColumnType("integer");
 
+                    b.Property<DateTime?>("InactiveDateTime")
+                        .HasColumnType("timestamp without time zone");
+
                     b.Property<int?>("NewConvertCount")
                         .HasColumnType("integer");
 
@@ -493,6 +496,9 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
 
                     b.Property<int?>("ReceivedHolySpiritCount")
                         .HasColumnType("integer");
+
+                    b.Property<string>("RecordStatus")
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 

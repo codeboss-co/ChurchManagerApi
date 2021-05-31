@@ -6,6 +6,7 @@ using ChurchManager.Application.Features.Communication.Services;
 using ChurchManager.Application.Features.Groups.Services;
 using ChurchManager.Application.Features.Profile.Services;
 using CodeBoss.AspNetCore;
+using Codeboss.Types;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
@@ -31,7 +32,6 @@ namespace ChurchManager.Application
 
             #endregion
 
-            services.AddAspNetCurrentUser<ICognitoCurrentUser, CognitoCurrentUser>();
-        }
+            services.AddAspNetCurrentUser<ICognitoCurrentUser, CognitoCurrentUser>(); }
     }
 }

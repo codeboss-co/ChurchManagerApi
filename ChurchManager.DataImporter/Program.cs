@@ -63,7 +63,7 @@ namespace ChurchManager.DataImporter
 
             IList<Church> churchDbList = new List<Church>(churches.Count);
 
-            using (var dbContext = new ChurchManagerDbContext(_options))
+            using (var dbContext = new ChurchManagerDbContext(_options,  null, null))
             {
                 DiscipleshipStepDefinition foundationSchoolStepDefinition;
                 DiscipleshipStepDefinition baptismClassStepDefinition;

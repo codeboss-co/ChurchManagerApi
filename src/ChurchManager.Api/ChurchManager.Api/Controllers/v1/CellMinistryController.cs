@@ -1,7 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using ChurchManager.Application.Common;
-using ChurchManager.Application.Features.Groups.Commands.AttendanceFeedback;
+using ChurchManager.Application.Features.Groups.Commands.GroupAttendanceFeedback;
 using ChurchManager.Application.Features.Groups.Queries.BrowseGroupAttendance;
 using ChurchManager.Application.Features.Groups.Queries.Charts.WeeklyComparison;
 using Microsoft.AspNetCore.Authorization;
@@ -35,7 +35,7 @@ namespace ChurchManager.Api.Controllers.v1
         }
 
         [HttpPost("attendance/feedback")]
-        public async Task<IActionResult> AttendanceFeedback([FromBody] GroupAttendanceFeedbackCommand command, CancellationToken token)
+        public async Task<IActionResult> AttendanceFeedback([FromBody] SubmitGroupAttendanceFeedbackCommand command, CancellationToken token)
         {
             await Mediator.Send(command, token);
             return Accepted();
