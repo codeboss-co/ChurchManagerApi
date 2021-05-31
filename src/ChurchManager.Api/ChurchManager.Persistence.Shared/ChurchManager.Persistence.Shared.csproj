@@ -16,4 +16,8 @@
     <PackageReference Include="CodeBoss" Version="0.1.10" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ChurchManager.Domain.Shared\ChurchManager.Domain.Shared.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -5,7 +5,6 @@ using AutoMapper;
 using ChurchManager.Application.Abstractions.Services;
 using ChurchManager.Application.ViewModels;
 using ChurchManager.Application.Wrappers;
-using ChurchManager.Domain.Features.Discipleship;
 using ChurchManager.Domain.Features.Discipleship.Repositories;
 using ChurchManager.Domain.Shared;
 using MediatR;
@@ -13,9 +12,9 @@ using MediatR;
 namespace ChurchManager.Application.Features.Profile.Queries.RetrieveProfile
 {
     /// <summary>
-    /// ProfileByUserLoginIdQuery - handles media IRequest
-    /// BaseRequestParameter - contains paging parameters
-    /// To add filter/search parameters, add search properties to the body of this class
+    ///     ProfileByUserLoginIdQuery - handles media IRequest
+    ///     BaseRequestParameter - contains paging parameters
+    ///     To add filter/search parameters, add search properties to the body of this class
     /// </summary>
     public record ProfileByUserLoginIdQuery(string UserLoginId) : IRequest<ApiResponse>
     {
@@ -23,9 +22,9 @@ namespace ChurchManager.Application.Features.Profile.Queries.RetrieveProfile
 
     public class ProfileByUserLogin : IRequestHandler<ProfileByUserLoginIdQuery, ApiResponse>
     {
+        private readonly IMapper _mapper;
         private readonly IProfileService _service;
         private readonly IDiscipleshipStepDefinitionDbRepository _stepsDbRepository;
-        private readonly IMapper _mapper;
 
         public ProfileByUserLogin(
             IProfileService service,
@@ -42,18 +41,19 @@ namespace ChurchManager.Application.Features.Profile.Queries.RetrieveProfile
             var domain = await _service.ProfileByUserLoginId(query.UserLoginId, ct);
 
             // Foundation School status
-            if(domain is not null)
+            if (domain is not null)
             {
-                var foundationSchoolStep = await _stepsDbRepository.DiscipleshipStepInfoForPersonAsync(domain.PersonId, 1, ct);
+                var foundationSchoolStep =
+                    await _stepsDbRepository.DiscipleshipStepInfoForPersonAsync(domain.PersonId, 1, ct);
 
                 domain.FoundationSchool = foundationSchoolStep.FirstOrDefault() ?? new DiscipleshipStepViewModel
                 {
                     IsComplete = false,
                     Status = "Not Started"
-                }; 
+                };
             }
 
-            return domain is null 
+            return domain is null
                 ? new ApiResponse("No matching user login Id found")
                 : new ApiResponse(_mapper.Map<PersonViewModel>(domain));
         }

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using ChurchManager.Domain.Shared;
 using Codeboss.Types;
 
 namespace ChurchManager.Persistence.Shared
@@ -11,6 +13,17 @@ namespace ChurchManager.Persistence.Shared
         public TPrimaryKey Id { get; set; }
         public string RecordStatus { get; set; } = "Active";
         public DateTime? InactiveDateTime { get; set; }
+
+        #region Domain Events
+
+        [NotMapped]
+        private readonly List<IDomainEvent> _domainEvents = new(0);
+        [NotMapped]
+        public IReadOnlyCollection<IDomainEvent> DomainEvents => _domainEvents.AsReadOnly();
+        public void AddDomainEvent(IDomainEvent @event) => _domainEvents?.Add(@event);
+        public void ClearDomainEvents() => _domainEvents.Clear();
+
+        #endregion
 
         #region Public Methods
 

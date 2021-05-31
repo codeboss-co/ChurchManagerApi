@@ -20,7 +20,8 @@ namespace ChurchManager.Application.Features.Discipleship.Queries.DiscipleshipTy
         private readonly IGenericDbRepository<DiscipleshipStepDefinition> _dbRepository;
         private readonly IMapper _mapper;
 
-        public DiscipleshipDefinitionStepsHandler(IGenericDbRepository<DiscipleshipStepDefinition> dbRepository, IMapper mapper)
+        public DiscipleshipDefinitionStepsHandler(IGenericDbRepository<DiscipleshipStepDefinition> dbRepository,
+            IMapper mapper)
         {
             _dbRepository = dbRepository;
             _mapper = mapper;
@@ -31,8 +32,8 @@ namespace ChurchManager.Application.Features.Discipleship.Queries.DiscipleshipTy
             var vm = await _mapper
                 .ProjectTo<GeneralViewModel>(
                     _dbRepository
-                                .Queryable().Where(x => x.DiscipleshipProgramId == query.DiscipleshipTypeId)
-                                .AsNoTracking())
+                        .Queryable().Where(x => x.DiscipleshipProgramId == query.DiscipleshipTypeId)
+                        .AsNoTracking())
                 .ToListAsync(ct);
 
             return new ApiResponse(vm);

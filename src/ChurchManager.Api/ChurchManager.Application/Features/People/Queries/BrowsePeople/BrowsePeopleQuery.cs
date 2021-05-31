@@ -5,6 +5,7 @@ using ChurchManager.Application.Abstractions.Services;
 using ChurchManager.Application.ViewModels;
 using ChurchManager.Application.Wrappers;
 using ChurchManager.Domain.Parameters;
+using Convey.CQRS.Queries;
 using MediatR;
 
 namespace ChurchManager.Application.Features.People.Queries.BrowsePeople
@@ -15,8 +16,8 @@ namespace ChurchManager.Application.Features.People.Queries.BrowsePeople
 
     public class BrowsePeopleHandler : IRequestHandler<BrowsePeopleQuery, PagedResponse<PersonViewModel>>
     {
-        private readonly IPersonService _service;
         private readonly IMapper _mapper;
+        private readonly IPersonService _service;
 
         public BrowsePeopleHandler(IPersonService service, IMapper mapper)
         {
@@ -28,17 +29,9 @@ namespace ChurchManager.Application.Features.People.Queries.BrowsePeople
         {
             var pagedResult = await _service.BrowseAsync(query, ct);
 
-            try
-            {
-                var vm = _mapper.Map<Convey.CQRS.Queries.PagedResult<PersonViewModel>>(pagedResult);
+            var vm = _mapper.Map<PagedResult<PersonViewModel>>(pagedResult);
 
-                return new PagedResponse<PersonViewModel>(vm);
-            }
-            catch(System.Exception ex)
-            {
-
-                throw;
-            }
+            return new PagedResponse<PersonViewModel>(vm);
         }
     }
 }

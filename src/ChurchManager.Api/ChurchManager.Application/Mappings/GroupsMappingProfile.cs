@@ -4,6 +4,7 @@ using ChurchManager.Domain.Features.Groups;
 using ChurchManager.Domain.Shared;
 using Convey.CQRS.Queries;
 using GroupMemberViewModel = ChurchManager.Domain.Shared.GroupMemberViewModel;
+using GroupTypeViewModel = ChurchManager.Domain.Shared.GroupTypeViewModel;
 using GroupViewModel = ChurchManager.Domain.Shared.GroupViewModel;
 
 namespace ChurchManager.Application.Mappings
@@ -26,7 +27,7 @@ namespace ChurchManager.Application.Mappings
             CreateMap<GroupType, SelectItemViewModel>().ReverseMap();
             CreateMap<Group, SelectItemViewModel>().ReverseMap();
             CreateMap<Group, GroupViewModel>();
-            CreateMap<GroupType, ChurchManager.Domain.Shared.GroupTypeViewModel>();
+            CreateMap<GroupType, GroupTypeViewModel>();
 
             // Attendance Records
             CreateMap<GroupMemberAttendance, GroupMemberAttendanceViewModel>().ReverseMap();

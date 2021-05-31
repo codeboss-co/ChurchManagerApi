@@ -129,6 +129,9 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                     b.Property<int?>("FirstTimerCount")
                         .HasColumnType("integer");
 
+                    b.Property<DateTime?>("InactiveDateTime")
+                        .HasColumnType("timestamp without time zone");
+
                     b.Property<int?>("MalesCount")
                         .HasColumnType("integer");
 
@@ -141,6 +144,9 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
 
                     b.Property<int?>("ReceivedHolySpiritCount")
                         .HasColumnType("integer");
+
+                    b.Property<string>("RecordStatus")
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -450,6 +456,8 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("GroupTypeId");
 
+                    b.HasIndex("Name");
+
                     b.HasIndex("ParentGroupId");
 
                     b.HasIndex("ScheduleId");
@@ -479,6 +487,9 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                     b.Property<int>("GroupId")
                         .HasColumnType("integer");
 
+                    b.Property<DateTime?>("InactiveDateTime")
+                        .HasColumnType("timestamp without time zone");
+
                     b.Property<int?>("NewConvertCount")
                         .HasColumnType("integer");
 
@@ -491,6 +502,9 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
 
                     b.Property<int?>("ReceivedHolySpiritCount")
                         .HasColumnType("integer");
+
+                    b.Property<string>("RecordStatus")
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -585,6 +599,9 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                     b.Property<int>("GroupMemberId")
                         .HasColumnType("integer");
 
+                    b.Property<DateTime?>("InactiveDateTime")
+                        .HasColumnType("timestamp without time zone");
+
                     b.Property<bool?>("IsFirstTime")
                         .HasColumnType("boolean");
 
@@ -597,6 +614,9 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
 
                     b.Property<bool?>("ReceivedHolySpirit")
                         .HasColumnType("boolean");
+
+                    b.Property<string>("RecordStatus")
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -669,12 +689,18 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                     b.Property<int?>("GroupTypeId")
                         .HasColumnType("integer");
 
+                    b.Property<DateTime?>("InactiveDateTime")
+                        .HasColumnType("timestamp without time zone");
+
                     b.Property<bool>("IsLeader")
                         .HasColumnType("boolean");
 
                     b.Property<string>("Name")
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
+
+                    b.Property<string>("RecordStatus")
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -744,6 +770,8 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                         .HasColumnType("text");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Name");
 
                     b.ToTable("Family");
                 });
@@ -835,11 +863,17 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
+                    b.Property<DateTime?>("InactiveDateTime")
+                        .HasColumnType("timestamp without time zone");
+
                     b.Property<DateTimeOffset>("LastOnlineDateTime")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<int>("PersonId")
                         .HasColumnType("integer");
+
+                    b.Property<string>("RecordStatus")
+                        .HasColumnType("text");
 
                     b.Property<string>("Status")
                         .HasMaxLength(20)
@@ -916,6 +950,8 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ChurchId");
+
+                    b.HasIndex("ConnectionStatus");
 
                     b.HasIndex("FamilyId");
 
@@ -1378,6 +1414,10 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                                 .HasColumnType("text");
 
                             b1.HasKey("PersonId");
+
+                            b1.HasIndex("FirstName");
+
+                            b1.HasIndex("LastName");
 
                             b1.ToTable("Person");
 

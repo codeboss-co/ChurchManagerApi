@@ -3,6 +3,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using ChurchManager.Application.Common;
 using ChurchManager.Application.Features.Groups.Queries.GroupsForPerson;
+using ChurchManager.Application.Tests;
+using ChurchManager.Infrastructure.Abstractions;
 using ChurchManager.Infrastructure.Abstractions.Persistence;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -20,17 +22,20 @@ namespace ChurchManager.Api.Controllers
         private readonly IMediator _mediator;
         private readonly ICognitoCurrentUser _currentUser;
         private readonly IChurchManagerDbContext _dbContext;
+        private readonly IDomainEventPublisher _events;
 
         public UtilityController(
             ILogger<UtilityController> logger,
             IMediator mediator,
             ICognitoCurrentUser currentUser,
-            IChurchManagerDbContext dbContext)
+            IChurchManagerDbContext dbContext,
+            IDomainEventPublisher events)
         {
             _logger = logger;
             _mediator = mediator;
             _currentUser = currentUser;
             _dbContext = dbContext;
+            _events = events;
         }
 
         [HttpGet]
@@ -67,5 +72,16 @@ namespace ChurchManager.Api.Controllers
             var person = await _currentUser.CurrentPerson.Value;
             return Ok(User.Claims.Select( x => new { Name=x.Type, x.Value}));
         }
+
+        [HttpGet("domain-event")]
+        //[Authorize]
+        public async Task<IActionResult> DomainEventTest()
+        {
+            var @event = new TestDomainEvent();
+            await _events.PublishAsync(@event);
+            return Ok();
+        }
     }
+
+   
 }

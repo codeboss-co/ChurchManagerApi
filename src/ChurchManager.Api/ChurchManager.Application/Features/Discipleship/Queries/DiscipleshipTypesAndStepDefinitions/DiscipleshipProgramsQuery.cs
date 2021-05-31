@@ -5,6 +5,5 @@ namespace ChurchManager.Application.Features.Discipleship.Queries.DiscipleshipTy
 {
     public record DiscipleshipProgramsQuery : IRequest<ApiResponse>
     {
-        
     }
 }

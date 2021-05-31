@@ -1,5 +1,5 @@
 @api = http://localhost:5001/api
-@accessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiZGlsbGFuIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZWlkZW50aWZpZXIiOiIwODkyNWFkZS05MjQ5LTQ3NmItODc4Ny1iM2RkOGY1ZGJjMTMiLCJQZXJzb25JZCI6IjEiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJNYW5hZ2VyIiwiZXhwIjoxNjIxMzc5MzY0LCJpc3MiOiJodHRwOi8vY29kZWJvc3MudGVjaCIsImF1ZCI6Imh0dHA6Ly9jb2RlYm9zcy50ZWNoIn0.Q9DwocQmqatp31vFqWF7hwEIs8Hm5a7g_l5-VS0oSwI
+@accessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiZGlsbGFuIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZWlkZW50aWZpZXIiOiIwODkyNWFkZS05MjQ5LTQ3NmItODc4Ny1iM2RkOGY1ZGJjMTMiLCJQZXJzb25JZCI6IjEiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJNYW5hZ2VyIiwiZXhwIjoxNjIyMTA5Mzg4LCJpc3MiOiJodHRwOi8vY29kZWJvc3MudGVjaCIsImF1ZCI6Imh0dHA6Ly9jb2RlYm9zcy50ZWNoIn0.1jR8902S0KbumhGOnGGY8jNlkCZNFESKsW0MPPn3CU0
 # Ensure this is in the Countries Table
 @countryId = 1 
 # From AWS Cognito
@@ -72,6 +72,11 @@ Authorization: Bearer {{accessToken}}
 
 # Get Group types
 GET {{api}}/v1/groups/types
+Authorization: Bearer {{accessToken}}
+
+# Get Group Member
+@groupMemberId = 1
+GET {{api}}/v1/groups/members/{{groupMemberId}}
 Authorization: Bearer {{accessToken}}
 
 # ============== PEOPLE ==================== #

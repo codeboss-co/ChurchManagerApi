@@ -22,7 +22,7 @@ namespace ChurchManager.Infrastructure.Tests
         {
             var dailyForFiveDays = new RecurrencePattern(FrequencyType.Daily, 1)
             {
-                Count = 5,
+                Count = 5
             };
 
             var calendarEvent = new CalendarEvent
@@ -30,7 +30,7 @@ namespace ChurchManager.Infrastructure.Tests
                 Summary = "Testing",
                 Start = new CalDateTime(Now),
                 End = new CalDateTime(Later),
-                RecurrenceRules = new List<RecurrencePattern> { dailyForFiveDays }
+                RecurrenceRules = new List<RecurrencePattern> {dailyForFiveDays}
             };
 
             var calendar = new Calendar();
@@ -53,14 +53,15 @@ namespace ChurchManager.Infrastructure.Tests
             var today = DateTime.Now;
             var nextMonth = DateTime.Now.AddMonths(1).Month;
 
-            var specificDates = new List<DateTime>{
+            var specificDates = new List<DateTime>
+            {
                 new(today.Year, nextMonth, 1),
-                new (today.Year, nextMonth, 3),
-                new (today.Year, nextMonth, 5),
-                new (today.Year, nextMonth, 7),
-                new (today.Year, nextMonth, 10),
-                new (today.Year, nextMonth, 20),
-                new (today.Year, nextMonth, 30)
+                new(today.Year, nextMonth, 3),
+                new(today.Year, nextMonth, 5),
+                new(today.Year, nextMonth, 7),
+                new(today.Year, nextMonth, 10),
+                new(today.Year, nextMonth, 20),
+                new(today.Year, nextMonth, 30)
             };
 
             var recurrenceDates = new PeriodList();
@@ -72,13 +73,15 @@ namespace ChurchManager.Infrastructure.Tests
             var calendarSpecificDates = new Calendar
             {
                 // Create an event for the first scheduled date (1am-2am), and set the recurring dates.
-                Events = { new CalendarEvent
+                Events =
+                {
+                    new CalendarEvent
                     {
-                        DtStart = new CalDateTime( firstDate.Year, firstDate.Month, firstDate.Day, 1, 0, 0 ),
-                        DtEnd = new CalDateTime( firstDate.Year, firstDate.Month, firstDate.Day, 2, 0, 0 ),
-                        DtStamp = new CalDateTime( firstDate.Year, firstDate.Month, firstDate.Day ),
-                        RecurrenceDates = new List<PeriodList> { recurrenceDates },
-                        Sequence = 0,
+                        DtStart = new CalDateTime(firstDate.Year, firstDate.Month, firstDate.Day, 1, 0, 0),
+                        DtEnd = new CalDateTime(firstDate.Year, firstDate.Month, firstDate.Day, 2, 0, 0),
+                        DtStamp = new CalDateTime(firstDate.Year, firstDate.Month, firstDate.Day),
+                        RecurrenceDates = new List<PeriodList> {recurrenceDates},
+                        Sequence = 0
                     }
                 }
             };

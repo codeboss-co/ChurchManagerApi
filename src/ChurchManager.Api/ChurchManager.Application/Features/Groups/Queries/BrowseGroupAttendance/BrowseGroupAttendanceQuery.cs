@@ -20,7 +20,9 @@ namespace ChurchManager.Application.Features.Groups.Queries.BrowseGroupAttendanc
         public DateTime? To { get; set; }
     }
 
-    public class BrowseGroupAttendanceHandler : IRequestHandler<BrowseGroupAttendanceQuery, PagedResponse<GroupAttendanceViewModel>>
+    public class
+        BrowseGroupAttendanceHandler : IRequestHandler<BrowseGroupAttendanceQuery,
+            PagedResponse<GroupAttendanceViewModel>>
     {
         private readonly IGroupAttendanceDbRepository _dbRepository;
 
@@ -29,7 +31,8 @@ namespace ChurchManager.Application.Features.Groups.Queries.BrowseGroupAttendanc
             _dbRepository = dbRepository;
         }
 
-        public async Task<PagedResponse<GroupAttendanceViewModel>> Handle(BrowseGroupAttendanceQuery query, CancellationToken ct)
+        public async Task<PagedResponse<GroupAttendanceViewModel>> Handle(BrowseGroupAttendanceQuery query,
+            CancellationToken ct)
         {
             var results = await _dbRepository.BrowseGroupAttendance(
                 query,
@@ -42,5 +45,4 @@ namespace ChurchManager.Application.Features.Groups.Queries.BrowseGroupAttendanc
             return new PagedResponse<GroupAttendanceViewModel>(results);
         }
     }
-
 }

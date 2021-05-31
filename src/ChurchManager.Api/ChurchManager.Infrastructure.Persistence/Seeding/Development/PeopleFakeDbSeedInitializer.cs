@@ -139,9 +139,10 @@ namespace ChurchManager.Infrastructure.Persistence.Seeding.Development
 
             var dillanUserLogin = new UserLogin
             {
+                Id = Guid.Parse("08925ade-9249-476b-8787-b3dd8f5dbc13"),
                 Person = dillan,
                 Username = "dillan",
-                Password = "81118599",
+                Password = BCrypt.Net.BCrypt.HashPassword("81118599"),
                 Roles = new List<string>() {"Admin"}
             };
 

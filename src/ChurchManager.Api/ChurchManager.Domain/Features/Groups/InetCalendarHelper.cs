@@ -81,5 +81,15 @@ namespace ChurchManager.Domain.Features.Groups
         {
             return CalendarWithWeeklyRecurrence(null, null, meetingTime, occurrenceCount);
         }
+
+
+        public static ScheduleType FromFrequencyType(FrequencyType frequency) => frequency switch
+        {
+            FrequencyType.None => ScheduleType.None,
+            FrequencyType.Daily => ScheduleType.Daily,
+            FrequencyType.Weekly => ScheduleType.Weekly,
+            FrequencyType.Monthly => ScheduleType.Monthly,
+            _ => ScheduleType.Custom
+        };
     }
 }

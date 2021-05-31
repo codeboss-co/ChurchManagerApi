@@ -1,13 +1,14 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using ChurchManager.Persistence.Shared;
 using Codeboss.Types;
 
 namespace ChurchManager.Domain.Features.Churches
 {
     [Table("ChurchAttendance")]
 
-    public class ChurchAttendance : IAggregateRoot<int>
+    public class ChurchAttendance : Entity<int>, IAggregateRoot<int>
     {
         [Key]
         public int Id { get; set; }

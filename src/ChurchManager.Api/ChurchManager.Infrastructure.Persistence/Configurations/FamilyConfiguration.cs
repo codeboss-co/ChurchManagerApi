@@ -1,5 +1,4 @@
-﻿using ChurchManager.Domain;
-using ChurchManager.Domain.Common;
+﻿using ChurchManager.Domain.Common;
 using ChurchManager.Domain.Features.People;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -15,6 +14,8 @@ namespace ChurchManager.Infrastructure.Persistence.Configurations
                 .HasConversion(
                     v => v.ToString(),
                     v => new RecordStatus(v));
+
+            builder.HasIndex(x => x.Name);
         }
     }
 }

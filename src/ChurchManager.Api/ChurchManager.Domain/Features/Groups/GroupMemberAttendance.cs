@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using ChurchManager.Persistence.Shared;
 using Codeboss.Types;
 
 namespace ChurchManager.Domain.Features.Groups
@@ -11,7 +12,7 @@ namespace ChurchManager.Domain.Features.Groups
     /// </summary>
     [Table("GroupMemberAttendance")]
 
-    public class GroupMemberAttendance : IAggregateRoot<int>
+    public class GroupMemberAttendance : Entity<int>, IAggregateRoot<int>
     {
         [Key]
         public int Id { get; set; }

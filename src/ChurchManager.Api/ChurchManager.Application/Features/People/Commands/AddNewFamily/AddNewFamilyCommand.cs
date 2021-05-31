@@ -46,7 +46,7 @@ namespace ChurchManager.Application.Features.People.Commands.AddNewFamily
                 {
                     FirstName = x.Person.FirstName,
                     MiddleName = x.Person.MiddleName,
-                    LastName = x.Person.LastName,
+                    LastName = x.Person.LastName
                 },
                 FirstVisitDate = x.FirstVisitDate,
                 ConnectionStatus = x.ConnectionStatus,
@@ -60,9 +60,11 @@ namespace ChurchManager.Application.Features.People.Commands.AddNewFamily
                     BirthYear = x.Person.BirthDate?.Year
                 },
                 ChurchId = x.ChurchId,
-                Email = !x.Person.EmailAddress.IsNullOrEmpty() ? new Email {Address = x.Person.EmailAddress, IsActive = true} : null,
-                PhoneNumbers = !x.Person.PhoneNumber.IsNullOrEmpty() 
-                    ? new List<PhoneNumber>() {new() {CountryCode = "+27", Number = x.Person.PhoneNumber}}
+                Email = !x.Person.EmailAddress.IsNullOrEmpty()
+                    ? new Email {Address = x.Person.EmailAddress, IsActive = true}
+                    : null,
+                PhoneNumbers = !x.Person.PhoneNumber.IsNullOrEmpty()
+                    ? new List<PhoneNumber> {new() {CountryCode = "+27", Number = x.Person.PhoneNumber}}
                     : null,
                 Source = x.Source,
                 Family = family

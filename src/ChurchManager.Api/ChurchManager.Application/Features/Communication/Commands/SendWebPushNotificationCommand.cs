@@ -1,5 +1,4 @@
-﻿using System.Runtime.InteropServices;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using ChurchManager.Application.Abstractions.Services;
 using ChurchManager.Domain.Features.Communication;

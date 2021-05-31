@@ -1,5 +1,4 @@
-﻿using ChurchManager.Domain;
-using ChurchManager.Domain.Common;
+﻿using ChurchManager.Domain.Common;
 using ChurchManager.Domain.Features.Groups;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -21,6 +20,8 @@ namespace ChurchManager.Infrastructure.Persistence.Configurations
                 .HasMany(p => p.Features)
                 .WithMany(p => p.Groups)
                 .UsingEntity(j => j.ToTable("GroupsFeatures"));
+
+            builder.HasIndex(x => x.Name);
         }
     }
 }

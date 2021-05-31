@@ -50,12 +50,12 @@ namespace ChurchManager.Application.Features.Discipleship.Queries.DiscipleshipTy
                         {
                             Order = step.Definition.Order, Id = step.Definition.Id,
                             Description = step.Definition.Description, Name = step.Definition.Name
-                        },
+                        }
                     }
                 })
                 .OrderBy(x => x.Step.StepDefinition.Order)
                 .ToListAsync(ct);
-                
+
             // This is done in memory
             var grouping = vm.GroupBy(x => x.Program.Id);
 
@@ -86,7 +86,7 @@ namespace ChurchManager.Application.Features.Discipleship.Queries.DiscipleshipTy
                             {
                                 Order = x.StepDefinition.Order, Id = x.StepDefinition.Id,
                                 Description = x.StepDefinition.Description, Name = x.StepDefinition.Name
-                            },
+                            }
                         })
                 };
             });
