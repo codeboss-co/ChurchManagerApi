@@ -479,17 +479,17 @@ namespace ChurchManager.DataImporter
                 var birthMonth = (int?) row.GetCell(11)?.NumericCellValue;
                 var birthYear = (int?) row.GetCell(12)?.NumericCellValue;
                 var source = row.GetCell(13)?.StringCellValue.Trim();
-                var firstVisitDate = row.GetCell(14).CellType != CellType.Blank ? row.GetCell(14)?.DateCellValue : null;
+                var firstVisitDate = row.GetCell(14)?.CellType != CellType.Blank ? row.GetCell(14)?.DateCellValue : null;
                 bool? isBaptised = row.GetCell(15)?.StringCellValue != null &&
                                    row.GetCell(15)?.StringCellValue.Trim() == "Yes";
-                var baptismDate = row.GetCell(16).CellType != CellType.Blank ? row.GetCell(16)?.DateCellValue : null;
+                var baptismDate = row.GetCell(16)?.CellType != CellType.Blank ? row.GetCell(16)?.DateCellValue : null;
                 bool? foundationSchoolComplete = row.GetCell(17)?.StringCellValue != null &&
                                                  row.GetCell(17)?.StringCellValue.Trim() == "Yes";
-                var foundationSchoolDate = row.GetCell(18).CellType != CellType.Blank ? row.GetCell(18)?.DateCellValue : null;
+                var foundationSchoolDate = row.GetCell(18)?.CellType != CellType.Blank ? row.GetCell(18)?.DateCellValue : null;
                 bool? holySpirit = row.GetCell(19)?.StringCellValue != null &&
                                    row.GetCell(19)?.StringCellValue.Trim() == "Yes";
                 var maritalStatus = row.GetCell(20)?.StringCellValue.Trim();
-                var anniversary = row.GetCell(21).CellType != CellType.Blank ? row.GetCell(21)?.DateCellValue : null;
+                var anniversary = row.GetCell(21)?.CellType != CellType.Blank ? row.GetCell(21)?.DateCellValue : null;
                 var phone = row.GetCell(22)?.StringCellValue.Trim();
                 var email = row.GetCell(23)?.StringCellValue.Trim();
                 var communicationPreference = row.GetCell(24)?.StringCellValue.Trim();
