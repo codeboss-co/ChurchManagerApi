@@ -84,24 +84,23 @@ namespace ChurchManager.Domain.Features.People.Specifications
 
             if(query.Filters.Contains("baptised") || query.Filters.Contains("notBaptised"))
             {
-                Expression<Func<Person, bool>> baptismCriteria = person => false;
+                Expression<Func<Person, bool>> baptismCriteria = null;
 
                 if(query.Filters.Contains("baptised"))
                 {
-                    Query.Where(x =>
-                        x.BaptismStatus != null &&
-                        x.BaptismStatus.IsBaptised.HasValue &&
-                        x.BaptismStatus.IsBaptised.Value);
+                    baptismCriteria = PersonCriteria.IsBaptisedFilter;
                 }
                 if(query.Filters.Contains("notBaptised"))
                 {
-                    baptismCriteria.Or(x =>
-                        x.BaptismStatus == null ||
-                        x.BaptismStatus.IsBaptised.HasValue == false ||
-                        x.BaptismStatus.IsBaptised.Value == false);
+                    baptismCriteria = baptismCriteria is null 
+                        ? PersonCriteria.NotBaptisedFilter 
+                        : baptismCriteria.Or(PersonCriteria.NotBaptisedFilter);
                 }
 
-                //Query.Where(baptismCriteria); 
+                if (baptismCriteria is not null)
+                {
+                    Query.Where(baptismCriteria);
+                }
             }
 
             // Ordering
@@ -123,6 +122,18 @@ namespace ChurchManager.Domain.Features.People.Specifications
                 .Skip(skip)
                 .Take(query.Results);
         }
+    }
 
+    public static class PersonCriteria
+    {
+       public static Expression<Func<Person, bool>> IsBaptisedFilter = x =>
+            x.BaptismStatus != null &&
+            x.BaptismStatus.IsBaptised.HasValue &&
+            x.BaptismStatus.IsBaptised.Value;
+
+       public static Expression<Func<Person, bool>> NotBaptisedFilter = x =>
+           x.BaptismStatus == null ||
+           x.BaptismStatus.IsBaptised.HasValue == false ||
+           x.BaptismStatus.IsBaptised.Value == false;
     }
 }
