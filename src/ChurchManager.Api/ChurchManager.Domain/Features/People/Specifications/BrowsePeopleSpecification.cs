@@ -81,7 +81,6 @@ namespace ChurchManager.Domain.Features.People.Specifications
             }
 
             // Baptism
-
             if(query.Filters.Contains("baptised") || query.Filters.Contains("notBaptised"))
             {
                 Expression<Func<Person, bool>> baptismCriteria = null;
@@ -101,6 +100,34 @@ namespace ChurchManager.Domain.Features.People.Specifications
                 {
                     Query.Where(baptismCriteria);
                 }
+            }
+
+            // Holy Spirit
+            if(query.Filters.Contains("holySpirit") || query.Filters.Contains("noHolySpirit"))
+            {
+                Expression<Func<Person, bool>> holySpiritCriteria = null;
+
+                if(query.Filters.Contains("holySpirit"))
+                {
+                    holySpiritCriteria = PersonCriteria.HasHolySpirit;
+                }
+                if(query.Filters.Contains("noHolySpirit"))
+                {
+                    holySpiritCriteria = holySpiritCriteria is null
+                        ? PersonCriteria.NotBaptisedFilter
+                        : holySpiritCriteria.Or(PersonCriteria.NoHolySpirit);
+                }
+
+                if(holySpiritCriteria is not null)
+                {
+                    Query.Where(holySpiritCriteria);
+                }
+            }
+
+            // No Photo Filter
+            if(query.Filters.Contains("noPhoto"))
+            {
+                Query.Where(x => x.PhotoUrl == null);
             }
 
             // Ordering
@@ -135,5 +162,15 @@ namespace ChurchManager.Domain.Features.People.Specifications
            x.BaptismStatus == null ||
            x.BaptismStatus.IsBaptised.HasValue == false ||
            x.BaptismStatus.IsBaptised.Value == false;
+
+       public static Expression<Func<Person, bool>> HasHolySpirit = x =>
+           x.ReceivedHolySpirit != null &&
+           x.ReceivedHolySpirit.HasValue && 
+           x.ReceivedHolySpirit.Value;
+
+       public static Expression<Func<Person, bool>> NoHolySpirit = x =>
+           x.ReceivedHolySpirit == null ||
+           x.ReceivedHolySpirit.HasValue == false ||
+           x.ReceivedHolySpirit == false;
     }
 }
