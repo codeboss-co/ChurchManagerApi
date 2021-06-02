@@ -67,6 +67,43 @@ namespace ChurchManager.Domain.Features.People.Specifications
                 Query.Where(genderCriteria);
             }
 
+            // Age Classification
+            if(query.RecordStatus.Any())
+            {
+                Expression<Func<Person, bool>> recordStatusCriteria = person => false;
+                foreach(var status in query.RecordStatus)
+                {
+                    Expression<Func<Person, bool>> recordStatusFilter = g => g.RecordStatus == status;
+                    recordStatusCriteria = recordStatusCriteria.Or(recordStatusFilter);
+                }
+
+                Query.Where(recordStatusCriteria);
+            }
+
+            // Baptism
+
+            if(query.Filters.Contains("baptised") || query.Filters.Contains("notBaptised"))
+            {
+                Expression<Func<Person, bool>> baptismCriteria = person => false;
+
+                if(query.Filters.Contains("baptised"))
+                {
+                    Query.Where(x =>
+                        x.BaptismStatus != null &&
+                        x.BaptismStatus.IsBaptised.HasValue &&
+                        x.BaptismStatus.IsBaptised.Value);
+                }
+                if(query.Filters.Contains("notBaptised"))
+                {
+                    baptismCriteria.Or(x =>
+                        x.BaptismStatus == null ||
+                        x.BaptismStatus.IsBaptised.HasValue == false ||
+                        x.BaptismStatus.IsBaptised.Value == false);
+                }
+
+                //Query.Where(baptismCriteria); 
+            }
+
             // Ordering
             if (!query.OrderBy.IsNullOrEmpty())
             {
