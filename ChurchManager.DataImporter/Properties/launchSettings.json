@@ -1,7 +1,8 @@
 {
   "profiles": {
     "ChurchManager.DataImporter": {
-      "commandName": "Project"
+      "commandName": "Project",
+      "commandLineArgs": ""
     }
   }
 }

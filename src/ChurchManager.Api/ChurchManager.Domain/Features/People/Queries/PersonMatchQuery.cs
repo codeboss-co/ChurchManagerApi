@@ -17,10 +17,10 @@ namespace ChurchManager.Domain.Features.People.Queries
         /// <param name="mobilePhone">The mobile phone.</param>
         public PersonMatchQuery(string firstName, string lastName, string email, string mobilePhone)
         {
-            FirstName = firstName.IsNullOrEmpty() ? firstName.Trim() : string.Empty;
-            LastName = lastName.IsNullOrEmpty() ? lastName.Trim() : string.Empty;
-            Email = email.IsNullOrEmpty() ? email.Trim() : string.Empty;
-            MobilePhone = mobilePhone.IsNullOrEmpty() ? PhoneNumber.CleanNumber(mobilePhone) : string.Empty;
+            FirstName = !firstName.IsNullOrEmpty() ? firstName.Trim() : string.Empty;
+            LastName = !lastName.IsNullOrEmpty() ? lastName.Trim() : string.Empty;
+            Email = !email.IsNullOrEmpty() ? email.Trim() : string.Empty;
+            MobilePhone = !mobilePhone.IsNullOrEmpty() ? PhoneNumber.CleanNumber(mobilePhone) : string.Empty;
             Gender = null;
             BirthDate = null;
             SuffixValueId = null;
@@ -40,10 +40,10 @@ namespace ChurchManager.Domain.Features.People.Queries
         /// <param name="suffixValueId">The suffix value identifier.</param>
         public PersonMatchQuery(string firstName, string lastName, string email, string mobilePhone, Gender? gender = null, int? birthMonth = null, int? birthDay = null, int? birthYear = null, int? suffixValueId = null)
         {
-            FirstName = firstName.IsNullOrEmpty() ? firstName.Trim() : string.Empty;
-            LastName = lastName.IsNullOrEmpty() ? lastName.Trim() : string.Empty;
-            Email = email.IsNullOrEmpty() ? email.Trim() : string.Empty;
-            MobilePhone = mobilePhone.IsNullOrEmpty() ? PhoneNumber.CleanNumber(mobilePhone) : string.Empty;
+            FirstName = !firstName.IsNullOrEmpty() ? firstName.Trim() : string.Empty;
+            LastName = !lastName.IsNullOrEmpty() ? lastName.Trim() : string.Empty;
+            Email = !email.IsNullOrEmpty() ? email.Trim() : string.Empty;
+            MobilePhone = !mobilePhone.IsNullOrEmpty() ? PhoneNumber.CleanNumber(mobilePhone) : string.Empty;
             Gender = gender;
             BirthDate = birthDay.HasValue && birthMonth.HasValue ? new DateTime(birthYear ?? DateTime.MinValue.Year, birthMonth.Value, birthDay.Value) : (DateTime?)null;
             SuffixValueId = suffixValueId;
@@ -61,10 +61,10 @@ namespace ChurchManager.Domain.Features.People.Queries
         /// <param name="suffixValueId">The suffix value identifier.</param>
         public PersonMatchQuery(string firstName, string lastName, string email, string mobilePhone, Gender? gender = null, DateTime? birthDate = null, int? suffixValueId = null)
         {
-            FirstName = firstName.IsNullOrEmpty() ? firstName.Trim() : string.Empty;
-            LastName = lastName.IsNullOrEmpty() ? lastName.Trim() : string.Empty;
-            Email = email.IsNullOrEmpty() ? email.Trim() : string.Empty;
-            MobilePhone = mobilePhone.IsNullOrEmpty() ? PhoneNumber.CleanNumber(mobilePhone) : string.Empty;
+            FirstName = !firstName.IsNullOrEmpty() ? firstName.Trim() : string.Empty;
+            LastName = !lastName.IsNullOrEmpty() ? lastName.Trim() : string.Empty;
+            Email = !email.IsNullOrEmpty() ? email.Trim() : string.Empty;
+            MobilePhone = !mobilePhone.IsNullOrEmpty() ? PhoneNumber.CleanNumber(mobilePhone) : string.Empty;
             Gender = gender;
             BirthDate = birthDate;
             SuffixValueId = suffixValueId;

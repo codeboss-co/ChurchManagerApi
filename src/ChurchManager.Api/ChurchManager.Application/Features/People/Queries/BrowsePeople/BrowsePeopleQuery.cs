@@ -4,13 +4,13 @@ using AutoMapper;
 using ChurchManager.Application.Abstractions.Services;
 using ChurchManager.Application.ViewModels;
 using ChurchManager.Application.Wrappers;
-using ChurchManager.Domain.Parameters;
+using ChurchManager.Domain.Features.People.Queries;
 using Convey.CQRS.Queries;
 using MediatR;
 
 namespace ChurchManager.Application.Features.People.Queries.BrowsePeople
 {
-    public record BrowsePeopleQuery : SearchTermQueryParameter, IRequest<PagedResponse<PersonViewModel>>
+    public record BrowsePeopleQuery : PeopleAdvancedSearchQuery, IRequest<PagedResponse<PersonViewModel>>
     {
     }
 
