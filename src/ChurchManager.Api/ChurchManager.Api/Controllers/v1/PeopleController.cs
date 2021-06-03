@@ -5,6 +5,7 @@ using ChurchManager.Application.Common;
 using ChurchManager.Application.Features.People.Commands.AddNewFamily;
 using ChurchManager.Application.Features.People.Commands.UpdatePerson;
 using ChurchManager.Application.Features.People.Queries.BrowsePeople;
+using ChurchManager.Application.Features.People.Queries.FindDuplicates;
 using ChurchManager.Application.Features.People.Queries.PeopleAutocomplete;
 using ChurchManager.Domain;
 using ChurchManager.Domain.Common;
@@ -76,6 +77,12 @@ namespace ChurchManager.Api.Controllers.v1
         {
             var groups = await Mediator.Send(query, token);
             return Ok(groups);
+        }
+
+        [HttpGet("find")]
+        public async Task<IActionResult> FindPeople([FromQuery] FindPeopleDuplicatesQuery query, CancellationToken token)
+        {
+            return Ok(await Mediator.Send(query, token));
         }
     }
 }
