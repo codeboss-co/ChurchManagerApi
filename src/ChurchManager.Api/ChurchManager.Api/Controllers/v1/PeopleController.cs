@@ -1,14 +1,11 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using ChurchManager.Application;
 using ChurchManager.Application.Common;
 using ChurchManager.Application.Features.People.Commands.AddNewFamily;
 using ChurchManager.Application.Features.People.Commands.UpdatePerson;
 using ChurchManager.Application.Features.People.Queries.BrowsePeople;
 using ChurchManager.Application.Features.People.Queries.FindDuplicates;
 using ChurchManager.Application.Features.People.Queries.PeopleAutocomplete;
-using ChurchManager.Domain;
-using ChurchManager.Domain.Common;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
