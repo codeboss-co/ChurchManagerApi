@@ -79,8 +79,8 @@ namespace ChurchManager.Api.Controllers.v1
             return Ok(groups);
         }
 
-        [HttpGet("find")]
-        public async Task<IActionResult> FindPeople([FromQuery] FindPeopleDuplicatesQuery query, CancellationToken token)
+        [HttpGet("duplicate-check")]
+        public async Task<IActionResult> DuplicatePersonCheck([FromQuery] FindPeopleDuplicatesQuery query, CancellationToken token)
         {
             return Ok(await Mediator.Send(query, token));
         }

@@ -4,8 +4,8 @@ using System.Threading.Tasks;
 using ChurchManager.Application.Wrappers;
 using ChurchManager.Domain.Features.People.Queries;
 using ChurchManager.Domain.Features.People.Repositories;
+using ChurchManager.Domain.Features.People.Specifications;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 
 namespace ChurchManager.Application.Features.People.Queries.FindDuplicates
 {
@@ -30,7 +30,10 @@ namespace ChurchManager.Application.Features.People.Queries.FindDuplicates
         public async Task<ApiResponse> Handle(FindPeopleDuplicatesQuery query, CancellationToken ct)
         {
             var searchParams = new PersonMatchQuery(query.FirstName, query.LastName, query.Email, null);
-            var people = await _dbRepository.FindPersons(searchParams).ToListAsync(ct);
+            
+            var spec = new FindPeopleSpecification(searchParams);
+
+            var people = await _dbRepository.ListAsync(spec, ct);
 
             return new ApiResponse(people?.Any() ?? false);
         }
