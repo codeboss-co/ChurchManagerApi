@@ -475,9 +475,9 @@ namespace ChurchManager.DataImporter
                 var connectionStatus = row.GetCell(7)?.StringCellValue.Trim();
                 var ageClassification = row.GetCell(8)?.StringCellValue.Trim();
                 var gender = row.GetCell(9)?.StringCellValue.Trim();
-                var birthDay = (int?) row.GetCell(10)?.NumericCellValue;
-                var birthMonth = (int?) row.GetCell(11)?.NumericCellValue;
-                var birthYear = (int?) row.GetCell(12)?.NumericCellValue;
+                var birthDay = row.GetCell(10)?.CellType != CellType.Blank ? (int?) row.GetCell(10)?.NumericCellValue : null;
+                var birthMonth = row.GetCell(11)?.CellType != CellType.Blank ? (int?)row.GetCell(10)?.NumericCellValue : null;
+                var birthYear = row.GetCell(12)?.CellType != CellType.Blank ? (int?)row.GetCell(10)?.NumericCellValue : null;
                 var source = row.GetCell(13)?.StringCellValue.Trim();
                 var firstVisitDate = row.GetCell(14)?.CellType != CellType.Blank ? row.GetCell(14)?.DateCellValue : null;
                 bool? isBaptised = row.GetCell(15)?.StringCellValue != null &&
