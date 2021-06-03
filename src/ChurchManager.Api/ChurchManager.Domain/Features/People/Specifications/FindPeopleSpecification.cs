@@ -7,18 +7,15 @@ namespace ChurchManager.Domain.Features.People.Specifications
 {
     public class FindPeopleSpecification : Specification<Person>
     {
-        public FindPeopleSpecification(PersonMatchQuery query, PersonQueryOptions options = null, string includes = null)
+        public FindPeopleSpecification(PersonMatchQuery query, PersonQueryOptions options = null, params string[] includes)
         {
             options ??= new PersonQueryOptions();
 
             Query.AsNoTracking();
 
-            if (!string.IsNullOrEmpty(includes))
+            foreach(var include in includes)
             {
-                foreach(var include in includes.Split("."))
-                {
-                    Query.Include(include);
-                }
+                Query.Include(include);
             }
 
             Query.Where(x =>
@@ -38,7 +35,7 @@ namespace ChurchManager.Domain.Features.People.Specifications
 
             if(options.IncludePendingStatus == false)
             {
-                Query.Where(p => p.RecordStatus == RecordStatus.Active);
+                Query.Where(p => p.RecordStatus != RecordStatus.Pending);
             }
         }
     }
