@@ -41,9 +41,13 @@ namespace ChurchManager.Application.Features.Auth
                 {
                     new(ClaimTypes.Name, request.Username),
                     new(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                    new("PersonId", user.PersonId.ToString()),
-                    new(ClaimTypes.Role, "Manager")
+                    new("PersonId", user.PersonId.ToString())
                 };
+                // Roles
+                foreach (var role in user.Roles)
+                {
+                    claims.Add(new(ClaimTypes.Role, role));
+                }
 
                 var accessToken = _tokens.GenerateAccessToken(claims);
                 var refreshToken = _tokens.GenerateRefreshToken();
