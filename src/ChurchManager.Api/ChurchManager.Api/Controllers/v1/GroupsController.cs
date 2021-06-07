@@ -53,7 +53,7 @@ namespace ChurchManager.Api.Controllers.v1
 
         // http://localhost/Groups/1/members?recordStatus=Pending
         [HttpGet("{groupId}/members")]
-        public async Task<IActionResult> GetGroupMembers(int groupId, [FromQuery] string recordStatus = "Active", CancellationToken token = default)
+        public async Task<IActionResult> GetGroupMembers(int groupId, [FromQuery] string recordStatus, CancellationToken token = default)
         {
             return Ok(await Mediator.Send(new GroupMembersQuery(groupId){RecordStatus = recordStatus }, token));
         }

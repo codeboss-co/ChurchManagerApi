@@ -100,6 +100,7 @@ namespace ChurchManager.Infrastructure.Persistence.Repositories
                     IconCssClass = group.GroupType.IconCssClass,
                 },
                 CreatedDate = group.CreatedDate,
+                Level = currentDepth,
                 Groups = currentDepth == maxDepth
                     ? new List<GroupViewModel>(0) // Reached maximum depth so stop
                     : group.Groups.AsQueryable()
