@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using Ardalis.Specification;
 using ChurchManager.Domain.Common;
+using CodeBoss.Extensions;
 
 namespace ChurchManager.Domain.Features.Groups.Specifications
 {
@@ -10,9 +11,12 @@ namespace ChurchManager.Domain.Features.Groups.Specifications
         {
             Query.AsNoTracking();
 
-            Query.Where(x => x.Id == groupId &&
-                             x.Members
-                                 .Any(x => x.RecordStatus == recordStatus));
+            Query.Where(x => x.Id == groupId);
+
+            if (recordStatus is not null && !recordStatus.Value.IsNullOrEmpty())
+            {
+                Query.Where(x => x.Members.Any(x => x.RecordStatus == recordStatus));
+            }
 
             Query.OrderBy(x => x.Name);
 

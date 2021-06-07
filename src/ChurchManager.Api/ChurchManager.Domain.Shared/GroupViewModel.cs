@@ -19,6 +19,7 @@ namespace ChurchManager.Domain.Shared
         public DateTime CreatedDate { get; set; }
 
         public IEnumerable<GroupViewModel> Groups { get; set; }
+        public int Level { get; set; } // Tree Depth level
     }
 
     public record GroupTypeViewModel

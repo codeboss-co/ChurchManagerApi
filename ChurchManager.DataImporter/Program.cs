@@ -39,7 +39,7 @@ namespace ChurchManager.DataImporter
         private static void Main(string[] args)
         {
             // "C:\Users\dilla\Downloads\churchmanager_db_data_import_updated_pstDillan.xlsx"
-            var path = args != null && args.Any() ? args[0] : "./churchmanager_db_data_import.xlsx";
+            var path = args != null && args.Any() ? args[0] : "./churchmanager_db_data_import_updated.xlsx";
             Process(path);
         }
 

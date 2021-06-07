@@ -26,7 +26,7 @@ namespace ChurchManager.Application.Features.Groups.Queries.GroupsWithChildren
 
         public async Task<ApiResponse> Handle(GroupsWithChildrenQuery request, CancellationToken ct)
         {
-            var groups = await _dbRepository.GroupsWithChildrenAsync(ct: ct);
+            var groups = await _dbRepository.GroupsWithChildrenAsync(maxDepth:2, ct: ct);
 
             return new ApiResponse(groups);
         }
