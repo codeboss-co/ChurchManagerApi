@@ -21,7 +21,7 @@ namespace ChurchManager.DataImporter.Models
         public static Group ToEntity(CellGroupImport import, IList<Church> churches, IList<Group> groups = null)
         {
             Schedule schedule = null;
-            // set weekly schedule for newly created groups
+            // Set weekly schedule for newly created groups
             if (!string.IsNullOrWhiteSpace(import.MeetingDay) &&
                 Enum.TryParse(import.MeetingDay, out DayOfWeek meetingDay))
             {
@@ -29,7 +29,7 @@ namespace ChurchManager.DataImporter.Models
 
                 var iCalendarContent =
                     Program.CalendarSerializer.SerializeToString(
-                        InetCalendarHelper.CalendarWithWeeklyRecurrence(meetingTime));
+                        InetCalendarHelper.CalendarWithWeeklyRecurrence(meetingTime, new []{ meetingDay }));
 
                 schedule = new Schedule
                 {

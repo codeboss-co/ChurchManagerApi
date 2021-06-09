@@ -2,12 +2,18 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using ChurchManager.Domain.Features.Groups;
+using CodeBoss.AspNetCore.CbDateTime;
 using Ical.Net;
 using Ical.Net.CalendarComponents;
 using Ical.Net.DataTypes;
 using Ical.Net.Serialization;
+using Microsoft.Extensions.Logging.Abstractions;
 using Xunit;
 
+/// <summary>
+/// https://blog.elmah.io/generate-calendar-in-ical-format-with-net-using-ical-net/
+/// https://github.com/rianjs/ical.net/blob/master/src/Ical.Net.CoreUnitTests/DocumentationExamples.cs
+/// </summary>
 namespace ChurchManager.Infrastructure.Tests
 {
     public class ICalendar_Tests
@@ -96,7 +102,7 @@ namespace ChurchManager.Infrastructure.Tests
         [Fact]
         public void Schedule_CreatedWithSpecificEventTime_EffectiveEndDateIsNull()
         {
-            // Create a daily recurring calendar that has no end date.
+            // Create a weekly recurring calendar that has no end date.
             var startDateTime = Now.AddHours(-2);
             var calendar = InetCalendarHelper.CalendarWithWeeklyRecurrence(startDateTime);
 
@@ -109,6 +115,26 @@ namespace ChurchManager.Infrastructure.Tests
             };
 
             Assert.Equal(2, occurrences.Count);
+        }
+
+        [Fact]
+        public void Schedule_Convert_ToFriendlyScheduleText()
+        {
+            // Create a weekly recurring calendar that has no end date.
+            var startDateTime = Now.AddHours(-2);
+            var days = new[] { DayOfWeek.Friday, DayOfWeek.Saturday };
+            var time = new TimeSpan(14, 0, 0);
+            var calendar = InetCalendarHelper.CalendarWithWeeklyRecurrence(startDateTime, meetingTime: time, days: days);
+            // Create the schedule based on the calendar
+            var schedule = new Schedule
+            {
+                iCalendarContent = CalendarSerializer.SerializeToString(calendar)
+            };
+
+            // Generate friendly text
+            var friendlyScheduleText = schedule.ToFriendlyScheduleText(true);
+
+            Assert.Contains("Weekly: Friday,Saturday at ", friendlyScheduleText) ;
         }
     }
 }

@@ -16,6 +16,7 @@ namespace ChurchManager.Infrastructure.Persistence.Repositories
 {
     public class GroupDbRepository : GenericRepositoryBase<Group>, IGroupDbRepository
     {
+
         public GroupDbRepository(ChurchManagerDbContext dbContext) : base(dbContext)
         {
         }
@@ -48,11 +49,15 @@ namespace ChurchManager.Infrastructure.Persistence.Repositories
             return members;
         }
 
+        /// <summary>
+        /// Gets groups and children that have a specific parent
+        /// </summary>
         public async Task<IEnumerable<GroupViewModel>> GroupsWithChildrenAsync(int? parentGroupId = null, int maxDepth = 10, CancellationToken ct = default)
         {
             var query = Queryable()
                 .AsNoTracking()
                 .Include(x => x.GroupType)
+                .Include(x => x.Schedule)
                 .Where(x => x.ParentGroupId == parentGroupId) // null will start at the root of the tree
                 .Select(GroupProjection(maxDepth))
                 ;
@@ -60,11 +65,15 @@ namespace ChurchManager.Infrastructure.Persistence.Repositories
             return await query.ToListAsync(ct);
         }
 
+        /// <summary>
+        /// Gets group and children of that group
+        /// </summary>
         public async Task<IEnumerable<GroupViewModel>> GroupWithChildrenAsync(int groupId, int maxDepth = 10, CancellationToken ct = default)
         {
             var query = Queryable()
                     .AsNoTracking()
                     .Include(x => x.GroupType)
+                    .Include(x => x.Schedule)
                     .Where(x => x.Id == groupId) 
                     .Select(GroupProjection(maxDepth))
                 ;
@@ -100,6 +109,7 @@ namespace ChurchManager.Infrastructure.Persistence.Repositories
                     IconCssClass = group.GroupType.IconCssClass,
                 },
                 CreatedDate = group.CreatedDate,
+                ScheduleText = group.Schedule != null ? group.Schedule.ToFriendlyScheduleText(true) : null,
                 Level = currentDepth,
                 Groups = currentDepth == maxDepth
                     ? new List<GroupViewModel>(0) // Reached maximum depth so stop

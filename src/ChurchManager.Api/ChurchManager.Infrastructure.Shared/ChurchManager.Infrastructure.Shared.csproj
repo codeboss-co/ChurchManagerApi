@@ -5,13 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="CodeBoss.AspNetCore" Version="0.1.13" />
     <PackageReference Include="MassTransit" Version="7.0.0" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.7.1" />
     <PackageReference Include="WebPush" Version="1.0.11" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="CodeBoss.AspNetCore" Version="0.1.10" />
   </ItemGroup>
 
   <ItemGroup>
