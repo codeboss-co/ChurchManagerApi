@@ -15,6 +15,7 @@
     <PackageReference Include="Ardalis.Specification.EntityFrameworkCore" Version="5.1.0" />
     <PackageReference Include="Bogus" Version="33.0.2" />
     <PackageReference Include="BCrypt.Net-Next" Version="4.0.2" />
+    <PackageReference Include="CodeBoss.AspNetCore" Version="0.1.13" />
     <PackageReference Include="Convey" Version="0.5.433" />
     <PackageReference Include="Convey.CQRS.Queries" Version="0.5.433" />
     <PackageReference Include="LinqKit.Microsoft.EntityFrameworkCore" Version="5.0.23" />
@@ -27,10 +28,6 @@
   <ItemGroup>
     <ProjectReference Include="..\ChurchManager.Application.Abstractions\ChurchManager.Application.Abstractions.csproj" />
     <ProjectReference Include="..\ChurchManager.Domain\ChurchManager.Domain.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="CodeBoss.AspNetCore" Version="0.1.10" />
   </ItemGroup>
 
   <ItemGroup>

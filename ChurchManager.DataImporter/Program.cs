@@ -168,7 +168,12 @@ namespace ChurchManager.DataImporter
                         .Select(x => CellGroupImport.ToEntity(x, churchDbList))
                         .ToList();
                     // Make all the root (parent) groups part of the section group
-                    parentGroups.ForEach(parent => parent.ParentGroup = cellSectionParentGroup);
+                    parentGroups.ForEach(parent =>
+                    {
+                        parent.ParentGroup = cellSectionParentGroup;
+                        // and update the church id
+                        parent.ChurchId = cellSectionParentGroup.ChurchId;
+                    });
 
                     dbContext.Add(cellSectionParentGroup);
                     dbContext.AddRange(parentGroups);
