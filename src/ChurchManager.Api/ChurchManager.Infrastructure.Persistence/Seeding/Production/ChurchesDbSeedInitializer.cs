@@ -29,9 +29,9 @@ namespace ChurchManager.Infrastructure.Persistence.Seeding.Production
 
                 await dbContext.Church.AddAsync(new Church
                 {
-                    Name = "Cape Town",
-                    Description = "CE Cape Town Church",
-                    ShortCode = "CECT",
+                    Name = "Waterfront",
+                    Description = "CE Waterfront",
+                    ShortCode = "CEWF",
                     PhoneNumber = "0214472005",
                     Address = "7 W Quay Rd, Victoria & Alfred Waterfront, Cape Town, 8002",
                     ChurchGroup = group1,

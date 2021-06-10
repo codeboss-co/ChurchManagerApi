@@ -83,7 +83,7 @@ namespace ChurchManager.Infrastructure.Persistence.Seeding.Development
                 UserLoginId = "08925ade-9249-476b-8787-b3dd8f5dbc13",
                 BirthDate = new BirthDate {BirthDay = 6, BirthMonth = 11, BirthYear = 1981},
                 ReceivedHolySpirit = true,
-                Occupation = "Software developer",
+                Occupation = "Pastor",
                 PhoneNumbers = new List<PhoneNumber>(1) {PhoneNumbersFaker()}
             };
 
@@ -103,7 +103,7 @@ namespace ChurchManager.Infrastructure.Persistence.Seeding.Development
                 AnniversaryDate = new DateTime(2013, 01, 22),
                 BirthDate = new BirthDate { BirthDay = 13, BirthMonth = 03, BirthYear = 1980 },
                 ReceivedHolySpirit = true,
-                Occupation = "Church Right hand",
+                Occupation = "Church Staff",
                 PhoneNumbers = new List<PhoneNumber>(1) { PhoneNumbersFaker() }
             };
 
@@ -142,7 +142,7 @@ namespace ChurchManager.Infrastructure.Persistence.Seeding.Development
                 Id = Guid.Parse("08925ade-9249-476b-8787-b3dd8f5dbc13"),
                 Person = dillan,
                 Username = "dillan",
-                Password = BCrypt.Net.BCrypt.HashPassword("81118599"),
+                Password = BCrypt.Net.BCrypt.HashPassword("pancake"),
                 Roles = new List<string>() {"Admin"}
             };
 

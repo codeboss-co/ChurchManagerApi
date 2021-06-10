@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using CodeBoss.Extensions;
 using Ical.Net;
 using Ical.Net.CalendarComponents;
 using Ical.Net.DataTypes;
@@ -40,12 +42,26 @@ namespace ChurchManager.Domain.Features.Groups
             return calendarEvent;
         }
 
-        public static Calendar CalendarWithWeeklyRecurrence(DateTime? startDateTime = null, DateTime? endDateTime = null, TimeSpan? meetingTime = null, int? occurrenceCount = null)
+        /// <summary>
+        /// Returns weekly iCal formatted meeting content
+        /// </summary>
+        /// <returns> FREQ=WEEKLY;BYDAY=MO;INTERVAL=1;UNTIL=20200515T220000Z </returns>
+        public static Calendar CalendarWithWeeklyRecurrence(
+            DateTime? startDateTime = null,
+            DateTime? endDateTime = null,
+            TimeSpan? meetingTime = null,
+            DayOfWeek[] days = null,
+            int? occurrenceCount = null)
         {
             var today = DateTime.UtcNow;
 
             // Repeat weekly from today until the specified end date.
             var pattern = "RRULE:FREQ=WEEKLY";
+
+            if(days != null)
+            {
+                pattern += $";BYDAY={days.ToList().AsDelimited(",")}";
+            }
 
             if(endDateTime != null)
             {
@@ -77,9 +93,76 @@ namespace ChurchManager.Domain.Features.Groups
             return calendar;
         }
 
-        public static Calendar CalendarWithWeeklyRecurrence(TimeSpan? meetingTime, int? occurrenceCount = null)
+        public static Calendar CalendarWithWeeklyRecurrence(TimeSpan? meetingTime, DayOfWeek[] days = null, int ? occurrenceCount = null)
         {
-            return CalendarWithWeeklyRecurrence(null, null, meetingTime, occurrenceCount);
+            return CalendarWithWeeklyRecurrence(null, null, meetingTime, days, occurrenceCount);
+        }
+
+        /// <summary>
+        /// Gets the occurrences for the specified iCal
+        /// </summary>
+        /// <param name="iCalendarContent">RFC 5545 ICal Content</param>
+        /// <param name="startDateTime">The start date time.</param>
+        /// <returns></returns>
+        public static IList<Occurrence> GetOccurrences(string iCalendarContent, DateTime startDateTime)
+        {
+            return GetOccurrences(iCalendarContent, startDateTime, null);
+        }
+
+        /// <summary>
+        /// Gets the occurrences.
+        /// </summary>
+        /// <param name="iCalendarContent">RFC 5545 ICal Content</param>
+        /// <param name="startDateTime">The start date time.</param>
+        /// <param name="endDateTime">The end date time.</param>
+        /// <returns></returns>
+        public static IList<Occurrence> GetOccurrences(string iCalendarContent, DateTime startDateTime, DateTime? endDateTime)
+        {
+            return GetOccurrences(iCalendarContent, startDateTime, endDateTime, null);
+        }
+
+        /// <summary>
+        /// Gets the occurrences.
+        /// </summary>
+        /// <param name="iCalendarContent">RFC 5545 ICal Content</param>
+        /// <param name="startDateTime">The start date time.</param>
+        /// <param name="endDateTime">The end date time.</param>
+        /// <param name="scheduleStartDateTimeOverride">The schedule start date time override.</param>
+        /// <returns></returns>
+        public static IList<Occurrence> GetOccurrences(string iCalendarContent, DateTime startDateTime, DateTime? endDateTime, DateTime? scheduleStartDateTimeOverride)
+        {
+            Occurrence[] occurrenceList = LoadOccurrences(iCalendarContent, startDateTime, endDateTime, scheduleStartDateTimeOverride);
+
+            return occurrenceList;
+        }
+
+        /// <summary>
+        /// Loads the occurrences.
+        /// </summary>
+        /// <param name="iCalendarContent">RFC 5545 ICal Content</param>
+        /// <param name="startDateTime">The start date time.</param>
+        /// <param name="endDateTime">The end date time.</param>
+        /// <param name="scheduleStartDateTimeOverride">The schedule start date time override.</param>
+        /// <returns></returns>
+        private static Occurrence[] LoadOccurrences(string iCalendarContent, DateTime startDateTime, DateTime? endDateTime, DateTime? scheduleStartDateTimeOverride)
+        {
+            var iCalEvent = CreateCalendarEvent(iCalendarContent);
+            if(iCalEvent == null)
+            {
+                return new Occurrence[0];
+            }
+
+            if(scheduleStartDateTimeOverride.HasValue)
+            {
+                iCalEvent.DtStart = new CalDateTime(scheduleStartDateTimeOverride.Value);
+            }
+
+            if(endDateTime.HasValue)
+            {
+                return iCalEvent.GetOccurrences(startDateTime, endDateTime.Value).ToArray();
+            }
+
+            return iCalEvent.GetOccurrences(startDateTime).ToArray();
         }
 
 

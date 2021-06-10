@@ -5,7 +5,10 @@ using ChurchManager.Application.Features.Groups.Services;
 using ChurchManager.Domain.Features.Groups;
 using ChurchManager.Infrastructure.Persistence.Contexts;
 using ChurchManager.Infrastructure.Persistence.Repositories;
+using Codeboss.Types;
+using CodeBoss.AspNetCore.CbDateTime;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging.Abstractions;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -54,7 +57,6 @@ namespace ChurchManager.Infrastructure.Persistence.Tests
                 var dbRepository = new GroupDbRepository(dbContext);
                 var service = new GroupsService(dbRepository);
 
-                // This is bad
                 var roles = await service.GroupRolesForGroupAsync(1);
 
                 Assert.NotEmpty(roles);

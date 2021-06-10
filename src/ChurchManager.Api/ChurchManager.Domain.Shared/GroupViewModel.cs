@@ -20,6 +20,7 @@ namespace ChurchManager.Domain.Shared
 
         public IEnumerable<GroupViewModel> Groups { get; set; }
         public int Level { get; set; } // Tree Depth level
+        public string ScheduleText { get; set; } // Schedule Friendly Text
     }
 
     public record GroupTypeViewModel
