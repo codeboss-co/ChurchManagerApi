@@ -6,6 +6,7 @@ on:
     branches:
     - develop
     - master
+  workflow_dispatch:
 
 # Global environment variables
 env:

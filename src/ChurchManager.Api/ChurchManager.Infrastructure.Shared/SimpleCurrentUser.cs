@@ -10,6 +10,6 @@ namespace ChurchManager.Infrastructure.Shared
         public SimpleCurrentUser(ICurrentPrincipalAccessor principalAccessor) => _principalAccessor = principalAccessor;
 
         public virtual bool IsAuthenticated => !string.IsNullOrEmpty(Id);
-        public string Id => _principalAccessor.Principal.FindFirstValue(ClaimTypes.NameIdentifier);
+        public string Id => _principalAccessor?.Principal?.FindFirstValue(ClaimTypes.NameIdentifier);
     }
 }
