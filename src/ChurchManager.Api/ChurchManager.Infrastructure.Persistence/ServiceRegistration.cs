@@ -9,6 +9,7 @@ using ChurchManager.Infrastructure.Abstractions.Persistence;
 using ChurchManager.Infrastructure.Persistence.Contexts;
 using ChurchManager.Infrastructure.Persistence.Repositories;
 using ChurchManager.Infrastructure.Persistence.Seeding;
+using ChurchManager.Infrastructure.Persistence.Seeding.Development;
 using ChurchManager.Infrastructure.Persistence.Seeding.Production;
 using ChurchManager.Persistence.Shared;
 using CodeBoss.AspNetCore.Startup;
@@ -58,14 +59,14 @@ namespace ChurchManager.Infrastructure.Persistence
                 // Development / Test -  Seeding
                 else
                 {
-                    services.AddInitializer<ChurchesDbSeedInitializer>();
+                    /*services.AddInitializer<ChurchesDbSeedInitializer>();
                     services.AddInitializer<PeopleDbSeedInitializer>();
-                    services.AddInitializer<GroupsDbSeedInitializer>();
-                    /*services.AddInitializer<ChurchesFakeDbSeedInitializer>();
+                    services.AddInitializer<GroupsDbSeedInitializer>();*/
+                    services.AddInitializer<ChurchesFakeDbSeedInitializer>();
                     services.AddInitializer<PeopleFakeDbSeedInitializer>();
                     services.AddInitializer<GroupsFakeDbSeedInitializer>();
                     services.AddInitializer<ChurchAttendanceFakeDbInitializer>();
-                    services.AddInitializer<GroupAttendanceFakeDbSeedInitializer>();*/
+                    services.AddInitializer<GroupAttendanceFakeDbSeedInitializer>();
                 }
             }
 

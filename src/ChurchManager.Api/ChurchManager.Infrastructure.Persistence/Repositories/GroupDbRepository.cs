@@ -93,6 +93,7 @@ namespace ChurchManager.Infrastructure.Persistence.Repositories
                 Id = group.Id,
                 Name = group.Name,
                 Description = group.Description,
+                Address = group.Address,
                 StartDate = group.StartDate,
                 ChurchId = group.ChurchId,
                 ParentGroupId = group.ParentGroupId,
