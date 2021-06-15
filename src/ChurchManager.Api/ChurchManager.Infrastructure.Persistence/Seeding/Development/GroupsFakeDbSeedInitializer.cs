@@ -40,6 +40,8 @@ namespace ChurchManager.Infrastructure.Persistence.Seeding.Development
             if (!_dbContext.GroupType.Any())
             {
                 await _dbContext.GroupType.AddAsync(_sectionGroupType);
+                await _dbContext.GroupType.AddAsync(_cellGroupType);
+                await _dbContext.SaveChangesAsync();
             }
 
             if (!await _dbContext.GroupTypeRole.AnyAsync())
