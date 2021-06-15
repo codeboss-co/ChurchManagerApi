@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using ChurchManager.Application.Wrappers;
@@ -12,7 +13,7 @@ namespace ChurchManager.Application.Features.Groups.Queries.Reports.AttendanceRe
     public record AttendanceReportGridQuery : IRequest<ApiResponse>
     {
         public int GroupTypeId { get; set; }
-        public int? GroupId { get; set; }
+        public IList<int> GroupId { get; set; }
         public DateTime From { get; set; }
         public DateTime To { get; set; }
     }
@@ -28,7 +29,7 @@ namespace ChurchManager.Application.Features.Groups.Queries.Reports.AttendanceRe
 
         public async Task<ApiResponse> Handle(AttendanceReportGridQuery query, CancellationToken ct)
         {
-            var spec = new AttendanceReportGridSpecification(query.GroupTypeId, query.From, query.To, query.GroupId);
+            var spec = new AttendanceReportGridSpecification(query.GroupTypeId, query.GroupId, query.From, query.To);
 
             var results = await _dbRepository.ListAsync<GroupAttendanceViewModel>(spec, ct);
 

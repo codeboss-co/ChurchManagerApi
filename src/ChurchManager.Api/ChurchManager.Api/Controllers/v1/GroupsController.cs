@@ -154,8 +154,8 @@ namespace ChurchManager.Api.Controllers.v1
         }
 
 
-        [HttpGet("attendance-report-grid")]
-        public async Task<IActionResult> AttendanceReportGrid([FromQuery] AttendanceReportGridQuery query, CancellationToken token)
+        [HttpPost("attendance-report-grid")]
+        public async Task<IActionResult> AttendanceReportGrid([FromBody] AttendanceReportGridQuery query, CancellationToken token)
         {
             var data = await Mediator.Send(query, token);
             return Ok(data);

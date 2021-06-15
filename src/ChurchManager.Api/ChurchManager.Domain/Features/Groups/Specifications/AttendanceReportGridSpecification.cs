@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Ardalis.Specification;
 using ChurchManager.Domain.Shared;
 
@@ -9,7 +11,7 @@ namespace ChurchManager.Domain.Features.Groups.Specifications
         // When the GroupId is 0 - it means we want to include all groups
         private const int AllGroupsId = 0;
 
-        public AttendanceReportGridSpecification(int groupTypeId, DateTime from, DateTime to, int? groupId = null)
+        public AttendanceReportGridSpecification(int groupTypeId, IList<int> groupId, DateTime from, DateTime to)
         {
             Query.AsNoTracking();
             Query.Include("Group.GroupType");
@@ -19,9 +21,9 @@ namespace ChurchManager.Domain.Features.Groups.Specifications
             Query.Where(g => g.Group.GroupTypeId == groupTypeId);
             
             // Group Filter
-            if(groupId.HasValue && groupId != AllGroupsId)
+            if(groupId != null && groupId.Any() && !groupId.Contains(AllGroupsId))
             {
-                Query.Where(g => g.Group.Id == groupId);
+                Query.Where(g => groupId.Contains(g.Group.Id));
             }
 
             // Date Filters
