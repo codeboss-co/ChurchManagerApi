@@ -47,5 +47,6 @@ namespace ChurchManager.Api.Controllers.v1
             var data = await Mediator.Send(query, token);
             return Ok(data);
         }
+
     }
 }

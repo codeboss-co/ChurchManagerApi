@@ -12,6 +12,8 @@ using ChurchManager.Application.Features.Groups.Queries.GroupsForChurch;
 using ChurchManager.Application.Features.Groups.Queries.GroupsForPerson;
 using ChurchManager.Application.Features.Groups.Queries.GroupsWithChildren;
 using ChurchManager.Application.Features.Groups.Queries.GroupTypes;
+using ChurchManager.Application.Features.Groups.Queries.GrroupsByGroupType;
+using ChurchManager.Application.Features.Groups.Queries.Reports.AttendanceReportGrid;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -62,6 +64,13 @@ namespace ChurchManager.Api.Controllers.v1
         public async Task<IActionResult> GetGroupsForChurchSelectItem(int churchId, CancellationToken token)
         {
             return Ok(await Mediator.Send(new GroupsForChurchSelectItemQuery(churchId), token));
+        }
+
+        [HttpGet("type/{groupTypeId}/select")]
+        public async Task<IActionResult> GetGroupsByGroupTypeSelectItem(int groupTypeId, CancellationToken token)
+        {
+            var group = await Mediator.Send(new GroupsByGroupTypeSelectItemQuery(groupTypeId), token);
+            return Ok(group);
         }
 
         [HttpGet("{groupTypeId}/grouproles")]
@@ -142,6 +151,14 @@ namespace ChurchManager.Api.Controllers.v1
         {
             var response = await Mediator.Send(command, token);
             return Ok(response);
+        }
+
+
+        [HttpPost("attendance-report-grid")]
+        public async Task<IActionResult> AttendanceReportGrid([FromBody] AttendanceReportGridQuery query, CancellationToken token)
+        {
+            var data = await Mediator.Send(query, token);
+            return Ok(data);
         }
     }
 }
