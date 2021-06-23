@@ -61,8 +61,8 @@ namespace ChurchManager.Application.Features.Communication.Services
 
             Logger.LogInformation($"Devices found for {personId} : {devices.Count}");
 
-            var payload =
-                "{\"notification\":{\"title\":\"Web Mail Notification\",\"body\":\"New Mail Received!\",\"icon\":\"images/bell.jpg\",\"vibrate\":[100,50,100],\"requireInteraction\":true,\"data\":{\"dateOfArrival\":1620921655995},\"actions\":[{\"action\":\"inbox\",\"title\":\"Go to Web Mail\"}]}}";
+            //var payload =
+            //    "{\"notification\":{\"title\":\"Web Mail Notification\",\"body\":\"New Mail Received!\",\"icon\":\"images/bell.jpg\",\"vibrate\":[100,50,100],\"requireInteraction\":true,\"data\":{\"dateOfArrival\":1620921655995},\"actions\":[{\"action\":\"inbox\",\"title\":\"Go to Web Mail\"}]}}";
 
             foreach (var device in devices) await _client.SendNotificationAsync(device, notification, ct);
 
