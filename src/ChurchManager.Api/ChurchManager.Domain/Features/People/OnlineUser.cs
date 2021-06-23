@@ -10,8 +10,6 @@ namespace ChurchManager.Domain.Features.People
 
     public class OnlineUser : Entity<int>, IAggregateRoot<int>
     {
-        [Key]
-        public int Id { get; set; }
         public int PersonId { get; set; }
 
         [MaxLength(50)]

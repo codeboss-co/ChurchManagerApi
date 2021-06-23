@@ -10,9 +10,6 @@ namespace ChurchManager.Domain.Features.Churches
 
     public class ChurchAttendance : Entity<int>, IAggregateRoot<int>
     {
-        [Key]
-        public int Id { get; set; }
-
         public int ChurchAttendanceTypeId { get; set; }
 
         /// <summary>
