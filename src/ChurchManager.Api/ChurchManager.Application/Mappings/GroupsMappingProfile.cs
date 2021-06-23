@@ -1,4 +1,6 @@
-﻿using AutoMapper;
+﻿using System;
+using System.Linq;
+using AutoMapper;
 using ChurchManager.Application.ViewModels;
 using ChurchManager.Domain.Features.Groups;
 using ChurchManager.Domain.Shared;
@@ -44,6 +46,14 @@ namespace ChurchManager.Application.Mappings
                 .ForMember(d => d.GroupName,
                     opt => opt.MapFrom(src => src.Group.Name))
                 .ForMember(dest => dest.Attendees, opt => opt.MapFrom(src => src.Attendees));
+
+            CreateMap<Schedule, ScheduleViewModel>()
+                .ForMember(d => d.ScheduleText, opt => opt.MapFrom(src => src != null ? src.ToFriendlyScheduleText(true) : null))
+                .ForMember(dest => dest.StartDate, opt => opt.MapFrom(src => src != null && src.GetICalEvent() != null ? src.GetICalEvent().DtStart.Date : (DateTime?)null))
+                .ForMember(dest => dest.EndDate, opt => opt.MapFrom(src => src != null && src.GetICalEvent() != null ? src.GetICalEvent().DtEnd.Date : (DateTime?)null))
+                .ForMember(dest => dest.MeetingTime, opt => opt.MapFrom(src => src != null && src.GetICalEvent() != null ? src.GetICalEvent().DtStart.Value.TimeOfDay.ToString(@"hh\:mm") : null))
+                .ForMember(dest => dest.RecurrenceRule, opt => opt.MapFrom(src => src != null && src.GetICalEvent() != null && src.GetICalEvent().RecurrenceRules.FirstOrDefault() != null ? src.GetICalEvent().RecurrenceRules.FirstOrDefault().ToString() : null))
+                ;
         }
     }
 }
