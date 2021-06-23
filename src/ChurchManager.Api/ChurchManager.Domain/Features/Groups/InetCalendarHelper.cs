@@ -46,6 +46,7 @@ namespace ChurchManager.Domain.Features.Groups
         /// Returns weekly iCal formatted meeting content
         /// </summary>
         /// <returns> FREQ=WEEKLY;BYDAY=MO;INTERVAL=1;UNTIL=20200515T220000Z </returns>
+        /// Examples: https://icalendar.org/iCalendar-RFC-5545/3-8-5-3-recurrence-rule.html
         public static Calendar CalendarWithWeeklyRecurrence(
             DateTime? startDateTime = null,
             DateTime? endDateTime = null,
@@ -56,7 +57,7 @@ namespace ChurchManager.Domain.Features.Groups
             var today = DateTime.UtcNow;
 
             // Repeat weekly from today until the specified end date.
-            var pattern = "RRULE:FREQ=WEEKLY";
+            var pattern = "RRULE:FREQ=WEEKLY;INTERVAL=1";
 
             if(days != null)
             {
