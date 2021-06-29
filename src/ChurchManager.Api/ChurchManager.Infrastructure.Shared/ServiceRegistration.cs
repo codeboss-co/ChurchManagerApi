@@ -1,8 +1,10 @@
-﻿using ChurchManager.Infrastructure.Abstractions;
+﻿using ChurchManager.Domain.Shared;
+using ChurchManager.Infrastructure.Abstractions;
 using ChurchManager.Infrastructure.Abstractions.Security;
 using ChurchManager.Infrastructure.Shared.DomainEvents;
-using CodeBoss.AspNetCore.DependencyInjection;
+using ChurchManager.Infrastructure.Shared.MultiTenant;
 using Codeboss.Types;
+using CodeBoss.AspNetCore.DependencyInjection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

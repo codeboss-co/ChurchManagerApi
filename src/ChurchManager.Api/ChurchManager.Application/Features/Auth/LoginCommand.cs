@@ -41,7 +41,8 @@ namespace ChurchManager.Application.Features.Auth
                 {
                     new(ClaimTypes.Name, request.Username),
                     new(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                    new("PersonId", user.PersonId.ToString())
+                    new("PersonId", user.PersonId.ToString()),
+                    new("Tenant", user.Tenant)
                 };
                 // Roles
                 foreach (var role in user.Roles)

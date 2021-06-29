@@ -41,13 +41,10 @@ namespace ChurchManager.Infrastructure.Persistence.Contexts
         public override async Task<int> SaveChangesAsync(CancellationToken ct = default)
         {
             _PreSaveChanges(ct);
-                        
-var result = await base.SaveChangesAsync(ct);
+            var result = await base.SaveChangesAsync(ct);
             await _PostSaveChanges(ct);
             return result;
         }
-
-      
 
         private void _PreSaveChanges(CancellationToken ct = default)
         {
