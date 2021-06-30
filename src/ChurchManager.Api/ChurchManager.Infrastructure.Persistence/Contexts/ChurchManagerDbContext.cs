@@ -2,27 +2,50 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using ChurchManager.Domain.Features.SharedKernel.MultiTenant;
 using ChurchManager.Infrastructure.Abstractions;
 using ChurchManager.Infrastructure.Abstractions.Persistence;
+using ChurchManager.Infrastructure.Shared;
 using ChurchManager.Persistence.Shared;
-using Codeboss.Types;
 using Microsoft.EntityFrameworkCore;
 
 namespace ChurchManager.Infrastructure.Persistence.Contexts
 {
     public partial class ChurchManagerDbContext : DbContext, IChurchManagerDbContext
     {
+        private Tenant _tenant;
         private readonly IDomainEventPublisher _events;
-        private readonly ICurrentUser _currentUser;
+        private readonly ITenantProvider _tenantProvider;
+        private readonly ITenantCurrentUser _currentUser;
 
         public ChurchManagerDbContext(
             DbContextOptions<ChurchManagerDbContext> options,
             IDomainEventPublisher events,
-            ICurrentUser currentUser) : base(options)
+            ITenantCurrentUser currentUser,
+            ITenantProvider tenantProvider) : base(options)
         {
             _events = events;
+            _tenantProvider = tenantProvider;
             _currentUser = currentUser;
+
+            if (currentUser is not null)
+            {
+                _tenant = _tenantProvider.Tenants().FirstOrDefault(x => x.Name == currentUser.Tenant);
+            }
+
+            _tenant ??= _tenantProvider.Tenants().First();
             // ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (optionsBuilder.IsConfigured == false && _tenantProvider.Enabled)
+            {
+                optionsBuilder.UseNpgsql(_tenant.ConnectionString,
+                    x => x.MigrationsAssembly("ChurchManager.Infrastructure.Persistence"));
+            }
+
+            base.OnConfiguring(optionsBuilder);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

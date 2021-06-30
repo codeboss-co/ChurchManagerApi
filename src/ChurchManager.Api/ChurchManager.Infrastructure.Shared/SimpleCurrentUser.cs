@@ -3,7 +3,12 @@ using Codeboss.Types;
 
 namespace ChurchManager.Infrastructure.Shared
 {
-    public class SimpleCurrentUser : ICurrentUser
+    public interface ITenantCurrentUser : ICurrentUser
+    {
+        public string Tenant { get; }
+    }
+
+    public class SimpleCurrentUser : ITenantCurrentUser
     {
         private readonly ICurrentPrincipalAccessor _principalAccessor;
 
@@ -11,5 +16,6 @@ namespace ChurchManager.Infrastructure.Shared
 
         public virtual bool IsAuthenticated => !string.IsNullOrEmpty(Id);
         public string Id => _principalAccessor?.Principal?.FindFirstValue(ClaimTypes.NameIdentifier);
+        public string Tenant => _principalAccessor?.Principal?.FindFirstValue("Tenant");
     }
 }

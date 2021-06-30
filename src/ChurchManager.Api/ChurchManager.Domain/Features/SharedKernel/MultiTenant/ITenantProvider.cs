@@ -2,6 +2,8 @@
 {
     public interface ITenantProvider
     {
+        public bool Enabled { get;}
+
         Tenant[] Tenants();
     }
 }

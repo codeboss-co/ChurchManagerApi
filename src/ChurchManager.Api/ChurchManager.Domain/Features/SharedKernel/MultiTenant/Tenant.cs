@@ -7,9 +7,6 @@ namespace ChurchManager.Domain.Features.SharedKernel.MultiTenant
         [MaxLength(100)]
         public string Name { get; set; }
 
-        [MaxLength(10)]
-        public string ShortCode { get; set; }
-
         [MaxLength(500)]
         public string ConnectionString { get; set; }
     }

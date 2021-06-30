@@ -13,6 +13,7 @@ namespace ChurchManager.Infrastructure.Shared.MultiTenant
             _options = options.Value;
         }
 
+        public bool Enabled => _options.Enabled;
         public Tenant[] Tenants() => _options.Tenants;
     }
 }

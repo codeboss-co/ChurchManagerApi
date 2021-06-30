@@ -23,9 +23,11 @@ namespace ChurchManager.Infrastructure.Persistence
         public async Task StartAsync(CancellationToken cancellationToken)
         {
             using var scope = _serviceProvider.CreateScope();
-            var tenants = scope.ServiceProvider.GetRequiredService<ITenantProvider>().Tenants();
+            var tenantProvider = scope.ServiceProvider.GetRequiredService<ITenantProvider>();
+                
+            var tenants = tenantProvider.Tenants();
 
-            IEnumerable<Task> tasks = tenants.Select(MigrateTenantDatabase);
+            IEnumerable<Task> tasks = tenants.Select(tenant => MigrateTenantDatabase(tenant, tenantProvider));
 
             Console.WriteLine("Starting parallel execution of pending migrations...");
             await Task.WhenAll(tasks);
@@ -36,14 +38,14 @@ namespace ChurchManager.Infrastructure.Persistence
             return Task.CompletedTask;
         }
 
-        private async Task MigrateTenantDatabase(Tenant tenant)
+        private async Task MigrateTenantDatabase(Tenant tenant, ITenantProvider provider)
         {
             var dbContextOptions = CreateDefaultDbContextOptions(tenant.ConnectionString);
             try
             {
                 Console.WriteLine($"*** Beginning migration: [{tenant.Name}]");
 
-                using var context = new ChurchManagerDbContext(dbContextOptions, null, null);
+                using var context = new ChurchManagerDbContext(dbContextOptions, null, null, provider);
                 await context.Database.MigrateAsync();
             }
             catch(Exception e)

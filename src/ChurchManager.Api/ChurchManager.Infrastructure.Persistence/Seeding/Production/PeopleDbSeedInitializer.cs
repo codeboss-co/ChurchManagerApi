@@ -115,7 +115,8 @@ namespace ChurchManager.Infrastructure.Persistence.Seeding.Production
                 Person = dillan,
                 Username = "dillan",
                 Password = BCrypt.Net.BCrypt.HashPassword("81118599"),
-                Roles = new List<string>() { "Admin" }
+                Roles = new List<string>() { "Admin" },
+                Tenant = "Tenant1"
             };
 
             await _dbContext.Person.AddAsync(dillan);

@@ -26,10 +26,11 @@ namespace ChurchManager.Infrastructure.Persistence
             IConfiguration configuration,
             IWebHostEnvironment environment)
         {
-            services.AddDbContext<ChurchManagerDbContext>(options =>
-                options.UseNpgsql(configuration.GetConnectionString("DefaultConnection"),
-                    x => x.MigrationsAssembly("ChurchManager.Infrastructure.Persistence")));
-            
+            //services.AddDbContext<ChurchManagerDbContext>(options =>
+            //   options.UseNpgsql(configuration.GetConnectionString("DefaultConnection"),
+            //       x => x.MigrationsAssembly("ChurchManager.Infrastructure.Persistence")));
+            services.AddDbContext<ChurchManagerDbContext>(options => { });
+
             // Database Health Check 
             services
                 .AddHealthChecks()
@@ -39,7 +40,7 @@ namespace ChurchManager.Infrastructure.Persistence
             services.AddScoped<DbContext>(s => s.GetService<ChurchManagerDbContext>());
 
             // Migrate database
-            services.AddHostedService<DbTenantMigrationHostedService>();
+            //services.AddHostedService<DbTenantMigrationHostedService>();
 
             // Seeding: Switch this off in `appsettings.json`
             bool seedDatabaseEnabled = configuration.GetOptions<DbOptions>(nameof(DbOptions)).Seed;

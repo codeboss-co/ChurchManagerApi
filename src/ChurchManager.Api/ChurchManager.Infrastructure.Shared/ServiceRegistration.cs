@@ -1,9 +1,6 @@
-﻿using ChurchManager.Domain.Shared;
-using ChurchManager.Infrastructure.Abstractions;
+﻿using ChurchManager.Infrastructure.Abstractions;
 using ChurchManager.Infrastructure.Abstractions.Security;
 using ChurchManager.Infrastructure.Shared.DomainEvents;
-using ChurchManager.Infrastructure.Shared.MultiTenant;
-using Codeboss.Types;
 using CodeBoss.AspNetCore.DependencyInjection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -23,7 +20,7 @@ namespace ChurchManager.Infrastructure.Shared
 
             services.AddScoped<IDomainEventPublisher, MassTransitDomainEventPublisher>();
             // Injected into db context to provide UserLoginId info
-            services.AddScoped<ICurrentUser, SimpleCurrentUser>();
+            services.AddScoped<ITenantCurrentUser, SimpleCurrentUser>();
         }
     }
 }
