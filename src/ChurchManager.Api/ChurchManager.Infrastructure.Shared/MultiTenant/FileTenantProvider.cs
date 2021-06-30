@@ -1,4 +1,5 @@
-﻿using ChurchManager.Domain.Features.SharedKernel.MultiTenant;
+﻿using System.Linq;
+using ChurchManager.Domain.Features.SharedKernel.MultiTenant;
 using Microsoft.Extensions.Options;
 
 namespace ChurchManager.Infrastructure.Shared.MultiTenant
@@ -15,5 +16,7 @@ namespace ChurchManager.Infrastructure.Shared.MultiTenant
 
         public bool Enabled => _options.Enabled;
         public Tenant[] Tenants() => _options.Tenants;
+        public Tenant Get(string name) => Tenants().FirstOrDefault(t => t.Name == name);
+        public Tenant CurrentTenant { get; set; }
     }
 }

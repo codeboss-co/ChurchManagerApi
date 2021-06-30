@@ -1,4 +1,3 @@
-using System;
 using ChurchManager.Api.Extensions;
 using ChurchManager.Api.Hubs;
 using ChurchManager.Application;
@@ -18,7 +17,6 @@ namespace ChurchManager.Api
     {
         public IConfiguration Configuration { get; }
         public IWebHostEnvironment Environment { get; }
-
 
         public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
@@ -60,6 +58,7 @@ namespace ChurchManager.Api
             app.UseAuthorization();
 
             app.UseErrorHandlingMiddleware();
+            app.UseMultiTenant();
 
             app.UseHealthChecks(ApiRoutes.HealthChecks.DefaultUrl);
 

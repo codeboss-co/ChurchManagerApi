@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using ChurchManager.Domain.Features.SharedKernel.MultiTenant;
 using ChurchManager.Infrastructure.Persistence.Contexts;
+using ChurchManager.Infrastructure.Persistence.Contexts.Factory;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -40,12 +41,11 @@ namespace ChurchManager.Infrastructure.Persistence
 
         private async Task MigrateTenantDatabase(Tenant tenant, ITenantProvider provider)
         {
-            var dbContextOptions = CreateDefaultDbContextOptions(tenant.ConnectionString);
             try
             {
                 Console.WriteLine($"*** Beginning migration: [{tenant.Name}]");
 
-                using var context = new ChurchManagerDbContext(dbContextOptions, null, null, provider);
+                using var context = DbContextFactory.Create(tenant.ConnectionString, provider);
                 await context.Database.MigrateAsync();
             }
             catch(Exception e)
@@ -54,10 +54,5 @@ namespace ChurchManager.Infrastructure.Persistence
                 throw;
             }
         }
-
-        private DbContextOptions<ChurchManagerDbContext> CreateDefaultDbContextOptions(string connectionString) =>
-            new DbContextOptionsBuilder<ChurchManagerDbContext>()
-                .UseNpgsql(connectionString)
-                .Options;
     }
 }

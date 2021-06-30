@@ -7,6 +7,7 @@ using ChurchManager.Infrastructure.Abstractions;
 using ChurchManager.Infrastructure.Abstractions.Persistence;
 using ChurchManager.Infrastructure.Shared;
 using ChurchManager.Persistence.Shared;
+using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore;
 
 namespace ChurchManager.Infrastructure.Persistence.Contexts
@@ -20,26 +21,22 @@ namespace ChurchManager.Infrastructure.Persistence.Contexts
 
         public ChurchManagerDbContext(
             DbContextOptions<ChurchManagerDbContext> options,
-            IDomainEventPublisher events,
-            ITenantCurrentUser currentUser,
-            ITenantProvider tenantProvider) : base(options)
+            [NotNull] ITenantProvider tenantProvider,
+            [CanBeNull] IDomainEventPublisher events = null,
+            [CanBeNull] ITenantCurrentUser currentUser = null) : base(options)
         {
             _events = events;
             _tenantProvider = tenantProvider;
             _currentUser = currentUser;
 
-            if (currentUser is not null)
-            {
-                _tenant = _tenantProvider.Tenants().FirstOrDefault(x => x.Name == currentUser.Tenant);
-            }
-
-            _tenant ??= _tenantProvider.Tenants().First();
+            ConfigureMultiTenants();
             // ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if (optionsBuilder.IsConfigured == false && _tenantProvider.Enabled)
+            // Only configure if its not already, which means we are in multi tenant mode
+            if (optionsBuilder.IsConfigured == false && _tenantProvider.Enabled && _tenant is not null)
             {
                 optionsBuilder.UseNpgsql(_tenant.ConnectionString,
                     x => x.MigrationsAssembly("ChurchManager.Infrastructure.Persistence"));
@@ -67,6 +64,22 @@ namespace ChurchManager.Infrastructure.Persistence.Contexts
             var result = await base.SaveChangesAsync(ct);
             await _PostSaveChanges(ct);
             return result;
+        }
+
+        private void ConfigureMultiTenants()
+        {
+            if (_tenantProvider.Enabled)
+            {
+                // Current user will have the tenant claim
+                if (_currentUser is not null)
+                {
+                    _tenant = _tenantProvider.Get(_currentUser.Tenant);
+                }
+
+                // CurrentTenant is set in `TenantIdentifierMiddleware`
+                // Fallback: first tenant in the list
+                _tenant ??= _tenantProvider.CurrentTenant ?? _tenantProvider.Tenants().First();
+            }
         }
 
         private void _PreSaveChanges(CancellationToken ct = default)
