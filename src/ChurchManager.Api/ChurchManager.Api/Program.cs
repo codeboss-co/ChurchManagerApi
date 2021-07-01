@@ -43,7 +43,11 @@ namespace ChurchManager.Api
                         var accessKey = configuration["AWS:AccessKey"];
                         var secretKey = configuration["AWS:SecretKey"];
                         awsOptions.Credentials = new BasicAWSCredentials(accessKey, secretKey);
-                        config.AddSystemsManager($"/{AppName}/{environmentName}", awsOptions);
+                        // AWS Parameter Store
+                        config.AddSystemsManager(
+                            path: $"/{AppName}/{environmentName}", 
+                            awsOptions: awsOptions,
+                            reloadAfter: TimeSpan.FromMinutes(5));
                     }
                 })
                 .UseLogging();

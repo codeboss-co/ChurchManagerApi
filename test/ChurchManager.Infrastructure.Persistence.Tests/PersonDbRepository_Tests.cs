@@ -6,6 +6,7 @@ using ChurchManager.Domain.Features.Groups;
 using ChurchManager.Domain.Features.People.Queries;
 using ChurchManager.Infrastructure.Persistence.Contexts;
 using ChurchManager.Infrastructure.Persistence.Repositories;
+using ChurchManager.Infrastructure.Persistence.Tests.Helpers;
 using Microsoft.EntityFrameworkCore;
 using Xunit;
 using Xunit.Abstractions;
@@ -30,7 +31,7 @@ namespace ChurchManager.Infrastructure.Persistence.Tests
         [Fact]
         public async Task Should_find_matching_people()
         {
-            using (var dbContext = new ChurchManagerDbContext(_options, null, null))
+            using (var dbContext = new ChurchManagerDbContext(_options, new LocalTenantProvider(), null))
             {
                 var dbRepository = new PersonDbRepository(dbContext);
 

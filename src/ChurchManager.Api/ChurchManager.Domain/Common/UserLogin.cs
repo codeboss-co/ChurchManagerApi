@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using ChurchManager.Domain.Features.People;
 
@@ -18,6 +19,11 @@ namespace ChurchManager.Domain.Common
         public List<string> Roles { get; set; } = new List<string>(0);
 
         public int PersonId { get; set; }
+
+        [Required]
+        [MaxLength(50)]
+        [DefaultValue("Tenant1")]
+        public string Tenant { get; set; }
 
         #region Navigation Properties
 

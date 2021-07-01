@@ -7,6 +7,7 @@ using ChurchManager.Application.Mappings;
 using ChurchManager.Domain.Features.Groups;
 using ChurchManager.Infrastructure.Persistence.Contexts;
 using ChurchManager.Infrastructure.Persistence.Repositories;
+using ChurchManager.Infrastructure.Persistence.Tests.Helpers;
 using Codeboss.Types;
 using CodeBoss.AspNetCore.CbDateTime;
 using Microsoft.EntityFrameworkCore;
@@ -44,7 +45,7 @@ namespace ChurchManager.Infrastructure.Persistence.Tests
         [Fact]
         public async Task Should_construct_group_tree()
         {
-            using (var dbContext = new ChurchManagerDbContext(_options, null, null))
+            using (var dbContext = new ChurchManagerDbContext(_options, new LocalTenantProvider(), null))
             {
                 var dbRepository = new GroupDbRepository(dbContext, _mapper);
 
