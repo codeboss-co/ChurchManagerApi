@@ -14,8 +14,6 @@ namespace ChurchManager.Domain.Features.Groups
 
     public class GroupAttendance : Entity<int>, IAggregateRoot<int>
     {
-        [Key]
-        public int Id { get; set; }
         /// <summary>
         /// Gets or sets the Id of the <see cref="Group"/> that the attendance is for.
         /// </summary>

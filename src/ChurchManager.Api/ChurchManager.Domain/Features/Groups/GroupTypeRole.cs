@@ -14,8 +14,6 @@ namespace ChurchManager.Domain.Features.Groups
 
     public class GroupTypeRole : Entity<int>, IAggregateRoot<int>
     {
-        [Key]
-        public int Id { get; set; }
         [MaxLength(50)]
         public string Name { get; set; }
         [MaxLength(100)]

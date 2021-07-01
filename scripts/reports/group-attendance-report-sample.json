@@ -1,0 +1,831 @@
+{
+    "dataSource": {
+        "dataSourceType": "json",
+        "data": [
+            {
+                "Date": "2021-05-27T03:44:52.960315",
+                "Church": "North Ryleymouth Church",
+                "Group": "Lake Andreanne Cell",
+                "Attendance": 10,
+                "FirstTimers": 1,
+                "NewConverts": 0,
+                "ReceivedHolySpirit": 0
+            },
+            {
+                "Date": "2021-04-12T13:33:52.190426",
+                "Church": "North Ryleymouth Church",
+                "Group": "Lake Andreanne Cell",
+                "Attendance": 11,
+                "FirstTimers": 4,
+                "NewConverts": 0,
+                "ReceivedHolySpirit": 1
+            },
+            {
+                "Date": "2021-04-01T19:49:25.273698",
+                "Church": "North Ryleymouth Church",
+                "Group": "East Alexieshire Cell",
+                "Attendance": 8,
+                "FirstTimers": 2,
+                "NewConverts": 0,
+                "ReceivedHolySpirit": 0
+            },
+            {
+                "Date": "2021-01-03T13:28:17.587978",
+                "Church": "North Ryleymouth Church",
+                "Group": "East Alexieshire Cell",
+                "Attendance": 10,
+                "FirstTimers": 3,
+                "NewConverts": 0,
+                "ReceivedHolySpirit": 0
+            },
+            {
+                "Date": "2021-01-19T23:31:30.342469",
+                "Church": "North Ryleymouth Church",
+                "Group": "North Brendonshire Cell",
+                "Attendance": 7,
+                "FirstTimers": 4,
+                "NewConverts": 0,
+                "ReceivedHolySpirit": 0
+            },
+            {
+                "Date": "2021-05-20T02:12:15.485821",
+                "Church": "North Ryleymouth Church",
+                "Group": "North Brendonshire Cell",
+                "Attendance": 12,
+                "FirstTimers": 3,
+                "NewConverts": 0,
+                "ReceivedHolySpirit": 0
+            },
+            {
+                "Date": "2021-01-22T04:18:28.047303",
+                "Church": "North Ryleymouth Church",
+                "Group": "North Brendonshire Cell",
+                "Attendance": 5,
+                "FirstTimers": 4,
+                "NewConverts": 1,
+                "ReceivedHolySpirit": 1
+            },
+            {
+                "Date": "2021-05-17T13:02:17.755432",
+                "Church": "North Ryleymouth Church",
+                "Group": "North Brendonshire Cell",
+                "Attendance": 9,
+                "FirstTimers": 2,
+                "NewConverts": 0,
+                "ReceivedHolySpirit": 0
+            },
+            {
+                "Date": "2021-06-13T22:47:49.579245",
+                "Church": "North Ryleymouth Church",
+                "Group": "North Brendonshire Cell",
+                "Attendance": 3,
+                "FirstTimers": 2,
+                "NewConverts": 0,
+                "ReceivedHolySpirit": 0
+            },
+            {
+                "Date": "2021-03-04T03:04:10.699633",
+                "Church": "North Ryleymouth Church",
+                "Group": "North Brendonshire Cell",
+                "Attendance": 6,
+                "FirstTimers": 2,
+                "NewConverts": 0,
+                "ReceivedHolySpirit": 0
+            },
+            {
+                "Date": "2021-06-08T05:42:03.458424",
+                "Church": "North Ryleymouth Church",
+                "Group": "North Brendonshire Cell",
+                "Attendance": 5,
+                "FirstTimers": 1,
+                "NewConverts": 0,
+                "ReceivedHolySpirit": 0
+            },
+            {
+                "Date": "2021-02-20T23:14:58.936349",
+                "Church": "North Ryleymouth Church",
+                "Group": "South Brianamouth Cell",
+                "Attendance": 13,
+                "FirstTimers": 4,
+                "NewConverts": 1,
+                "ReceivedHolySpirit": 1
+            },
+            {
+                "Date": "2021-04-27T03:25:29.234938",
+                "Church": "North Ryleymouth Church",
+                "Group": "South Brianamouth Cell",
+                "Attendance": 9,
+                "FirstTimers": 1,
+                "NewConverts": 0,
+                "ReceivedHolySpirit": 0
+            },
+            {
+                "Date": "2021-01-06T19:46:19.074144",
+                "Church": "North Ryleymouth Church",
+                "Group": "South Brianamouth Cell",
+                "Attendance": 12,
+                "FirstTimers": 3,
+                "NewConverts": 1,
+                "ReceivedHolySpirit": 1
+            },
+            {
+                "Date": "2021-03-29T13:35:35.986974",
+                "Church": "North Ryleymouth Church",
+                "Group": "South Jefferey Cell",
+                "Attendance": 6,
+                "FirstTimers": 3,
+                "NewConverts": 1,
+                "ReceivedHolySpirit": 0
+            },
+            {
+                "Date": "2021-03-19T10:39:06.043849",
+                "Church": "North Ryleymouth Church",
+                "Group": "South Jefferey Cell",
+                "Attendance": 12,
+                "FirstTimers": 4,
+                "NewConverts": 0,
+                "ReceivedHolySpirit": 1
+            },
+            {
+                "Date": "2021-05-26T13:09:12.37392",
+                "Church": "North Ryleymouth Church",
+                "Group": "South Jefferey Cell",
+                "Attendance": 5,
+                "FirstTimers": 2,
+                "NewConverts": 0,
+                "ReceivedHolySpirit": 0
+            },
+            {
+                "Date": "2021-04-18T17:18:16.814939",
+                "Church": "North Ryleymouth Church",
+                "Group": "South Jefferey Cell",
+                "Attendance": 4,
+                "FirstTimers": 1,
+                "NewConverts": 0,
+                "ReceivedHolySpirit": 0
+            },
+            {
+                "Date": "2021-04-28T21:03:18.044256",
+                "Church": "North Ryleymouth Church",
+                "Group": "South Jefferey Cell",
+                "Attendance": 7,
+                "FirstTimers": 2,
+                "NewConverts": 0,
+                "ReceivedHolySpirit": 0
+            },
+            {
+                "Date": "2021-01-15T21:58:39.017318",
+                "Church": "North Ryleymouth Church",
+                "Group": "South Jefferey Cell",
+                "Attendance": 3,
+                "FirstTimers": 1,
+                "NewConverts": 0,
+                "ReceivedHolySpirit": 0
+            },
+            {
+                "Date": "2021-04-02T01:45:37.932447",
+                "Church": "North Ryleymouth Church",
+                "Group": "South Jefferey Cell",
+                "Attendance": 12,
+                "FirstTimers": 4,
+                "NewConverts": 0,
+                "ReceivedHolySpirit": 0
+            },
+            {
+                "Date": "2021-05-11T14:33:56.784982",
+                "Church": "North Ryleymouth Church",
+                "Group": "South Jefferey Cell",
+                "Attendance": 9,
+                "FirstTimers": 3,
+                "NewConverts": 1,
+                "ReceivedHolySpirit": 0
+            },
+            {
+                "Date": "2021-04-09T04:09:44.165247",
+                "Church": "North Ryleymouth Church",
+                "Group": "Lake Carlottaview Cell",
+                "Attendance": 11,
+                "FirstTimers": 2,
+                "NewConverts": 0,
+                "ReceivedHolySpirit": 0
+            },
+            {
+                "Date": "2021-05-17T05:07:45.123271",
+                "Church": "North Ryleymouth Church",
+                "Group": "Lake Carlottaview Cell",
+                "Attendance": 5,
+                "FirstTimers": 4,
+                "NewConverts": 1,
+                "ReceivedHolySpirit": 0
+            },
+            {
+                "Date": "2021-03-12T00:41:57.904268",
+                "Church": "North Ryleymouth Church",
+                "Group": "Lake Carlottaview Cell",
+                "Attendance": 9,
+                "FirstTimers": 1,
+                "NewConverts": 0,
+                "ReceivedHolySpirit": 0
+            },
+            {
+                "Date": "2021-05-21T22:05:39.265709",
+                "Church": "North Ryleymouth Church",
+                "Group": "Lake Carlottaview Cell",
+                "Attendance": 6,
+                "FirstTimers": 3,
+                "NewConverts": 0,
+                "ReceivedHolySpirit": 1
+            },
+            {
+                "Date": "2021-04-18T02:54:46.648607",
+                "Church": "North Ryleymouth Church",
+                "Group": "Montehaven Cell",
+                "Attendance": 6,
+                "FirstTimers": 2,
+                "NewConverts": 0,
+                "ReceivedHolySpirit": 0
+            },
+            {
+                "Date": "2021-05-20T08:56:52.950412",
+                "Church": "North Ryleymouth Church",
+                "Group": "Montehaven Cell",
+                "Attendance": 8,
+                "FirstTimers": 3,
+                "NewConverts": 0,
+                "ReceivedHolySpirit": 1
+            },
+            {
+                "Date": "2021-05-28T13:51:42.390914",
+                "Church": "North Ryleymouth Church",
+                "Group": "Montehaven Cell",
+                "Attendance": 6,
+                "FirstTimers": 4,
+                "NewConverts": 1,
+                "ReceivedHolySpirit": 1
+            },
+            {
+                "Date": "2021-03-24T03:57:20.675705",
+                "Church": "North Ryleymouth Church",
+                "Group": "West Cara Cell",
+                "Attendance": 5,
+                "FirstTimers": 2,
+                "NewConverts": 0,
+                "ReceivedHolySpirit": 0
+            },
+            {
+                "Date": "2021-03-05T08:40:29.327902",
+                "Church": "North Ryleymouth Church",
+                "Group": "West Cara Cell",
+                "Attendance": 3,
+                "FirstTimers": 3,
+                "NewConverts": 1,
+                "ReceivedHolySpirit": 1
+            },
+            {
+                "Date": "2021-05-21T01:01:18.126661",
+                "Church": "North Ryleymouth Church",
+                "Group": "Quincyfurt Cell",
+                "Attendance": 7,
+                "FirstTimers": 4,
+                "NewConverts": 0,
+                "ReceivedHolySpirit": 0
+            },
+            {
+                "Date": "2021-01-20T10:10:11.11319",
+                "Church": "North Ryleymouth Church",
+                "Group": "Quincyfurt Cell",
+                "Attendance": 6,
+                "FirstTimers": 3,
+                "NewConverts": 1,
+                "ReceivedHolySpirit": 1
+            },
+            {
+                "Date": "2021-05-13T07:50:34.60943",
+                "Church": "North Ryleymouth Church",
+                "Group": "Quincyfurt Cell",
+                "Attendance": 9,
+                "FirstTimers": 4,
+                "NewConverts": 0,
+                "ReceivedHolySpirit": 0
+            },
+            {
+                "Date": "2021-04-13T02:35:49.12814",
+                "Church": "North Ryleymouth Church",
+                "Group": "Ethelburgh Cell",
+                "Attendance": 3,
+                "FirstTimers": 3,
+                "NewConverts": 0,
+                "ReceivedHolySpirit": 0
+            },
+            {
+                "Date": "2021-02-20T01:25:57.729553",
+                "Church": "North Ryleymouth Church",
+                "Group": "Ethelburgh Cell",
+                "Attendance": 8,
+                "FirstTimers": 4,
+                "NewConverts": 0,
+                "ReceivedHolySpirit": 0
+            },
+            {
+                "Date": "2021-01-03T22:20:58.173001",
+                "Church": "North Ryleymouth Church",
+                "Group": "Ethelburgh Cell",
+                "Attendance": 4,
+                "FirstTimers": 3,
+                "NewConverts": 0,
+                "ReceivedHolySpirit": 1
+            },
+            {
+                "Date": "2021-02-08T02:04:06.760726",
+                "Church": "North Ryleymouth Church",
+                "Group": "Quincyfurt Cell - 1",
+                "Attendance": 11,
+                "FirstTimers": 4,
+                "NewConverts": 1,
+                "ReceivedHolySpirit": 1
+            },
+            {
+                "Date": "2021-01-14T14:33:07.353844",
+                "Church": "North Ryleymouth Church",
+                "Group": "Quincyfurt Cell - 1",
+                "Attendance": 6,
+                "FirstTimers": 2,
+                "NewConverts": 0,
+                "ReceivedHolySpirit": 0
+            },
+            {
+                "Date": "2021-03-18T21:42:14.004041",
+                "Church": "North Ryleymouth Church",
+                "Group": "Quincyfurt Cell - 1",
+                "Attendance": 13,
+                "FirstTimers": 4,
+                "NewConverts": 1,
+                "ReceivedHolySpirit": 0
+            },
+            {
+                "Date": "2021-02-08T06:04:40.984489",
+                "Church": "North Ryleymouth Church",
+                "Group": "North Brendonshire Cell - 1",
+                "Attendance": 6,
+                "FirstTimers": 4,
+                "NewConverts": 1,
+                "ReceivedHolySpirit": 1
+            },
+            {
+                "Date": "2021-04-17T03:46:34.267736",
+                "Church": "North Ryleymouth Church",
+                "Group": "North Brendonshire Cell - 1",
+                "Attendance": 5,
+                "FirstTimers": 2,
+                "NewConverts": 0,
+                "ReceivedHolySpirit": 0
+            },
+            {
+                "Date": "2021-06-13T21:17:13.668483",
+                "Church": "North Ryleymouth Church",
+                "Group": "North Brendonshire Cell - 1",
+                "Attendance": 8,
+                "FirstTimers": 3,
+                "NewConverts": 1,
+                "ReceivedHolySpirit": 1
+            },
+            {
+                "Date": "2021-04-04T07:43:50.387227",
+                "Church": "North Ryleymouth Church",
+                "Group": "West Cara Cell - 2",
+                "Attendance": 7,
+                "FirstTimers": 2,
+                "NewConverts": 0,
+                "ReceivedHolySpirit": 0
+            },
+            {
+                "Date": "2021-01-09T05:35:44.249705",
+                "Church": "North Ryleymouth Church",
+                "Group": "West Cara Cell - 2",
+                "Attendance": 5,
+                "FirstTimers": 2,
+                "NewConverts": 0,
+                "ReceivedHolySpirit": 0
+            },
+            {
+                "Date": "2021-01-24T07:59:48.280504",
+                "Church": "North Ryleymouth Church",
+                "Group": "Ethelburgh Cell - 2",
+                "Attendance": 11,
+                "FirstTimers": 4,
+                "NewConverts": 1,
+                "ReceivedHolySpirit": 1
+            },
+            {
+                "Date": "2021-03-10T02:12:24.955229",
+                "Church": "North Ryleymouth Church",
+                "Group": "Ethelburgh Cell - 2",
+                "Attendance": 9,
+                "FirstTimers": 2,
+                "NewConverts": 0,
+                "ReceivedHolySpirit": 0
+            },
+            {
+                "Date": "2021-04-01T21:19:25.660278",
+                "Church": "North Ryleymouth Church",
+                "Group": "Ethelburgh Cell - 3",
+                "Attendance": 5,
+                "FirstTimers": 3,
+                "NewConverts": 1,
+                "ReceivedHolySpirit": 1
+            },
+            {
+                "Date": "2021-03-28T10:20:42.290249",
+                "Church": "North Ryleymouth Church",
+                "Group": "Ethelburgh Cell - 3",
+                "Attendance": 10,
+                "FirstTimers": 3,
+                "NewConverts": 0,
+                "ReceivedHolySpirit": 1
+            },
+            {
+                "Date": "2021-04-25T16:44:43.131793",
+                "Church": "North Ryleymouth Church",
+                "Group": "Ethelburgh Cell - 3",
+                "Attendance": 4,
+                "FirstTimers": 2,
+                "NewConverts": 0,
+                "ReceivedHolySpirit": 0
+            },
+            {
+                "Date": "2021-04-20T11:41:45.81186",
+                "Church": "North Ryleymouth Church",
+                "Group": "Ethelburgh Cell - 3",
+                "Attendance": 9,
+                "FirstTimers": 4,
+                "NewConverts": 1,
+                "ReceivedHolySpirit": 1
+            },
+            {
+                "Date": "2021-06-11T04:06:54.995907",
+                "Church": "North Ryleymouth Church",
+                "Group": "North Brendonshire Cell - 2",
+                "Attendance": 10,
+                "FirstTimers": 3,
+                "NewConverts": 1,
+                "ReceivedHolySpirit": 0
+            },
+            {
+                "Date": "2021-01-21T02:33:43.056739",
+                "Church": "North Ryleymouth Church",
+                "Group": "North Brendonshire Cell - 2",
+                "Attendance": 10,
+                "FirstTimers": 2,
+                "NewConverts": 0,
+                "ReceivedHolySpirit": 0
+            },
+            {
+                "Date": "2021-02-13T17:27:56.853641",
+                "Church": "North Ryleymouth Church",
+                "Group": "North Brendonshire Cell - 2",
+                "Attendance": 4,
+                "FirstTimers": 2,
+                "NewConverts": 0,
+                "ReceivedHolySpirit": 0
+            },
+            {
+                "Date": "2021-06-09T10:56:30.829533",
+                "Church": "North Ryleymouth Church",
+                "Group": "North Brendonshire Cell - 2",
+                "Attendance": 6,
+                "FirstTimers": 2,
+                "NewConverts": 0,
+                "ReceivedHolySpirit": 0
+            },
+            {
+                "Date": "2021-01-15T14:52:05.590389",
+                "Church": "North Ryleymouth Church",
+                "Group": "East Alexieshire Cell - 3",
+                "Attendance": 2,
+                "FirstTimers": 1,
+                "NewConverts": 0,
+                "ReceivedHolySpirit": 0
+            },
+            {
+                "Date": "2021-04-05T12:36:19.165178",
+                "Church": "North Ryleymouth Church",
+                "Group": "East Alexieshire Cell - 3",
+                "Attendance": 11,
+                "FirstTimers": 3,
+                "NewConverts": 0,
+                "ReceivedHolySpirit": 1
+            },
+            {
+                "Date": "2021-02-26T05:07:46.076829",
+                "Church": "North Ryleymouth Church",
+                "Group": "East Alexieshire Cell - 3",
+                "Attendance": 4,
+                "FirstTimers": 3,
+                "NewConverts": 1,
+                "ReceivedHolySpirit": 0
+            },
+            {
+                "Date": "2021-03-05T13:20:56.986475",
+                "Church": "North Ryleymouth Church",
+                "Group": "East Alexieshire Cell - 3",
+                "Attendance": 10,
+                "FirstTimers": 2,
+                "NewConverts": 0,
+                "ReceivedHolySpirit": 0
+            },
+            {
+                "Date": "2021-05-21T08:41:20.593995",
+                "Church": "North Ryleymouth Church",
+                "Group": "East Alexieshire Cell - 2",
+                "Attendance": 8,
+                "FirstTimers": 4,
+                "NewConverts": 1,
+                "ReceivedHolySpirit": 1
+            },
+            {
+                "Date": "2021-05-06T04:46:34.51423",
+                "Church": "North Ryleymouth Church",
+                "Group": "East Alexieshire Cell - 2",
+                "Attendance": 3,
+                "FirstTimers": 1,
+                "NewConverts": 0,
+                "ReceivedHolySpirit": 0
+            },
+            {
+                "Date": "2021-04-25T16:41:50.193896",
+                "Church": "North Ryleymouth Church",
+                "Group": "East Alexieshire Cell - 2",
+                "Attendance": 3,
+                "FirstTimers": 1,
+                "NewConverts": 0,
+                "ReceivedHolySpirit": 0
+            },
+            {
+                "Date": "2021-04-05T18:40:29.060832",
+                "Church": "North Ryleymouth Church",
+                "Group": "East Alexieshire Cell - 2",
+                "Attendance": 6,
+                "FirstTimers": 2,
+                "NewConverts": 0,
+                "ReceivedHolySpirit": 0
+            },
+            {
+                "Date": "2021-06-12T23:22:49.170864",
+                "Church": "North Ryleymouth Church",
+                "Group": "North Brendonshire Cell - 3",
+                "Attendance": 11,
+                "FirstTimers": 4,
+                "NewConverts": 0,
+                "ReceivedHolySpirit": 0
+            },
+            {
+                "Date": "2021-03-10T15:53:38.092344",
+                "Church": "North Ryleymouth Church",
+                "Group": "North Brendonshire Cell - 3",
+                "Attendance": 9,
+                "FirstTimers": 3,
+                "NewConverts": 1,
+                "ReceivedHolySpirit": 1
+            },
+            {
+                "Date": "2021-03-21T09:38:46.350813",
+                "Church": "North Ryleymouth Church",
+                "Group": "North Brendonshire Cell - 3",
+                "Attendance": 6,
+                "FirstTimers": 3,
+                "NewConverts": 1,
+                "ReceivedHolySpirit": 0
+            },
+            {
+                "Date": "2021-05-07T13:21:07.791512",
+                "Church": "North Ryleymouth Church",
+                "Group": "North Brendonshire Cell - 3",
+                "Attendance": 7,
+                "FirstTimers": 2,
+                "NewConverts": 0,
+                "ReceivedHolySpirit": 0
+            },
+            {
+                "Date": "2021-04-07T02:05:57.98677",
+                "Church": "North Ryleymouth Church",
+                "Group": "North Brendonshire Cell - 3",
+                "Attendance": 10,
+                "FirstTimers": 4,
+                "NewConverts": 1,
+                "ReceivedHolySpirit": 0
+            },
+            {
+                "Date": "2021-01-18T20:49:24.344367",
+                "Church": "North Ryleymouth Church",
+                "Group": "Montehaven Cell - 2",
+                "Attendance": 7,
+                "FirstTimers": 2,
+                "NewConverts": 0,
+                "ReceivedHolySpirit": 0
+            },
+            {
+                "Date": "2021-03-12T11:27:58.569689",
+                "Church": "North Ryleymouth Church",
+                "Group": "Montehaven Cell - 2",
+                "Attendance": 5,
+                "FirstTimers": 4,
+                "NewConverts": 1,
+                "ReceivedHolySpirit": 1
+            },
+            {
+                "Date": "2021-01-09T20:44:11.764853",
+                "Church": "North Ryleymouth Church",
+                "Group": "Montehaven Cell - 2",
+                "Attendance": 4,
+                "FirstTimers": 3,
+                "NewConverts": 0,
+                "ReceivedHolySpirit": 0
+            },
+            {
+                "Date": "2021-05-10T01:51:33.196455",
+                "Church": "North Ryleymouth Church",
+                "Group": "Montehaven Cell - 1",
+                "Attendance": 3,
+                "FirstTimers": 1,
+                "NewConverts": 0,
+                "ReceivedHolySpirit": 0
+            },
+            {
+                "Date": "2021-01-20T19:10:08.898089",
+                "Church": "North Ryleymouth Church",
+                "Group": "Quincyfurt Cell - 2",
+                "Attendance": 5,
+                "FirstTimers": 4,
+                "NewConverts": 0,
+                "ReceivedHolySpirit": 1
+            },
+            {
+                "Date": "2021-03-24T21:35:50.182457",
+                "Church": "North Ryleymouth Church",
+                "Group": "Quincyfurt Cell - 2",
+                "Attendance": 10,
+                "FirstTimers": 2,
+                "NewConverts": 0,
+                "ReceivedHolySpirit": 0
+            },
+            {
+                "Date": "2021-06-14T05:27:49.072878",
+                "Church": "North Ryleymouth Church",
+                "Group": "Quincyfurt Cell - 2",
+                "Attendance": 6,
+                "FirstTimers": 1,
+                "NewConverts": 0,
+                "ReceivedHolySpirit": 0
+            },
+            {
+                "Date": "2021-04-17T16:17:58.567917",
+                "Church": "North Ryleymouth Church",
+                "Group": "Quincyfurt Cell - 2",
+                "Attendance": 11,
+                "FirstTimers": 3,
+                "NewConverts": 0,
+                "ReceivedHolySpirit": 0
+            },
+            {
+                "Date": "2021-04-06T06:01:00.789697",
+                "Church": "North Ryleymouth Church",
+                "Group": "Quincyfurt Cell - 2",
+                "Attendance": 7,
+                "FirstTimers": 3,
+                "NewConverts": 1,
+                "ReceivedHolySpirit": 0
+            },
+            {
+                "Date": "2021-04-30T13:57:28.082066",
+                "Church": "North Ryleymouth Church",
+                "Group": "South Brianamouth Cell - 2",
+                "Attendance": 2,
+                "FirstTimers": 1,
+                "NewConverts": 0,
+                "ReceivedHolySpirit": 0
+            },
+            {
+                "Date": "2021-04-08T07:15:59.727169",
+                "Church": "North Ryleymouth Church",
+                "Group": "South Brianamouth Cell - 2",
+                "Attendance": 13,
+                "FirstTimers": 4,
+                "NewConverts": 1,
+                "ReceivedHolySpirit": 1
+            },
+            {
+                "Date": "2021-02-23T12:37:52.299821",
+                "Church": "North Ryleymouth Church",
+                "Group": "South Brianamouth Cell - 2",
+                "Attendance": 10,
+                "FirstTimers": 3,
+                "NewConverts": 0,
+                "ReceivedHolySpirit": 1
+            },
+            {
+                "Date": "2021-05-24T05:39:17.771985",
+                "Church": "North Ryleymouth Church",
+                "Group": "South Brianamouth Cell - 3",
+                "Attendance": 2,
+                "FirstTimers": 1,
+                "NewConverts": 0,
+                "ReceivedHolySpirit": 0
+            },
+            {
+                "Date": "2021-01-27T09:20:31.193292",
+                "Church": "North Ryleymouth Church",
+                "Group": "South Brianamouth Cell - 3",
+                "Attendance": 9,
+                "FirstTimers": 3,
+                "NewConverts": 1,
+                "ReceivedHolySpirit": 1
+            },
+            {
+                "Date": "2021-02-19T03:52:14.103493",
+                "Church": "North Ryleymouth Church",
+                "Group": "South Brianamouth Cell - 3",
+                "Attendance": 4,
+                "FirstTimers": 4,
+                "NewConverts": 1,
+                "ReceivedHolySpirit": 1
+            },
+            {
+                "Date": "2021-04-01T22:25:34.421749",
+                "Church": "North Ryleymouth Church",
+                "Group": "Montehaven Cell - 3",
+                "Attendance": 6,
+                "FirstTimers": 3,
+                "NewConverts": 1,
+                "ReceivedHolySpirit": 1
+            },
+            {
+                "Date": "2021-02-16T01:37:22.348383",
+                "Church": "North Ryleymouth Church",
+                "Group": "Montehaven Cell - 3",
+                "Attendance": 7,
+                "FirstTimers": 4,
+                "NewConverts": 1,
+                "ReceivedHolySpirit": 1
+            },
+            {
+                "Date": "2021-03-12T11:03:16.962411",
+                "Church": "North Ryleymouth Church",
+                "Group": "Montehaven Cell - 3",
+                "Attendance": 11,
+                "FirstTimers": 2,
+                "NewConverts": 0,
+                "ReceivedHolySpirit": 0
+            },
+            {
+                "Date": "2021-06-04T15:36:25.216954",
+                "Church": "North Ryleymouth Church",
+                "Group": "Montehaven Cell - 3",
+                "Attendance": 7,
+                "FirstTimers": 2,
+                "NewConverts": 0,
+                "ReceivedHolySpirit": 0
+            }
+        ]
+    },
+    "slice": {
+        "rows": [
+            {
+                "uniqueName": "Church"
+            },
+            {
+                "uniqueName": "Group"
+            }
+        ],
+        "columns": [
+            {
+                "uniqueName": "Date.Month"
+            },
+            {
+                "uniqueName": "Measures"
+            }
+        ],
+        "measures": [
+            {
+                "uniqueName": "Attendance",
+                "aggregation": "sum"
+            },
+            {
+                "uniqueName": "FirstTimers",
+                "aggregation": "sum"
+            },
+            {
+                "uniqueName": "NewConverts",
+                "aggregation": "sum"
+            }
+        ],
+        "expands": {
+            "rows": [
+                {
+                    "tuple": [
+                        "Church.North Ryleymouth Church"
+                    ]
+                }
+            ]
+        }
+    }
+}

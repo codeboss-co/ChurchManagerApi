@@ -4,6 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
+using AutoMapper;
 using ChurchManager.Domain.Common;
 using ChurchManager.Domain.Features.Groups;
 using ChurchManager.Domain.Features.Groups.Repositories;
@@ -16,9 +17,11 @@ namespace ChurchManager.Infrastructure.Persistence.Repositories
 {
     public class GroupDbRepository : GenericRepositoryBase<Group>, IGroupDbRepository
     {
+        private readonly IMapper _mapper;
 
-        public GroupDbRepository(ChurchManagerDbContext dbContext) : base(dbContext)
+        public GroupDbRepository(ChurchManagerDbContext dbContext, IMapper mapper) : base(dbContext)
         {
+            _mapper = mapper;
         }
 
         public async Task<IEnumerable<GroupMemberViewModel>> GroupMembersAsync(int groupId, RecordStatus status, CancellationToken ct = default)
@@ -99,18 +102,9 @@ namespace ChurchManager.Infrastructure.Persistence.Repositories
                 ParentGroupId = group.ParentGroupId,
                 ParentGroupName = group.ParentGroup.Name,
                 IsOnline = group.IsOnline,
-                GroupType = new GroupTypeViewModel
-                {
-                    Id = group.GroupType.Id,
-                    Name = group.GroupType.Name,
-                    Description = group.GroupType.Description,
-                    GroupMemberTerm = group.GroupType.GroupMemberTerm,
-                    GroupTerm = group.GroupType.GroupTerm,
-                    TakesAttendance = group.GroupType.TakesAttendance,
-                    IconCssClass = group.GroupType.IconCssClass,
-                },
+                GroupType = _mapper.Map<GroupTypeViewModel>(group.GroupType),
                 CreatedDate = group.CreatedDate,
-                ScheduleText = group.Schedule != null ? group.Schedule.ToFriendlyScheduleText(true) : null,
+                Schedule = _mapper.Map<ScheduleViewModel>(group.Schedule),
                 Level = currentDepth,
                 Groups = currentDepth == maxDepth
                     ? new List<GroupViewModel>(0) // Reached maximum depth so stop

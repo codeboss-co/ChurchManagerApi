@@ -6,6 +6,7 @@ namespace ChurchManager.Domain.Shared
     public record GroupAttendanceViewModel
     {
         public int Id { get; set; }
+        public string ChurchName { get; set; }
         public string GroupName { get; set; }
         public DateTime AttendanceDate { get; set; }
         public bool? DidNotOccur { get; set; }

@@ -2,10 +2,7 @@
 
 namespace ChurchManager.Domain.Shared
 {
-    public record GeneralViewModel : SelectItemViewModel
-    {
-        public string Description { get; set; }
-    }
+    public record GeneralViewModel : SelectItemViewModel;
 
     public class GeneralViewModels : List<GeneralViewModel>
     {

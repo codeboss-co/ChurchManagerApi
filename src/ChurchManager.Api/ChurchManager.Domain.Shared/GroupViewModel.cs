@@ -20,7 +20,7 @@ namespace ChurchManager.Domain.Shared
 
         public IEnumerable<GroupViewModel> Groups { get; set; }
         public int Level { get; set; } // Tree Depth level
-        public string ScheduleText { get; set; } // Schedule Friendly Text
+        public ScheduleViewModel Schedule { get; set; }
     }
 
     public record GroupTypeViewModel
@@ -33,5 +33,15 @@ namespace ChurchManager.Domain.Shared
         public bool TakesAttendance { get; set; }
         public bool IsSystem { get; set; }
         public string IconCssClass { get; set; }
+    }
+
+    public record ScheduleViewModel
+    {
+        public string ScheduleText { get; set; } // Schedule Friendly Text
+        public string iCalendarContent { get; set; } // Schedule Calendar Content
+        public DateTime? StartDate { get; set; }
+        public DateTime? EndDate { get; set; }
+        public string MeetingTime { get; set; }
+        public string RecurrenceRule { get; set; }
     }
 }

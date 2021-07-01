@@ -42,6 +42,11 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                     b.Property<List<string>>("Roles")
                         .HasColumnType("text[]");
 
+                    b.Property<string>("Tenant")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
                     b.Property<string>("Username")
                         .IsRequired()
                         .HasMaxLength(255)
