@@ -23,7 +23,7 @@ namespace ChurchManager.Infrastructure.Shared.MultiTenant
 
                 if(!string.IsNullOrWhiteSpace(tenantName))
                 {
-                    return _provider.Tenant(tenantName);
+                    return _provider.Get(tenantName);
                 }
             }
 

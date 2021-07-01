@@ -35,7 +35,7 @@ namespace ChurchManager.Api.Middlewares
                 }
             }
 
-            var tenant = _tenantProvider.Tenant(tenantName);
+            var tenant = _tenantProvider.Get(tenantName);
             _tenantProvider.CurrentTenant = tenant;
 
             await _next(context);

@@ -29,7 +29,10 @@ namespace ChurchManager.Infrastructure.Persistence.Contexts
             _tenantProvider = tenantProvider;
             _currentUser = currentUser;
 
-            ConfigureMultiTenants();
+            if (_tenantProvider.Enabled)
+            {
+                ConfigureMultiTenants();
+            }
             // ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
         }
 
@@ -68,18 +71,18 @@ namespace ChurchManager.Infrastructure.Persistence.Contexts
 
         private void ConfigureMultiTenants()
         {
-            if (_tenantProvider.Enabled)
+            // Current user will have the tenant claim
+            if(_currentUser is not null)
             {
-                // Current user will have the tenant claim
-                if (_currentUser is not null)
-                {
-                    _tenant = _tenantProvider.Get(_currentUser.Tenant);
-                }
-
-                // CurrentTenant is set in `TenantIdentifierMiddleware`
-                // Fallback: first tenant in the list
-                _tenant ??= _tenantProvider.CurrentTenant ?? _tenantProvider.Tenants().First();
+                _tenant = _tenantProvider.Get(_currentUser.Tenant);
             }
+
+            // CurrentTenant is set in `TenantIdentifierMiddleware`
+            // Fallback: first tenant in the list
+            _tenant 
+                ??= _tenantProvider.CurrentTenant
+                ?? _tenantProvider.Tenants().FirstOrDefault()
+                ?? throw new ArgumentNullException(nameof(_tenant), "Valid tenant not found or configured");
         }
 
         private void _PreSaveChanges(CancellationToken ct = default)

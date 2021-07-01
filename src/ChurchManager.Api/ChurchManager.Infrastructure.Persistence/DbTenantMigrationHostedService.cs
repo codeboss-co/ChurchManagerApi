@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using ChurchManager.Domain.Features.SharedKernel.MultiTenant;
-using ChurchManager.Infrastructure.Persistence.Contexts;
 using ChurchManager.Infrastructure.Persistence.Contexts.Factory;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -47,6 +46,8 @@ namespace ChurchManager.Infrastructure.Persistence
 
                 using var context = DbContextFactory.Create(tenant.ConnectionString, provider);
                 await context.Database.MigrateAsync();
+
+                Console.WriteLine($"*** Completed migration: [{tenant.Name}]");
             }
             catch(Exception e)
             {

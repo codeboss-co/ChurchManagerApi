@@ -40,7 +40,7 @@ namespace ChurchManager.Infrastructure.Persistence
             services.AddScoped<DbContext>(s => s.GetService<ChurchManagerDbContext>());
 
             // Migrate database
-            //services.AddHostedService<DbTenantMigrationHostedService>();
+            services.AddHostedService<DbTenantMigrationHostedService>();
 
             // Seeding: Switch this off in `appsettings.json`
             bool seedDatabaseEnabled = configuration.GetOptions<DbOptions>(nameof(DbOptions)).Seed;

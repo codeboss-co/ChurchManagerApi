@@ -12,7 +12,7 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                 type: "character varying(50)",
                 maxLength: 50,
                 nullable: false,
-                defaultValue: "Waterfront");
+                defaultValue: "CE Waterfront");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

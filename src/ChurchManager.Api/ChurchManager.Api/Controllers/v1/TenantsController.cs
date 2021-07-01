@@ -13,6 +13,7 @@ namespace ChurchManager.Api.Controllers.v1
         public TenantsController(ITenantProvider provider) => _provider = provider;
 
         [HttpGet]
+        [AllowAnonymous]
         public IActionResult GetTenants() => Ok(_provider.Tenants());
     }
 }

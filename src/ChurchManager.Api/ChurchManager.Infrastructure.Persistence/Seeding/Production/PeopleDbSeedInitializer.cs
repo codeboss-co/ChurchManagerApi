@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using ChurchManager.Domain.Common;
 using ChurchManager.Domain.Features.People;
+using ChurchManager.Domain.Features.SharedKernel.MultiTenant;
 using ChurchManager.Infrastructure.Persistence.Contexts;
 using CodeBoss.AspNetCore.Startup;
 using Microsoft.EntityFrameworkCore;
@@ -19,12 +21,14 @@ namespace ChurchManager.Infrastructure.Persistence.Seeding.Production
         public int OrderNumber { get; } = 1;
         private readonly IServiceScopeFactory _scopeFactory;
         private ChurchManagerDbContext _dbContext;
+        private Tenant _tenant;
 
         public PeopleDbSeedInitializer(IServiceScopeFactory scopeFactory) => _scopeFactory = scopeFactory;
 
         public async Task InitializeAsync()
         {
             using var scope = _scopeFactory.CreateScope();
+            _tenant = scope.ServiceProvider.GetRequiredService<ITenantProvider>().Tenants().FirstOrDefault();
             _dbContext = scope.ServiceProvider.GetRequiredService<ChurchManagerDbContext>();
 
             if (!await _dbContext.Person.AnyAsync())
@@ -115,8 +119,8 @@ namespace ChurchManager.Infrastructure.Persistence.Seeding.Production
                 Person = dillan,
                 Username = "dillan",
                 Password = BCrypt.Net.BCrypt.HashPassword("81118599"),
-                Roles = new List<string>() { "Admin" },
-                Tenant = "Tenant1"
+                Roles = new List<string>{ "Admin" },
+                Tenant = _tenant.Name
             };
 
             await _dbContext.Person.AddAsync(dillan);
