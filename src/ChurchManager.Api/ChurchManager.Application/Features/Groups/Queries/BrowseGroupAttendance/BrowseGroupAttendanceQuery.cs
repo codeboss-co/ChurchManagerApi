@@ -15,7 +15,7 @@ namespace ChurchManager.Application.Features.Groups.Queries.BrowseGroupAttendanc
     public record BrowseGroupAttendanceQuery
         : QueryParameter, IRequest<PagedResponse<GroupAttendanceViewModel>>
     {
-        public int GroupTypeId { get; set; };
+        public int GroupTypeId { get; set; }
         public int? ChurchId { get; set; }
         public int? GroupId { get; set; }
         public bool WithFeedBack { get; set; }
