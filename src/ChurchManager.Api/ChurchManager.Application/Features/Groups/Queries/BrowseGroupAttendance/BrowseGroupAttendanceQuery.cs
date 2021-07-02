@@ -2,17 +2,20 @@
 using System.Threading;
 using System.Threading.Tasks;
 using ChurchManager.Application.Wrappers;
+using ChurchManager.Domain.Features.Groups;
 using ChurchManager.Domain.Features.Groups.Repositories;
 using ChurchManager.Domain.Parameters;
 using ChurchManager.Domain.Shared;
+using ChurchManager.Infrastructure.Abstractions.Persistence;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace ChurchManager.Application.Features.Groups.Queries.BrowseGroupAttendance
 {
     public record BrowseGroupAttendanceQuery
         : QueryParameter, IRequest<PagedResponse<GroupAttendanceViewModel>>
     {
-        public int GroupTypeId { get; set; } = DomainConstants.GROUP_TYPE_CELL_MINISTRY;
+        public int GroupTypeId { get; set; };
         public int? ChurchId { get; set; }
         public int? GroupId { get; set; }
         public bool WithFeedBack { get; set; }
@@ -25,18 +28,23 @@ namespace ChurchManager.Application.Features.Groups.Queries.BrowseGroupAttendanc
             PagedResponse<GroupAttendanceViewModel>>
     {
         private readonly IGroupAttendanceDbRepository _dbRepository;
+        private readonly IGenericDbRepository<GroupType> _groupTypeRepo;
 
-        public BrowseGroupAttendanceHandler(IGroupAttendanceDbRepository dbRepository)
+        public BrowseGroupAttendanceHandler(IGroupAttendanceDbRepository dbRepository, IGenericDbRepository<GroupType> groupTypeRepo)
         {
             _dbRepository = dbRepository;
+            _groupTypeRepo = groupTypeRepo;
         }
 
         public async Task<PagedResponse<GroupAttendanceViewModel>> Handle(BrowseGroupAttendanceQuery query,
             CancellationToken ct)
         {
+            // TODO: Pass in group type id from so we can support all groups
+            var cellGroupType = await _groupTypeRepo.Queryable().FirstOrDefaultAsync(x => x.Name == "Cell", ct);
+
             var results = await _dbRepository.BrowseGroupAttendance(
                 query,
-                query.GroupTypeId,
+                cellGroupType.Id,
                 query.ChurchId,
                 query.GroupId,
                 query.WithFeedBack,
