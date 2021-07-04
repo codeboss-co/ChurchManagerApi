@@ -16,9 +16,8 @@ namespace ChurchManager.Application.Features.Groups.Commands.NewGroup
 {
     public record AddGroupCommand : IRequest<ApiResponse>
     {
-        public int ChurchId { get; set; }
         public int GroupTypeId { get; set; }
-        public int? ParentGroupId { get; set; }
+        public ParentChurchGroup ParentChurchGroup { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public string Address { get; set; }
@@ -27,6 +26,12 @@ namespace ChurchManager.Application.Features.Groups.Commands.NewGroup
         public DateTime? Start { get; set; }
         public DateTime? End { get; set; }
         public string Recurrence { get; set; }
+    }
+
+    public record ParentChurchGroup
+    {
+        public int ChurchId { get; set; }
+        public int? GroupId { get; set; }
     }
 
     public class NewGroupHandler : IRequestHandler<AddGroupCommand, ApiResponse>
@@ -60,9 +65,9 @@ namespace ChurchManager.Application.Features.Groups.Commands.NewGroup
             var group = new Group
             {
                 Name = command.Name, Description = command.Description,
-                ChurchId = command.ChurchId,
                 GroupTypeId = command.GroupTypeId,
-                ParentGroupId = command.ParentGroupId,
+                ChurchId = command.ParentChurchGroup.ChurchId,
+                ParentGroupId = command.ParentChurchGroup.GroupId,
                 Address = command.Address,
                 IsOnline = command.IsOnline,
                 StartDate = DateTimeOffset.UtcNow,

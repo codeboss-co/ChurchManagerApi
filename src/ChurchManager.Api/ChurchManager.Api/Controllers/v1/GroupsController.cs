@@ -153,6 +153,13 @@ namespace ChurchManager.Api.Controllers.v1
             return Ok(response);
         }
 
+        [HttpPut]
+        public async Task<IActionResult> EditGroup([FromBody] EditGroupCommand command, CancellationToken token)
+        {
+            var response = await Mediator.Send(command, token);
+            return Ok(response);
+        }
+
 
         [HttpPost("attendance-report-grid")]
         public async Task<IActionResult> AttendanceReportGrid([FromBody] AttendanceReportGridQuery query, CancellationToken token)

@@ -114,7 +114,11 @@ namespace ChurchManager.Infrastructure.Tests
                 iCalendarContent = CalendarSerializer.SerializeToString(calendar)
             };
 
+            var iCalEvent = schedule.GetICalEvent();
+            var recurrenceRule = iCalEvent.RecurrenceRules.FirstOrDefault()?.ToString();
+
             Assert.Equal(2, occurrences.Count);
+            Assert.NotNull(recurrenceRule);
         }
 
         [Fact]
