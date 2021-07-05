@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using ChurchManager.Application.Wrappers;
 using ChurchManager.Domain.Features.Groups;
 using ChurchManager.Domain.Features.Groups.Repositories;
+using ChurchManager.Domain.Shared;
 using Ical.Net;
 using Ical.Net.CalendarComponents;
 using Ical.Net.DataTypes;
@@ -62,12 +63,17 @@ namespace ChurchManager.Application.Features.Groups.Commands.NewGroup
             var serializer = new CalendarSerializer();
             var serializedCalendar = serializer.SerializeToString(calendar);
 
+            // 
+            var parentGroupId = command.ParentChurchGroup.GroupId is DomainConstants.Groups.NoParentGroupId
+                ? null
+                : command.ParentChurchGroup.GroupId;
+
             var group = new Group
             {
                 Name = command.Name, Description = command.Description,
                 GroupTypeId = command.GroupTypeId,
                 ChurchId = command.ParentChurchGroup.ChurchId,
-                ParentGroupId = command.ParentChurchGroup.GroupId,
+                ParentGroupId = parentGroupId,
                 Address = command.Address,
                 IsOnline = command.IsOnline,
                 StartDate = DateTimeOffset.UtcNow,

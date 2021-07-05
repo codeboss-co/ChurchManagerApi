@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using ChurchManager.Application.Wrappers;
 using ChurchManager.Domain.Features.Groups;
 using ChurchManager.Domain.Features.Groups.Repositories;
+using ChurchManager.Domain.Shared;
 using Ical.Net;
 using Ical.Net.CalendarComponents;
 using Ical.Net.DataTypes;
@@ -54,7 +55,9 @@ namespace ChurchManager.Application.Features.Groups.Commands.NewGroup
             group.Description = command.Description;
             group.GroupTypeId = command.GroupTypeId;
             group.ChurchId = command.ParentChurchGroup.ChurchId;
-            group.ParentGroupId = command.ParentChurchGroup.GroupId;
+            group.ParentGroupId = command.ParentChurchGroup.GroupId is DomainConstants.Groups.NoParentGroupId
+                ? null
+                : command.ParentChurchGroup.GroupId;
             group.Address = command.Address;
             group.IsOnline = command.IsOnline;
             // Update schedule
