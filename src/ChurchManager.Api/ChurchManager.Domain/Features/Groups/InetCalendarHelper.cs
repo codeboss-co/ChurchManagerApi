@@ -74,7 +74,10 @@ namespace ChurchManager.Domain.Features.Groups
                 pattern += $";COUNT={occurrenceCount}";
             }
 
-            var recurrencePattern = new RecurrencePattern(pattern);
+            var recurrencePattern = new RecurrencePattern(pattern)
+            {
+                //Interval = 1 // Every (1) Week
+            };
 
             int startTimeHour = meetingTime?.Hours ?? today.Hour;
             int startTimeMinutes = meetingTime?.Minutes ?? today.Minute;

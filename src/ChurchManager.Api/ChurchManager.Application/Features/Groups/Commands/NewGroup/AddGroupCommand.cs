@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using ChurchManager.Application.Wrappers;
 using ChurchManager.Domain.Features.Groups;
 using ChurchManager.Domain.Features.Groups.Repositories;
+using ChurchManager.Domain.Shared;
 using Ical.Net;
 using Ical.Net.CalendarComponents;
 using Ical.Net.DataTypes;
@@ -16,9 +17,8 @@ namespace ChurchManager.Application.Features.Groups.Commands.NewGroup
 {
     public record AddGroupCommand : IRequest<ApiResponse>
     {
-        public int ChurchId { get; set; }
         public int GroupTypeId { get; set; }
-        public int? ParentGroupId { get; set; }
+        public ParentChurchGroup ParentChurchGroup { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public string Address { get; set; }
@@ -27,6 +27,12 @@ namespace ChurchManager.Application.Features.Groups.Commands.NewGroup
         public DateTime? Start { get; set; }
         public DateTime? End { get; set; }
         public string Recurrence { get; set; }
+    }
+
+    public record ParentChurchGroup
+    {
+        public int ChurchId { get; set; }
+        public int? GroupId { get; set; }
     }
 
     public class NewGroupHandler : IRequestHandler<AddGroupCommand, ApiResponse>
@@ -57,12 +63,17 @@ namespace ChurchManager.Application.Features.Groups.Commands.NewGroup
             var serializer = new CalendarSerializer();
             var serializedCalendar = serializer.SerializeToString(calendar);
 
+            // 
+            var parentGroupId = command.ParentChurchGroup.GroupId is DomainConstants.Groups.NoParentGroupId
+                ? null
+                : command.ParentChurchGroup.GroupId;
+
             var group = new Group
             {
                 Name = command.Name, Description = command.Description,
-                ChurchId = command.ChurchId,
                 GroupTypeId = command.GroupTypeId,
-                ParentGroupId = command.ParentGroupId,
+                ChurchId = command.ParentChurchGroup.ChurchId,
+                ParentGroupId = parentGroupId,
                 Address = command.Address,
                 IsOnline = command.IsOnline,
                 StartDate = DateTimeOffset.UtcNow,
