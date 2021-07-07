@@ -2,6 +2,9 @@
 {
     public static class DomainConstants
     {
-        public const int GROUP_TYPE_CELL_MINISTRY = 1;
+        public static class Groups
+        {
+            public const int NoParentGroupId = 0;
+        }
     }
 }

@@ -2,6 +2,7 @@
 using System.Linq;
 using AutoMapper;
 using ChurchManager.Application.ViewModels;
+using ChurchManager.Domain.Common.Extensions;
 using ChurchManager.Domain.Features.Groups;
 using ChurchManager.Domain.Shared;
 using Convey.CQRS.Queries;
@@ -52,7 +53,7 @@ namespace ChurchManager.Application.Mappings
                 .ForMember(dest => dest.StartDate, opt => opt.MapFrom(src => src != null && src.GetICalEvent() != null ? src.GetICalEvent().DtStart.Date : (DateTime?)null))
                 .ForMember(dest => dest.EndDate, opt => opt.MapFrom(src => src != null && src.GetICalEvent() != null ? src.GetICalEvent().DtEnd.Date : (DateTime?)null))
                 .ForMember(dest => dest.MeetingTime, opt => opt.MapFrom(src => src != null && src.GetICalEvent() != null ? src.GetICalEvent().DtStart.Value.TimeOfDay.ToString(@"hh\:mm") : null))
-                .ForMember(dest => dest.RecurrenceRule, opt => opt.MapFrom(src => src != null && src.GetICalEvent() != null && src.GetICalEvent().RecurrenceRules.FirstOrDefault() != null ? src.GetICalEvent().RecurrenceRules.FirstOrDefault().ToString() : null))
+                .ForMember(dest => dest.RecurrenceRule, opt => opt.MapFrom(src => src.WithInterval()))
                 ;
         }
     }
