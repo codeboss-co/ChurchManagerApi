@@ -153,6 +153,7 @@ namespace ChurchManager.Api.Controllers.v1
             return Ok(response);
         }
 
+        /// <returns>The edited group</returns>
         [HttpPut]
         public async Task<IActionResult> EditGroup([FromBody] EditGroupCommand command, CancellationToken token)
         {

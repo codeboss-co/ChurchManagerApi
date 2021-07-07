@@ -87,7 +87,7 @@ namespace ChurchManager.Application.Features.Groups.Commands.NewGroup
 
             await _dbRepository.UpdateAsync(group, ct);
 
-            return new ApiResponse(group.Id);
+            return new ApiResponse(group);
         }
     }
 }
