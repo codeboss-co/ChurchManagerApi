@@ -40,8 +40,10 @@ namespace ChurchManager.Application.Features.Profile.Queries.RetrieveProfile
             // Foundation School status
             if (vm is not null)
             {
+                // TODO: Get from database
+                var foundationSchoolStepDefinitionId = 1;
                 var foundationSchoolStep =
-                    await _stepsDbRepository.DiscipleshipStepInfoForPersonAsync(vm.PersonId, 1, ct);
+                    await _stepsDbRepository.DiscipleshipStepInfoForPersonAsync(vm.PersonId, foundationSchoolStepDefinitionId, ct);
 
                 vm.FoundationSchool = foundationSchoolStep.FirstOrDefault() ?? new DiscipleshipStepViewModel
                 {

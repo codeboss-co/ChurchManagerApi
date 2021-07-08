@@ -67,6 +67,15 @@ namespace ChurchManager.Api.Controllers.v1
             await Mediator.Send(command, token);
             return Accepted();
         }
+
+        // v1/people/edit/{personId}/discipleship-info/
+        [HttpPost("edit/{personId}/discipleship-info")]
+        public async Task<IActionResult> EditDiscipleshipInfo(int personId, [FromBody] UpdateDiscipleshipInfoCommand command, CancellationToken token)
+        {
+            command.PersonId = personId;
+            await Mediator.Send(command, token);
+            return Accepted();
+        }
         #endregion
 
         [HttpPost("browse")]
