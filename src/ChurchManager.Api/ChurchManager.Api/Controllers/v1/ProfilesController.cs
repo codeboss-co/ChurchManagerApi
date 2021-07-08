@@ -1,10 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using ChurchManager.Application;
 using ChurchManager.Application.Common;
 using ChurchManager.Application.Features.Profile.Queries.RetrieveProfile;
-using ChurchManager.Domain;
-using ChurchManager.Domain.Common;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
