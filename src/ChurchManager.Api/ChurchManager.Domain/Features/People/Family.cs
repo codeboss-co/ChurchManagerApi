@@ -2,13 +2,14 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations.Schema;
 using ChurchManager.Persistence.Shared;
+using Codeboss.Types;
 using Microsoft.EntityFrameworkCore;
 
 namespace ChurchManager.Domain.Features.People
 {
     [Table("Family")]
 
-    public class Family : Entity<int>
+    public class Family : Entity<int>, IAggregateRoot<int>
     {
         public string Name { get; set; }
         public Address Address { get; set; }
