@@ -1,13 +1,9 @@
 ﻿using System.Security.Claims;
 using Codeboss.Types;
+using CodeBoss.MultiTenant;
 
 namespace ChurchManager.Infrastructure.Shared
 {
-    public interface ITenantCurrentUser : ICurrentUser
-    {
-        public string Tenant { get; }
-    }
-
     public class SimpleCurrentUser : ITenantCurrentUser
     {
         private readonly ICurrentPrincipalAccessor _principalAccessor;

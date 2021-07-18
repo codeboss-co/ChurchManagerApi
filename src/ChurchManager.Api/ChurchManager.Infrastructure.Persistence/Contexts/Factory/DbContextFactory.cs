@@ -1,4 +1,4 @@
-﻿using ChurchManager.Domain.Features.SharedKernel.MultiTenant;
+﻿using CodeBoss.MultiTenant;
 using Microsoft.EntityFrameworkCore;
 
 namespace ChurchManager.Infrastructure.Persistence.Contexts.Factory
