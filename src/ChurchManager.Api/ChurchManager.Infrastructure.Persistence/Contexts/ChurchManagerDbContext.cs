@@ -2,11 +2,10 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using ChurchManager.Domain.Features.SharedKernel.MultiTenant;
 using ChurchManager.Infrastructure.Abstractions;
 using ChurchManager.Infrastructure.Abstractions.Persistence;
-using ChurchManager.Infrastructure.Shared;
 using ChurchManager.Persistence.Shared;
+using CodeBoss.MultiTenant;
 using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,7 +13,7 @@ namespace ChurchManager.Infrastructure.Persistence.Contexts
 {
     public partial class ChurchManagerDbContext : DbContext, IChurchManagerDbContext
     {
-        private Tenant _tenant;
+        private ITenant _tenant;
         private readonly IDomainEventPublisher _events;
         private readonly ITenantProvider _tenantProvider;
         private readonly ITenantCurrentUser _currentUser;

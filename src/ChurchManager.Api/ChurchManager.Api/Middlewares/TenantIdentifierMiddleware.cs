@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
-using ChurchManager.Domain.Features.SharedKernel.MultiTenant;
+using CodeBoss.MultiTenant;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 
@@ -37,6 +37,11 @@ namespace ChurchManager.Api.Middlewares
 
             var tenant = _tenantProvider.Get(tenantName);
             _tenantProvider.CurrentTenant = tenant;
+
+            if(tenant is not null)
+            {
+                _logger.LogInformation($"Tenant found in query string: {tenant.Name}");
+            }
 
             await _next(context);
         }

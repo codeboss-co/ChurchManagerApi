@@ -1,6 +1,5 @@
-﻿using ChurchManager.Domain.Features.SharedKernel.MultiTenant;
-using ChurchManager.Infrastructure.Shared.MultiTenant;
-using CodeBoss.AspNetCore.DependencyInjection;
+﻿using CodeBoss.AspNetCore.DependencyInjection;
+using CodeBoss.MultiTenant;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -11,9 +10,11 @@ namespace ChurchManager.Infrastructure.Shared._DependencyInjection
     {
         public void InstallServices(IServiceCollection services, IConfiguration configuration, IHostEnvironment environment)
         {
-            services.Configure<MultiTenantOptions>(configuration.GetSection(nameof(MultiTenantOptions)));
+            services.AddCodeBossMultiTenancy(configuration);
 
-            services.AddSingleton<ITenantProvider, FileTenantProvider>();
+            // Injected into db context to provide UserLoginId info
+            services.AddScoped<ITenantCurrentUser, SimpleCurrentUser>();
+
         }
     }
 }

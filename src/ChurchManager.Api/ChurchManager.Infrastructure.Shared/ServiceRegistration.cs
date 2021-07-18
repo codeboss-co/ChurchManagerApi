@@ -19,8 +19,7 @@ namespace ChurchManager.Infrastructure.Shared
             services.AddSingleton<ITokenService, TokenService>();
 
             services.AddScoped<IDomainEventPublisher, MassTransitDomainEventPublisher>();
-            // Injected into db context to provide UserLoginId info
-            services.AddScoped<ITenantCurrentUser, SimpleCurrentUser>();
+
         }
     }
 }
