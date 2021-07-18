@@ -4,13 +4,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using Bogus;
 using Bogus.DataSets;
-using ChurchManager.Domain;
 using ChurchManager.Domain.Common;
 using ChurchManager.Domain.Features.People;
-using ChurchManager.Domain.Features.SharedKernel.MultiTenant;
 using ChurchManager.Infrastructure.Persistence.Contexts;
 using CodeBoss.AspNetCore.Startup;
 using CodeBoss.Extensions;
+using CodeBoss.MultiTenant;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Person = ChurchManager.Domain.Features.People.Person;
@@ -25,7 +24,7 @@ namespace ChurchManager.Infrastructure.Persistence.Seeding.Development
         public int OrderNumber { get; } = 1;
         private readonly IServiceScopeFactory _scopeFactory;
         private ChurchManagerDbContext _dbContext;
-        private Tenant _tenant;
+        private ITenant _tenant;
 
         public PeopleFakeDbSeedInitializer(IServiceScopeFactory scopeFactory) => _scopeFactory = scopeFactory;
 

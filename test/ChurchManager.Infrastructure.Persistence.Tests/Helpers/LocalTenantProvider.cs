@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Linq;
-using ChurchManager.Domain.Features.SharedKernel.MultiTenant;
+using CodeBoss.MultiTenant;
 
 namespace ChurchManager.Infrastructure.Persistence.Tests.Helpers
 {
     public class LocalTenantProvider : ITenantProvider
     {
         public bool Enabled => true;
-        public Tenant[] Tenants()
+        public ITenant[] Tenants()
         {
             return new[]
             {
@@ -20,9 +20,9 @@ namespace ChurchManager.Infrastructure.Persistence.Tests.Helpers
             };
         }
 
-        public Tenant Get(string name) => Tenants().First();
+        public ITenant Get(string name) => Tenants().First();
 
-        public Tenant CurrentTenant
+        public ITenant CurrentTenant
         {
             get => Get("Tenant1");
             set => throw new NotImplementedException();

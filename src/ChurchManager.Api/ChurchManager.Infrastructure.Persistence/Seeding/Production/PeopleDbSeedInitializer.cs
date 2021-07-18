@@ -4,9 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using ChurchManager.Domain.Common;
 using ChurchManager.Domain.Features.People;
-using ChurchManager.Domain.Features.SharedKernel.MultiTenant;
 using ChurchManager.Infrastructure.Persistence.Contexts;
 using CodeBoss.AspNetCore.Startup;
+using CodeBoss.MultiTenant;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Person = ChurchManager.Domain.Features.People.Person;
@@ -21,7 +21,7 @@ namespace ChurchManager.Infrastructure.Persistence.Seeding.Production
         public int OrderNumber { get; } = 1;
         private readonly IServiceScopeFactory _scopeFactory;
         private ChurchManagerDbContext _dbContext;
-        private Tenant _tenant;
+        private ITenant _tenant;
 
         public PeopleDbSeedInitializer(IServiceScopeFactory scopeFactory) => _scopeFactory = scopeFactory;
 

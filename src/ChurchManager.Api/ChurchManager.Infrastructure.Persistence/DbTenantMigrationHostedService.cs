@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using ChurchManager.Domain.Features.SharedKernel.MultiTenant;
 using ChurchManager.Infrastructure.Persistence.Contexts.Factory;
+using CodeBoss.MultiTenant;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -38,7 +38,7 @@ namespace ChurchManager.Infrastructure.Persistence
             return Task.CompletedTask;
         }
 
-        private async Task MigrateTenantDatabase(Tenant tenant, ITenantProvider provider)
+        private async Task MigrateTenantDatabase(ITenant tenant, ITenantProvider provider)
         {
             try
             {
