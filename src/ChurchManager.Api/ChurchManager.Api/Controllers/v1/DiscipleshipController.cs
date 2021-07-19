@@ -1,10 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using ChurchManager.Application;
 using ChurchManager.Application.Common;
 using ChurchManager.Application.Features.Discipleship.Queries.DiscipleshipTypesAndStepDefinitions;
-using ChurchManager.Domain;
-using ChurchManager.Domain.Common;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -31,6 +28,12 @@ namespace ChurchManager.Api.Controllers.v1
         public async Task<IActionResult> GetDiscipleshipDefinitionSteps(int typeId, CancellationToken token)
         {
             return Ok(await Mediator.Send(new DiscipleshipDefinitionStepsQuery(typeId), token));
+        }
+
+        [HttpGet("steps/{definitionId}/people")]
+        public async Task<IActionResult> GetPeopleInDiscipleshipStep(int definitionId, CancellationToken token)
+        {
+            return Ok(await Mediator.Send(new PeopleInDiscipleshipStepQuery(definitionId), token));
         }
 
         [HttpPost("person/programs")]

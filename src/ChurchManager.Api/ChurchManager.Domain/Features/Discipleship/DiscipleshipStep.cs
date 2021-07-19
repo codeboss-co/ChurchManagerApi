@@ -46,7 +46,7 @@ namespace ChurchManager.Domain.Features.Discipleship
         /// Indicates if this step has been completed
         /// </summary>
         [DataMember]
-        public virtual bool IsComplete => Status != null && Status.Equals("Completed");
+        public virtual bool IsComplete => Status is "Completed";
 
         #region Navigation
 
