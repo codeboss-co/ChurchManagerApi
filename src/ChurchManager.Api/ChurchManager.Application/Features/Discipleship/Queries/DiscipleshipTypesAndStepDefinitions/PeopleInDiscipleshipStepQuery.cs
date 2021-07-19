@@ -58,7 +58,7 @@ namespace ChurchManager.Application.Features.Discipleship.Queries.DiscipleshipTy
             })
             .OrderBy(step => step.StepDefinition.Order);
 
-            return new ApiResponse(vm);
+            return new ApiResponse(vm.GroupBy(x => x.Status));
         }
     }
 }
