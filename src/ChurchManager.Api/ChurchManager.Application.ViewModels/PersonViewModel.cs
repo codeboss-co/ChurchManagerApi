@@ -28,11 +28,11 @@ namespace ChurchManager.Application.ViewModels
         public string Source { get; set; }
         public bool? ReceivedHolySpirit { get; set; } = false;
         public DiscipleshipStepViewModel FoundationSchool { get; set; }
-        public ICollection<FamilyMembersViewModel> FamilyMembers { get; set; } = new Collection<FamilyMembersViewModel>();
+        public ICollection<PersonViewModelBasic> FamilyMembers { get; set; } = new Collection<PersonViewModelBasic>();
         public string RecordStatus { get; set; }
     }
 
-    public record FamilyMembersViewModel
+    public record PersonViewModelBasic
     {
         public int PersonId { get; set; }
         public FullName FullName { get; set; }
