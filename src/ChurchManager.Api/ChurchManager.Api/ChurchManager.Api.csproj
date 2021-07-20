@@ -41,8 +41,4 @@
     <ProjectReference Include="..\ChurchManager.Infrastructure.Shared\ChurchManager.Infrastructure.Shared.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Controllers\v1\Crud\" />
-  </ItemGroup>
-
 </Project>
