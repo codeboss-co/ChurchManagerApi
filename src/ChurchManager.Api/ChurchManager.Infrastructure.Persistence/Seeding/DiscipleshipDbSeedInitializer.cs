@@ -28,7 +28,7 @@ namespace ChurchManager.Infrastructure.Persistence.Seeding
                 {
                     Name = "Foundation School",
                     Description = "Basics of our Faith and Doctrine",
-                    IconCssClass = "heroicons-solid:academic-cap",
+                    IconCssClass = "heroicons_solid:academic-cap",
                     Order = 0
                 };
                 var baptismClassStepDefinition = new DiscipleshipStepDefinition

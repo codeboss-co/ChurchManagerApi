@@ -73,7 +73,7 @@ namespace ChurchManager.DataImporter
                     {
                         Name = "Foundation School",
                         Description = "Basics of our Faith and Doctrine",
-                        IconCssClass = "heroicons-solid:academic-cap",
+                        IconCssClass = "heroicons_solid:academic-cap",
                         Order = 0
                     };
                     baptismClassStepDefinition = new DiscipleshipStepDefinition

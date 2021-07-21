@@ -27,7 +27,7 @@ namespace ChurchManager.Domain.Features.Discipleship
         /// Gets or sets the icon CSS class.
         /// </summary>
         [MaxLength(100)]
-        public string IconCssClass { get; set; } = "heroicons-solid:bookmark";
+        public string IconCssClass { get; set; } = "heroicons_solid:bookmark";
 
         /// <summary>
         /// Gets or sets a flag indicating if this step type allows multiple step records per person.
