@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using ChurchManager.Application.ViewModels;
 using ChurchManager.Application.Wrappers;
 using ChurchManager.Domain.Common;
 using ChurchManager.Domain.Features.Discipleship;
@@ -28,6 +29,29 @@ namespace ChurchManager.Application.Features.Discipleship.Queries.DiscipleshipTy
                 .AsNoTracking()
                 .Include(x => x.StepDefinitions)
                 .Where(x => x.RecordStatus == RecordStatus.Active)
+                .Select(x => new
+                {
+                    Program = new DiscipleshipProgramViewModel
+                    {
+                        Id = x.Id,
+                        Name = x.Name,
+                        Description = x.Description,
+                        Category = x.Category,
+                        Order = x.Order,
+                        IconCssClass = "heroicons_outline:template",
+                        CreatedDate = x.CreatedDate,
+                        ModifiedDate = x.ModifiedDate
+                    },
+                    StepDefinitions = x.StepDefinitions.Select(stepDef => new StepDefinitionViewModel
+                    {
+                        Id = stepDef.Id,
+                        AllowMultiple = stepDef.AllowMultiple,
+                        Name = stepDef.Name,
+                        Description = stepDef.Description,
+                        Order = stepDef.Order,
+                        IconCssClass = stepDef.IconCssClass
+                    })
+                })
                 .ToListAsync(ct);
 
             // Sort the step definitions

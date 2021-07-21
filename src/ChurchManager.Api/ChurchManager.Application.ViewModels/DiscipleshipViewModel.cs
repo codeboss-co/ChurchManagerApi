@@ -25,11 +25,15 @@ namespace ChurchManager.Application.ViewModels
     {
         public int Order { get; set; }
         public bool AllowMultiple { get; set; }
+        public string IconCssClass { get; set; }
     }
 
     public record DiscipleshipProgramViewModel : GeneralViewModel
     {
         public int Order { get; set; }
         public string Category { get; set; }
+        public string IconCssClass { get; set; }
+        public DateTime CreatedDate { get; set; }
+        public DateTime? ModifiedDate { get; set; }
     }
 }
