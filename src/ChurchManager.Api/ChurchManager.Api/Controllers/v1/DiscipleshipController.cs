@@ -24,6 +24,13 @@ namespace ChurchManager.Api.Controllers.v1
             return Ok(await Mediator.Send(new DiscipleshipProgramsQuery(), token));
         }
 
+
+        [HttpGet("programs/{id}")]
+        public async Task<IActionResult> GetDiscipleshipProgramById(int id, CancellationToken token)
+        {
+            return Ok(await Mediator.Send(new DiscipleshipProgramsQuery{DiscipleshipProgramId = id}, token));
+        }
+
         [HttpPost("person/programs")]
         public async Task<IActionResult> GetDiscipleshipForPerson([FromBody] DiscipleshipForPersonQuery query, CancellationToken token)
         {
