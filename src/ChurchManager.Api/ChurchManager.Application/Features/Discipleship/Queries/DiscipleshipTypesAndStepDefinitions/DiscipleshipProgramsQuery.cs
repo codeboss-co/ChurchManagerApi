@@ -50,7 +50,16 @@ namespace ChurchManager.Application.Features.Discipleship.Queries.DiscipleshipTy
                             IconCssClass = "heroicons_outline:template",
                             CreatedDate = x.CreatedDate,
                             ModifiedDate = x.ModifiedDate
-                        }
+                        },
+                        StepDefinitions = x.StepDefinitions.Select(stepDef => new StepDefinitionViewModel
+                        {
+                            Id = stepDef.Id,
+                            AllowMultiple = stepDef.AllowMultiple,
+                            Name = stepDef.Name,
+                            Description = stepDef.Description,
+                            Order = stepDef.Order,
+                            IconCssClass = stepDef.IconCssClass
+                        })
                     })
                     .FirstOrDefaultAsync(ct);
 
