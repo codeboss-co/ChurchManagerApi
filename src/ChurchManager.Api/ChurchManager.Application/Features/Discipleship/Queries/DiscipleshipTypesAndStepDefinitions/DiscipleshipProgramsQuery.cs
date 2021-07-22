@@ -35,6 +35,7 @@ namespace ChurchManager.Application.Features.Discipleship.Queries.DiscipleshipTy
                     .Queryable()
                     .AsNoTracking()
                     .Include(x => x.StepDefinitions)
+                        .ThenInclude(y => y.Steps)
                     .Where(x =>
                         x.RecordStatus == RecordStatus.Active &&
                         x.Id == query.DiscipleshipProgramId.Value)
@@ -58,8 +59,17 @@ namespace ChurchManager.Application.Features.Discipleship.Queries.DiscipleshipTy
                             Name = stepDef.Name,
                             Description = stepDef.Description,
                             Order = stepDef.Order,
-                            IconCssClass = stepDef.IconCssClass
-                        })
+                            IconCssClass = stepDef.IconCssClass,
+                            Statistics = new StepDefinitionStatistics
+                            {
+                                Started = stepDef.Steps.Count(step => step.Status != "Completed"),
+                                Completed = stepDef.Steps.Count(step => step.Status == "Completed")
+                            }
+                        }),
+                        /*Statistics = new {
+                            Started = x.StepDefinitions.SelectMany(x => x.Steps).Select(y => y.CompletionDate).AsEnumerable().Count(completeDate => completeDate.HasValue == false),
+                            Completed = x.StepDefinitions.SelectMany(x => x.Steps).Select(y => y.CompletionDate).AsEnumerable().Count(completeDate => completeDate.HasValue),
+                        }*/
                     })
                     .FirstOrDefaultAsync(ct);
 

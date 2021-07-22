@@ -26,6 +26,13 @@ namespace ChurchManager.Application.ViewModels
         public int Order { get; set; }
         public bool AllowMultiple { get; set; }
         public string IconCssClass { get; set; }
+        public StepDefinitionStatistics Statistics { get; set; }
+    }
+
+    public record StepDefinitionStatistics
+    {
+        public int Started { get; set; }
+        public int Completed { get; set; }
     }
 
     public record DiscipleshipProgramViewModel : GeneralViewModel
