@@ -31,7 +31,7 @@ namespace ChurchManager.Application.ViewModels
 
     public record StepDefinitionStatistics
     {
-        public int Started { get; set; }
+        public int InProgress { get; set; }
         public int Completed { get; set; }
     }
 

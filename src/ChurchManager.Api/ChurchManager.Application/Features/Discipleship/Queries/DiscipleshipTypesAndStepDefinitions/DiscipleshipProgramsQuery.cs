@@ -5,6 +5,7 @@ using ChurchManager.Application.ViewModels;
 using ChurchManager.Application.Wrappers;
 using ChurchManager.Domain.Common;
 using ChurchManager.Domain.Features.Discipleship;
+using ChurchManager.Domain.Shared;
 using ChurchManager.Infrastructure.Abstractions.Persistence;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -62,8 +63,8 @@ namespace ChurchManager.Application.Features.Discipleship.Queries.DiscipleshipTy
                             IconCssClass = stepDef.IconCssClass,
                             Statistics = new StepDefinitionStatistics
                             {
-                                Started = stepDef.Steps.Count(step => step.Status != "Completed"),
-                                Completed = stepDef.Steps.Count(step => step.Status == "Completed")
+                                InProgress = stepDef.Steps.Count(step => step.Status == DomainConstants.Discipleship.StepStatus.InProgress),
+                                Completed = stepDef.Steps.Count(step => step.Status == DomainConstants.Discipleship.StepStatus.Completed)
                             }
                         }),
                         /*Statistics = new {
