@@ -48,17 +48,17 @@ namespace ChurchManager.Application.Features.Discipleship.Queries.DiscipleshipTy
                 CompletionDate = step.CompletionDate,
                 Status = step.Status,
                 IsComplete = step.IsComplete,
-                StepDefinition = new StepDefinitionViewModel
+                /*StepDefinition = new StepDefinitionViewModel
                 {
                     Order = step.Definition.Order,
                     Id = step.Definition.Id,
                     Description = step.Definition.Description,
-                    Name = step.Definition.Name
-                }
+                    Name = step.Definition.Name,
+                }*/
             })
-            .OrderBy(step => step.StepDefinition.Order);
+                .OrderBy(step => step.Status);
 
-            return new ApiResponse(vm.GroupBy(x => x.Status));
+            return new ApiResponse(vm);
         }
     }
 }
