@@ -44,10 +44,11 @@ namespace ChurchManager.Api.Controllers.v1
             return Ok(await Mediator.Send(new DiscipleshipDefinitionStepsQuery(typeId), token));
         }
 
-        [HttpGet("steps/{definitionId}/people")]
-        public async Task<IActionResult> GetPeopleInDiscipleshipStep(int definitionId, CancellationToken token)
+        [HttpPost("steps/{definitionId}/people/browse")]
+        public async Task<IActionResult> BrowsePeopleInDiscipleshipStep(int definitionId, [FromBody] BrowsePeopleInDiscipleshipStepQuery query, CancellationToken token)
         {
-            return Ok(await Mediator.Send(new PeopleInDiscipleshipStepQuery(definitionId), token));
+            query.DiscipleshipStepDefinitionId = definitionId;
+            return Ok(await Mediator.Send(query, token));
         }
 
         [HttpPost("person/step")]

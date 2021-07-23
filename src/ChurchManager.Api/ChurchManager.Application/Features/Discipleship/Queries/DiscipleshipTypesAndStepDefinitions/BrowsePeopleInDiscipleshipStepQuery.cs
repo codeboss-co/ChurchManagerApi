@@ -5,15 +5,21 @@ using AutoMapper;
 using ChurchManager.Application.ViewModels;
 using ChurchManager.Application.Wrappers;
 using ChurchManager.Domain.Features.Discipleship;
+using ChurchManager.Domain.Parameters;
 using ChurchManager.Infrastructure.Abstractions.Persistence;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace ChurchManager.Application.Features.Discipleship.Queries.DiscipleshipTypesAndStepDefinitions
 {
-    public record PeopleInDiscipleshipStepQuery(int DiscipleshipStepDefinitionId) : IRequest<ApiResponse>;
+    public record BrowsePeopleInDiscipleshipStepQuery : SearchTermQueryParameter,
+        IRequest<ApiResponse>
+    {
+        public int DiscipleshipStepDefinitionId { get; set; }
+        public string Status { get; set; }
+    };
 
-    public class PeopleInDiscipleshipStepHandler : IRequestHandler<PeopleInDiscipleshipStepQuery, ApiResponse>
+    public class PeopleInDiscipleshipStepHandler : IRequestHandler<BrowsePeopleInDiscipleshipStepQuery, ApiResponse>
     {
         private readonly IGenericDbRepository<DiscipleshipStep> _dbRepository;
         private readonly IMapper _mapper;
@@ -24,14 +30,16 @@ namespace ChurchManager.Application.Features.Discipleship.Queries.DiscipleshipTy
             _mapper = mapper;
         }
 
-        public async Task<ApiResponse> Handle(PeopleInDiscipleshipStepQuery query, CancellationToken ct)
+        public async Task<ApiResponse> Handle(BrowsePeopleInDiscipleshipStepQuery query, CancellationToken ct)
         {
             var peopleInSteps = await _dbRepository
                 .Queryable()
                 .AsNoTracking()
                 .Include(x => x.Person)
                 .Include(x => x.Definition)
-                .Where(x => x.DiscipleshipStepDefinitionId == query.DiscipleshipStepDefinitionId)
+                .Where(x => 
+                    x.DiscipleshipStepDefinitionId == query.DiscipleshipStepDefinitionId &&
+                    x.Status == query.Status )
                 .ToListAsync(ct);
 
             var vm = peopleInSteps.Select(step => new DiscipleshipStepViewModel
