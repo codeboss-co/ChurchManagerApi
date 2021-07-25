@@ -45,7 +45,7 @@ namespace ChurchManager.Api.Controllers.v1
         }
 
         [HttpPost("steps/{definitionId}/people/browse")]
-        public async Task<IActionResult> BrowsePeopleInDiscipleshipStep(int definitionId, [FromBody] BrowsePeopleInDiscipleshipStepQuery query, CancellationToken token)
+        public async Task<IActionResult> BrowsePeopleInDiscipleshipStep(int definitionId, [FromBody] BrowseDiscipleshipStepParticipantsQuery query, CancellationToken token)
         {
             query.DiscipleshipStepDefinitionId = definitionId;
             return Ok(await Mediator.Send(query, token));

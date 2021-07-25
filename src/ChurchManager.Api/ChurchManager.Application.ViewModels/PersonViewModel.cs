@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using ChurchManager.Domain;
 using ChurchManager.Domain.Features.People;
 using ChurchManager.Domain.Shared;
 
@@ -31,15 +32,4 @@ namespace ChurchManager.Application.ViewModels
         public ICollection<PersonViewModelBasic> FamilyMembers { get; set; } = new Collection<PersonViewModelBasic>();
         public string RecordStatus { get; set; }
     }
-
-    public record PersonViewModelBasic
-    {
-        public int PersonId { get; set; }
-        public FullName FullName { get; set; }
-        public string Gender { get; set; }
-        public string AgeClassification { get; set; }
-        public string PhotoUrl { get; set; }
-        public BirthDate BirthDate { get; set; }
-    }
-
 }

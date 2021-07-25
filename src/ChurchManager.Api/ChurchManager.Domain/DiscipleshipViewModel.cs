@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using ChurchManager.Domain.Shared;
 
-namespace ChurchManager.Application.ViewModels
+namespace ChurchManager.Domain
 {
     public record DiscipleshipForPersonViewModel
     {

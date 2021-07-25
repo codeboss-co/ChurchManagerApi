@@ -1,8 +1,8 @@
 ﻿using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using ChurchManager.Application.ViewModels;
 using ChurchManager.Application.Wrappers;
+using ChurchManager.Domain;
 using ChurchManager.Domain.Common;
 using ChurchManager.Domain.Features.Discipleship;
 using ChurchManager.Domain.Shared;

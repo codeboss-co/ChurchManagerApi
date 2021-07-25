@@ -1,25 +1,26 @@
-﻿using System.Linq;
+﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
-using ChurchManager.Application.ViewModels;
 using ChurchManager.Application.Wrappers;
+using ChurchManager.Domain;
 using ChurchManager.Domain.Features.Discipleship;
+using ChurchManager.Domain.Features.Discipleship.Specifications;
 using ChurchManager.Domain.Parameters;
 using ChurchManager.Infrastructure.Abstractions.Persistence;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 
 namespace ChurchManager.Application.Features.Discipleship.Queries.DiscipleshipTypesAndStepDefinitions
 {
-    public record BrowsePeopleInDiscipleshipStepQuery : SearchTermQueryParameter,
-        IRequest<ApiResponse>
+    public record BrowseDiscipleshipStepParticipantsQuery : SearchTermQueryParameter, IRequest<PagedResponse<DiscipleshipStepViewModel>>
     {
         public int DiscipleshipStepDefinitionId { get; set; }
         public string Status { get; set; }
+        public DateTime? To { get; set; }
+        public DateTime? From { get; set; }
     };
 
-    public class PeopleInDiscipleshipStepHandler : IRequestHandler<BrowsePeopleInDiscipleshipStepQuery, ApiResponse>
+    public class PeopleInDiscipleshipStepHandler : IRequestHandler<BrowseDiscipleshipStepParticipantsQuery, PagedResponse<DiscipleshipStepViewModel>>
     {
         private readonly IGenericDbRepository<DiscipleshipStep> _dbRepository;
         private readonly IMapper _mapper;
@@ -30,9 +31,15 @@ namespace ChurchManager.Application.Features.Discipleship.Queries.DiscipleshipTy
             _mapper = mapper;
         }
 
-        public async Task<ApiResponse> Handle(BrowsePeopleInDiscipleshipStepQuery query, CancellationToken ct)
+        public async Task<PagedResponse<DiscipleshipStepViewModel>> Handle(BrowseDiscipleshipStepParticipantsQuery query, CancellationToken ct)
         {
-            var peopleInSteps = await _dbRepository
+            var spec = new BrowseDiscipleshipParticipants(query, query.DiscipleshipStepDefinitionId, query.Status, query.From, query.To);
+
+            var pagedResult = await _dbRepository.BrowseAsync<DiscipleshipStepViewModel>(query, spec, ct);
+
+            return new PagedResponse<DiscipleshipStepViewModel>(pagedResult);
+
+            /*var peopleInSteps = await _dbRepository
                 .Queryable()
                 .AsNoTracking()
                 .Include(x => x.Person)
@@ -62,11 +69,11 @@ namespace ChurchManager.Application.Features.Discipleship.Queries.DiscipleshipTy
                     Id = step.Definition.Id,
                     Description = step.Definition.Description,
                     Name = step.Definition.Name,
-                }*/
+                }#1#
             })
                 .OrderBy(step => step.Status);
 
-            return new ApiResponse(vm);
+            return new ApiResponse(vm);*/
         }
     }
 }
