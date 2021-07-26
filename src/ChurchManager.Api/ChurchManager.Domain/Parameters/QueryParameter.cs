@@ -1,5 +1,4 @@
-﻿
-using Convey.CQRS.Queries;
+﻿using Convey.CQRS.Queries;
 
 namespace ChurchManager.Domain.Parameters
 {

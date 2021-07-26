@@ -2,8 +2,10 @@
 using System.Linq;
 using AutoMapper;
 using ChurchManager.Application.ViewModels;
+using ChurchManager.Domain;
 using ChurchManager.Domain.Common;
 using ChurchManager.Domain.Features.People;
+using ChurchManager.Domain.Shared;
 using Convey.CQRS.Queries;
 using GroupMemberViewModel = ChurchManager.Domain.Shared.GroupMemberViewModel;
 
@@ -17,7 +19,7 @@ namespace ChurchManager.Application.Mappings
                 .ForMember(d => d.PersonId, opt => opt.MapFrom(src => src.Id))
                 ;
 
-            CreateMap<Person, FamilyMembersViewModel>()
+            CreateMap<Person, PersonViewModelBasic>()
                 .ForMember(d => d.PersonId, opt => opt.MapFrom(src => src.Id))
                 ;
 
@@ -58,10 +60,10 @@ namespace ChurchManager.Application.Mappings
                 // Gets the persons family members excluding them
                 .ForMember(d => d.FamilyMembers, o => o.MapFrom(src
                     => src.Family == null
-                        ? new List<FamilyMembersViewModel>(0)
+                        ? new List<PersonViewModelBasic>(0)
                         : src.Family.FamilyMembers
                             .Where(x => x.Id != src.Id)
-                            .Select(x => new FamilyMembersViewModel
+                            .Select(x => new PersonViewModelBasic
                             {
                                 PersonId = x.Id,
                                 FullName = x.FullName,

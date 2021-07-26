@@ -1,5 +1,5 @@
 @api = http://localhost:5001/api
-@accessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiZGlsbGFuIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZWlkZW50aWZpZXIiOiIwODkyNWFkZS05MjQ5LTQ3NmItODc4Ny1iM2RkOGY1ZGJjMTMiLCJQZXJzb25JZCI6IjEiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJNYW5hZ2VyIiwiZXhwIjoxNjIyMTA5Mzg4LCJpc3MiOiJodHRwOi8vY29kZWJvc3MudGVjaCIsImF1ZCI6Imh0dHA6Ly9jb2RlYm9zcy50ZWNoIn0.1jR8902S0KbumhGOnGGY8jNlkCZNFESKsW0MPPn3CU0
+@accessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiZGlsbGFuIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZWlkZW50aWZpZXIiOiIwODkyNWFkZS05MjQ5LTQ3NmItODc4Ny1iM2RkOGY1ZGJjMTMiLCJQZXJzb25JZCI6IjEiLCJUZW5hbnQiOiJUZW5hbnQxIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW4iLCJleHAiOjE2MjY2ODUwODUsImlzcyI6Imh0dHA6Ly9jb2RlYm9zcy50ZWNoIiwiYXVkIjoiaHR0cDovL2NvZGVib3NzLnRlY2gifQ.7oildEOTOtZ4JGEl0L5_bPZQdMQEf3PUlVegIn2iu0c
 # Ensure this is in the Countries Table
 @countryId = 1 
 # From AWS Cognito
@@ -61,7 +61,7 @@ Authorization: Bearer {{accessToken}}
 }
 
 # Get Group With Children Tree By Parent
-@parentGroupId = 15
+@parentGroupId = 1
 GET {{api}}/v1/groups/parent/{{parentGroupId}}/tree
 Authorization: Bearer {{accessToken}}
 
@@ -209,6 +209,15 @@ Authorization: Bearer {{accessToken}}
 {
     "personId": 1,
 	"DiscipleshipStepDefinitionId" : 1
+}
+
+# People in Discipleship Step
+@definitionId = 1
+GET {{api}}/v1/discipleship/steps/{{definitionId}}/people
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
+{
 }
 
 # ============== COMMUNICATIONS ==================== #
