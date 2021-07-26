@@ -1,10 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using ChurchManager.Application;
 using ChurchManager.Application.Common;
 using ChurchManager.Application.Features.Discipleship.Queries.DiscipleshipTypesAndStepDefinitions;
-using ChurchManager.Domain;
-using ChurchManager.Domain.Common;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -27,16 +24,30 @@ namespace ChurchManager.Api.Controllers.v1
             return Ok(await Mediator.Send(new DiscipleshipProgramsQuery(), token));
         }
 
-        [HttpGet("types/{typeId}/definitions")]
-        public async Task<IActionResult> GetDiscipleshipDefinitionSteps(int typeId, CancellationToken token)
+
+        [HttpGet("programs/{id}")]
+        public async Task<IActionResult> GetDiscipleshipProgramById(int id, CancellationToken token)
         {
-            return Ok(await Mediator.Send(new DiscipleshipDefinitionStepsQuery(typeId), token));
+            return Ok(await Mediator.Send(new DiscipleshipProgramsQuery{DiscipleshipProgramId = id}, token));
         }
 
         [HttpPost("person/programs")]
         public async Task<IActionResult> GetDiscipleshipForPerson([FromBody] DiscipleshipForPersonQuery query, CancellationToken token)
         {
             query.PersonId ??= _currentUser.PersonId;
+            return Ok(await Mediator.Send(query, token));
+        }
+
+        [HttpGet("types/{typeId}/definitions")]
+        public async Task<IActionResult> GetDiscipleshipDefinitionSteps(int typeId, CancellationToken token)
+        {
+            return Ok(await Mediator.Send(new DiscipleshipDefinitionStepsQuery(typeId), token));
+        }
+
+        [HttpPost("steps/{definitionId}/people/browse")]
+        public async Task<IActionResult> BrowsePeopleInDiscipleshipStep(int definitionId, [FromBody] BrowseDiscipleshipStepParticipantsQuery query, CancellationToken token)
+        {
+            query.DiscipleshipStepDefinitionId = definitionId;
             return Ok(await Mediator.Send(query, token));
         }
 
