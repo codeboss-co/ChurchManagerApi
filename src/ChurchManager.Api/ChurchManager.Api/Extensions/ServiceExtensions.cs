@@ -91,6 +91,7 @@ namespace ChurchManager.Api.Extensions
                             "http://localhost:8080", // Angular PWA test
                             "http://test-churchmanager.codeboss.tech", // Test
                             "https://test-churchmanager.codeboss.tech", // Test
+                            "https://test-churchmanager-api.codeboss.tech", // Test
                             "http://churchmanager.codeboss.tech", // Production
                             "https://churchmanager.codeboss.tech" // Production
                             ) 
