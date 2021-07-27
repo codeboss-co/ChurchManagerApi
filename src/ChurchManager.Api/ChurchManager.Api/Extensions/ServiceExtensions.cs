@@ -87,7 +87,6 @@ namespace ChurchManager.Api.Extensions
                 //  If you need the top level as well as subdomains, you need to add both -> e.g. .WithOrigins(new string[] { "https://*.example.com", "https://example.com" }) 
                 options.AddPolicy(ApiRoutes.DefaultCorsPolicy,
                     builder => builder
-                        .SetIsOriginAllowedToAllowWildcardSubdomains()
                         .WithOrigins(
                             "http://localhost:4200", // Angular App
                             "http://localhost:8080", // Angular PWA test
@@ -98,7 +97,8 @@ namespace ChurchManager.Api.Extensions
                             "http://*.codeboss.tech.s3-website-us-east-1.amazonaws.com", // S3 buckets
                             "http://dxoazadshajgs.cloudfront.net", // Test Cloud front
                             "https://dxoazadshajgs.cloudfront.net" // Test Cloud front
-                            ) 
+                            )
+                        .SetIsOriginAllowedToAllowWildcardSubdomains()
                         .AllowAnyMethod()
                         .AllowAnyHeader()
                         .AllowCredentials());
