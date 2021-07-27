@@ -95,7 +95,9 @@ namespace ChurchManager.Api.Extensions
                             "https://*.codeboss.tech", // HTTPS
                             "http://codeboss.tech", // TOP LEVEL DOMAIN
                             "https://codeboss.tech", // TOP LEVEL DOMAIN
-                            "http://*.codeboss.tech.s3-website-us-east-1.amazonaws.com" // S3  buckets
+                            "http://*.codeboss.tech.s3-website-us-east-1.amazonaws.com", // S3 buckets
+                            "http://dxoazadshajgs.cloudfront.net", // Test Cloud front
+                            "https://dxoazadshajgs.cloudfront.net" // Test Cloud front
                             ) 
                         .AllowAnyMethod()
                         .AllowAnyHeader()
