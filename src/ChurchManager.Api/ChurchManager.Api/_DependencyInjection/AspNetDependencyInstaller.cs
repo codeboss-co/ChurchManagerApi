@@ -1,4 +1,5 @@
-﻿using ChurchManager.Api.Extensions;
+﻿using Bugsnag.AspNet.Core;
+using ChurchManager.Api.Extensions;
 using CodeBoss.AspNetCore.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

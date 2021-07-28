@@ -3,10 +3,14 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Bugsnag;
+using ChurchManager.Api.Models;
 using ChurchManager.Application.Exceptions;
 using ChurchManager.Application.Wrappers;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 
 namespace ChurchManager.Api.Middlewares
 {
@@ -14,8 +18,11 @@ namespace ChurchManager.Api.Middlewares
     {
         private readonly RequestDelegate _next;
         private readonly ILogger<ErrorHandlerMiddleware> _logger;
+        private IClient _bugsnag;
 
-        public ErrorHandlerMiddleware(RequestDelegate next, ILogger<ErrorHandlerMiddleware> logger)
+        public ErrorHandlerMiddleware(
+            RequestDelegate next,
+            ILogger<ErrorHandlerMiddleware> logger)
         {
             _next = next;
             _logger = logger;
@@ -55,6 +62,13 @@ namespace ChurchManager.Api.Middlewares
                 }
 
                 _logger.LogError(error, "Application Error");
+
+                var bugsnagOptions = context.RequestServices.GetRequiredService<IOptions<BugsnagOptions>>().Value;
+                if (bugsnagOptions.Enabled)
+                {
+                    _bugsnag = context.RequestServices.GetRequiredService<IClient>();
+                    _bugsnag.Notify(error);
+                }
 
                 var result = JsonSerializer.Serialize(responseModel);
                 await response.WriteAsync(result);
