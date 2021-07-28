@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using ChurchManager.Application.Common;
 using ChurchManager.Application.Features.Groups.Commands.GroupAttendanceFeedback;
 using ChurchManager.Application.Features.Groups.Queries.BrowseGroupAttendance;
+using ChurchManager.Application.Features.Groups.Queries.Charts.Dashboard;
 using ChurchManager.Application.Features.Groups.Queries.Charts.WeeklyComparison;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -45,6 +46,13 @@ namespace ChurchManager.Api.Controllers.v1
         public async Task<IActionResult> Charts([FromQuery] WeeklyBreakdownForMonthQuery query, CancellationToken token)
         {
             var data = await Mediator.Send(query, token);
+            return Ok(data);
+        }
+
+        [HttpGet("dashboard")]
+        public async Task<IActionResult> Dashboard(CancellationToken token)
+        {
+            var data = await Mediator.Send(new CellMinistryDashboardMetrics(), token);
             return Ok(data);
         }
 
