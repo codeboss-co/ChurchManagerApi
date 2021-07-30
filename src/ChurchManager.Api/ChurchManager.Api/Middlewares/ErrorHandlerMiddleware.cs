@@ -5,6 +5,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Bugsnag;
 using ChurchManager.Api.Models;
+using ChurchManager.Application.Common;
 using ChurchManager.Application.Exceptions;
 using ChurchManager.Application.Wrappers;
 using Microsoft.AspNetCore.Http;
@@ -67,6 +68,22 @@ namespace ChurchManager.Api.Middlewares
                 if (bugsnagOptions.Enabled)
                 {
                     _bugsnag = context.RequestServices.GetRequiredService<IClient>();
+                    var currentUser = context.RequestServices.GetService<ICognitoCurrentUser>();
+
+                    if (currentUser is not null)
+                    {
+                        var person = await currentUser.CurrentPerson.Value;
+                        _bugsnag.BeforeNotify(report =>
+                        {
+                            report.Event.User = new Bugsnag.Payload.User
+                            {
+                                Id = currentUser.Id,
+                                Name = $"{person.FullName.FirstName} {person.FullName.LastName}",
+                                Email = person.Email?.Address
+                            };
+                        });
+                    }
+
                     _bugsnag.Notify(error);
                 }
 
