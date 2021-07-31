@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using ChurchManager.Application.Common;
+using ChurchManager.Application.Exceptions;
 using ChurchManager.Application.Features.Groups.Queries.GroupsForPerson;
 using ChurchManager.Application.Tests;
 using ChurchManager.Infrastructure.Abstractions;
@@ -75,14 +76,20 @@ namespace ChurchManager.Api.Controllers
         }
 
         [HttpGet("domain-event")]
-        //[Authorize]
+        [Authorize]
         public async Task<IActionResult> DomainEventTest()
         {
             var @event = new TestDomainEvent();
             await _events.PublishAsync(@event);
             return Ok();
         }
-    }
 
-   
+
+        [HttpGet("ex")]
+        [Authorize]
+        public async Task<IActionResult> Exception()
+        {
+            throw new ApiException("Custom exception thrown");
+        }
+    }
 }

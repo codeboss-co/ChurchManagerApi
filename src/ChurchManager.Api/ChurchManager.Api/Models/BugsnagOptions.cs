@@ -1,8 +1,7 @@
 ﻿namespace ChurchManager.Api.Models
 {
-    public class BugsnagOptions
+    public class BugsnagOptions : Bugsnag.Configuration
     {
         public bool Enabled { get; set; } = false;
-        public string ApiKey { get; set; }
     }
 }
