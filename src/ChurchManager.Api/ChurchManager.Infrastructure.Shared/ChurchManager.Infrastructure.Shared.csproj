@@ -11,8 +11,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="CodeBoss.AspNetCore" Version="0.1.16" />
-    <PackageReference Include="CodeBoss.MultiTenant" Version="0.1.16" />
+    <PackageReference Include="CodeBoss.AspNetCore" Version="0.1.18" />
+    <PackageReference Include="CodeBoss.MultiTenant" Version="0.1.18" />
   </ItemGroup>
 
   <ItemGroup>

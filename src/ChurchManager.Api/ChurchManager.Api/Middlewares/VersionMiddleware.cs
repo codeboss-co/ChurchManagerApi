@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using CodeBoss.AspNetCore;
 using Microsoft.AspNetCore.Http;
 
@@ -11,7 +10,6 @@ namespace ChurchManager.Api.Middlewares
     public class VersionMiddleware
     {
         private readonly RequestDelegate _next;
-        private readonly string _version = $"{DateTime.UtcNow:yyyyMMdd}-local";
 
         public VersionMiddleware(RequestDelegate next)
         {
@@ -20,7 +18,7 @@ namespace ChurchManager.Api.Middlewares
 
         public async Task InvokeAsync(HttpContext context, IBuildVersionInfo buildInfo)
         {
-            context.Response.Headers.Add("X-Version", $"{_version}");
+            context.Response.Headers.Add("X-Version", $"{buildInfo.Version}");
             await _next(context);
         }
     }
