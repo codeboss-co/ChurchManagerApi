@@ -3,11 +3,13 @@ using System.Threading.Tasks;
 using ChurchManager.Application.Common;
 using ChurchManager.Application.Features.People.Commands.AddNewFamily;
 using ChurchManager.Application.Features.People.Commands.DeletePerson;
+using ChurchManager.Application.Features.People.Commands.EditPhoto;
 using ChurchManager.Application.Features.People.Commands.UpdatePerson;
 using ChurchManager.Application.Features.People.Queries.BrowsePeople;
 using ChurchManager.Application.Features.People.Queries.FindDuplicates;
 using ChurchManager.Application.Features.People.Queries.PeopleAutocomplete;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -72,6 +74,15 @@ namespace ChurchManager.Api.Controllers.v1
         // v1/people/edit/{personId}/discipleship-info/
         [HttpPost("edit/{personId}/discipleship-info")]
         public async Task<IActionResult> EditDiscipleshipInfo(int personId, [FromBody] UpdateDiscipleshipInfoCommand command, CancellationToken token)
+        {
+            command.PersonId = personId;
+            await Mediator.Send(command, token);
+            return Accepted();
+        }
+
+        // v1/people/edit/{personId}/photo/
+        [HttpPost("edit/{personId}/photo")]
+        public async Task<IActionResult> EditPhoto(int personId, [FromBody] EditPhotoCommand command, CancellationToken token)
         {
             command.PersonId = personId;
             await Mediator.Send(command, token);
