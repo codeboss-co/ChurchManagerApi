@@ -21,6 +21,7 @@ namespace ChurchManager.Api.Extensions
         public static void UseErrorHandlingMiddleware(this IApplicationBuilder app)
         {
             app.UseMiddleware<ErrorHandlerMiddleware>();
+            app.UseMiddleware<VersionMiddleware>();
         }
 
         public static void UseMultiTenant(this IApplicationBuilder app)

@@ -30,6 +30,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.travis.yml = .travis.yml
 		docker containers = docker containers
 		Dockerfile = Dockerfile
+		.github\workflows\feature.yml = .github\workflows\feature.yml
 		.github\workflows\main.yml = .github\workflows\main.yml
 		README.md = README.md
 	EndProjectSection
@@ -46,7 +47,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChurchManager.Infrastructur
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChurchManager.Application.Abstractions", "src\ChurchManager.Api\ChurchManager.Application.Abstractions\ChurchManager.Application.Abstractions.csproj", "{2A5D4198-5D39-40A8-8FA4-E1CE1E7413B9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChurchManager.Application.ViewModels", "src\ChurchManager.Api\ChurchManager.Application.ViewModels\ChurchManager.Application.ViewModels.csproj", "{8E9D3C51-21BB-4430-9965-D82C89CB5BCC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChurchManager.Application.ViewModels", "src\ChurchManager.Api\ChurchManager.Application.ViewModels\ChurchManager.Application.ViewModels.csproj", "{8E9D3C51-21BB-4430-9965-D82C89CB5BCC}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChurchManager.Domain.Shared", "src\ChurchManager.Api\ChurchManager.Domain.Shared\ChurchManager.Domain.Shared.csproj", "{0CF1407E-B07A-4B8F-B589-F51F413E031E}"
 EndProject

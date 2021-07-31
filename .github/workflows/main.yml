@@ -58,6 +58,15 @@ jobs:
       id: date
       run: echo "::set-output name=date::$(date +'%Y%m%d')"
 
+    - name: Update BuildInfo version
+      id: build-info
+      env:
+          VERSION: ${{ steps.date.outputs.date }}-${{ github.run_number }}-${{ env.ENVIRONMENT }}
+      run: |
+          printf '{"version":"%s"}' $VERSION > ./buildinfo.json
+          cat ./buildinfo.json # just some logging
+      working-directory: ./src/ChurchManager.Api/ChurchManager.Api
+
     - name: Build, tag, and push image to Amazon ECR
       id: build-image
       env:

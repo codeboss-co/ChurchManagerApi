@@ -19,7 +19,6 @@ namespace ChurchManager.Api.Middlewares
     {
         private readonly RequestDelegate _next;
         private readonly ILogger<ErrorHandlerMiddleware> _logger;
-        private IClient _bugsnag;
 
         public ErrorHandlerMiddleware(
             RequestDelegate next,
@@ -29,7 +28,7 @@ namespace ChurchManager.Api.Middlewares
             _logger = logger;
         }
 
-        public async Task Invoke(HttpContext context)
+        public async Task InvokeAsync(HttpContext context, IOptions<BugsnagOptions> options)
         {
             try
             {
@@ -43,7 +42,7 @@ namespace ChurchManager.Api.Middlewares
 
                 switch(error)
                 {
-                    case Application.Exceptions.ApiException e:
+                    case ApiException e:
                         // custom application error
                         response.StatusCode = (int)HttpStatusCode.BadRequest;
                         break;
@@ -64,16 +63,15 @@ namespace ChurchManager.Api.Middlewares
 
                 _logger.LogError(error, "Application Error");
 
-                var bugsnagOptions = context.RequestServices.GetRequiredService<IOptions<BugsnagOptions>>().Value;
-                if (bugsnagOptions.Enabled)
+                if (options.Value.Enabled)
                 {
-                    _bugsnag = context.RequestServices.GetRequiredService<IClient>();
+                    var bugsnagClient = context.RequestServices.GetRequiredService<IClient>();
                     var currentUser = context.RequestServices.GetService<ICognitoCurrentUser>();
 
                     if (currentUser is not null)
                     {
                         var person = await currentUser.CurrentPerson.Value;
-                        _bugsnag.BeforeNotify(report =>
+                        bugsnagClient.BeforeNotify(report =>
                         {
                             report.Event.User = new Bugsnag.Payload.User
                             {
@@ -84,7 +82,7 @@ namespace ChurchManager.Api.Middlewares
                         });
                     }
 
-                    _bugsnag.Notify(error);
+                    bugsnagClient.Notify(error);
                 }
 
                 var result = JsonSerializer.Serialize(responseModel);
