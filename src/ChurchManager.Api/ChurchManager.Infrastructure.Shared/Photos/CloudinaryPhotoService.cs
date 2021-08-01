@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using ChurchManager.Domain.Features.People.Services;
@@ -30,6 +31,7 @@ namespace ChurchManager.Infrastructure.Shared.Photos
                 var uploadParams = new ImageUploadParams
                 {
                     File = new FileDescription($"{fileName}", stream),
+                    Folder = fileName.Split("-").LastOrDefault(), // gets the environment as the folder
                     Transformation = new Transformation().Height(500).Width(500).Crop("fill").Gravity("face")
                 };
                 result = await _cloudinary.UploadAsync(uploadParams, ct);
