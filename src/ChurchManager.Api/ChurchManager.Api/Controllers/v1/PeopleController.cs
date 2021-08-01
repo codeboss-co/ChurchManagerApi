@@ -82,8 +82,9 @@ namespace ChurchManager.Api.Controllers.v1
 
         // v1/people/edit/{personId}/photo/
         [HttpPost("edit/{personId}/photo")]
-        public async Task<IActionResult> EditPhoto(int personId, [FromBody] EditPhotoCommand command, CancellationToken token)
+        public async Task<IActionResult> EditPhoto(int personId, [FromForm(Name = "file")] IFormFile file, CancellationToken token)
         {
+            var command = new EditPhotoCommand();
             command.PersonId = personId;
             await Mediator.Send(command, token);
             return Accepted();
