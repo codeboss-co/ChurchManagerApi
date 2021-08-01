@@ -20,7 +20,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="AWSSDK.S3" Version="3.7.1.19" />
     <PackageReference Include="Bugsnag.AspNet.Core" Version="2.2.1" />
     <PackageReference Include="Amazon.Extensions.Configuration.SystemsManager" Version="2.1.1" />
     <PackageReference Include="Convey.Logging" Version="0.5.433" />

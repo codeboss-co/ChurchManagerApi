@@ -1,31 +1,43 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using Amazon.S3;
+using ChurchManager.Domain.Features.People.Repositories;
+using ChurchManager.Domain.Features.People.Services;
 using MediatR;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 
 namespace ChurchManager.Application.Features.People.Commands.EditPhoto
 {
-    public record EditPhotoCommand: IRequest
-    {
-        public int PersonId { get; set; }
-        public string Base64FileString { get; set; }
-    }
+    public record EditPhotoCommand(int PersonId, IFormFile File) : IRequest;
 
     public class EditPhotoHandler : IRequestHandler<EditPhotoCommand>
     {
-        private readonly IAmazonS3 _amazonS3;
+        private readonly IPhotoService _photos;
+        private readonly IPersonDbRepository _dbRepository;
+        private readonly string _environment;
 
-        public EditPhotoHandler(IAmazonS3 amazonS3)
+        public EditPhotoHandler(
+            IPhotoService photos, 
+            IPersonDbRepository dbRepository,
+            IWebHostEnvironment host)
         {
-            _amazonS3 = amazonS3;
+            _photos = photos;
+            _dbRepository = dbRepository;
+            _environment = host.EnvironmentName;
         }
 
-        public Task<Unit> Handle(EditPhotoCommand command, CancellationToken ct)
+        public async Task<Unit> Handle(EditPhotoCommand command, CancellationToken ct)
         {
-            throw new System.NotImplementedException();
-        }
+            var person = await _dbRepository.GetByIdAsync(command.PersonId, ct);
 
+            if (person is not null)
+            {
+                var fileName = $"{person.Id}-{person.FullName.FirstName}-{person.FullName.LastName}-{_environment}";
+
+                var photoUrl = await _photos.AddPhotoAsync(fileName, command.File, ct);
+            }
+
+            return Unit.Value;
+        }
     }
-
-
 }
