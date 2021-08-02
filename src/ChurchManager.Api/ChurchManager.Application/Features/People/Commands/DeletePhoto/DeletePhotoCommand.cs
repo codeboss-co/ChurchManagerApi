@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using ChurchManager.Application.Extensions;
 using ChurchManager.Domain.Features.People.Repositories;
@@ -30,7 +31,7 @@ namespace ChurchManager.Application.Features.People.Commands.DeletePhoto
             if (person is not null)
             {
                 // Delete current photo
-                if (!person.PhotoUrl.IsNullOrEmpty() && person.PhotoUrl.Contains("cloudinary"))
+                if(!person.PhotoUrl.IsNullOrEmpty() && person.PhotoUrl.Contains("cloudinary", StringComparison.InvariantCultureIgnoreCase))
                 {
                     var publicId = person.CloudinaryPublicId();
                     await _photos.DeletePhotoAsync(publicId);
