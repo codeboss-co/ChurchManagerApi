@@ -87,7 +87,7 @@ namespace ChurchManager.Api.Controllers
 
         [HttpGet("ex")]
         [Authorize]
-        public async Task<IActionResult> Exception()
+        public Task<IActionResult> Exception()
         {
             throw new ApiException("Custom exception thrown");
         }

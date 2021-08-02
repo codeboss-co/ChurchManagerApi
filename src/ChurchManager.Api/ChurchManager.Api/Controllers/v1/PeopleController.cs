@@ -3,11 +3,14 @@ using System.Threading.Tasks;
 using ChurchManager.Application.Common;
 using ChurchManager.Application.Features.People.Commands.AddNewFamily;
 using ChurchManager.Application.Features.People.Commands.DeletePerson;
+using ChurchManager.Application.Features.People.Commands.DeletePhoto;
+using ChurchManager.Application.Features.People.Commands.EditPhoto;
 using ChurchManager.Application.Features.People.Commands.UpdatePerson;
 using ChurchManager.Application.Features.People.Queries.BrowsePeople;
 using ChurchManager.Application.Features.People.Queries.FindDuplicates;
 using ChurchManager.Application.Features.People.Queries.PeopleAutocomplete;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -74,6 +77,24 @@ namespace ChurchManager.Api.Controllers.v1
         public async Task<IActionResult> EditDiscipleshipInfo(int personId, [FromBody] UpdateDiscipleshipInfoCommand command, CancellationToken token)
         {
             command.PersonId = personId;
+            await Mediator.Send(command, token);
+            return Accepted();
+        }
+
+        // v1/people/edit/{personId}/photo/
+        [HttpPost("edit/{personId}/photo")]
+        public async Task<IActionResult> EditPhoto(int personId, [FromForm(Name = "file")] IFormFile file, CancellationToken token)
+        {
+            var command = new EditPhotoCommand(personId, file);
+            await Mediator.Send(command, token);
+            return Accepted();
+        }
+
+        // v1/people/edit/{personId}/photo/
+        [HttpDelete("edit/{personId}/photo")]
+        public async Task<IActionResult> DeletePhoto(int personId, CancellationToken token)
+        {
+            var command = new DeletePhotoCommand(personId);
             await Mediator.Send(command, token);
             return Accepted();
         }
