@@ -1,12 +1,10 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using ChurchManager.Application.Extensions;
 using ChurchManager.Domain.Features.People.Repositories;
 using ChurchManager.Domain.Features.People.Services;
 using CodeBoss.Extensions;
 using MediatR;
-using Microsoft.AspNetCore.Hosting;
 
 namespace ChurchManager.Application.Features.People.Commands.DeletePhoto
 {
@@ -16,16 +14,13 @@ namespace ChurchManager.Application.Features.People.Commands.DeletePhoto
     {
         private readonly IPhotoService _photos;
         private readonly IPersonDbRepository _dbRepository;
-        private readonly string _environment;
 
         public DeletePhotoHandler(
             IPhotoService photos,
-            IPersonDbRepository dbRepository,
-            IWebHostEnvironment host)
+            IPersonDbRepository dbRepository)
         {
             _photos = photos;
             _dbRepository = dbRepository;
-            _environment = host.EnvironmentName;
         }
 
         public async Task<Unit> Handle(DeletePhotoCommand command, CancellationToken ct)
