@@ -1,5 +1,7 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
+using ChurchManager.Application.Extensions;
 using ChurchManager.Domain.Features.People.Repositories;
 using ChurchManager.Domain.Features.People.Services;
 using CodeBoss.Extensions;
@@ -36,15 +38,9 @@ namespace ChurchManager.Application.Features.People.Commands.EditPhoto
                 var fileName = $"{person.Id}-{person.FullName.FirstName}-{person.FullName.LastName}-{_environment}";
 
                 // Delete current photo
-                if(!person.PhotoUrl.IsNullOrEmpty() && person.PhotoUrl.Contains("cloudinary"))
+                if(!person.PhotoUrl.IsNullOrEmpty() && person.PhotoUrl.Contains("cloudinary", StringComparison.InvariantCultureIgnoreCase))
                 {
-                    // https://res.cloudinary.com/codebossza/image/upload/v1627875380/Development/lnaughtycscssronmncu.png
-                    var parsed = person.PhotoUrl.Substring(8); // remove https://
-                    parsed = parsed.Remove(parsed.Length - 4); // remove file extension e.g. .png
-                    var split = parsed.Split("/");
-                    var splitLength = split.Length;
-                    var publicId = $"{split[splitLength - 2]}/{split[splitLength-1]}";
-
+                    var publicId = person.CloudinaryPublicId();
                     await _photos.DeletePhotoAsync(publicId);
                 }
 

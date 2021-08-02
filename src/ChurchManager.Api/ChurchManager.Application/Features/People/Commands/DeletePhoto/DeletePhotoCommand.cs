@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using ChurchManager.Application.Extensions;
 using ChurchManager.Domain.Features.People.Repositories;
 using ChurchManager.Domain.Features.People.Services;
 using CodeBoss.Extensions;
 using MediatR;
-using Microsoft.AspNetCore.Hosting;
 
 namespace ChurchManager.Application.Features.People.Commands.DeletePhoto
 {
@@ -15,16 +15,13 @@ namespace ChurchManager.Application.Features.People.Commands.DeletePhoto
     {
         private readonly IPhotoService _photos;
         private readonly IPersonDbRepository _dbRepository;
-        private readonly string _environment;
 
         public DeletePhotoHandler(
             IPhotoService photos,
-            IPersonDbRepository dbRepository,
-            IWebHostEnvironment host)
+            IPersonDbRepository dbRepository)
         {
             _photos = photos;
             _dbRepository = dbRepository;
-            _environment = host.EnvironmentName;
         }
 
         public async Task<Unit> Handle(DeletePhotoCommand command, CancellationToken ct)
@@ -34,16 +31,9 @@ namespace ChurchManager.Application.Features.People.Commands.DeletePhoto
             if (person is not null)
             {
                 // Delete current photo
-                if (!person.PhotoUrl.IsNullOrEmpty() && person.PhotoUrl.Contains("cloudinary"))
+                if(!person.PhotoUrl.IsNullOrEmpty() && person.PhotoUrl.Contains("cloudinary", StringComparison.InvariantCultureIgnoreCase))
                 {
-                    // TODO: Same logic in EditPhotoCommand
-                    // https://res.cloudinary.com/codebossza/image/upload/v1627875380/Development/lnaughtycscssronmncu.png
-                    var parsed = person.PhotoUrl.Substring(8); // remove https://
-                    parsed = parsed.Remove(parsed.Length - 4); // remove file extension e.g. .png
-                    var split = parsed.Split("/");
-                    var splitLength = split.Length;
-                    var publicId = $"{split[splitLength - 2]}/{split[splitLength - 1]}";
-
+                    var publicId = person.CloudinaryPublicId();
                     await _photos.DeletePhotoAsync(publicId);
                 }
 
