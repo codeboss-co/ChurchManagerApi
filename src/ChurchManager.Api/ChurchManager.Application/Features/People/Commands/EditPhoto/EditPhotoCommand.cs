@@ -34,7 +34,11 @@ namespace ChurchManager.Application.Features.People.Commands.EditPhoto
             {
                 var fileName = $"{person.Id}-{person.FullName.FirstName}-{person.FullName.LastName}-{_environment}";
 
-                var photoUrl = await _photos.AddPhotoAsync(fileName, command.File, ct);
+                var operationResult = await _photos.AddPhotoAsync(fileName, command.File, ct);
+
+                person.PhotoUrl = operationResult.Result;
+
+                await _dbRepository.SaveChangesAsync(ct);
             }
 
             return Unit.Value;
