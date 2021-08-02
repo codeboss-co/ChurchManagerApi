@@ -51,6 +51,7 @@ namespace ChurchManager.Application.Features.People.Commands.EditPhoto
 
                 var operationResult = await _photos.AddPhotoAsync(fileName, command.File, ct);
 
+                // The new image URL
                 person.PhotoUrl = operationResult.Result;
 
                 await _dbRepository.SaveChangesAsync(ct);
