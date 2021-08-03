@@ -54,6 +54,11 @@ namespace ChurchManager.Application.Features.Groups.Services
                     var spec = new GroupWithTypeSpecification(command.GroupId);
                     var group = await _groupDb.GetBySpecAsync(spec, ct);
 
+                    if (group is null)
+                    {
+                        throw new ArgumentNullException(nameof(group), $"Cannot find group with id: {command.GroupId} - to add group attendance record");
+                    }
+
                     var members = command.Members
                         .Select(x => new GroupMemberAttendance
                             {
@@ -74,6 +79,7 @@ namespace ChurchManager.Application.Features.Groups.Services
                                 {
                                     GroupId = command.GroupId,
                                     GroupRole = groupMemberRoles.First(x => !x.IsLeader),
+                                    RecordStatus = RecordStatus.Pending,
                                     Person = new Person
                                     {
                                         FullName = new FullName {FirstName = x.FirstName, LastName = x.LastName},
@@ -82,8 +88,7 @@ namespace ChurchManager.Application.Features.Groups.Services
                                         FirstVisitDate = command.AttendanceDate,
                                         ConnectionStatus = ConnectionStatus.FirstTimer,
                                         RecordStatus = RecordStatus.Pending,
-                                        PhoneNumbers = new List<PhoneNumber>
-                                            {new() {CountryCode = "+27", Number = x.PhoneNumber}},
+                                        PhoneNumbers = new List<PhoneNumber> {new() {CountryCode = "+27", Number = x.PhoneNumber}},
                                         Source = $"{group.GroupType.Name}",
                                         ChurchId = group.ChurchId
                                     }
@@ -92,7 +97,8 @@ namespace ChurchManager.Application.Features.Groups.Services
                                 DidAttend = true,
                                 IsFirstTime = true,
                                 IsNewConvert = x.NewConvert,
-                                ReceivedHolySpirit = x.ReceivedHolySpirit
+                                ReceivedHolySpirit = x.ReceivedHolySpirit,
+                                Note = x.Note
                             }
                         ).ToList();
                     // Attendees = Members + First Timers
@@ -108,8 +114,8 @@ namespace ChurchManager.Application.Features.Groups.Services
                         FirstTimerCount = command.FirstTimers.Count(),
                         NewConvertCount =
                             attendees.Where(x => x.IsNewConvert.HasValue).Count(x => x.IsNewConvert.Value),
-                        ReceivedHolySpiritCount = attendees.Where(x => x.ReceivedHolySpirit.HasValue)
-                            .Count(x => x.ReceivedHolySpirit.Value),
+                        ReceivedHolySpiritCount = 
+                            attendees.Where(x => x.ReceivedHolySpirit.HasValue).Count(x => x.ReceivedHolySpirit.Value),
                         Attendees = attendees,
                         Notes = command.Notes
                     };
