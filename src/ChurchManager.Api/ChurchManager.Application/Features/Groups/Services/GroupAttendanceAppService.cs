@@ -78,12 +78,14 @@ namespace ChurchManager.Application.Features.Groups.Services
                                     {
                                         FullName = new FullName {FirstName = x.FirstName, LastName = x.LastName},
                                         Gender = x.Gender,
+                                        AgeClassification = x.AgeClassification,
                                         FirstVisitDate = command.AttendanceDate,
                                         ConnectionStatus = ConnectionStatus.FirstTimer,
                                         RecordStatus = RecordStatus.Pending,
                                         PhoneNumbers = new List<PhoneNumber>
                                             {new() {CountryCode = "+27", Number = x.PhoneNumber}},
-                                        Source = $"{group.GroupType.Name}"
+                                        Source = $"{group.GroupType.Name}",
+                                        ChurchId = group.ChurchId
                                     }
                                 },
                                 AttendanceDate = command.AttendanceDate,
