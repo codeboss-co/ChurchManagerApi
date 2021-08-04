@@ -7,6 +7,7 @@ using ChurchManager.Application.Wrappers;
 using ChurchManager.Domain.Features.Groups;
 using ChurchManager.Domain.Features.Groups.Repositories;
 using ChurchManager.Domain.Shared;
+using Codeboss.Types;
 using Ical.Net;
 using Ical.Net.CalendarComponents;
 using Ical.Net.DataTypes;
@@ -38,21 +39,28 @@ namespace ChurchManager.Application.Features.Groups.Commands.NewGroup
     public class NewGroupHandler : IRequestHandler<AddGroupCommand, ApiResponse>
     {
         private readonly IGroupDbRepository _dbRepository;
+        private readonly IDateTimeProvider _dateTime;
 
-        public NewGroupHandler(IGroupDbRepository dbRepository)
+        public NewGroupHandler(IGroupDbRepository dbRepository, IDateTimeProvider dateTime)
         {
             _dbRepository = dbRepository;
+            _dateTime = dateTime;
         }
 
         public async Task<ApiResponse> Handle(AddGroupCommand command, CancellationToken ct)
         {
+            var weeklyTimeOfDay = _dateTime.ConvertFromUtc(command.MeetingTime).TimeOfDay;
+
             //Repeat daily for 5 days
             var rrule = new RecurrencePattern(command.Recurrence);
             var days = rrule.ByDay;
 
             var e = new CalendarEvent
             {
-                Start = command.Start.HasValue ? new CalDateTime(command.Start.Value) : CalDateTime.Today,
+                Start = command.Start.HasValue
+                    ? new CalDateTime(command.Start.Value.Year, command.Start.Value.Month, command.Start.Value.Day,
+                        weeklyTimeOfDay.Hours, weeklyTimeOfDay.Minutes, weeklyTimeOfDay.Seconds)
+                    : CalDateTime.Today,
                 End = command.End.HasValue ? new CalDateTime(command.End.Value) : CalDateTime.Today.AddYears(5),
                 RecurrenceRules = new List<RecurrencePattern> {rrule}
             };
@@ -83,7 +91,7 @@ namespace ChurchManager.Application.Features.Groups.Commands.NewGroup
                     EndDate = command.End,
                     Name = $"{command.Name} Schedule",
                     iCalendarContent = serializedCalendar,
-                    WeeklyTimeOfDay = command.MeetingTime.TimeOfDay,
+                    WeeklyTimeOfDay = weeklyTimeOfDay,
                     WeeklyDayOfWeek = days.FirstOrDefault()?.DayOfWeek
                 }
             };
