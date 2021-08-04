@@ -37,8 +37,4 @@
     <ProjectReference Include="..\ChurchManager.Infrastructure.Shared\ChurchManager.Infrastructure.Shared.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Migrations\" />
-  </ItemGroup>
-
 </Project>

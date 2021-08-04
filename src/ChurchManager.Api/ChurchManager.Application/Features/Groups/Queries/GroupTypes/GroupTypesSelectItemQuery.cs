@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using ChurchManager.Application.Wrappers;
@@ -35,7 +36,7 @@ namespace ChurchManager.Application.Features.Groups.Queries.GroupTypes
                     .ProjectTo<SelectItemViewModel>(_dbRepository.Queryable())
                     .ToListAsync(ct);
 
-                return new ApiResponse(all);
+                return new ApiResponse(all.OrderBy(x => x.Name));
             }
 
             // Single

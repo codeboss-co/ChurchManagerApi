@@ -233,6 +233,9 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                     b.Property<int>("PersonId")
                         .HasColumnType("integer");
 
+                    b.Property<string>("UniqueIdentification")
+                        .HasColumnType("text");
+
                     b.HasKey("Id");
 
                     b.HasIndex("PersonId");
