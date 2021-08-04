@@ -233,6 +233,9 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                     b.Property<int>("PersonId")
                         .HasColumnType("integer");
 
+                    b.Property<string>("UniqueIdentification")
+                        .HasColumnType("text");
+
                     b.HasKey("Id");
 
                     b.HasIndex("PersonId");
@@ -1122,6 +1125,28 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.OwnsOne("ChurchManager.Domain.Common.Money", "Offering", b1 =>
+                        {
+                            b1.Property<int>("GroupAttendanceId")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("integer")
+                                .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                            b1.Property<decimal>("Amount")
+                                .HasColumnType("numeric");
+
+                            b1.Property<string>("Currency")
+                                .HasMaxLength(5)
+                                .HasColumnType("character varying(5)");
+
+                            b1.HasKey("GroupAttendanceId");
+
+                            b1.ToTable("GroupAttendance");
+
+                            b1.WithOwner()
+                                .HasForeignKey("GroupAttendanceId");
+                        });
+
                     b.OwnsOne("ChurchManager.Domain.Features.Groups.AttendanceReview", "AttendanceReview", b1 =>
                         {
                             b1.Property<int>("GroupAttendanceId")
@@ -1151,6 +1176,8 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                     b.Navigation("AttendanceReview");
 
                     b.Navigation("Group");
+
+                    b.Navigation("Offering");
                 });
 
             modelBuilder.Entity("ChurchManager.Domain.Features.Groups.GroupMember", b =>

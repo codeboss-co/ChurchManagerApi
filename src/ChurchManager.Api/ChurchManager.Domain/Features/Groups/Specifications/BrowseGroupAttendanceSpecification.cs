@@ -74,7 +74,8 @@ namespace ChurchManager.Domain.Features.Groups.Specifications
                 NewConvertCount = x.NewConvertCount,
                 ReceivedHolySpiritCount = x.ReceivedHolySpiritCount,
                 Notes = x.Notes,
-                PhotoUrls = x.PhotoUrls
+                PhotoUrls = x.PhotoUrls,
+                Offering = x.Offering != null ? new MoneyViewModel{Currency = x.Offering.Currency, Amount = x.Offering.Amount} : null
             });
         }  
     }
