@@ -10,6 +10,7 @@ namespace ChurchManager.Domain.Features.Communication
         public string Endpoint { get; set; }
         public string P256DH { get; set; }
         public string Auth { get; set; }
+        public string UniqueIdentification { get; set; }
 
         public int PersonId { get; set; }
 

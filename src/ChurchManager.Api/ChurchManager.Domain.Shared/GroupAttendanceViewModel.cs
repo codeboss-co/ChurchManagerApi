@@ -16,6 +16,7 @@ namespace ChurchManager.Domain.Shared
         public int? ReceivedHolySpiritCount { get; set; }
         public string Notes { get; set; }
         public IEnumerable<string> PhotoUrls { get; set; }
+        public MoneyViewModel Offering { get; set; }
     }
 
     public record GroupMemberAttendanceViewModel
@@ -27,5 +28,11 @@ namespace ChurchManager.Domain.Shared
         public bool? ReceivedHolySpirit { get; set; }
         public string Note { get; set; }
         public virtual GroupMemberViewModel GroupMember { get; set; }
+    }
+
+    public record MoneyViewModel
+    {
+        public string Currency { get; set; }
+        public decimal Amount { get; set; }
     }
 }

@@ -21,7 +21,7 @@ namespace ChurchManager.Infrastructure.Persistence.Repositories
             throw new NotImplementedException();
         }
 
-        public async Task SubscribeAsync(PushSubscription subscription, string deviceType, int personId, CancellationToken ct = default)
+        public async Task SubscribeAsync(PushSubscription subscription, string deviceType, string uniqueIdentification, int personId, CancellationToken ct = default)
         {
             _ = subscription ?? throw new ArgumentNullException(nameof(subscription));
 
@@ -34,7 +34,8 @@ namespace ChurchManager.Infrastructure.Persistence.Repositories
                     PersonId = personId,
                     Endpoint = subscription.Endpoint,
                     P256DH = subscription.GetKey(PushEncryptionKeyName.P256DH),
-                    Auth = subscription.GetKey(PushEncryptionKeyName.Auth)
+                    Auth = subscription.GetKey(PushEncryptionKeyName.Auth),
+                    UniqueIdentification = uniqueIdentification
                 };
 
                 await AddAsync(device, ct);
@@ -49,6 +50,19 @@ namespace ChurchManager.Infrastructure.Persistence.Repositories
             if (await Queryable().AnyAsync(s => s.P256DH == p256dh, ct))
             {
                 var device = Queryable().First(x => x.Endpoint == subscription.Endpoint);
+                await DeleteAsync(device, ct);
+            }
+        }
+
+        public async Task UnsubscribeAsync(string deviceType, string uniqueIdentification, int personId, CancellationToken ct = default)
+        {
+            var device = Queryable().FirstOrDefault(s => 
+                s.Name == deviceType &&
+                s.UniqueIdentification == uniqueIdentification &&
+                s.PersonId == personId);
+
+            if(device is not null)
+            {
                 await DeleteAsync(device, ct);
             }
         }
