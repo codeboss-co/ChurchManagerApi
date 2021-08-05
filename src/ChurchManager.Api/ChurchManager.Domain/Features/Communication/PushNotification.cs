@@ -27,9 +27,21 @@ namespace ChurchManager.Domain.Features.Communication
         public string Lang { get; set; } = "en";
         public string Body { get; set; }
         public string Tag { get; set; }
+        /// <summary>
+        /// Displaying a large image below the notification's title and message.
+        /// Common sizes: 512x256px or 1440x720px
+        /// </summary>
         public string Image { get; set; }
-        public string Icon { get; set; }
-        public string Badge { get; set; }
+        /// <summary>
+        /// Displays to the side of the notification's title and message. Usually the logo:
+        /// Recommended: 256x256 or larger
+        /// </summary>
+        public string Icon { get; set; } = "assets/images/logo/icon.png";
+        /// <summary>
+        ///  Replaces the Chrome browser icon that appears on the notification tray and above the title
+        /// 72x72 or larger
+        /// </summary>
+        public string Badge { get; set; } = "assets/images/logo/badge.png";
         public DateTime Timestamp { get; set; } = DateTime.UtcNow;
         public bool RequireInteraction { get; set; } = true;
         public IDictionary<string, object> Data { get; set; }
