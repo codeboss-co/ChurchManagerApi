@@ -19,7 +19,7 @@ namespace ChurchManager.Application.Features.Groups.Commands.GroupAttendanceReco
         public IEnumerable<GroupMemberAttendance> Members { get; set; }
         public IEnumerable<FirstTimerAttendance> FirstTimers { get; set; }
         public string Notes { get; set; }
-        public MoneyViewModel Offering { get; set; }
+        public decimal? Offering { get; set; }
     }
 
     public class GroupAttendanceHandler : IRequestHandler<GroupAttendanceRecordCommand>

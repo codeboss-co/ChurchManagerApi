@@ -118,7 +118,7 @@ namespace ChurchManager.Application.Features.Groups.Services
                             attendees.Count(x => x.ReceivedHolySpirit.HasValue && x.ReceivedHolySpirit.Value),
                         Attendees = attendees,
                         Notes = command.Notes,
-                        Offering = command.Offering != null ? new Money(command.Offering.Currency, command.Offering.Amount) : null
+                        Offering = command.Offering != null ? new Money("ZAR", command.Offering.Value) : null
                     };
                 }
 
