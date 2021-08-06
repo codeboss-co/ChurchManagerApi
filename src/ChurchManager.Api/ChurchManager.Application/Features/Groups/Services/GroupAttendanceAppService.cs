@@ -39,13 +39,14 @@ namespace ChurchManager.Application.Features.Groups.Services
                 GroupAttendance groupAttendance;
 
                 // Group meeting did not occur
-                if (command.DidNotOccur.HasValue && command.DidNotOccur == true)
+                if (command.DidNotOccur is true)
                 {
                     groupAttendance = new GroupAttendance
                     {
                         GroupId = command.GroupId,
                         AttendanceDate = command.AttendanceDate,
-                        DidNotOccur = command.DidNotOccur
+                        DidNotOccur = command.DidNotOccur,
+                        Notes = command.Notes
                     };
                 }
                 else
@@ -109,20 +110,20 @@ namespace ChurchManager.Application.Features.Groups.Services
                         GroupId = command.GroupId,
                         AttendanceDate = command.AttendanceDate,
                         DidNotOccur = command.DidNotOccur,
-                        AttendanceCount = attendees.Where(x => x.DidAttend.HasValue).Count(x => x.DidAttend.Value) +
-                                          command.FirstTimers.Count(),
+                        AttendanceCount = attendees.Count(x => x.DidAttend.HasValue && x.DidAttend.Value) + command.FirstTimers.Count(),
                         FirstTimerCount = command.FirstTimers.Count(),
                         NewConvertCount =
-                            attendees.Where(x => x.IsNewConvert.HasValue).Count(x => x.IsNewConvert.Value),
+                            attendees.Count(x => x.IsNewConvert.HasValue && x.IsNewConvert.Value),
                         ReceivedHolySpiritCount = 
-                            attendees.Where(x => x.ReceivedHolySpirit.HasValue).Count(x => x.ReceivedHolySpirit.Value),
+                            attendees.Count(x => x.ReceivedHolySpirit.HasValue && x.ReceivedHolySpirit.Value),
                         Attendees = attendees,
-                        Notes = command.Notes
+                        Notes = command.Notes,
+                        Offering = command.Offering != null ? new Money("ZAR", command.Offering.Value) : null
                     };
                 }
 
-                await _attendanceDbRepository.AddAsync(groupAttendance);
-                await _attendanceDbRepository.SaveChangesAsync();
+                await _attendanceDbRepository.AddAsync(groupAttendance, ct);
+                await _attendanceDbRepository.SaveChangesAsync(ct);
                 await transaction.CommitAsync(ct);
             }
             catch (Exception)

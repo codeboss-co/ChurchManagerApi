@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using ChurchManager.Domain.Common;
 using ChurchManager.Persistence.Shared;
 using Codeboss.Types;
 using Microsoft.EntityFrameworkCore;
@@ -26,6 +27,11 @@ namespace ChurchManager.Domain.Features.Groups
         public int? ReceivedHolySpiritCount { get; set; }
         [MaxLength(200)]
         public string Notes { get; set; }
+
+        /// <summary>
+        /// Gets or sets the <see cref="Money"/> or offering for this attendance record
+        /// </summary>
+        public Money Offering { get; set; }
 
         /// <summary>
         /// Gets or sets the Id of the photos attached for this attendance
