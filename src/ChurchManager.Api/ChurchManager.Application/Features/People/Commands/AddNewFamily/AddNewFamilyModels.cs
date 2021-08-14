@@ -1,4 +1,5 @@
 ﻿using System;
+using ChurchManager.Domain.Shared;
 
 namespace ChurchManager.Application.Features.People.Commands.AddNewFamily
 {
@@ -30,6 +31,7 @@ namespace ChurchManager.Application.Features.People.Commands.AddNewFamily
         public string Source { get; set; }
         public DateTime? FirstVisitDate { get; set; }
         public PersonBasicDetails Person { get; set; }
+        public AutocompleteResult AssignedFollowUpPerson { get; set; }
     }
 
     public record Address

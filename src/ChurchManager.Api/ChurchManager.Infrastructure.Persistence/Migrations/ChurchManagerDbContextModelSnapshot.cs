@@ -784,6 +784,64 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                     b.ToTable("Family");
                 });
 
+            modelBuilder.Entity("ChurchManager.Domain.Features.People.FollowUp", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<DateTime?>("ActionDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<DateTime>("AssignedDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int>("AssignedPersonId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<DateTime?>("InactiveDateTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("Note")
+                        .HasColumnType("text");
+
+                    b.Property<int>("PersonId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("RecordStatus")
+                        .HasColumnType("text");
+
+                    b.Property<bool?>("RequiresAdditionalFollowUp")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Severity")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Type")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AssignedPersonId");
+
+                    b.HasIndex("PersonId");
+
+                    b.ToTable("FollowUp");
+                });
+
             modelBuilder.Entity("ChurchManager.Domain.Features.People.Notes.Note", b =>
                 {
                     b.Property<int>("Id")
@@ -1295,6 +1353,25 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                         });
 
                     b.Navigation("Address");
+                });
+
+            modelBuilder.Entity("ChurchManager.Domain.Features.People.FollowUp", b =>
+                {
+                    b.HasOne("ChurchManager.Domain.Features.People.Person", "AssignedPerson")
+                        .WithMany()
+                        .HasForeignKey("AssignedPersonId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ChurchManager.Domain.Features.People.Person", "Person")
+                        .WithMany()
+                        .HasForeignKey("PersonId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AssignedPerson");
+
+                    b.Navigation("Person");
                 });
 
             modelBuilder.Entity("ChurchManager.Domain.Features.People.Notes.Note", b =>

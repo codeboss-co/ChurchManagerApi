@@ -1,5 +1,4 @@
-﻿using ChurchManager.Domain.Common;
-using ChurchManager.Domain.Features.Communication;
+﻿using ChurchManager.Domain.Features.Communication;
 using ChurchManager.Domain.Features.People;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,6 +10,7 @@ namespace ChurchManager.Infrastructure.Persistence.Contexts
         public DbSet<Person> Person { get; set; }
         public DbSet<OnlineUser> OnlineUser { get; set; }
         public DbSet<PushDevice> PushDevice { get; set; }
+        public DbSet<FollowUp> FollowUp { get; set; }
 
     }
 }
