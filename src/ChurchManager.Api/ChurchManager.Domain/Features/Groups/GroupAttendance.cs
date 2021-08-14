@@ -25,7 +25,6 @@ namespace ChurchManager.Domain.Features.Groups
         public int? FirstTimerCount { get; set; }
         public int? NewConvertCount { get; set; }
         public int? ReceivedHolySpiritCount { get; set; }
-        [MaxLength(200)]
         public string Notes { get; set; }
 
         /// <summary>
@@ -92,7 +91,6 @@ namespace ChurchManager.Domain.Features.Groups
     public record AttendanceReview
     {
         public bool? IsReviewed { get; set; }
-        [MaxLength(200)]
         public string Feedback { get; set; }
         [MaxLength(50)]
         public string ReviewedBy { get; set; }

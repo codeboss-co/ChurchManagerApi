@@ -144,8 +144,7 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                         .HasColumnType("integer");
 
                     b.Property<string>("Notes")
-                        .HasMaxLength(200)
-                        .HasColumnType("character varying(200)");
+                        .HasColumnType("text");
 
                     b.Property<int?>("ReceivedHolySpiritCount")
                         .HasColumnType("integer");
@@ -502,8 +501,7 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                         .HasColumnType("integer");
 
                     b.Property<string>("Notes")
-                        .HasMaxLength(200)
-                        .HasColumnType("character varying(200)");
+                        .HasColumnType("text");
 
                     b.Property<List<string>>("PhotoUrls")
                         .HasColumnType("text[]");
@@ -1155,8 +1153,7 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                             b1.Property<string>("Feedback")
-                                .HasMaxLength(200)
-                                .HasColumnType("character varying(200)");
+                                .HasColumnType("text");
 
                             b1.Property<bool?>("IsReviewed")
                                 .HasColumnType("boolean");
