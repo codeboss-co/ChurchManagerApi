@@ -26,8 +26,6 @@ namespace ChurchManager.Domain.Features.Churches
         public int? FirstTimerCount { get; set; }
         public int? NewConvertCount { get; set; }
         public int? ReceivedHolySpiritCount { get; set; }
-
-        [MaxLength(200)]
         public string Notes { get; set; }
 
         #region Navigation
