@@ -1,6 +1,8 @@
 ﻿using ChurchManager.Infrastructure.Abstractions;
+using ChurchManager.Infrastructure.Abstractions.Communication;
 using ChurchManager.Infrastructure.Abstractions.Security;
 using ChurchManager.Infrastructure.Shared.DomainEvents;
+using ChurchManager.Infrastructure.Shared.Templating;
 using CodeBoss.AspNetCore.DependencyInjection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -20,6 +22,7 @@ namespace ChurchManager.Infrastructure.Shared
 
             services.AddScoped<IDomainEventPublisher, MassTransitDomainEventPublisher>();
 
+            services.AddSingleton<ITemplateParser, DotLiquidTemplateParser>();
         }
     }
 }

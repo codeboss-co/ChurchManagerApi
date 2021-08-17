@@ -1,10 +1,12 @@
-﻿using DotLiquid;
+﻿using ChurchManager.Infrastructure.Abstractions.Communication;
+using DotLiquid;
 using DotLiquid.NamingConventions;
 
 
 namespace ChurchManager.Infrastructure.Shared.Templating
 {
-    public class DotLiquidTemplateParser
+    // https://github.com/JonJam/templates_dotliquid/blob/master/TemplatesWithDotLiquid/Program.cs
+    public class DotLiquidTemplateParser : ITemplateParser
     {
         public DotLiquidTemplateParser()
         {
@@ -16,9 +18,8 @@ namespace ChurchManager.Infrastructure.Shared.Templating
         }
 
         /// <summary>
-        /// 
+        /// Render template
         /// </summary>
-        /// <param name="template">"Hello @Model.Name, welcome to RazorEngine!"</param>
         /// <param name="model">new { Model = data }</param>
         /// <returns></returns>
         public string Render(string liquidTemplateContent, object model)
@@ -29,11 +30,6 @@ namespace ChurchManager.Infrastructure.Shared.Templating
             Hash hash = Hash.FromAnonymousObject(model);
 
             return template.Render(hash);
-        }
-
-        public string Render<TModel>(string template, TModel model)
-        {
-            return null;
         }
     }
 }
