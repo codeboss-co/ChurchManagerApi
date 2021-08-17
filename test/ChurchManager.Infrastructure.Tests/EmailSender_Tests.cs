@@ -11,7 +11,9 @@ namespace ChurchManager.Infrastructure.Tests
         {
             var sender = new AwsSesEmailSender("AKIA6HLAUN2QAA2ZQ5W3", "PMd1zeIjRc2Nja0qwa+RzU3y5/xdqolEDODGQoqX");
 
-            await sender.SendEmailAsync("dillancagnetta@yahoo.com", "EmailSender Tests", "Hello there");
+            var operationResult = await sender.SendEmailAsync("dillancagnetta@yahoo.com", "EmailSender Tests", "Hello there");
+
+            Assert.True(operationResult.IsSuccess);
         }
     }
 }
