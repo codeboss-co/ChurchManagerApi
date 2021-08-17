@@ -21,7 +21,7 @@ namespace ChurchManager.Application.Features.People.Commands.AddNewFamily
         public string PhoneNumber { get; set; }
         public string Occupation { get; set; }
         public BirthDate BirthDate { get; set; }
-        public bool ReceivedHolySpirit { get; set; }
+        public bool? ReceivedHolySpirit { get; set; }
     }
 
     public record FamilyMember

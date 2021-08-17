@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\ChurchManager.Api\ChurchManager.Domain\ChurchManager.Domain.csproj" />
+    <ProjectReference Include="..\..\src\ChurchManager.Api\ChurchManager.Infrastructure.Shared\ChurchManager.Infrastructure.Shared.csproj" />
   </ItemGroup>
 
 </Project>
