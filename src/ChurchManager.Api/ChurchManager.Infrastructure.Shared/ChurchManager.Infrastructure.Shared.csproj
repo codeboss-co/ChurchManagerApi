@@ -22,4 +22,10 @@
     <ProjectReference Include="..\ChurchManager.Domain\ChurchManager.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Email\Templates\FollowUpAssignment.liquid">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

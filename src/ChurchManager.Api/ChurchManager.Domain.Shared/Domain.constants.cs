@@ -1,4 +1,6 @@
-﻿namespace ChurchManager.Domain.Shared
+﻿using System.IO;
+
+namespace ChurchManager.Domain.Shared
 {
     public static class DomainConstants
     {
@@ -17,6 +19,19 @@
                 public const string Completed = "Completed";
             }
 
+        }
+
+        public static class Communication
+        {
+            public static class Email
+            {
+                public static string TemplatePath = Path.Combine("Email", "Templates");
+                public static string TemplateExtension = ".liquid";
+
+                public static string FollowUpTemplate = "FollowUpAssignment";
+
+                public static string Template(string name) => Path.Combine(TemplatePath, $"{name}{TemplateExtension}");
+            }
         }
     }
 }
