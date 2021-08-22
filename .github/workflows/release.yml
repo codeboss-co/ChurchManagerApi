@@ -1,0 +1,40 @@
+name: deploy
+concurrency: 'deploy'
+
+on:
+  pull_request:
+    branches:
+      - release
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+        - name: 🛒 Checkout
+          uses: actions/checkout@v2
+
+        - name: ⚙️ Set env to Test
+          if: endsWith(github.ref, '/develop')
+          run: |
+            echo "ENVIRONMENT=Test" >> $GITHUB_ENV
+
+        - name: ⚙️ Set env to Production
+          if: endsWith(github.ref, '/master')
+          run: |
+            echo "ENVIRONMENT=Test" >> $GITHUB_ENV          
+
+        - name: ⚙️ Setup .NET 5.x
+          uses: actions/setup-dotnet@v1
+          with:
+            # Semantic version range syntax or exact version of a dotnet version
+            dotnet-version: '5.x'
+
+        - name: 🛠️ Build
+          run: dotnet build
+
+        - name: 🎁 Publish
+          run: dotnet publish -c Release -o ./app/publish
