@@ -27,11 +27,11 @@ namespace ChurchManager.Api
                 })
                 .ConfigureAppConfiguration((context, config) =>
                 {
+                    var environmentName = context.HostingEnvironment.EnvironmentName;
+                    Console.WriteLine($"** Environment: [{environmentName}] **");
                     // We pull settings from AWS parameter store if not running locally
                     if(!context.HostingEnvironment.IsDevelopment())
                     {
-                        var environmentName = context.HostingEnvironment.EnvironmentName;
-
                         config
                             .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
                             .AddJsonFile($"appsettings.{environmentName}.json", true, true);
