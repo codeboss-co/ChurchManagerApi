@@ -51,7 +51,7 @@ namespace ChurchManager.Infrastructure.Persistence
             }
             catch(Exception e)
             {
-                Console.WriteLine($"Error occurred during migration: {e.Message}");
+                Console.WriteLine($"Error occurred during migration: {e.Message} --> {tenant.ConnectionString}");
                 throw;
             }
         }
