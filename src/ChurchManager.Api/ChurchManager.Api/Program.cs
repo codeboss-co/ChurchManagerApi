@@ -28,7 +28,7 @@ namespace ChurchManager.Api
                 .ConfigureAppConfiguration((context, config) =>
                 {
                     var environmentName = context.HostingEnvironment.EnvironmentName;
-                    Console.WriteLine($"** Environment: [{environmentName}] **");
+                    Console.WriteLine($"** Environment: [{environmentName}], ASPNETCORE_ENVIRONMENT: [{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")}] **");
                     // We pull settings from AWS parameter store if not running locally
                     if(!context.HostingEnvironment.IsDevelopment())
                     {
