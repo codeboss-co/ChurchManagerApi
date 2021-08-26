@@ -10,7 +10,6 @@ on:
 
   # Global environment variables
 env:
-    CONTAINER_NAME: churchmanager-api
     REPOSITORY: churchmanager-api
 
 jobs:
@@ -51,7 +50,7 @@ jobs:
             username: ${{ secrets.DOCKERHUB_USERNAME }}
             password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
-        - name: 🛠️ Build, tag, and push image to Amazon ECR
+        - name: 🛠️ Build, tag, and push image to Docker Hub
           id: build-image
           env:
             REGISTRY: godcode
@@ -66,7 +65,9 @@ jobs:
 
         - name:  ⏭ Deploy to Jelastic
           uses: fjogeleit/http-request-action@master
+          env:          
+            JELASTIC_ENVIRONMENT_NAME: ${{ env.REPOSITORY }}- ${{ env.ENVIRONMENT }}
           with:
-            url: https://app.paas.mamazala.com/1.0/environment/control/rest/redeploycontainers?envName=docker&session=2390be464b054389842b82aa0a9d4b8ab9914208&tag=${{ steps.build-image.outputs.tag }}&nodeGroup=cp
+            url: https://app.paas.mamazala.com/1.0/environment/control/rest/redeploycontainers?envName=$JELASTIC_ENVIRONMENT_NAME&session=2390be464b054389842b82aa0a9d4b8ab9914208&tag=${{ steps.build-image.outputs.tag }}&nodeGroup=cp
             method: 'POST'
-            timeout: 240000
+            timeout: 300000 #5mins
