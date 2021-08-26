@@ -1,5 +1,5 @@
-name: deploy
-concurrency: 'deploy'
+name: Deploy Test
+concurrency: 'Deploy Test'
 
 on:
   push:
@@ -8,9 +8,14 @@ on:
 
   workflow_dispatch:
 
+  # Global environment variables
+env:
+    CONTAINER_NAME: churchmanager-api
+    ECR_REPOSITORY: prod-churchmanager-api-ecr-repository
+
 jobs:
   build:
-    name: Deploy
+    name: Deploy to Jelastic
     runs-on: ubuntu-latest
 
     steps:
