@@ -74,5 +74,4 @@ jobs:
           with:
             url: https://app.paas.mamazala.com/1.0/environment/control/rest/redeploycontainers?envName=docker&session=2390be464b054389842b82aa0a9d4b8ab9914208&tag=${{ steps.build-image.outputs.tag }}&nodeGroup=cp
             method: 'POST'
-
-
+            timeout: 240000
