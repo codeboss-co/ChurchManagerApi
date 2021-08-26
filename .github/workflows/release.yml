@@ -27,14 +27,47 @@ jobs:
           run: |
             echo "ENVIRONMENT=Test" >> $GITHUB_ENV          
 
-        - name: ⚙️ Setup .NET 5.x
-          uses: actions/setup-dotnet@v1
+        - name: ⚙️ Set current date
+          id: date
+          run: echo "::set-output name=date::$(date +'%Y%m%d')"
+
+        - name: ⚙️ Configure AWS credentials
+          uses: aws-actions/configure-aws-credentials@v1
           with:
-            # Semantic version range syntax or exact version of a dotnet version
-            dotnet-version: '5.x'
+            aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+            aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+            aws-region: us-east-1
 
-        - name: 🛠️ Build
-          run: dotnet build
+        - name: 🛠️ Update BuildInfo version
+          id: build-info
+          env:
+              VERSION: ${{ steps.date.outputs.date }}-${{ github.run_number }}-${{ env.ENVIRONMENT }}
+          run: |
+              printf '{"version":"%s"}' $VERSION > ./buildinfo.json
+              cat ./buildinfo.json # just some logging
+          working-directory: ./src/ChurchManager.Api/ChurchManager.Api
+                    
+        - name: 🛠️ Login to Amazon ECR
+          id: login-ecr
+          uses: aws-actions/amazon-ecr-login@v1
 
-        - name: 🎁 Publish
-          run: dotnet publish -c Release -o ./app/publish
+        - name: 🛠️ Build, tag, and push image to Amazon ECR
+          id: build-image
+          env:
+            ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+            ECR_REPOSITORY: ${{ env.ECR_REPOSITORY }}
+            IMAGE_TAG: ${{ steps.date.outputs.date }}-${{ github.run_number }}
+          run: |
+            # Build & push a docker container to ECR.
+            docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+            docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+            echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+            echo "::set-output name=tag::$IMAGE_TAG"
+
+        - name:  ⏭ Deploy to Jelastic
+          uses: fjogeleit/http-request-action@master
+          with:
+            url: https://app.paas.mamazala.com/1.0/environment/control/rest/redeploycontainers?envName=docker&session=2390be464b054389842b82aa0a9d4b8ab9914208&tag=${{ steps.build-image.outputs.tag }}&nodeGroup=cp
+            method: 'POST'
+
+
