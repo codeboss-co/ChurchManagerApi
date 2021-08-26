@@ -65,6 +65,6 @@ jobs:
         - name:  ⏭ Deploy to Jelastic
           uses: fjogeleit/http-request-action@master
           with:
-            url: https://app.paas.mamazala.com/1.0/environment/control/rest/redeploycontainers?envName= ${{ env.REPOSITORY }}-${{ env.ENVIRONMENT }}&session=2390be464b054389842b82aa0a9d4b8ab9914208&tag=${{ steps.build-image.outputs.tag }}&nodeGroup=cp
+            url: https://app.paas.mamazala.com/1.0/environment/control/rest/redeploycontainers?envName=${{ env.REPOSITORY }}-${{ env.ENVIRONMENT }}&session=2390be464b054389842b82aa0a9d4b8ab9914208&tag=${{ steps.build-image.outputs.tag }}&nodeGroup=cp
             method: 'POST'
             timeout: 300000 #5mins
