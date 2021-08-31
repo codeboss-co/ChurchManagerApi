@@ -92,8 +92,12 @@ namespace ChurchManager.Api.Extensions
                             "http://localhost:8080", // Angular PWA test
                             "http://*.codeboss.tech", // HTTP
                             "https://*.codeboss.tech", // HTTPS
+                            "http://*.codeboss.co.za", // HTTP
+                            "https://*.codeboss.co.za", // HTTPS
                             "http://codeboss.tech", // TOP LEVEL DOMAIN
                             "https://codeboss.tech", // TOP LEVEL DOMAIN
+                            "http://codeboss.co.za", // TOP LEVEL DOMAIN
+                            "https://codeboss.co.za", // TOP LEVEL DOMAIN
                             "http://*.codeboss.tech.s3-website-us-east-1.amazonaws.com", // S3 buckets
                             "http://dxoazadshajgs.cloudfront.net", // Test Cloud front
                             "https://dxoazadshajgs.cloudfront.net" // Test Cloud front
