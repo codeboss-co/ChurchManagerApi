@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using ChurchManager.Application.Common;
 using ChurchManager.Domain.Features.People;
 using ChurchManager.Domain.Features.People.Events;
 using ChurchManager.Domain.Features.People.Repositories;
@@ -24,15 +25,18 @@ namespace ChurchManager.Application.Features.People.Commands.AddNewFamily
     {
         private readonly IPersonDbRepository _dbRepository;
         private readonly IDomainEventPublisher _eventPublisher;
+        private readonly ICognitoCurrentUser _currentUser;
         private readonly ILogger<AddNewFamilyHandler> _logger;
 
         public AddNewFamilyHandler(
             IPersonDbRepository dbRepository, 
             IDomainEventPublisher eventPublisher,
+            ICognitoCurrentUser currentUser,
             ILogger<AddNewFamilyHandler> logger)
         {
             _dbRepository = dbRepository;
             _eventPublisher = eventPublisher;
+            _currentUser = currentUser;
             _logger = logger;
         }
 
@@ -119,7 +123,8 @@ namespace ChurchManager.Application.Features.People.Commands.AddNewFamily
                 await _eventPublisher.PublishAsync(
                     new FollowUpAssignedEvent(followUp.Person.Id, followUp.AssignedFollowUpPerson.Id)
                     {
-                        Type = $"{followUp.Person.ConnectionStatus}-{followUp.Person.Source}"
+                        Type = $"{followUp.Person.ConnectionStatus}-{followUp.Person.Source}",
+                        UserLoginId = _currentUser.Id
                     }, ct);
             }
         }

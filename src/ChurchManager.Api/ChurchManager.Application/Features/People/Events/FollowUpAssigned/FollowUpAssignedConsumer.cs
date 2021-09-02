@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using ChurchManager.Domain.Features.People;
 using ChurchManager.Domain.Features.People.Events;
 using ChurchManager.Infrastructure.Abstractions.Persistence;
@@ -11,17 +12,14 @@ namespace ChurchManager.Application.Features.People.Events.FollowUpAssigned
     public class FollowUpAssignedConsumer : IConsumer<FollowUpAssignedEvent>
     {
         private readonly IGenericDbRepository<FollowUp> _dbRepository;
-        private readonly ChurchManagerDbContext _dbContext;
         public ILogger<FollowUpAssignedConsumer> Logger { get; }
 
         public FollowUpAssignedConsumer(
             IGenericDbRepository<FollowUp> dbRepository,
-            ChurchManagerDbContext dbContext,
             ILogger<FollowUpAssignedConsumer> logger)
         {
             Logger = logger;
             _dbRepository = dbRepository;
-            _dbContext = dbContext;
         }
 
         public async Task Consume(ConsumeContext<FollowUpAssignedEvent> context)
@@ -34,7 +32,10 @@ namespace ChurchManager.Application.Features.People.Events.FollowUpAssigned
             {
                 PersonId = message.PersonId,
                 AssignedPersonId = message.AssignedFollowUpPersonId,
-                Type = message.Type
+                Type = message.Type,
+                // Audits
+                CreatedBy = message.UserLoginId,
+                CreatedDate = DateTime.UtcNow
             });
         }
     }
