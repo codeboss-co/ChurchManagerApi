@@ -89,28 +89,10 @@ namespace ChurchManager.Application.Features.People.Commands.AddNewFamily
                     Source = x.Source,
                     Family = family
                 }).ToArray(); // <----------------   the fix for the Id's
-                
+
                 await _dbRepository.AddRangeAsync(members, ct);
 
-                var followUpRequests = command.Members
-                    .Where(x => x.AssignedFollowUpPerson != null)
-                    .Select(x => new { x.Person, x.AssignedFollowUpPerson });
-
-                var personFollowUps = members.Join(followUpRequests, // Join lists
-                    member => member.FullName.FirstName + member.FullName.LastName + member.Email?.Address, // Join key
-                    followUp => followUp.Person.FirstName + followUp.Person.LastName + followUp.Person.EmailAddress,  // Join key
-                    (person, followUps) => new { Person = person, followUps.AssignedFollowUpPerson }); // Selection
-
-
-                foreach (var followUp in personFollowUps)
-                {
-                    await _eventPublisher.PublishAsync(
-                        new FollowUpAssignedEvent(followUp.Person.Id, followUp.AssignedFollowUpPerson.Id)
-                        {
-                            Type = $"{followUp.Person.ConnectionStatus}-{followUp.Person.Source}"
-                        }, ct);
-                }
-
+                await SendFollowUpAssignments(command, members, ct);
             }
             catch(Exception ex)
             {
@@ -119,6 +101,27 @@ namespace ChurchManager.Application.Features.People.Commands.AddNewFamily
             }
 
             return new Unit();
+        }
+
+        private async Task SendFollowUpAssignments(AddNewFamilyCommand command, Person[] members, CancellationToken ct)
+        {
+            var followUpRequests = command.Members
+                .Where(x => x.AssignedFollowUpPerson != null)
+                .Select(x => new { x.Person, x.AssignedFollowUpPerson });
+
+            var personFollowUps = members.Join(followUpRequests, // Join lists
+                member => member.FullName.FirstName + member.FullName.LastName + member.Email?.Address, // Join key
+                followUp => followUp.Person.FirstName + followUp.Person.LastName + followUp.Person.EmailAddress, // Join key
+                (person, followUps) => new { Person = person, followUps.AssignedFollowUpPerson }); // Selection
+
+            foreach (var followUp in personFollowUps)
+            {
+                await _eventPublisher.PublishAsync(
+                    new FollowUpAssignedEvent(followUp.Person.Id, followUp.AssignedFollowUpPerson.Id)
+                    {
+                        Type = $"{followUp.Person.ConnectionStatus}-{followUp.Person.Source}"
+                    }, ct);
+            }
         }
     }
 }
