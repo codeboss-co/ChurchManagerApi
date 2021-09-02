@@ -4,7 +4,9 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using ChurchManager.Domain.Features.People;
+using ChurchManager.Domain.Features.People.Events;
 using ChurchManager.Domain.Features.People.Repositories;
+using ChurchManager.Infrastructure.Abstractions;
 using CodeBoss.Extensions;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -21,13 +23,16 @@ namespace ChurchManager.Application.Features.People.Commands.AddNewFamily
     public class AddNewFamilyHandler : IRequestHandler<AddNewFamilyCommand>
     {
         private readonly IPersonDbRepository _dbRepository;
+        private readonly IDomainEventPublisher _eventPublisher;
         private readonly ILogger<AddNewFamilyHandler> _logger;
 
         public AddNewFamilyHandler(
             IPersonDbRepository dbRepository, 
+            IDomainEventPublisher eventPublisher,
             ILogger<AddNewFamilyHandler> logger)
         {
             _dbRepository = dbRepository;
+            _eventPublisher = eventPublisher;
             _logger = logger;
         }
 
@@ -48,6 +53,13 @@ namespace ChurchManager.Application.Features.People.Commands.AddNewFamily
                     }
                 };
 
+                /*
+                 * https://stackoverflow.com/questions/42480952/cant-auto-generate-identity-with-addrange-in-entity-framework
+                 *
+                 *  Id's not showing after inserting: What was causing the problem? Enumerables!
+                 *
+                 *  Use:   ToArray()
+                 */
                 var members = command.Members.Select(x => new Person
                 {
                     FullName = new FullName
@@ -76,9 +88,29 @@ namespace ChurchManager.Application.Features.People.Commands.AddNewFamily
                         : null,
                     Source = x.Source,
                     Family = family
-                });
-
+                }).ToArray(); // <----------------   the fix for the Id's
+                
                 await _dbRepository.AddRangeAsync(members, ct);
+
+                var followUpRequests = command.Members
+                    .Where(x => x.AssignedFollowUpPerson != null)
+                    .Select(x => new { x.Person, x.AssignedFollowUpPerson });
+
+                var personFollowUps = members.Join(followUpRequests, // Join lists
+                    member => member.FullName.FirstName + member.FullName.LastName + member.Email?.Address, // Join key
+                    followUp => followUp.Person.FirstName + followUp.Person.LastName + followUp.Person.EmailAddress,  // Join key
+                    (person, followUps) => new { Person = person, followUps.AssignedFollowUpPerson }); // Selection
+
+
+                foreach (var followUp in personFollowUps)
+                {
+                    await _eventPublisher.PublishAsync(
+                        new FollowUpAssignedEvent(followUp.Person.Id, followUp.AssignedFollowUpPerson.Id)
+                        {
+                            Type = $"{followUp.Person.ConnectionStatus}-{followUp.Person.Source}"
+                        }, ct);
+                }
+
             }
             catch(Exception ex)
             {

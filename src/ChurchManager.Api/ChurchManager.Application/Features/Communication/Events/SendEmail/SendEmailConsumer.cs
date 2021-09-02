@@ -34,14 +34,14 @@ namespace ChurchManager.Application.Features.Communication.Events.SendEmail
             
             var message = context.Message;
 
-            if(_isEmailActive(message.Recepient))
+            if(_isEmailActive(message.Recipient))
             {
                 string template = await File.ReadAllTextAsync(DomainConstants.Communication.Email.Template(message.Template));
                 object model = new { Model = message.TemplateData };
 
                 var htmlBody = _templateParser.Render(template, model);
 
-                var operationResult = await _sender.SendEmailAsync(message.Recepient.Email.Address, message.Subject, htmlBody);
+                var operationResult = await _sender.SendEmailAsync(message.Recipient.Email.Address, message.Subject, htmlBody);
 
                 if (!operationResult.IsSuccess)
                 {
