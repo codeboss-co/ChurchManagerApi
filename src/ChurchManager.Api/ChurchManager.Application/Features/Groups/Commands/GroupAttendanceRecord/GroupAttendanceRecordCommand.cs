@@ -4,7 +4,6 @@ using System.ComponentModel.DataAnnotations;
 using System.Threading;
 using System.Threading.Tasks;
 using ChurchManager.Application.Features.Groups.Services;
-using ChurchManager.Domain.Shared;
 using MediatR;
 
 namespace ChurchManager.Application.Features.Groups.Commands.GroupAttendanceRecord

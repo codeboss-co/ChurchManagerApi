@@ -99,6 +99,7 @@ namespace ChurchManager.Api.Extensions
                             "http://codeboss.co.za", // TOP LEVEL DOMAIN
                             "https://codeboss.co.za", // TOP LEVEL DOMAIN
                             "http://*.codeboss.tech.s3-website-us-east-1.amazonaws.com", // S3 buckets
+                            "https://*.netlify.app", // NETLIFY
                             "http://dxoazadshajgs.cloudfront.net", // Test Cloud front
                             "https://dxoazadshajgs.cloudfront.net" // Test Cloud front
                             )

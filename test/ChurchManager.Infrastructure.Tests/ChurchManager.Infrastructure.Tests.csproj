@@ -23,6 +23,16 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\ChurchManager.Api\ChurchManager.Domain\ChurchManager.Domain.csproj" />
+    <ProjectReference Include="..\..\src\ChurchManager.Api\ChurchManager.Infrastructure.Shared\ChurchManager.Infrastructure.Shared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Templates\ExampleData.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Templates\ExampleTemplate.liquid">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
