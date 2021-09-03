@@ -29,9 +29,13 @@ namespace ChurchManager.Domain.Shared
                 public static string TemplatePath => Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), Path.Combine("Email", "Templates"));
                 public static string TemplateExtension = ".liquid";
 
-                public static string FollowUpTemplate = "FollowUpAssignment";
-
                 public static string Template(string name) => Path.Combine(TemplatePath, $"{name}{TemplateExtension}");
+
+                // Templates
+                public static class Templates
+                {
+                    public static string FollowUpTemplate = "FollowUpAssignment";
+                }
             }
         }
     }
