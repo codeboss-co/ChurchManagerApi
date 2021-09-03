@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Linq;
 using Bugsnag;
 using Bugsnag.AspNet.Core;
-using ChurchManager.Api.Models;
+using ChurchManager.Domain.Common.Configuration;
 using CodeBoss.AspNetCore;
 using CodeBoss.AspNetCore.DependencyInjection;
 using Convey;

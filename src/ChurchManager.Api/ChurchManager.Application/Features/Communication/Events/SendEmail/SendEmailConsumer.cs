@@ -7,6 +7,7 @@ using ChurchManager.Domain.Features.People;
 using ChurchManager.Domain.Shared;
 using ChurchManager.Infrastructure.Abstractions.Communication;
 using MassTransit;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Logging;
 
 namespace ChurchManager.Application.Features.Communication.Events.SendEmail
@@ -15,16 +16,19 @@ namespace ChurchManager.Application.Features.Communication.Events.SendEmail
     {
         private readonly IEmailSender _sender;
         private readonly ITemplateParser _templateParser;
+        private readonly IWebHostEnvironment _hostingEnvironment;
         public ILogger<SendEmailConsumer> Logger { get; }
 
 
         public SendEmailConsumer(
             IEmailSender sender,
             ITemplateParser templateParser,
+            IWebHostEnvironment hostingEnvironment,
             ILogger<SendEmailConsumer> logger)
         {
             _sender = sender;
             _templateParser = templateParser;
+            _hostingEnvironment = hostingEnvironment;
             Logger = logger;
         }
 
@@ -36,7 +40,8 @@ namespace ChurchManager.Application.Features.Communication.Events.SendEmail
 
             if(_isEmailActive(message.Recipient))
             {
-                string template = await File.ReadAllTextAsync(DomainConstants.Communication.Email.Template(message.Template));
+                var path = DomainConstants.Communication.Email.Template(message.Template);
+                string template = await File.ReadAllTextAsync(path);
                 object model = new { Model = message.TemplateData };
 
                 var htmlBody = _templateParser.Render(template, model);

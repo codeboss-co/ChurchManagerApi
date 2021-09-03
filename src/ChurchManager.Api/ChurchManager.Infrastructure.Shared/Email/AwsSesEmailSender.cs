@@ -5,6 +5,7 @@ using Amazon;
 using Amazon.SimpleEmailV2;
 using Amazon.SimpleEmailV2.Model;
 using ChurchManager.Domain.Features.Communication.Services;
+using ChurchManager.Domain.Features.People;
 using Codeboss.Results;
 
 namespace ChurchManager.Infrastructure.Shared.Email
@@ -58,6 +59,26 @@ namespace ChurchManager.Infrastructure.Shared.Email
             var response = await client.SendEmailAsync(sendRequest);
 
             return new OperationResult(success: response.HttpStatusCode == HttpStatusCode.OK);
+        }
+
+        public Task<OperationResult> SendEmailAsync(Domain.Features.People.Email email, string subject, string htmlBody)
+        {
+            if (email.IsActive.HasValue && email.IsActive.Value)
+            {
+                return SendEmailAsync(email.Address, subject, htmlBody);
+            }
+
+            return Task.FromResult(OperationResult.Success());
+        }
+
+        public Task<OperationResult> SendEmailAsync(Person person, string subject, string htmlBody)
+        {
+            if(person.Email.IsActive.HasValue && person.Email.IsActive.Value)
+            {
+                return SendEmailAsync(person.Email.Address, subject, htmlBody);
+            }
+
+            return Task.FromResult(OperationResult.Success());
         }
     }
 }

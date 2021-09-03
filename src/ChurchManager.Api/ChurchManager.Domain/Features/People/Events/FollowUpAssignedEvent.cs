@@ -6,5 +6,6 @@ namespace ChurchManager.Domain.Features.People.Events
     {
         public string Type { get; set; }
         public string UserLoginId { get; set; }
+        public bool SendEmail { get; set; } = true;
     }
 }

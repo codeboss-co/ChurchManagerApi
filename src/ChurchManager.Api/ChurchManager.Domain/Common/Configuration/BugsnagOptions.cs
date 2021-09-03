@@ -1,4 +1,4 @@
-﻿namespace ChurchManager.Api.Models
+﻿namespace ChurchManager.Domain.Common.Configuration
 {
     public class BugsnagOptions : Bugsnag.Configuration
     {

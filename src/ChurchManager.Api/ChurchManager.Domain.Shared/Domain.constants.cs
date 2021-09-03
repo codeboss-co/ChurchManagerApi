@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Reflection;
 
 namespace ChurchManager.Domain.Shared
 {
@@ -25,7 +26,7 @@ namespace ChurchManager.Domain.Shared
         {
             public static class Email
             {
-                public static string TemplatePath = Path.Combine("Email", "Templates");
+                public static string TemplatePath => Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), Path.Combine("Email", "Templates"));
                 public static string TemplateExtension = ".liquid";
 
                 public static string FollowUpTemplate = "FollowUpAssignment";
