@@ -1,5 +1,4 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace ChurchManager.Domain.Common
 {
@@ -14,7 +13,7 @@ namespace ChurchManager.Domain.Common
 
         public Money(string currency, decimal amount)
         {
-            if (amount <= 0) throw new InvalidOperationException(nameof(amount));
+            if (amount <= 0) amount = 0;
 
             Currency = currency;
             Amount = amount;

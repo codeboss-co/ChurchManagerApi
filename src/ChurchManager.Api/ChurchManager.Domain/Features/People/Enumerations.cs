@@ -13,6 +13,7 @@ namespace ChurchManager.Domain.Features.People
 
         public static AgeClassification Adult = new("Adult");
         public static AgeClassification Child = new("Child");
+        public static AgeClassification Teen = new("Teen");
         public static AgeClassification Unknown = new("Unknown");
         // Implicit conversion from string
         public static implicit operator AgeClassification(string value) => new(value);
