@@ -16,7 +16,6 @@ namespace ChurchManager.Application.Features.Communication.Events.SendEmail
     {
         private readonly IEmailSender _sender;
         private readonly ITemplateParser _templateParser;
-        private readonly IWebHostEnvironment _hostingEnvironment;
         public ILogger<SendEmailConsumer> Logger { get; }
 
 
@@ -28,7 +27,6 @@ namespace ChurchManager.Application.Features.Communication.Events.SendEmail
         {
             _sender = sender;
             _templateParser = templateParser;
-            _hostingEnvironment = hostingEnvironment;
             Logger = logger;
         }
 
