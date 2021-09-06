@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Linq;
 using AutoMapper;
 using ChurchManager.Application.ViewModels;
+using ChurchManager.Domain.Common;
 using ChurchManager.Domain.Common.Extensions;
 using ChurchManager.Domain.Features.Groups;
 using ChurchManager.Domain.Shared;
@@ -29,6 +29,7 @@ namespace ChurchManager.Application.Mappings
 
             CreateMap<GroupType, SelectItemViewModel>().ReverseMap();
             CreateMap<Group, SelectItemViewModel>().ReverseMap();
+            CreateMap<Money, MoneyViewModel>().ReverseMap();
             CreateMap<Group, GroupViewModel>();
             CreateMap<GroupType, GroupTypeViewModel>();
 
