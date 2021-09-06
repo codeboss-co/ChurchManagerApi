@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using AutoMapper;
 using ChurchManager.Application.ViewModels;
 using ChurchManager.Domain.Common.Extensions;
@@ -46,6 +45,9 @@ namespace ChurchManager.Application.Mappings
             CreateMap<GroupAttendance, GroupAttendanceDetailViewModel>()
                 .ForMember(d => d.GroupName,
                     opt => opt.MapFrom(src => src.Group.Name))
+
+                .ForMember(d => d.Offering,
+                    opt => opt.MapFrom(src => src.Offering != null ? src.Offering.Amount : 0))
                 .ForMember(dest => dest.Attendees, opt => opt.MapFrom(src => src.Attendees));
 
             CreateMap<Schedule, ScheduleViewModel>()
