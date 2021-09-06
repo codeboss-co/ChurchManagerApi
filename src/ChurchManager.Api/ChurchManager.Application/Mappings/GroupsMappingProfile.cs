@@ -1,6 +1,7 @@
 ﻿using System;
 using AutoMapper;
 using ChurchManager.Application.ViewModels;
+using ChurchManager.Domain.Common;
 using ChurchManager.Domain.Common.Extensions;
 using ChurchManager.Domain.Features.Groups;
 using ChurchManager.Domain.Shared;
@@ -28,6 +29,7 @@ namespace ChurchManager.Application.Mappings
 
             CreateMap<GroupType, SelectItemViewModel>().ReverseMap();
             CreateMap<Group, SelectItemViewModel>().ReverseMap();
+            CreateMap<Money, MoneyViewModel>().ReverseMap();
             CreateMap<Group, GroupViewModel>();
             CreateMap<GroupType, GroupTypeViewModel>();
 
@@ -45,9 +47,6 @@ namespace ChurchManager.Application.Mappings
             CreateMap<GroupAttendance, GroupAttendanceDetailViewModel>()
                 .ForMember(d => d.GroupName,
                     opt => opt.MapFrom(src => src.Group.Name))
-
-                .ForMember(d => d.Offering,
-                    opt => opt.MapFrom(src => src.Offering != null ? src.Offering.Amount : 0))
                 .ForMember(dest => dest.Attendees, opt => opt.MapFrom(src => src.Attendees));
 
             CreateMap<Schedule, ScheduleViewModel>()

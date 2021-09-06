@@ -4,10 +4,12 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using ChurchManager.Infrastructure.Persistence.Contexts.Factory;
+using ChurchManager.Persistence.Shared;
 using CodeBoss.MultiTenant;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 
 namespace ChurchManager.Infrastructure.Persistence
 {
@@ -23,6 +25,16 @@ namespace ChurchManager.Infrastructure.Persistence
         public async Task StartAsync(CancellationToken cancellationToken)
         {
             using var scope = _serviceProvider.CreateScope();
+            
+            var dbOptions = _serviceProvider.GetRequiredService<IOptions<DbOptions>>().Value;
+            if (!dbOptions.Migrate)
+            {
+                Console.WriteLine("Migrations disabled.");
+                return;
+            }
+
+            Console.WriteLine("Migrations enabled.");
+
             var tenantProvider = scope.ServiceProvider.GetRequiredService<ITenantProvider>();
                 
             var tenants = tenantProvider.Tenants();
