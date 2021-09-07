@@ -121,7 +121,7 @@ namespace ChurchManager.Application.Features.People.Commands.AddNewFamily
             foreach (var followUp in personFollowUps)
             {
                 await _eventPublisher.PublishAsync(
-                    new FollowUpAssignedEvent(followUp.Person.Id, followUp.AssignedFollowUpPerson.Id)
+                    new FollowUpAssignedEvent(followUp.Person.Id, followUp.AssignedFollowUpPerson.Id.Value)
                     {
                         Type = $"{followUp.Person.ConnectionStatus}-{followUp.Person.Source}",
                         UserLoginId = _currentUser.Id

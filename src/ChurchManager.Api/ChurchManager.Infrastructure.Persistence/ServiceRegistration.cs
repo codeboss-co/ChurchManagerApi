@@ -26,6 +26,8 @@ namespace ChurchManager.Infrastructure.Persistence
             IConfiguration configuration,
             IWebHostEnvironment environment)
         {
+            // Add to DI
+            services.Configure<DbOptions>(configuration.GetSection(nameof(DbOptions)));        
             //services.AddDbContext<ChurchManagerDbContext>(options =>
             //   options.UseNpgsql(configuration.GetConnectionString("DefaultConnection"),
             //       x => x.MigrationsAssembly("ChurchManager.Infrastructure.Persistence")));

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using ChurchManager.Domain.Common.Configuration;
 using ChurchManager.Domain.Features.Communication.Events;
-using ChurchManager.Domain.Features.People;
 using ChurchManager.Domain.Features.People.Events;
 using ChurchManager.Domain.Features.People.Repositories;
 using ChurchManager.Domain.Shared;
@@ -17,14 +16,14 @@ namespace ChurchManager.Application.Features.People.Events.FollowUpAssigned
 {
     public class FollowUpAssignedConsumer : IConsumer<FollowUpAssignedEvent>
     {
-        private readonly IGenericDbRepository<FollowUp> _dbRepository;
+        private readonly IGenericDbRepository<Domain.Features.People.FollowUp> _dbRepository;
         private readonly IPersonDbRepository _personDbRepository;
         private readonly IDateTimeProvider _dateTimeProvider;
         private readonly BugsnagOptions _bugsnagOptions;
         public ILogger<FollowUpAssignedConsumer> Logger { get; }
 
         public FollowUpAssignedConsumer(
-            IGenericDbRepository<FollowUp> dbRepository,
+            IGenericDbRepository<Domain.Features.People.FollowUp> dbRepository,
             IPersonDbRepository personDbRepository,
             IDateTimeProvider dateTimeProvider,
             IOptions<BugsnagOptions> bugsnagOptions,
@@ -43,7 +42,7 @@ namespace ChurchManager.Application.Features.People.Events.FollowUpAssigned
 
             Logger.LogInformation("------ FollowUpAssignedEvent event received {@message)------", message);
 
-            await _dbRepository.AddAsync(new FollowUp
+            await _dbRepository.AddAsync(new Domain.Features.People.FollowUp
             {
                 PersonId = message.PersonId,
                 AssignedPersonId = message.AssignedFollowUpPersonId,
