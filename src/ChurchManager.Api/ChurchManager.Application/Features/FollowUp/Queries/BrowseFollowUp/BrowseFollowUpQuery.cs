@@ -14,7 +14,7 @@ namespace ChurchManager.Application.Features.FollowUp.Queries.BrowseFollowUp
     public record BrowseFollowUpQuery
         : SearchTermQueryParameter, IRequest<PagedResponse<FollowUpViewModel>>
     {
-        public string Type { get; set; }
+        public string[] Types { get; set; } = { };
         public AutocompleteResult Person { get; set; }
         public AutocompleteResult AssignedPerson { get; set; }
         public string[] Severity { get; set; } =  {};
@@ -49,7 +49,7 @@ namespace ChurchManager.Application.Features.FollowUp.Queries.BrowseFollowUp
                 query, 
                 query.Person?.Id,
                 assignedPersonId, 
-                query.Type, 
+                query.Types, 
                 query.Severity,
                 query.WithAction, 
                 query.From, query.To);

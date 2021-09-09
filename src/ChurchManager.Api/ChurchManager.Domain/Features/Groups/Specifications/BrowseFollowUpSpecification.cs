@@ -15,7 +15,7 @@ namespace ChurchManager.Domain.Features.Groups.Specifications
             IPagedQuery paging,
             int? personId,
             int? assignedPersonId,
-            string type,
+            string[] types,
             string[] severity,
             bool? withAction,
             DateTime? from, DateTime? to)
@@ -36,9 +36,9 @@ namespace ChurchManager.Domain.Features.Groups.Specifications
             }
 
             // Type Filter
-            if (!type.IsNullOrEmpty())
+            if (types.Any())
             {
-                Query.Where(g => g.Type == type);
+                Query.Where(g => types.Contains(g.Type));
             }
 
             // Severity Filter
