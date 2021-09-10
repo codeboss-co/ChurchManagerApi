@@ -4,7 +4,6 @@ using Ardalis.Specification;
 using ChurchManager.Domain.Common.Extensions;
 using ChurchManager.Domain.Features.People;
 using ChurchManager.Domain.Shared;
-using CodeBoss.Extensions;
 using Convey.CQRS.Queries;
 
 namespace ChurchManager.Domain.Features.Groups.Specifications
@@ -36,13 +35,13 @@ namespace ChurchManager.Domain.Features.Groups.Specifications
             }
 
             // Type Filter
-            if (types.Any())
+            if (types is not null && types.Any())
             {
                 Query.Where(g => types.Contains(g.Type));
             }
 
             // Severity Filter
-            if(severity.Any())
+            if(severity is not null && severity.Any())
             {
                 Query.Where(g => severity.Contains(g.Severity));
             }
