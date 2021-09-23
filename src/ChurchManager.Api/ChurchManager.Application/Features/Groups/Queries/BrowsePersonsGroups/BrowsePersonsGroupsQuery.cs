@@ -1,7 +1,6 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
-using ChurchManager.Application.Common;
 using ChurchManager.Application.ViewModels;
 using ChurchManager.Application.Wrappers;
 using ChurchManager.Domain.Features.Groups.Repositories;
@@ -21,16 +20,13 @@ namespace ChurchManager.Application.Features.Groups.Queries.BrowsePersonsGroups
     public class
         BrowsePersonsGroupsHandler : IRequestHandler<BrowsePersonsGroupsQuery, PagedResponse<GroupSummaryViewModel>>
     {
-        private readonly ICognitoCurrentUser _currentUser;
         private readonly IGroupDbRepository _groupDbRepository;
         private readonly IMapper _mapper;
 
         public BrowsePersonsGroupsHandler(
-            ICognitoCurrentUser currentUser,
             IGroupDbRepository groupDbRepository,
             IMapper mapper)
         {
-            _currentUser = currentUser;
             _groupDbRepository = groupDbRepository;
             _mapper = mapper;
         }
