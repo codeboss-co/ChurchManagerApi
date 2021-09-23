@@ -10,12 +10,14 @@ using ChurchManager.Domain.Features.Groups;
 using ChurchManager.Domain.Features.Groups.Repositories;
 using ChurchManager.Domain.Features.Groups.Specifications;
 using ChurchManager.Domain.Features.People;
+using Microsoft.Extensions.Logging;
 using GroupMemberAttendance = ChurchManager.Domain.Features.Groups.GroupMemberAttendance;
 
 namespace ChurchManager.Application.Features.Groups.Services
 {
     public class GroupAttendanceAppService : IGroupAttendanceAppService
     {
+        public ILogger<GroupAttendanceAppService> Logger { get; }
         private readonly IGroupAttendanceDbRepository _attendanceDbRepository;
         private readonly IGroupDbRepository _groupDb;
         private readonly IGroupsService _service;
@@ -23,8 +25,10 @@ namespace ChurchManager.Application.Features.Groups.Services
         public GroupAttendanceAppService(
             IGroupDbRepository groupDb,
             IGroupsService service,
-            IGroupAttendanceDbRepository attendanceDbRepository)
+            IGroupAttendanceDbRepository attendanceDbRepository,
+            ILogger<GroupAttendanceAppService> logger)
         {
+            Logger = logger;
             _groupDb = groupDb;
             _service = service;
             _attendanceDbRepository = attendanceDbRepository;
@@ -126,9 +130,10 @@ namespace ChurchManager.Application.Features.Groups.Services
                 await _attendanceDbRepository.SaveChangesAsync(ct);
                 await transaction.CommitAsync(ct);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 await transaction.RollbackAsync(ct);
+                Logger.LogError(ex, $"Error adding attendance record for groupId: {command.GroupId}");
                 throw;
             }
         }
