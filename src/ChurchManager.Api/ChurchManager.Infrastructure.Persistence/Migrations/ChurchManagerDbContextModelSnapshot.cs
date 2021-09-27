@@ -1289,7 +1289,8 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                 {
                     b.HasOne("ChurchManager.Domain.Features.Groups.GroupAttendance", null)
                         .WithMany("Attendees")
-                        .HasForeignKey("GroupAttendanceId");
+                        .HasForeignKey("GroupAttendanceId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("ChurchManager.Domain.Features.Groups.Group", "Group")
                         .WithMany()
