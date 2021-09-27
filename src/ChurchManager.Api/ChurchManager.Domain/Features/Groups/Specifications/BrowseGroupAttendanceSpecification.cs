@@ -57,7 +57,7 @@ namespace ChurchManager.Domain.Features.Groups.Specifications
                 Query.Where(g => g.AttendanceDate <= to.Value);
             }
 
-            Query.OrderBy(x => x.AttendanceDate);
+            Query.OrderByDescending(x => x.AttendanceDate);
 
             Query
                 .Skip(paging.CalculateSkip())

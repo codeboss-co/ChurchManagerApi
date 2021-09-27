@@ -9,6 +9,7 @@ namespace ChurchManager.Infrastructure.Persistence.Configurations
         public void Configure(EntityTypeBuilder<GroupAttendance> builder)
         {
             builder.OwnsOne(x => x.Offering);
+            builder.HasMany(b => b.Attendees).WithOne().OnDelete(DeleteBehavior.Cascade);
         }
     }
 }
