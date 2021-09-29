@@ -73,6 +73,7 @@ namespace ChurchManager.Infrastructure.Persistence
 
             #region Repositories
 
+            // TODO: scan and register these automatically
             services.AddScoped(typeof(IGenericDbRepository<>), typeof(GenericRepositoryBase<>));
             services.AddScoped<IGroupAttendanceDbRepository, GroupAttendanceDbRepository>();
             services.AddScoped<IChurchAttendanceDbRepository, ChurchAttendanceDbRepository>();
@@ -81,6 +82,7 @@ namespace ChurchManager.Infrastructure.Persistence
             services.AddScoped<IGroupTypeRoleDbRepository, GroupTypeRoleDbRepository>();
             services.AddScoped<IPersonDbRepository, PersonDbRepository>();
             services.AddScoped<IGroupDbRepository, GroupDbRepository>();
+            services.AddScoped<IGroupMemberAttendanceDbRepository, GroupMemberAttendanceDbRepository>();
             services.AddScoped<IPushSubscriptionsService, PushSubscriptionsService>();
 
             #endregion
