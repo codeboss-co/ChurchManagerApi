@@ -85,6 +85,39 @@ namespace ChurchManager.Infrastructure.Persistence.Repositories
         }
 
         /// <summary>
+        /// Group statistics by group type
+        /// </summary>
+        public async Task<(int totalGroupsCount, int activeGroupsCount, int inActiveGroupsCount, int onlineGroupsCount, int openedGroupsCount, int closedGroupsCount)> GroupStatisticsAsync(int groupTypeId, DateTime? startDate = null, CancellationToken ct = default)
+        {
+            var groups = await Queryable()
+                .AsNoTracking()
+                .Where(x => x.GroupTypeId == groupTypeId)
+                .Select(x => new { x.Id, x.RecordStatus, x.IsOnline, x.StartDate, x.InactiveDateTime })
+                .ToListAsync(ct);
+
+            var totalCellsCount = groups.Count;
+            var activeCellsCount = groups.Count(x => x.RecordStatus == RecordStatus.Active);
+            var inActiveCellsCount = totalCellsCount - activeCellsCount;
+            var onlineCellsCount = groups.Count(x => x.IsOnline.HasValue && x.IsOnline.Value);
+
+            if (startDate is null)
+            {
+                startDate = DateTime.UtcNow.AddMonths(-6);
+            }
+
+            var openedGroupsCount = groups
+                .Count(x => x.StartDate >= startDate);
+
+            var closedGroupsCount = groups
+                .Count(
+                    x => x.InactiveDateTime != null &&
+                         x.InactiveDateTime >= startDate &&
+                         x.RecordStatus != RecordStatus.Active);
+
+            return (totalCellsCount, activeCellsCount, inActiveCellsCount, onlineCellsCount, openedGroupsCount, closedGroupsCount);
+        }
+
+        /// <summary>
         /// https://michaelceber.medium.com/implementing-a-recursive-projection-query-in-c-and-entity-framework-core-240945122be6
         /// </summary>
         private Expression<Func<Group, GroupViewModel>> GroupProjection(int maxDepth, int currentDepth = 0)
