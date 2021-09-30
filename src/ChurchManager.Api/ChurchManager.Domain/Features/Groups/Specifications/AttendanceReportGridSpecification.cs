@@ -41,7 +41,10 @@ namespace ChurchManager.Domain.Features.Groups.Specifications
                 AttendanceCount = x.AttendanceCount,
                 FirstTimerCount = x.FirstTimerCount,
                 NewConvertCount = x.NewConvertCount,
-                ReceivedHolySpiritCount = x.ReceivedHolySpiritCount
+                ReceivedHolySpiritCount = x.ReceivedHolySpiritCount,
+                Offering = x.Offering == null
+                    ? new MoneyViewModel{Amount = 0, Currency = "ZAR"}
+                    : new MoneyViewModel { Amount = x.Offering.Amount, Currency = x.Offering.Currency }
             });
         }
     }

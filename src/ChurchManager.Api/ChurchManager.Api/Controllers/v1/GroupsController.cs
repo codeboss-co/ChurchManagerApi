@@ -13,7 +13,6 @@ using ChurchManager.Application.Features.Groups.Queries.GroupsForPerson;
 using ChurchManager.Application.Features.Groups.Queries.GroupsWithChildren;
 using ChurchManager.Application.Features.Groups.Queries.GroupTypes;
 using ChurchManager.Application.Features.Groups.Queries.GrroupsByGroupType;
-using ChurchManager.Application.Features.Groups.Queries.Reports.AttendanceReportGrid;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -57,7 +56,7 @@ namespace ChurchManager.Api.Controllers.v1
         [HttpGet("{groupId}/members")]
         public async Task<IActionResult> GetGroupMembers(int groupId, [FromQuery] string recordStatus, CancellationToken token = default)
         {
-            return Ok(await Mediator.Send(new GroupMembersQuery(groupId){RecordStatus = recordStatus }, token));
+            return Ok(await Mediator.Send(new GroupMembersQuery(groupId) { RecordStatus = recordStatus }, token));
         }
 
         [HttpGet("church/{churchId}")]
@@ -96,7 +95,7 @@ namespace ChurchManager.Api.Controllers.v1
         [HttpGet("parent/{parentGroupId}/tree")]
         public async Task<IActionResult> GetGroupWithChildrenByParentTree(int parentGroupId, CancellationToken token)
         {
-            return Ok(await Mediator.Send(new GroupsWithChildrenQuery{ParentGroupId = parentGroupId }, token));
+            return Ok(await Mediator.Send(new GroupsWithChildrenQuery { ParentGroupId = parentGroupId }, token));
         }
 
         [HttpGet("{groupId}/tree")]
@@ -142,7 +141,7 @@ namespace ChurchManager.Api.Controllers.v1
         [HttpGet("types/{groupTypeId}")]
         public async Task<IActionResult> GetGroupTypeById(int groupTypeId, CancellationToken token)
         {
-            var group = await Mediator.Send(new GroupTypesQuery{GroupTypeId = groupTypeId}, token);
+            var group = await Mediator.Send(new GroupTypesQuery { GroupTypeId = groupTypeId }, token);
             return Ok(group);
         }
 
@@ -159,14 +158,6 @@ namespace ChurchManager.Api.Controllers.v1
         {
             var response = await Mediator.Send(command, token);
             return Ok(response);
-        }
-
-
-        [HttpPost("attendance-report-grid")]
-        public async Task<IActionResult> AttendanceReportGrid([FromBody] AttendanceReportGridQuery query, CancellationToken token)
-        {
-            var data = await Mediator.Send(query, token);
-            return Ok(data);
         }
     }
 }
