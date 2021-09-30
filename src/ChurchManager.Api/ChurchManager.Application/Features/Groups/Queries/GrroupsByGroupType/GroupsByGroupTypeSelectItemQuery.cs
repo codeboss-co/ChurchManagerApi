@@ -31,6 +31,7 @@ namespace ChurchManager.Application.Features.Groups.Queries.GrroupsByGroupType
                         .Queryable()
                         .AsNoTracking()
                         .Where(x => x.GroupTypeId == query.GroupTypeId)
+                        .OrderBy(x => x.Name)
                     )
                 .ToListAsync(ct);
 
