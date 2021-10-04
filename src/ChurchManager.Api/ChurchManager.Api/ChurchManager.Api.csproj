@@ -33,13 +33,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="CodeBoss.MultiTenant" Version="0.1.18" />
+    <PackageReference Include="CodeBoss" Version="0.1.19" />
+    <PackageReference Include="CodeBoss.MultiTenant" Version="0.1.19" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\ChurchManager.Application\ChurchManager.Application.csproj" />
     <ProjectReference Include="..\ChurchManager.Infrastructure.Persistence\ChurchManager.Infrastructure.Persistence.csproj" />
-    <ProjectReference Include="..\ChurchManager.Infrastructure.Shared\ChurchManager.Infrastructure.Shared.csproj" />
   </ItemGroup>
 
 </Project>

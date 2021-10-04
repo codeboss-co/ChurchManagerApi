@@ -1,8 +1,8 @@
 using ChurchManager.Api.Extensions;
-using ChurchManager.Api.Hubs;
 using ChurchManager.Application;
 using ChurchManager.Infrastructure.Persistence;
 using ChurchManager.Infrastructure.Shared;
+using ChurchManager.Infrastructure.Shared.SignalR.Hubs;
 using CodeBoss.AspNetCore.DependencyInjection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
