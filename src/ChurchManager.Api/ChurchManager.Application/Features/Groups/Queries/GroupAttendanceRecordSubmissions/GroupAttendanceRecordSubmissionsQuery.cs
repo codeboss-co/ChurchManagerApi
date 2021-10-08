@@ -7,13 +7,14 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using ChurchManager.Domain.Features.Groups;
+using ChurchManager.Infrastructure.Abstractions.Persistence;
 
 namespace ChurchManager.Application.Features.Groups.Queries.GroupAttendanceRecordSubmissions
 {
     public record GroupAttendanceRecordSubmissionsQuery : IRequest<ApiResponse>
     {
         public int ChurchId { get; set; }
-        public int GroupTypeId { get; set; }
         public PeriodType PeriodType { get; set; }
     }
 
@@ -21,13 +22,16 @@ namespace ChurchManager.Application.Features.Groups.Queries.GroupAttendanceRecor
     {
         private readonly IGroupDbRepository _groupDbRepository;
         private readonly IGroupAttendanceDbRepository _dbRepository;
+        private readonly IGenericDbRepository<GroupType> _groupTypeRepo;
 
         public GroupAttendanceRecordSubmissionsHandler(
             IGroupDbRepository groupDbRepository,
-            IGroupAttendanceDbRepository dbRepository)
+            IGroupAttendanceDbRepository dbRepository,
+            IGenericDbRepository<GroupType> groupTypeRepo)
         {
             _groupDbRepository = groupDbRepository;
             _dbRepository = dbRepository;
+            _groupTypeRepo = groupTypeRepo;
         }
 
 
@@ -41,7 +45,10 @@ namespace ChurchManager.Application.Features.Groups.Queries.GroupAttendanceRecor
                 .Select(x => new { x.Id, x.Name })
                 .ToListAsync(ct);
 
-            var spec = new AttendanceReportSubmissionsSpecification(query.GroupTypeId, query.PeriodType);
+            // TODO: Pass in group type id from so we can support all groups
+            var cellGroupType = await _groupTypeRepo.Queryable().FirstOrDefaultAsync(x => x.Name == "Cell", ct);
+
+            var spec = new AttendanceReportSubmissionsSpecification(cellGroupType.Id, query.PeriodType);
             var groupIdsWithReports = await _dbRepository.ListAsync<int>(spec, ct);
 
             var groupsWithReports = groupIdsWithReports.Join(allActiveGroups,  // Join lists

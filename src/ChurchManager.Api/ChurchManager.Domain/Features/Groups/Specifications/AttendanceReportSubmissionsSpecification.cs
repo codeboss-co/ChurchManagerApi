@@ -11,11 +11,9 @@ namespace ChurchManager.Domain.Features.Groups.Specifications
         {
             Query.AsNoTracking();
 
-
             // Group Type Filter
             Query.Where(g => g.Group.GroupTypeId == groupTypeId);
-            
-           
+
             // Date Filters
             DateTime from = DateTime.UtcNow;
             DateTime to = DateTime.UtcNow;
