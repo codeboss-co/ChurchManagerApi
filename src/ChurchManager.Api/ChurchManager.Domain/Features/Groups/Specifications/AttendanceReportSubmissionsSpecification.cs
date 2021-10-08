@@ -5,6 +5,9 @@ using System;
 
 namespace ChurchManager.Domain.Features.Groups.Specifications
 {
+    /// <summary>
+    /// List of GroupId's that have an attendance record submission
+    /// </summary>
     public class AttendanceReportSubmissionsSpecification : Specification<GroupAttendance, int>
     {
         public AttendanceReportSubmissionsSpecification(int groupTypeId, PeriodType periodType)
@@ -35,8 +38,8 @@ namespace ChurchManager.Domain.Features.Groups.Specifications
 
             Query.Where(g => g.AttendanceDate >= from);
             Query.Where(g => g.AttendanceDate <= to);
-            
-            Query.Select(x => x.Id);
+            // Keep track of the GroupId's
+            Query.Select(x => x.GroupId);
         }
     }
 }

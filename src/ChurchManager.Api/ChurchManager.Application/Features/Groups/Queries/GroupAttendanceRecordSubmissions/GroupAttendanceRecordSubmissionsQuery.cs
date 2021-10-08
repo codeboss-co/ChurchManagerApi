@@ -37,16 +37,17 @@ namespace ChurchManager.Application.Features.Groups.Queries.GroupAttendanceRecor
 
         public async Task<ApiResponse> Handle(GroupAttendanceRecordSubmissionsQuery query, CancellationToken ct)
         {
+            // TODO: Pass in group type id from so we can support all groups
+            var cellGroupType = await _groupTypeRepo.Queryable().FirstOrDefaultAsync(x => x.Name == "Cell", ct);
+
             var allActiveGroups = await _groupDbRepository.Queryable()
                 .AsNoTracking()
                 .Where(x => 
                     x.ChurchId == query.ChurchId &&
+                    x.GroupTypeId == cellGroupType.Id &&
                     x.RecordStatus == RecordStatus.Active)
                 .Select(x => new { x.Id, x.Name })
                 .ToListAsync(ct);
-
-            // TODO: Pass in group type id from so we can support all groups
-            var cellGroupType = await _groupTypeRepo.Queryable().FirstOrDefaultAsync(x => x.Name == "Cell", ct);
 
             var spec = new AttendanceReportSubmissionsSpecification(cellGroupType.Id, query.PeriodType);
             var groupIdsWithReports = await _dbRepository.ListAsync<int>(spec, ct);
