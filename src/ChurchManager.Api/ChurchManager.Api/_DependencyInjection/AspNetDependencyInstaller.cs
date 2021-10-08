@@ -1,5 +1,5 @@
-﻿using Bugsnag.AspNet.Core;
-using ChurchManager.Api.Extensions;
+﻿using ChurchManager.Api.Extensions;
+using ChurchManager.Api.Middlewares;
 using CodeBoss.AspNetCore.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -20,7 +20,9 @@ namespace ChurchManager.Api._DependencyInjection
             // API version
             services.AddApiVersioningExtension();
             // API explorer
-            services.AddMvcCore()
+            services.AddMvcCore(options => {
+                    options.Filters.Add<OperationCancelledExceptionFilter>();
+                })
                 .AddApiExplorer();
             // API explorer version
             services.AddVersionedApiExplorerExtension();

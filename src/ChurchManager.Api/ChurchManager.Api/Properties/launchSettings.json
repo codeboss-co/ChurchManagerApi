@@ -24,7 +24,9 @@
       "launchBrowser": true,
       "launchUrl": "api/swagger",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Production"
+        "ASPNETCORE_ENVIRONMENT": "Production",
+        "DbOptions__Seed": "false",
+        "DbOptions__Migrate": "false"
       },
       "dotnetRunMessages": "true",
       "applicationUrl": "http://localhost:5001"
@@ -34,7 +36,9 @@
       "launchBrowser": true,
       "launchUrl": "api/swagger",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Test"
+        "ASPNETCORE_ENVIRONMENT": "Test",
+        "DbOptions__Seed": "false",
+        "DbOptions__Migrate": "false"
       },
       "dotnetRunMessages": "true",
       "applicationUrl": "http://localhost:5001"
