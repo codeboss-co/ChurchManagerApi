@@ -1,15 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Bogus;
+﻿using Bogus;
 using ChurchManager.Domain.Features.Groups;
 using ChurchManager.Infrastructure.Persistence.Contexts;
 using CodeBoss.AspNetCore.Startup;
 using Ical.Net.Serialization;
-using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace ChurchManager.Infrastructure.Persistence.Seeding.Development
 {
@@ -27,6 +26,10 @@ namespace ChurchManager.Infrastructure.Persistence.Seeding.Development
         // Cell Group Type
         private readonly GroupType _sectionGroupType = new() { Name = "Section", Description = "Group Section", IconCssClass = "heroicons_outline:collection" };
         private readonly GroupType _cellGroupType = new() { Name = "Cell", Description = "Cell Ministry", IconCssClass = "heroicons_outline:share" };
+
+        private GroupTypeRole _cellLeaderRole;
+        private GroupTypeRole _cellAssistantRole;
+        private GroupTypeRole _cellMemberRole;
 
         private static readonly CalendarSerializer CalendarSerializer = new();
 
@@ -46,20 +49,20 @@ namespace ChurchManager.Infrastructure.Persistence.Seeding.Development
 
             if (!await _dbContext.GroupTypeRole.AnyAsync())
             {
-                var cellLeaderRole = new GroupTypeRole
+                _cellLeaderRole = new GroupTypeRole
                 {
                     Name = "Leader", Description = "Cell Leader", IsLeader = true,
                     CanView = true, CanEdit = true, CanManageMembers = true,
                     GroupType = _cellGroupType
                 };
-                var cellAssistantRole = new GroupTypeRole
+                _cellAssistantRole = new GroupTypeRole
                     { Name = "Assistant", Description = "Assistant Leader", GroupType = _cellGroupType, IsLeader = true };
-                var cellMemberRole = new GroupTypeRole
+                _cellMemberRole = new GroupTypeRole
                     { Name = "Member", Description = "Group Member", GroupType = _cellGroupType };
 
-                await _dbContext.GroupTypeRole.AddAsync(cellLeaderRole);
-                await _dbContext.GroupTypeRole.AddAsync(cellAssistantRole);
-                await _dbContext.GroupTypeRole.AddAsync(cellMemberRole);
+                await _dbContext.GroupTypeRole.AddAsync(_cellLeaderRole);
+                await _dbContext.GroupTypeRole.AddAsync(_cellAssistantRole);
+                await _dbContext.GroupTypeRole.AddAsync(_cellMemberRole);
 
                 await _dbContext.SaveChangesAsync();
             }
@@ -182,11 +185,11 @@ namespace ChurchManager.Infrastructure.Persistence.Seeding.Development
 
             var cellLeader = new Faker<GroupMember>()
                 .RuleFor(u => u.PersonId, f => groupLeaderPersonId ?? random.Next(2, totalPeopleInDb / 2)) // The personIds generated
-                .RuleFor(u => u.GroupRoleId, f => 1);
+                .RuleFor(u => u.GroupRoleId, f => _cellLeaderRole.Id);
 
             var cellMember = new Faker<GroupMember>()
                 .RuleFor(u => u.PersonId, f => random.Next((totalPeopleInDb / 2)+1, totalPeopleInDb))
-                .RuleFor(u => u.GroupRoleId, f => random.Next(2, 4));
+                .RuleFor(u => u.GroupRoleId, f => _cellMemberRole.Id);
 
             var cellGroupMembers = cellMember.Generate(random.Next(1, 16));
 
