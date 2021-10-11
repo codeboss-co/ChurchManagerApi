@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using ChurchManager.Application.ViewModels;
@@ -28,7 +29,7 @@ namespace ChurchManager.Application.Features.Churches.Queries.RetrieveChurches
         public async Task<ApiResponse> Handle(ChurchesQuery query, CancellationToken ct)
         {
             var vm = await _mapper
-                .ProjectTo<ChurchViewModel>(_dbRepository.Queryable())
+                .ProjectTo<ChurchViewModel>(_dbRepository.Queryable().OrderBy(x => x.Name))
                 .ToListAsync(ct);
 
             return new ApiResponse(vm);

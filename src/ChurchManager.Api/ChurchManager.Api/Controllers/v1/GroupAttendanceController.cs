@@ -1,9 +1,10 @@
 ﻿using ChurchManager.Application.Features.Groups.Commands.DeleteGroupAttendanceRecord;
+using ChurchManager.Application.Features.Groups.Queries.Reports.AttendanceReportGrid;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading;
 using System.Threading.Tasks;
-using ChurchManager.Application.Features.Groups.Queries.Reports.AttendanceReportGrid;
+using ChurchManager.Application.Features.Groups.Queries.GroupAttendanceRecordSubmissions;
 
 namespace ChurchManager.Api.Controllers.v1
 {
@@ -21,6 +22,13 @@ namespace ChurchManager.Api.Controllers.v1
 
         [HttpPost("attendance-report-grid")]
         public async Task<IActionResult> AttendanceReportGrid([FromBody] AttendanceReportGridQuery query, CancellationToken token)
+        {
+            var data = await Mediator.Send(query, token);
+            return Ok(data);
+        }
+
+        [HttpPost("report-submissions")]
+        public async Task<IActionResult> GroupAttendanceRecordSubmissions([FromBody] GroupAttendanceRecordSubmissionsQuery query, CancellationToken token)
         {
             var data = await Mediator.Send(query, token);
             return Ok(data);

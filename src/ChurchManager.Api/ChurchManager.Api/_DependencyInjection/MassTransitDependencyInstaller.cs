@@ -1,7 +1,5 @@
-﻿using System;
-using System.Reflection;
-using ChurchManager.Api.Hubs;
-using ChurchManager.Application.Tests;
+﻿using ChurchManager.Application.Tests;
+using ChurchManager.Infrastructure.Shared.SignalR.Hubs;
 using CodeBoss.AspNetCore.DependencyInjection;
 using MassTransit;
 using MassTransit.Definition;
@@ -9,6 +7,7 @@ using MassTransit.SignalR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System;
 
 namespace ChurchManager.Api._DependencyInjection
 {

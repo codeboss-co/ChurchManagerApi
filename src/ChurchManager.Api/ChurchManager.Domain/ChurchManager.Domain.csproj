@@ -6,14 +6,15 @@
 
   <ItemGroup>
     <PackageReference Include="Bugsnag.AspNet.Core" Version="2.2.1" />
+    <PackageReference Include="CodeBoss.MassTransit" Version="0.1.19" />
     <PackageReference Include="Convey.CQRS.Queries" Version="0.5.433" />
     <PackageReference Include="Ical.Net" Version="4.2.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.4" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="CodeBoss.Extensions" Version="0.1.18" />
-    <PackageReference Include="CodeBoss.MultiTenant" Version="0.1.18" />
+    <PackageReference Include="CodeBoss.Extensions" Version="0.1.19" />
+    <PackageReference Include="CodeBoss.MultiTenant" Version="0.1.19" />
   </ItemGroup>
   
   <ItemGroup>
