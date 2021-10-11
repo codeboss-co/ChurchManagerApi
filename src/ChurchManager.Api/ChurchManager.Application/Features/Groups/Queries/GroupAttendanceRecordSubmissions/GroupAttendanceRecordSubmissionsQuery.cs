@@ -40,14 +40,25 @@ namespace ChurchManager.Application.Features.Groups.Queries.GroupAttendanceRecor
             // TODO: Pass in group type id from so we can support all groups
             var cellGroupType = await _groupTypeRepo.Queryable().FirstOrDefaultAsync(x => x.Name == "Cell", ct);
 
-            var allActiveGroups = await _groupDbRepository.Queryable()
+            var allActiveGroups = await _groupDbRepository.Queryable("Members", "Members.GroupRole", "Members.Person")
                 .AsNoTracking()
                 .Where(x => 
                     x.ChurchId == query.ChurchId &&
                     x.GroupTypeId == cellGroupType.Id &&
                     x.RecordStatus == RecordStatus.Active)
-                .Select(x => new { x.Id, x.Name })
+                .Select(x => 
+                    new { x.Id, x.Name,
+                        Leader = x.Members.FirstOrDefault(m => 
+                             m.GroupRole.IsLeader &&
+                             m.RecordStatus == RecordStatus.Active) })
                 .ToListAsync(ct);
+
+            /*var allActiveGroups = allActiveGroupsWithLeaders.Select(x =>
+            {
+                var leaderName = x.Leader?.Person?.FullName?.ToString();
+
+                return new { x.Id, x.Name, Leader = leaderName };
+            });*/
 
             var spec = new AttendanceReportSubmissionsSpecification(cellGroupType.Id, query.PeriodType);
             var groupIdsWithReports = await _dbRepository.ListAsync<int>(spec, ct);
@@ -55,14 +66,14 @@ namespace ChurchManager.Application.Features.Groups.Queries.GroupAttendanceRecor
             var groupsWithReports = groupIdsWithReports.Join(allActiveGroups,  // Join lists
                 groupId => groupId, // Join key
                 activeGroup => activeGroup.Id, // Join key
-                (_, activeGroup) => new { activeGroup.Id, activeGroup.Name });  // Selection
+                (_, activeGroup) => new { activeGroup.Id, activeGroup.Name, activeGroup.Leader });  // Selection
 
             var groupIdsWithoutReports = allActiveGroups.Select(x => x.Id).Except(groupsWithReports.Select(x => x.Id));
 
             var groupsWithoutReports = groupIdsWithoutReports.Join(allActiveGroups,  // Join lists
                 groupId => groupId, // Join key
                 activeGroup => activeGroup.Id, // Join key
-                (_, activeGroup) => new { activeGroup.Id, activeGroup.Name });  // Selection
+                (_, activeGroup) => new { activeGroup.Id, activeGroup.Name, activeGroup.Leader });  // Selection
 
             return new ApiResponse(new { groupsWithReports, groupsWithoutReports });
         }
