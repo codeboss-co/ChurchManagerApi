@@ -73,29 +73,37 @@ namespace ChurchManager.Infrastructure.Shared.SignalR.Hubs
 
             await Clients.All.SendAsync("OnlineUsers", onlineUsers);*/
 
+            // Add user connections to a group for that user
+            await Groups.AddToGroupAsync(connectionId, userId);
+
             await base.OnConnectedAsync();
         }
 
         public override async Task OnDisconnectedAsync(Exception ex)
         {
-            /*var userId = Context.UserIdentifier;
-            var onlineUser = await _onlineUserRepository
-                .Queryable()
-                .Include(x => x.Person)
-                .FirstOrDefaultAsync(p => p.Person.UserLoginId == userId);
+            var connectionId = Context.ConnectionId;
+            var userId = Context.UserIdentifier;
+            
+            /*var onlineUser = await _onlineUserRepository
+               .Queryable()
+               .Include(x => x.Person)
+               .FirstOrDefaultAsync(p => p.Person.UserLoginId == userId);
 
-            if(onlineUser is not null && onlineUser.IsOnline)
-            {
-                _logger.LogDebug("[x] NotificationHub Disconnected for {user} with Connection: {connection}", Context.UserIdentifier, Context.ConnectionId);
+           if(onlineUser is not null && onlineUser.IsOnline)
+           {
+               _logger.LogDebug("[x] NotificationHub Disconnected for {user} with Connection: {connection}", Context.UserIdentifier, Context.ConnectionId);
 
-                onlineUser.GoOffline();
-                await _onlineUserRepository.SaveChangesAsync();
+               onlineUser.GoOffline();
+               await _onlineUserRepository.SaveChangesAsync();
 
-                var onlineUsersSpec = new OnlineUsersSpecification(_dateTime);
-                var onlineUsers = await _onlineUserRepository.ListAsync(onlineUsersSpec);
+               var onlineUsersSpec = new OnlineUsersSpecification(_dateTime);
+               var onlineUsers = await _onlineUserRepository.ListAsync(onlineUsersSpec);
 
-                await Clients.All.SendAsync("OnlineUsers", onlineUsers);
-            }*/
+               await Clients.All.SendAsync("OnlineUsers", onlineUsers);
+           }*/
+
+            // Remove user connection to a group for that user
+            await Groups.RemoveFromGroupAsync(connectionId, userId);
 
             await base.OnDisconnectedAsync(ex);
         }

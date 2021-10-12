@@ -3,7 +3,7 @@
 namespace ChurchManager.Domain.Common
 {
     /// <summary>
-    /// Schedule Type
+    /// PeriodType Type
     /// </summary>
     [Flags]
     public enum PeriodType
@@ -37,5 +37,42 @@ namespace ChurchManager.Domain.Common
         /// LastMonth
         /// </summary>
         LastMonth = 60,
+    }
+
+    /// <summary>
+    /// ReportPeriodType Type
+    /// </summary>
+    [Flags]
+    public enum ReportPeriodType
+    {
+        /// <summary>
+        /// Day
+        /// </summary>
+        Day = 10,
+
+        /// <summary>
+        /// Month
+        /// </summary>
+        Week = 20,
+
+        /// <summary>
+        /// Month
+        /// </summary>
+        Month = 30,
+
+        /// <summary>
+        /// ThreeMonths
+        /// </summary>
+        ThreeMonths = 40,
+
+        /// <summary>
+        /// SixMonths
+        /// </summary>
+        SixMonths = 50,
+
+        /// <summary>
+        /// OneYear
+        /// </summary>
+        OneYear = 60
     }
 }
