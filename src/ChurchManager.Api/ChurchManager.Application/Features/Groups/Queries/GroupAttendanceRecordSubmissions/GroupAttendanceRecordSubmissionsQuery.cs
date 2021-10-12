@@ -1,19 +1,18 @@
-using System.Collections.Generic;
 using ChurchManager.Application.Wrappers;
 using ChurchManager.Domain.Common;
+using ChurchManager.Domain.Features.Groups;
 using ChurchManager.Domain.Features.Groups.Repositories;
 using ChurchManager.Domain.Features.Groups.Specifications;
-using MediatR;
-using Microsoft.EntityFrameworkCore;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using ChurchManager.Domain.Features.Groups;
-using ChurchManager.Domain.Features.People;
 using ChurchManager.Infrastructure.Abstractions.Persistence;
 using ChurchManager.Infrastructure.Persistence.Contexts;
 using CodeBoss.Extensions;
+using MediatR;
+using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace ChurchManager.Application.Features.Groups.Queries.GroupAttendanceRecordSubmissions
 {
@@ -33,7 +32,6 @@ namespace ChurchManager.Application.Features.Groups.Queries.GroupAttendanceRecor
         public GroupAttendanceRecordSubmissionsHandler(
             IGroupDbRepository groupDbRepository,
             IGroupAttendanceDbRepository dbRepository,
-            IGroupMemberDbRepository groupMemberDbRepository,
             IGenericDbRepository<GroupType> groupTypeRepo)
         {
             _groupDbRepository = groupDbRepository;
@@ -105,7 +103,7 @@ namespace ChurchManager.Application.Features.Groups.Queries.GroupAttendanceRecor
             return false;
         }
 
-        public int GetHashCode([DisallowNull] GroupSubmission obj) => obj.GetHashCode();
+        public int GetHashCode([DisallowNull] GroupSubmission obj) => obj.GroupId;
     }
 
     public record GroupSubmission(int GroupId, int PersonId, string PersonName)

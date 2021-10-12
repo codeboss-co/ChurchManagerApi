@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Threading;
 using System.Threading.Tasks;
 using ChurchManager.Application.Features.Groups.Queries.GroupAttendanceRecordSubmissions;
+using ChurchManager.Application.Features.Groups.Queries.GroupMemberAttendance;
 
 namespace ChurchManager.Api.Controllers.v1
 {
@@ -29,6 +30,13 @@ namespace ChurchManager.Api.Controllers.v1
 
         [HttpPost("report-submissions")]
         public async Task<IActionResult> GroupAttendanceRecordSubmissions([FromBody] GroupAttendanceRecordSubmissionsQuery query, CancellationToken token)
+        {
+            var data = await Mediator.Send(query, token);
+            return Ok(data);
+        }
+
+        [HttpGet("members-attendance")]
+        public async Task<IActionResult> GroupMembersAttendance([FromQuery] GroupMembersAttendanceQuery query, CancellationToken token)
         {
             var data = await Mediator.Send(query, token);
             return Ok(data);
