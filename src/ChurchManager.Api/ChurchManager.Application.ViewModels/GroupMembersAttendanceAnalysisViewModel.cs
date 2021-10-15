@@ -6,18 +6,19 @@ namespace ChurchManager.Application.ViewModels
     public record GroupMembersAttendanceAnalysisViewModel
     {
         public IEnumerable<GroupMemberAttendanceAnalysisViewModel> MembersAttendance { get; set; }
+        public DateTime[] AttendanceDates { get; set; }
+
+        public GroupMembersAttendanceAnalysisViewModel(int capacity)
+        {
+            MembersAttendance = new List<GroupMemberAttendanceAnalysisViewModel>(capacity);
+        }
+
     }
 
     public record GroupMemberAttendanceAnalysisViewModel
     {
         public int GroupMemberId { get; set; }
-        public IEnumerable<GroupMemberAttendanceRecord> AttendanceRecords { get; set; }
-    }
-
-    public record GroupMemberAttendanceRecord
-    {
-        public DateTime AttendanceDate { get; set; }
-        public bool? DidAttend { get; set; }
+        public bool?[] AttendanceRecords { get; set; }
     }
 }
 

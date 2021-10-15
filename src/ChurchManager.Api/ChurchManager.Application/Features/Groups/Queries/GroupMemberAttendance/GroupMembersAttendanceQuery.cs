@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using ChurchManager.Application.ViewModels;
+﻿using ChurchManager.Application.ViewModels;
 using ChurchManager.Application.Wrappers;
 using ChurchManager.Domain.Common;
 using ChurchManager.Domain.Features.Groups.Repositories;
 using ChurchManager.Domain.Features.Groups.Specifications;
 using MediatR;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace ChurchManager.Application.Features.Groups.Queries.GroupMemberAttendance
 {
@@ -28,28 +26,21 @@ namespace ChurchManager.Application.Features.Groups.Queries.GroupMemberAttendanc
             var spec = new GroupMembersAttendanceAnalysisSpecification(query.GroupId, query.Period);
             var results = await _attendanceDbRepository.ListAsync(spec, ct);
 
-            var attendance = new List<GroupMemberAttendanceAnalysisViewModel>(results.Count);
-
-            results.ForEach(x =>
+            var groupByMember = results.GroupBy(x => x.GroupMemberId);
+            var groupMemberAttendances = groupByMember.Select(@group => new GroupMemberAttendanceAnalysisViewModel
             {
-                attendance.Add(
-                    new()
-                    {
-                        GroupMemberId = x.GroupMemberId,
-                        AttendanceRecords = new List<GroupMemberAttendanceRecord>()
-                    });
+                GroupMemberId = @group.Key,
+                AttendanceRecords = @group.Select(x => x.DidAttend).ToArray(),
             });
 
-            var vm = new GroupMembersAttendanceAnalysisViewModel
+            var analysis = new GroupMembersAttendanceAnalysisViewModel(results.Count)
             {
-                MembersAttendance = attendance
+                MembersAttendance = groupMemberAttendances,
+                AttendanceDates = groupByMember.SelectMany(x => x.Select(y => y.AttendanceDate)).ToArray()
             };
 
-            var test = vm.MembersAttendance.GroupBy(x => x.GroupMemberId);
 
-
-
-            return new ApiResponse(vm);
+            return new ApiResponse(analysis);
         }
     }
 }
