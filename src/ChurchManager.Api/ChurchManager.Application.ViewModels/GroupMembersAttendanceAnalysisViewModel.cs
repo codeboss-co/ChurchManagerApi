@@ -18,6 +18,8 @@ namespace ChurchManager.Application.ViewModels
     public record GroupMemberAttendanceAnalysisViewModel
     {
         public int GroupMemberId { get; set; }
+        public int PersonId { get; set; }
+        public string PersonName { get; set; }
         public bool?[] AttendanceRecords { get; set; }
     }
 }

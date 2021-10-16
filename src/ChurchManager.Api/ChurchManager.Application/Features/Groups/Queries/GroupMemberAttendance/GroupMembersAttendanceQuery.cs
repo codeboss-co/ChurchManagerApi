@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace ChurchManager.Application.Features.Groups.Queries.GroupMemberAttendance
 {
-    public record GroupMembersAttendanceQuery(int GroupId, ReportPeriodType Period) : IRequest<ApiResponse>;
+    public record GroupMembersAttendanceQuery(int GroupId, PeriodType Period) : IRequest<ApiResponse>;
 
     public class GroupMembersAttendanceHandler : IRequestHandler<GroupMembersAttendanceQuery, ApiResponse>
     {
@@ -26,17 +26,23 @@ namespace ChurchManager.Application.Features.Groups.Queries.GroupMemberAttendanc
             var spec = new GroupMembersAttendanceAnalysisSpecification(query.GroupId, query.Period);
             var results = await _attendanceDbRepository.ListAsync(spec, ct);
 
-            var groupByMember = results.GroupBy(x => x.GroupMemberId);
+            var groupByMember = results.GroupBy(x => new { x.GroupMemberId , x.GroupMember.PersonId, FullName = x.GroupMember.Person.FullName.ToString()}).ToList();
             var groupMemberAttendances = groupByMember.Select(@group => new GroupMemberAttendanceAnalysisViewModel
             {
-                GroupMemberId = @group.Key,
+                GroupMemberId = @group.Key.GroupMemberId,
+                PersonId = @group.Key.PersonId,
+                PersonName = @group.Key.FullName,
                 AttendanceRecords = @group.Select(x => x.DidAttend).ToArray(),
             });
 
             var analysis = new GroupMembersAttendanceAnalysisViewModel(results.Count)
             {
                 MembersAttendance = groupMemberAttendances,
-                AttendanceDates = groupByMember.SelectMany(x => x.Select(y => y.AttendanceDate)).ToArray()
+                // So we can map attendance array to attendance date header
+                AttendanceDates = groupByMember.SelectMany(x => x.Select(y => y.AttendanceDate))
+                    .Distinct()
+                    .OrderBy(x => x)
+                    .ToArray()
             };
 
 

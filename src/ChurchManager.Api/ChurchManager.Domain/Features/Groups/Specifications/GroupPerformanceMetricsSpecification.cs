@@ -23,7 +23,10 @@ namespace ChurchManager.Domain.Features.Groups.Specifications
                     from = DateTime.UtcNow.StartOfMonth();
                     to = DateTime.UtcNow.EndOfMonth();
                     break;
-
+                case PeriodType.LastMonth:
+                    from = DateTime.UtcNow.AddMonths(-1).StartOfMonth();
+                    to = DateTime.UtcNow.AddMonths(-1).EndOfMonth();
+                    break;
                 case PeriodType.ThisYear:
                     from = new DateTime(DateTime.UtcNow.Year, 1, 1);
                     to = DateTime.UtcNow.EndOfMonth();

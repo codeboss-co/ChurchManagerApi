@@ -16,14 +16,9 @@ using System.Threading.Tasks;
 
 namespace ChurchManager.Application.Features.Groups.Queries.GroupAttendanceRecordSubmissions
 {
-    public record GroupAttendanceRecordSubmissionsQuery : IRequest<ApiResponse>
-    {
-        public int ChurchId { get; set; }
-        public PeriodType PeriodType { get; set; }
-    }
+    public record GroupAttendanceRecordSubmissionsQuery(int ChurchId, PeriodType PeriodType) : IRequest<ApiResponse>;
 
-    public class
-        GroupAttendanceRecordSubmissionsHandler : IRequestHandler<GroupAttendanceRecordSubmissionsQuery, ApiResponse>
+    public class GroupAttendanceRecordSubmissionsHandler : IRequestHandler<GroupAttendanceRecordSubmissionsQuery, ApiResponse>
     {
         private readonly IGroupDbRepository _groupDbRepository;
         private readonly IGroupAttendanceDbRepository _dbRepository;
@@ -119,6 +114,4 @@ namespace ChurchManager.Application.Features.Groups.Queries.GroupAttendanceRecor
     public record GroupSubmission(int GroupId, int PersonId, string PersonName)
     {
     }
-
-
 }
