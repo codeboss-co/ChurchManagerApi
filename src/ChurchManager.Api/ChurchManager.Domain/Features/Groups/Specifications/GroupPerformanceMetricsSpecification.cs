@@ -5,20 +5,18 @@ using System;
 
 namespace ChurchManager.Domain.Features.Groups.Specifications
 {
-    public class GroupMembersAttendanceAnalysisSpecification : Specification<GroupMemberAttendance>
+    public class GroupPerformanceMetricsSpecification : Specification<GroupMemberAttendance>
     {
-        public GroupMembersAttendanceAnalysisSpecification(int groupId, PeriodType periodType)
+        public GroupPerformanceMetricsSpecification(int groupId, PeriodType periodType)
         {
             Query.AsNoTracking();
-
-            Query.Include("GroupMember.Person");
 
             // Group Filter
             Query.Where(g => g.GroupId == groupId);
 
             // Date Filters
             DateTime from = DateTime.UtcNow;
-            DateTime to = DateTime.UtcNow.AddMonths(-3);
+            DateTime to = DateTime.UtcNow.AddYears(-2);
             switch (periodType)
             {
                 case PeriodType.ThisMonth:

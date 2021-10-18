@@ -7,6 +7,7 @@ using ChurchManager.Application.Features.Groups.Commands.NewGroup;
 using ChurchManager.Application.Features.Groups.Commands.RemoveGroupMember;
 using ChurchManager.Application.Features.Groups.Queries.BrowsePersonsGroups;
 using ChurchManager.Application.Features.Groups.Queries.GroupMembers;
+using ChurchManager.Application.Features.Groups.Queries.GroupPerformanceMetrics;
 using ChurchManager.Application.Features.Groups.Queries.GroupRoles;
 using ChurchManager.Application.Features.Groups.Queries.GroupsForChurch;
 using ChurchManager.Application.Features.Groups.Queries.GroupsForPerson;
@@ -157,6 +158,12 @@ namespace ChurchManager.Api.Controllers.v1
         public async Task<IActionResult> EditGroup([FromBody] EditGroupCommand command, CancellationToken token)
         {
             var response = await Mediator.Send(command, token);
+            return Ok(response);
+        }
+
+        [HttpPost("{groupId}/performance-metrics")]
+        public async Task<IActionResult> GroupPerformanceMetrics([FromBody] GroupPerformanceMetricsQuery query, CancellationToken token) {
+            var response = await Mediator.Send(query, token);
             return Ok(response);
         }
     }
