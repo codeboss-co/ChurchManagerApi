@@ -16,14 +16,9 @@ using System.Threading.Tasks;
 
 namespace ChurchManager.Application.Features.Groups.Queries.GroupAttendanceRecordSubmissions
 {
-    public record GroupAttendanceRecordSubmissionsQuery : IRequest<ApiResponse>
-    {
-        public int ChurchId { get; set; }
-        public PeriodType PeriodType { get; set; }
-    }
+    public record GroupAttendanceRecordSubmissionsQuery(int ChurchId, PeriodType PeriodType) : IRequest<ApiResponse>;
 
-    public class
-        GroupAttendanceRecordSubmissionsHandler : IRequestHandler<GroupAttendanceRecordSubmissionsQuery, ApiResponse>
+    public class GroupAttendanceRecordSubmissionsHandler : IRequestHandler<GroupAttendanceRecordSubmissionsQuery, ApiResponse>
     {
         private readonly IGroupDbRepository _groupDbRepository;
         private readonly IGroupAttendanceDbRepository _dbRepository;
@@ -69,18 +64,23 @@ namespace ChurchManager.Application.Features.Groups.Queries.GroupAttendanceRecor
                 .Distinct(new GroupSubmissionComparer())
                 .ToDictionary(t => t.GroupId, t => t);
 
+            // Get attendance reports for the period
             var spec = new AttendanceReportSubmissionsSpecification(cellGroupType.Id, query.PeriodType);
             var groupIdsWithReports = await _dbRepository.ListAsync<int>(spec, ct);
 
+            // Groups with Reports
             var groupsWithReports = groupIdsWithReports.Join(allActiveGroups, // Join lists
                 groupId => groupId, // Join key
                 activeGroup => activeGroup.Id, // Join key
                 (_, activeGroup) => new
                 {
                     activeGroup.Id, activeGroup.Name, Leader = groupLeaderInfoMap.GetOrDefault(activeGroup.Id)
-                }); // Selection
+                })
+                .ToList(); // Selection
 
-            var groupIdsWithoutReports = allActiveGroups.Select(x => x.Id).Except(groupsWithReports.Select(x => x.Id));
+            // Groups without Reports
+            var groupIdsWithoutReports = allActiveGroups.Select(x => x.Id)
+                .Except(groupsWithReports.Select(x => x.Id));
 
             var groupsWithoutReports = groupIdsWithoutReports.Join(allActiveGroups, // Join lists
                 groupId => groupId, // Join key
@@ -88,9 +88,14 @@ namespace ChurchManager.Application.Features.Groups.Queries.GroupAttendanceRecor
                 (_, activeGroup) => new
                 {
                     activeGroup.Id, activeGroup.Name, Leader = groupLeaderInfoMap.GetOrDefault(activeGroup.Id)
-                }); // Selection
+                })
+                .ToList(); // Selection
 
-            return new ApiResponse(new { groupsWithReports, groupsWithoutReports });
+            return new ApiResponse(new
+            {
+                groupsWithReports = groupsWithReports.OrderBy(x => x.Name),
+                groupsWithoutReports = groupsWithoutReports.OrderBy(x => x.Name),
+            });
         }
     }
 
@@ -109,6 +114,4 @@ namespace ChurchManager.Application.Features.Groups.Queries.GroupAttendanceRecor
     public record GroupSubmission(int GroupId, int PersonId, string PersonName)
     {
     }
-
-
 }

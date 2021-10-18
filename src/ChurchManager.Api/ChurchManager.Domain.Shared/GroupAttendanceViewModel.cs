@@ -14,13 +14,16 @@ namespace ChurchManager.Domain.Shared
         public int? FirstTimerCount { get; set; }
         public int? NewConvertCount { get; set; }
         public int? ReceivedHolySpiritCount { get; set; }
+        public double AttendanceRate { get; set; }
         public string Notes { get; set; }
         public IEnumerable<string> PhotoUrls { get; set; }
         public MoneyViewModel Offering { get; set; }
+        public IEnumerable<GroupMemberAttendanceViewModel> Attendees { get; set; }
     }
 
     public record GroupMemberAttendanceViewModel
     {
+        public DateTime AttendanceDate { get; set; }
         public int GroupMemberId { get; set; }
         public bool? DidAttend { get; set; } = true;
         public bool? IsFirstTime { get; set; }
