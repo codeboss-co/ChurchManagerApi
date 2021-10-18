@@ -99,7 +99,7 @@ namespace ChurchManager.Application.Features.Groups.Queries.GroupMemberAttendanc
                     .OrderBy(x => x)
                     .ToArray(),
 
-                AvgAttendanceRate = results.Average(x => x.AttendanceRate)
+                AvgAttendanceRate = results.Any() ? results.Average(x => x.AttendanceRate) :  0
             };
 
             return new ApiResponse(analysis);
