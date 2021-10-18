@@ -1,14 +1,13 @@
-﻿using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using ChurchManager.Application.Features.Groups.Queries.GroupAttendanceRecordSubmissions;
-using ChurchManager.Application.Features.Groups.Queries.GroupMemberAttendance;
+﻿using ChurchManager.Application.Features.Groups.Queries.GroupMemberAttendance;
 using ChurchManager.Application.Wrappers;
 using ChurchManager.Domain.Common;
 using ChurchManager.Domain.Features.Groups.Repositories;
 using ChurchManager.Domain.Features.Groups.Specifications;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace ChurchManager.Application.Features.Groups.Queries.GroupPerformanceMetrics
 {
@@ -21,15 +20,18 @@ namespace ChurchManager.Application.Features.Groups.Queries.GroupPerformanceMetr
     public class GroupPerformanceMetricsHandler : IRequestHandler<GroupPerformanceMetricsQuery, ApiResponse>
     {
         private readonly IGroupMemberAttendanceDbRepository _dbRepository;
+        private readonly IGroupAttendanceDbRepository _groupAttendanceDbRepository;
         private readonly IGroupDbRepository _groupDbRepository;
         private readonly IMediator _mediator;
 
         public GroupPerformanceMetricsHandler(
             IGroupMemberAttendanceDbRepository dbRepository,
+            IGroupAttendanceDbRepository groupAttendanceDbRepository,
             IGroupDbRepository groupDbRepository,
             IMediator mediator)
         {
             _dbRepository = dbRepository;
+            _groupAttendanceDbRepository = groupAttendanceDbRepository;
             _groupDbRepository = groupDbRepository;
             _mediator = mediator;
         }
@@ -54,7 +56,7 @@ namespace ChurchManager.Application.Features.Groups.Queries.GroupPerformanceMetr
 
             #endregion
 
-            var attendanceRecords = (await _mediator.Send(new GroupMembersAttendanceQuery(query.GroupId, query.Period), ct)).Data;
+            var attendanceRecords = (await _mediator.Send(new GroupAttendanceQuery(query.GroupId, query.Period), ct)).Data;
 
             return new ApiResponse( new { metrics, attendanceRecords });
         }

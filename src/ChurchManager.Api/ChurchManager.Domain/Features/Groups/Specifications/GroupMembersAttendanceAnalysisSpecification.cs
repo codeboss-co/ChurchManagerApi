@@ -37,8 +37,6 @@ namespace ChurchManager.Domain.Features.Groups.Specifications
 
             Query.Where(g => g.AttendanceDate >= from);
             Query.Where(g => g.AttendanceDate <= to);
-
-          
         }
     }
 }

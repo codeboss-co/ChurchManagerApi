@@ -26,7 +26,10 @@ namespace ChurchManager.Application.Features.Groups.Queries.GroupMemberAttendanc
             var spec = new GroupMembersAttendanceAnalysisSpecification(query.GroupId, query.Period);
             var results = await _attendanceDbRepository.ListAsync(spec, ct);
 
-            var groupByMember = results.GroupBy(x => new { x.GroupMemberId , x.GroupMember.PersonId, FullName = x.GroupMember.Person.FullName.ToString()}).ToList();
+            var groupByMember = results
+                .GroupBy(x => new { x.GroupMemberId , x.GroupMember.PersonId, FullName = x.GroupMember.Person.FullName.ToString()})
+                .ToList();
+
             var groupMemberAttendances = groupByMember.Select(@group => new GroupMemberAttendanceAnalysisViewModel
             {
                 GroupMemberId = @group.Key.GroupMemberId,
@@ -45,6 +48,56 @@ namespace ChurchManager.Application.Features.Groups.Queries.GroupMemberAttendanc
                     .ToArray()
             };
 
+
+            return new ApiResponse(analysis);
+        }
+    }
+
+    /*
+     * -------------------------------------------------------------------------------------------------------------
+     */
+
+    public record GroupAttendanceQuery(int GroupId, PeriodType Period) : IRequest<ApiResponse>;
+
+    public class GroupAttendance2Handler : IRequestHandler<GroupAttendanceQuery, ApiResponse>
+    {
+        private readonly IGroupAttendanceDbRepository _attendanceDbRepository;
+
+        public GroupAttendance2Handler(IGroupAttendanceDbRepository attendanceDbRepository)
+        {
+            _attendanceDbRepository = attendanceDbRepository;
+        }
+
+        public async Task<ApiResponse> Handle(GroupAttendanceQuery query, CancellationToken ct)
+        {
+            var spec = new GroupAttendancesByGroupSpecification(query.GroupId, query.Period);
+            var results = await _attendanceDbRepository.ListAsync(spec, ct);
+
+            var attendances = results
+                .Select(x => new {x.AttendanceDate, x.Attendees})
+                .ToList();
+
+            var groupByMember = attendances.SelectMany(x => x.Attendees)
+                .GroupBy(x => new { x.GroupMemberId, x.GroupMember.PersonId, FullName = x.GroupMember.Person.FullName.ToString() })
+                .ToList();
+
+            var groupMemberAttendances = groupByMember.Select(@group => new GroupMemberAttendanceAnalysisViewModel
+            {
+                GroupMemberId = @group.Key.GroupMemberId,
+                PersonId = @group.Key.PersonId,
+                PersonName = @group.Key.FullName,
+                AttendanceRecords = @group.Select(x => x.DidAttend).ToArray(),
+            });
+
+            var analysis = new GroupMembersAttendanceAnalysisViewModel(results.Count)
+            {
+                MembersAttendance = groupMemberAttendances,
+                // So we can map attendance array to attendance date header
+                AttendanceDates = groupByMember.SelectMany(x => x.Select(y => y.AttendanceDate))
+                    .Distinct()
+                    .OrderBy(x => x)
+                    .ToArray()
+            };
 
             return new ApiResponse(analysis);
         }
