@@ -1,4 +1,5 @@
 ﻿using ChurchManager.Application.Features.Groups.Queries.GroupMemberAttendance;
+using ChurchManager.Application.ViewModels;
 using ChurchManager.Application.Wrappers;
 using ChurchManager.Domain.Common;
 using ChurchManager.Domain.Features.Groups.Repositories;
@@ -38,6 +39,8 @@ namespace ChurchManager.Application.Features.Groups.Queries.GroupPerformanceMetr
 
         public async Task<ApiResponse> Handle(GroupPerformanceMetricsQuery query, CancellationToken ct)
         {
+            var attendanceRecords = (await _mediator.Send(new GroupAttendanceQuery(query.GroupId, query.Period), ct)).Data as GroupMembersAttendanceAnalysisViewModel;
+
             #region Metrics
 
             var spec = new GroupPerformanceMetricsSpecification(query.GroupId, query.Period);
@@ -52,11 +55,9 @@ namespace ChurchManager.Application.Features.Groups.Queries.GroupPerformanceMetr
                 firstTimerCount,
                 newConvertCount,
                 membersCount
-            }; 
-
+            };
+            
             #endregion
-
-            var attendanceRecords = (await _mediator.Send(new GroupAttendanceQuery(query.GroupId, query.Period), ct)).Data;
 
             return new ApiResponse( new { metrics, attendanceRecords });
         }

@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Linq;
 using Ardalis.Specification;
 using ChurchManager.Domain.Common;
+using ChurchManager.Domain.Shared;
 using CodeBoss.Extensions;
 
 namespace ChurchManager.Domain.Features.Groups.Specifications
@@ -17,7 +19,7 @@ namespace ChurchManager.Domain.Features.Groups.Specifications
         }  
     }
 
-    public class GroupAttendancesByGroupSpecification : Specification<GroupAttendance>
+    public class GroupAttendancesByGroupSpecification : Specification<GroupAttendance, GroupAttendanceViewModel>
     {
         public GroupAttendancesByGroupSpecification(int groupId, PeriodType periodType)
         {
@@ -50,6 +52,37 @@ namespace ChurchManager.Domain.Features.Groups.Specifications
             Query.Where(g => g.AttendanceDate <= to);
 
             Query.Where(g => g.DidNotOccur == null || (g.DidNotOccur.HasValue && !g.DidNotOccur.Value));
+
+            Query.Select(entity => new GroupAttendanceViewModel
+            {
+                Id = entity.Id,
+                // TODO: ChurchName = ???
+                GroupName = entity.Group.Name,
+                AttendanceDate = entity.AttendanceDate,
+                AttendanceRate = entity.AttendanceRate,
+                Attendees = entity.Attendees.Select(entityAttendee => new GroupMemberAttendanceViewModel
+                {
+                    AttendanceDate = entityAttendee.AttendanceDate,
+                    GroupMemberId = entityAttendee.GroupMemberId,
+                    DidAttend = entityAttendee.DidAttend,
+                    GroupMember = new GroupMemberViewModel
+                    {
+                        PersonId = entityAttendee.GroupMember.PersonId,
+                        FirstName = entityAttendee.GroupMember.Person.FullName.FirstName,
+                        MiddleName = entityAttendee.GroupMember.Person.FullName.MiddleName,
+                        LastName = entityAttendee.GroupMember.Person.FullName.LastName,
+                        PhotoUrl = entityAttendee.GroupMember.Person.PhotoUrl,
+                        // TODO: MiddleName = ???
+                        // TODO: LastName = ???
+                        // TODO: Gender = ???
+                        // TODO: PhotoUrl = ???
+                        // TODO: GroupMemberRoleId = ???
+                        // TODO: GroupMemberRole = ???
+                        // TODO: IsLeader = ???
+                        RecordStatus = entityAttendee.GroupMember.RecordStatus
+                    }
+                })
+            });
         }
     }
 }

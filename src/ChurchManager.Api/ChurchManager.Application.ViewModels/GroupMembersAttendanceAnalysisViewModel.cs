@@ -7,7 +7,7 @@ namespace ChurchManager.Application.ViewModels
     {
         public IEnumerable<GroupMemberAttendanceAnalysisViewModel> MembersAttendance { get; set; }
         public DateTime[] AttendanceDates { get; set; }
-
+        public double AvgAttendanceRate { get; set; }
         public GroupMembersAttendanceAnalysisViewModel(int capacity)
         {
             MembersAttendance = new List<GroupMemberAttendanceAnalysisViewModel>(capacity);

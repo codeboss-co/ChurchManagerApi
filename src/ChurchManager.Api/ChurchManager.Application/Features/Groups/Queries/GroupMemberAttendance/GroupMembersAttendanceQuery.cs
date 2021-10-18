@@ -3,6 +3,7 @@ using ChurchManager.Application.Wrappers;
 using ChurchManager.Domain.Common;
 using ChurchManager.Domain.Features.Groups.Repositories;
 using ChurchManager.Domain.Features.Groups.Specifications;
+using ChurchManager.Domain.Shared;
 using MediatR;
 using System.Linq;
 using System.Threading;
@@ -71,22 +72,22 @@ namespace ChurchManager.Application.Features.Groups.Queries.GroupMemberAttendanc
         public async Task<ApiResponse> Handle(GroupAttendanceQuery query, CancellationToken ct)
         {
             var spec = new GroupAttendancesByGroupSpecification(query.GroupId, query.Period);
-            var results = await _attendanceDbRepository.ListAsync(spec, ct);
+            var results = await _attendanceDbRepository.ListAsync<GroupAttendanceViewModel>(spec, ct);
 
             var attendances = results
                 .Select(x => new {x.AttendanceDate, x.Attendees})
                 .ToList();
 
             var groupByMember = attendances.SelectMany(x => x.Attendees)
-                .GroupBy(x => new { x.GroupMemberId, x.GroupMember.PersonId, FullName = x.GroupMember.Person.FullName.ToString() })
+                .GroupBy(x => new { x.GroupMemberId, x.GroupMember.PersonId, x.GroupMember.FirstName, x.GroupMember.LastName })
                 .ToList();
 
             var groupMemberAttendances = groupByMember.Select(@group => new GroupMemberAttendanceAnalysisViewModel
             {
                 GroupMemberId = @group.Key.GroupMemberId,
                 PersonId = @group.Key.PersonId,
-                PersonName = @group.Key.FullName,
-                AttendanceRecords = @group.Select(x => x.DidAttend).ToArray(),
+                PersonName = $"{@group.Key.FirstName} {@group.Key.LastName}",
+                AttendanceRecords = @group.Select(x => x.DidAttend).Take(10).ToArray()
             });
 
             var analysis = new GroupMembersAttendanceAnalysisViewModel(results.Count)
@@ -96,7 +97,9 @@ namespace ChurchManager.Application.Features.Groups.Queries.GroupMemberAttendanc
                 AttendanceDates = groupByMember.SelectMany(x => x.Select(y => y.AttendanceDate))
                     .Distinct()
                     .OrderBy(x => x)
-                    .ToArray()
+                    .ToArray(),
+
+                AvgAttendanceRate = results.Average(x => x.AttendanceRate)
             };
 
             return new ApiResponse(analysis);
