@@ -6,11 +6,13 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using ChurchManager.Domain.Features.Churches;
 using ChurchManager.Domain.Features.Groups;
+using ChurchManager.Persistence.Shared;
+using Codeboss.Types;
 
 namespace ChurchManager.Domain.Features.Missions
 {
     [Table("Mission")]
-    public class Mission
+    public class Mission : AuditableEntity<int>, IAggregateRoot<int>
     {
         [Required, MaxLength(50)]
         public string Name { get; set; }
@@ -28,7 +30,7 @@ namespace ChurchManager.Domain.Features.Missions
         /// Gets or sets the icon CSS class.
         /// </summary>
         [MaxLength(100)]
-        public string IconCssClass { get; set; } = "heroicons_solid:bookmark";
+        public string IconCssClass { get; set; } = "heroicons_solid:calendar";
 
         public DateTime? StartDateTime { get; set; }
 
