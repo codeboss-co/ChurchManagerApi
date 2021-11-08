@@ -25,5 +25,10 @@
     <ProjectReference Include="..\ChurchManager.Domain.Shared\ChurchManager.Domain.Shared.csproj" />
     <ProjectReference Include="..\ChurchManager.Infrastructure.Abstractions\ChurchManager.Infrastructure.Abstractions.csproj" />
   </ItemGroup>
+  
+  <ItemGroup>
+    <Folder Include="Features\Missions\Repositories\" />
+    <Folder Include="Features\Missions\Queries\" />
+  </ItemGroup>
 
 </Project>

@@ -756,6 +756,84 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                     b.ToTable("Schedule");
                 });
 
+            modelBuilder.Entity("ChurchManager.Domain.Features.Missions.Mission", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("Category")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<int?>("ChurchId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<DateTime?>("EndDateTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int?>("GroupId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("IconCssClass")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<DateTime?>("InactiveDateTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<string>("Notes")
+                        .HasColumnType("text");
+
+                    b.Property<int?>("PersonId")
+                        .HasColumnType("integer");
+
+                    b.Property<List<string>>("PhotoUrls")
+                        .HasColumnType("text[]");
+
+                    b.Property<string>("RecordStatus")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("StartDateTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("Type")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ChurchId");
+
+                    b.HasIndex("GroupId");
+
+                    b.HasIndex("PersonId");
+
+                    b.ToTable("Mission");
+                });
+
             modelBuilder.Entity("ChurchManager.Domain.Features.People.Family", b =>
                 {
                     b.Property<int>("Id")
@@ -1316,6 +1394,56 @@ namespace ChurchManager.Infrastructure.Persistence.Migrations
                         .HasForeignKey("GroupTypeId");
 
                     b.Navigation("GroupType");
+                });
+
+            modelBuilder.Entity("ChurchManager.Domain.Features.Missions.Mission", b =>
+                {
+                    b.HasOne("ChurchManager.Domain.Features.Churches.Church", "Church")
+                        .WithMany()
+                        .HasForeignKey("ChurchId");
+
+                    b.HasOne("ChurchManager.Domain.Features.Groups.Group", "Group")
+                        .WithMany()
+                        .HasForeignKey("GroupId");
+
+                    b.HasOne("ChurchManager.Domain.Features.People.Person", "Person")
+                        .WithMany()
+                        .HasForeignKey("PersonId");
+
+                    b.OwnsOne("ChurchManager.Domain.Features.Missions.Attendance", "Attendance", b1 =>
+                        {
+                            b1.Property<int>("MissionId")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("integer")
+                                .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                            b1.Property<int?>("AttendanceCount")
+                                .HasColumnType("integer");
+
+                            b1.Property<int?>("FirstTimerCount")
+                                .HasColumnType("integer");
+
+                            b1.Property<int?>("NewConvertCount")
+                                .HasColumnType("integer");
+
+                            b1.Property<int?>("ReceivedHolySpiritCount")
+                                .HasColumnType("integer");
+
+                            b1.HasKey("MissionId");
+
+                            b1.ToTable("Mission");
+
+                            b1.WithOwner()
+                                .HasForeignKey("MissionId");
+                        });
+
+                    b.Navigation("Attendance");
+
+                    b.Navigation("Church");
+
+                    b.Navigation("Group");
+
+                    b.Navigation("Person");
                 });
 
             modelBuilder.Entity("ChurchManager.Domain.Features.People.Family", b =>
