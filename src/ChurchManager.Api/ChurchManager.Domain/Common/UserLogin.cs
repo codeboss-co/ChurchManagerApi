@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using ChurchManager.Domain.Features.People;
+using ChurchManager.Persistence.Shared;
+using Codeboss.Types;
 
 namespace ChurchManager.Domain.Common
 {
-    public class UserLogin
+    public class UserLogin : Entity<int>, IAggregateRoot<int>
     {
         public Guid Id { get; set; }
         [Required]
@@ -16,7 +18,7 @@ namespace ChurchManager.Domain.Common
         public string Password { get; set; }
         public string RefreshToken { get; set; }
         public DateTime? RefreshTokenExpiryTime { get; set; }
-        public List<string> Roles { get; set; } = new List<string>(0);
+        public List<string> Roles { get; set; } = new(0);
 
         public int PersonId { get; set; }
 
