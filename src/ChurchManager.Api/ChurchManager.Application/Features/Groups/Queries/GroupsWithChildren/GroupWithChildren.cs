@@ -1,7 +1,9 @@
-﻿using System.Threading;
+﻿using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using ChurchManager.Application.Wrappers;
 using ChurchManager.Domain.Features.Groups.Repositories;
+using CodeBoss.Extensions;
 using MediatR;
 
 namespace ChurchManager.Application.Features.Groups.Queries.GroupsWithChildren
@@ -22,6 +24,11 @@ namespace ChurchManager.Application.Features.Groups.Queries.GroupsWithChildren
         public async Task<ApiResponse> Handle(GroupWithChildrenQuery query, CancellationToken ct)
         {
             var groups = await _dbRepository.GroupWithChildrenAsync(query.GroupId, maxDepth:2, ct: ct);
+
+            // Ordering
+            groups = groups.OrderBy(x => x.Name);
+            // Order the group children
+            groups.ForEach(x => x.Groups = x.Groups.OrderBy(x => x.Name));
 
             return new ApiResponse(groups);
         }
