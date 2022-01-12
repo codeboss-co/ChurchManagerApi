@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace ChurchManager.Api.Controllers.v1
 {
     [ApiVersion("1.0")]
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     public class UserLoginsController : BaseApiController
     {
         private readonly ILogger<UserLoginsController> _logger;
