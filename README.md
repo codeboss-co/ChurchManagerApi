@@ -1,10 +1,19 @@
 ﻿# Church Manager
 
+## Dependencies 
+
+	- RabbitMQ
+	- PostgreSQL
+	- Seq
+	- Jaeger
+
 ## Running Locally
 
 ### Prerequisites
 
 1. Run all the docker commands in the `docker containers` file in the root directory.
+
+> docker compose -f docker-compose.dependencies.yml up
 
 ### Database
 
