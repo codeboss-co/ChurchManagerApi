@@ -46,7 +46,7 @@ namespace ChurchManager.Application.Features.People.Commands.AddNewFamily
             {
                 var family = new Family
                 {
-                    Name = $"{command.FamilyName} Family",
+                    Name = $"{command.FamilyName}",
                     Address = new Domain.Features.People.Address
                     {
                         Street = command.Address.Street,

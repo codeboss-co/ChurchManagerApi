@@ -27,6 +27,7 @@ namespace ChurchManager.Application.Features.People.Commands.AddNewFamily
     public record FamilyMember
     {
         public int ChurchId { get; set; }
+        public int? FamilyId { get; set; }
         public string ConnectionStatus { get; set; }
         public string Source { get; set; }
         public DateTime? FirstVisitDate { get; set; }
