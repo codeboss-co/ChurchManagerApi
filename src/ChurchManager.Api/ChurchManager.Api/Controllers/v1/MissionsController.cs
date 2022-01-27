@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading;
 using System.Threading.Tasks;
+using ChurchManager.Application.Features.Missions.Commands.AddMission;
 
 namespace ChurchManager.Api.Controllers.v1
 {
@@ -23,6 +24,13 @@ namespace ChurchManager.Api.Controllers.v1
         public async Task<IActionResult> Browse([FromBody] BrowseMissionsQuery query, CancellationToken token)
         {
             var groups = await Mediator.Send(query, token);
+            return Ok(groups);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Browse([FromBody] AddMissionCommand command, CancellationToken token)
+        {
+            var groups = await Mediator.Send(command, token);
             return Ok(groups);
         }
 
