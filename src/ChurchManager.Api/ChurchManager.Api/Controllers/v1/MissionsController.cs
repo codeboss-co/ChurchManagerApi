@@ -28,10 +28,10 @@ namespace ChurchManager.Api.Controllers.v1
         }
 
         [HttpPost]
-        public async Task<IActionResult> Browse([FromBody] AddMissionCommand command, CancellationToken token)
+        public async Task<IActionResult> AddMission([FromBody] AddMissionCommand command, CancellationToken token)
         {
-            var groups = await Mediator.Send(command, token);
-            return Ok(groups);
+            await Mediator.Send(command, token);
+            return Accepted();
         }
 
         [HttpGet("{missionId}")]

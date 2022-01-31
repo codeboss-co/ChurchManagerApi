@@ -64,7 +64,7 @@ namespace ChurchManager.Domain.Features.Missions.Specifications
                 Query.Where(g => g.EndDateTime <= to.Value);
             }
 
-            Query.OrderBy(x => x.StartDateTime);
+            Query.OrderByDescending(x => x.StartDateTime);
 
             Query
                 .Skip(paging.CalculateSkip())

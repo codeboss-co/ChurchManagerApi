@@ -2,6 +2,10 @@
 using MediatR;
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.Threading;
+using System.Threading.Tasks;
+using ChurchManager.Domain.Common;
+using ChurchManager.Infrastructure.Abstractions.Persistence;
 
 namespace ChurchManager.Application.Features.Missions.Commands.AddMission
 {
@@ -47,5 +51,44 @@ namespace ChurchManager.Application.Features.Missions.Commands.AddMission
         public Attendance Attendance { get; set; }
 
         public string Notes { get; set; }
+    }
+
+    public class AddMissionHandler : IRequestHandler<AddMissionCommand>
+    {
+        private readonly IGenericDbRepository<Mission> _dbRepository;
+
+        public AddMissionHandler(IGenericDbRepository<Mission> dbRepository)
+        {
+            _dbRepository = dbRepository;
+        }
+
+        public async Task<Unit> Handle(AddMissionCommand command, CancellationToken ct)
+        {
+            var entity = Map(command);
+
+            await _dbRepository.AddAsync(entity, ct);
+
+            return Unit.Value;
+        }
+
+        public Mission Map(AddMissionCommand entity)
+        {
+            return new()
+            {
+                Name = entity.Name,
+                Description = entity.Description,
+                Type = entity.Type,
+                Category = entity.Category,
+                IconCssClass = entity.IconCssClass,
+                StartDateTime = entity.StartDateTime,
+                EndDateTime = entity.EndDateTime,
+                PersonId = entity.PersonId,
+                ChurchId = entity.ChurchId,
+                GroupId = entity.GroupId,
+                Attendance = entity.Attendance,
+                Notes = entity.Notes,
+                RecordStatus = RecordStatus.Active
+            };
+        }
     }
 }
