@@ -15,6 +15,14 @@ namespace ChurchManager.Domain.Shared
         public PeopleAutocompleteViewModel Person { get; set; }
         public AutocompleteResult Church { get; set; }
         public AutocompleteResult Group { get; set; }
+        public AttendanceViewModel Attendance { get; set; }
+    }
 
+    public class AttendanceViewModel
+    {
+        public int? AttendanceCount { get; set; }
+        public int? FirstTimerCount { get; set; }
+        public int? NewConvertCount { get; set; }
+        public int? ReceivedHolySpiritCount { get; set; }
     }
 }

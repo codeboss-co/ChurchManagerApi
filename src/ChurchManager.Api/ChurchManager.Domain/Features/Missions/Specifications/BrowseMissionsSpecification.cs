@@ -82,7 +82,14 @@ namespace ChurchManager.Domain.Features.Missions.Specifications
                 EndDateTime = x.EndDateTime,
                 Person = x.PersonId != null ? new PeopleAutocompleteViewModel(x.PersonId, x.Person.FullName.ToString(), x.Person.PhotoUrl, x.Person.ConnectionStatus) : null,
                 Church = x.ChurchId != null ? new AutocompleteResult(x.Church.Id, x.Church.Name) : null,
-                Group = x.GroupId != null ? new AutocompleteResult(x.Group.Id, x.Group.Name) : null
+                Group = x.GroupId != null ? new AutocompleteResult(x.Group.Id, x.Group.Name) : null,
+                Attendance = new AttendanceViewModel
+                {
+                    AttendanceCount = x.Attendance.AttendanceCount, 
+                    FirstTimerCount = x.Attendance.FirstTimerCount,
+                    NewConvertCount = x.Attendance.NewConvertCount,
+                    ReceivedHolySpiritCount = x.Attendance.ReceivedHolySpiritCount
+                }
             });
         }
     }

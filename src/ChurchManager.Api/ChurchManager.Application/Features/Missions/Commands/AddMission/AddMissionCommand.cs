@@ -66,6 +66,12 @@ namespace ChurchManager.Application.Features.Missions.Commands.AddMission
         {
             var entity = Map(command);
 
+            // Assign Mission Stream
+            var stream = command.PersonId.HasValue ? "Person" : string.Empty;
+            stream = command.GroupId.HasValue ? "Group" : stream;
+            stream = command.ChurchId.HasValue ? "Church" : stream;
+            entity.Stream = stream;
+
             await _dbRepository.AddAsync(entity, ct);
 
             return Unit.Value;
