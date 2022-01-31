@@ -26,7 +26,7 @@ namespace ChurchManager.Application.Features.Groups.Queries.GroupsForChurch
         public async Task<ApiResponse> Handle(GroupsForChurchSelectItemQuery query, CancellationToken ct)
         {
             var vm = await _mapper
-                .ProjectTo<SelectItemViewModel>(_dbRepository.Queryable())
+                .ProjectTo<SelectItemViewModel>(_dbRepository.Queryable().AsNoTracking().Where(x => x.ChurchId == query.ChurchId))
                 .ToListAsync(ct);
 
             return new ApiResponse(vm.OrderBy(x => x.Name));

@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using Bogus;
 using ChurchManager.Domain.Features.Groups;
 using ChurchManager.Domain.Features.Missions;
-using ChurchManager.Domain.Features.People;
 using ChurchManager.Infrastructure.Persistence.Contexts;
 using CodeBoss.AspNetCore.Startup;
 using Microsoft.EntityFrameworkCore;
@@ -18,6 +17,10 @@ namespace ChurchManager.Infrastructure.Persistence.Seeding.Development
         public int OrderNumber => 99;
 
         private readonly IServiceScopeFactory _scopeFactory;
+
+        private string[] Streams => new[] { "Person", "Group", "Church" };
+        private string[] Categories => new[] { "ROSA", "Healing Streams" };
+        private string[] Types => new[] { "InReach", "OutReach" };
 
         public MissionsFakeDbSeedInitializer(IServiceScopeFactory scopeFactory) => _scopeFactory = scopeFactory;
 
@@ -64,15 +67,16 @@ namespace ChurchManager.Infrastructure.Persistence.Seeding.Development
             var attendance = new
             {
                 attendancedate = faker.Date.Between(new DateTime(DateTime.Now.Year, DateTime.Now.Month, 01), DateTime.Now),
-                members = random.Next(0, 10),
-                firsttimers = random.Next(1, 5),
+                members = random.Next(1, 100),
+                firsttimers = random.Next(1, 50),
             };
 
             yield return new Mission
             {
                 Name = $"{faker.Commerce.Department(1)} Mission Event",
-                Type = "OutReach",
-                Category = "ROSA",
+                Type = faker.PickRandom(Types),
+                Category = faker.PickRandom(Categories),
+                Stream = "Group",
                 GroupId = group.Id,
                 ChurchId = group.ChurchId,
                 StartDateTime = attendance.attendancedate,
@@ -92,15 +96,16 @@ namespace ChurchManager.Infrastructure.Persistence.Seeding.Development
             var attendance = new
             {
                 attendancedate = faker.Date.Between(new DateTime(DateTime.Now.Year, DateTime.Now.Month, 01), DateTime.Now),
-                members = random.Next(0, 10),
-                firsttimers = random.Next(1, 5),
+                members = random.Next(1, 100),
+                firsttimers = random.Next(1, 50),
             };
 
             yield return new Mission
             {
                 Name = $"{faker.Commerce.Department(1)} Mission Event",
-                Type = "OutReach",
-                Category = "ROSA",
+                Type = faker.PickRandom(Types),
+                Category = faker.PickRandom(Categories),
+                Stream = "Person",
                 PersonId = person.Id,
                 StartDateTime = attendance.attendancedate,
                 Attendance = new Attendance

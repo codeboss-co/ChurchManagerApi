@@ -26,6 +26,9 @@ namespace ChurchManager.Domain.Features.Missions
         [MaxLength(200)]
         public string Category { get; set; } // ROSA, Healing Streams etc
 
+        [MaxLength(100)]
+        public string Stream { get; set; } // Person, Group or Church
+
         /// <summary>
         /// Gets or sets the icon CSS class.
         /// </summary>

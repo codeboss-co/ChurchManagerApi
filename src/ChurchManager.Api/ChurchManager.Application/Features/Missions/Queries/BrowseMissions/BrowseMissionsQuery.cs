@@ -18,6 +18,7 @@ namespace ChurchManager.Application.Features.Missions.Queries.BrowseMissions
         public int? ChurchId { get; set; }
         public string[] Types { get; set; }
         public string[] Categories { get; set; }
+        public string[] Streams { get; set; }
         public DateTime? From { get; set; }
         public DateTime? To { get; set; }
     
@@ -34,7 +35,7 @@ namespace ChurchManager.Application.Features.Missions.Queries.BrowseMissions
 
         public async Task<PagedResponse<MissionViewModel>> Handle(BrowseMissionsQuery query, CancellationToken ct)
         {
-            var spec = new BrowseMissionsSpecification(query, query.PersonId, query.GroupId, query.ChurchId, query.Types, query.Categories, query.From, query.To);
+            var spec = new BrowseMissionsSpecification(query, query.PersonId, query.GroupId, query.ChurchId, query.Types, query.Categories, query.Streams, query.From, query.To);
 
             var pagedResult = await _dbRepository.BrowseAsync<MissionViewModel>(query, spec, ct);
 
