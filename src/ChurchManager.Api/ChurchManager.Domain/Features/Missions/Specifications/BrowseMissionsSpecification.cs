@@ -77,6 +77,7 @@ namespace ChurchManager.Domain.Features.Missions.Specifications
                 Description = x.Description,
                 Type = x.Type,
                 Category = x.Category,
+                Stream = x.Stream,
                 IconCssClass = x.IconCssClass,
                 StartDateTime = x.StartDateTime,
                 EndDateTime = x.EndDateTime,

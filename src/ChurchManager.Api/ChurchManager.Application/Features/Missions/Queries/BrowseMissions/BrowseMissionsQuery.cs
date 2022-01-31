@@ -18,6 +18,7 @@ namespace ChurchManager.Application.Features.Missions.Queries.BrowseMissions
         public int? ChurchId { get; set; }
         public string[] Types { get; set; }
         public string[] Categories { get; set; }
+        public string[] Stream { get; set; }
         public DateTime? From { get; set; }
         public DateTime? To { get; set; }
     
