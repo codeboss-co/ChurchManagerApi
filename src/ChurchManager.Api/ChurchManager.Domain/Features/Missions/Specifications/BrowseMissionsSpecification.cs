@@ -9,6 +9,9 @@ namespace ChurchManager.Domain.Features.Missions.Specifications
 {
     public class BrowseMissionsSpecification : Specification<Mission, MissionViewModel>
     {
+        // When the GroupId is 0 - it means we want to include all groups
+        private const int AllGroupsId = 0;
+
         public BrowseMissionsSpecification(
             IPagedQuery paging,
             int? personId,
@@ -16,6 +19,7 @@ namespace ChurchManager.Domain.Features.Missions.Specifications
             int? churchId,
             string[] types,
             string[] categories,
+            string[] streams,
             DateTime? from, DateTime? to)
         {
             Query.AsNoTracking();
@@ -30,7 +34,7 @@ namespace ChurchManager.Domain.Features.Missions.Specifications
             }
 
             // Group Filter
-            if(groupId.HasValue)
+            if(groupId.HasValue && groupId != AllGroupsId)
             {
                 Query.Where(g => g.GroupId == groupId);
             }
@@ -53,9 +57,15 @@ namespace ChurchManager.Domain.Features.Missions.Specifications
                 Query.Where(g => categories.Contains(g.Category));
             }
 
+            // Stream Filter
+            if (streams is not null && streams.Any())
+            {
+                Query.Where(g => streams.Contains(g.Stream));
+            }
+
 
             // Date Filters
-            if(from.HasValue)
+            if (from.HasValue)
             {
                 Query.Where(g => g.StartDateTime >= from.Value);
             }
