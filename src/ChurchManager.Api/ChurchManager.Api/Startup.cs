@@ -1,3 +1,4 @@
+using System;
 using ChurchManager.Api.Extensions;
 using ChurchManager.Application;
 using ChurchManager.Infrastructure.Persistence;
@@ -9,6 +10,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using OpenTelemetry.Resources;
+using OpenTelemetry.Trace;
 using Serilog;
 
 namespace ChurchManager.Api
@@ -34,6 +37,9 @@ namespace ChurchManager.Api
 
             // Add detection services container and device resolver service.
             services.AddDetection();
+
+
+          
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

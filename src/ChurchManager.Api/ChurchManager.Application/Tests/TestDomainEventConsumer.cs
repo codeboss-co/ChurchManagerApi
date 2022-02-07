@@ -16,7 +16,7 @@ namespace ChurchManager.Application.Tests
 
         public Task Consume(ConsumeContext<TestDomainEvent> context)
         {
-            Logger.LogInformation(context.Message.Content);
+            Logger.LogInformation($"✔️ Message Received: {context.Message.Content}");
             return Task.CompletedTask;
         }
     }

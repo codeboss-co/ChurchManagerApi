@@ -5,6 +5,7 @@ using System.Security.Claims;
 using System.Threading;
 using System.Threading.Tasks;
 using ChurchManager.Application.ViewModels;
+using ChurchManager.Domain.Shared;
 using ChurchManager.Infrastructure.Abstractions.Security;
 using ChurchManager.Infrastructure.Persistence.Contexts;
 using MediatR;
@@ -30,6 +31,9 @@ namespace ChurchManager.Application.Features.Auth
 
         public async Task<TokenViewModel> Handle(LoginCommand request, CancellationToken ct)
         {
+            using var activity = DomainConstants.Telemetry.ActivitySource.StartActivity(nameof(LoginCommand));
+            activity?.SetTag("test.tag.username", request.Username);
+
             // get account from database
             var user = await _dbContext.UserLogin
                 .FirstOrDefaultAsync(u => u.Username == request.Username, ct);
@@ -57,6 +61,9 @@ namespace ChurchManager.Application.Features.Auth
                 user.RefreshTokenExpiryTime = DateTime.UtcNow.AddDays(7);
 
                 await _dbContext.SaveChangesAsync(ct);
+
+
+                activity?.Stop();
 
                 return new TokenViewModel(true, accessToken, refreshToken);
             }

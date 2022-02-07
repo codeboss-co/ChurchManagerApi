@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="CodeBoss.AspNetCore" Version="0.1.19" />
     <PackageReference Include="Ical.Net" Version="4.2.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.7.1" />
     <PackageReference Include="xunit" Version="2.4.1" />
@@ -21,7 +20,12 @@
     </PackageReference>
   </ItemGroup>
 
-  <ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="CodeBoss.AspNetCore" Version="0.1.21" />
+	</ItemGroup>
+
+
+	<ItemGroup>
     <ProjectReference Include="..\..\src\ChurchManager.Api\ChurchManager.Domain\ChurchManager.Domain.csproj" />
     <ProjectReference Include="..\..\src\ChurchManager.Api\ChurchManager.Infrastructure.Shared\ChurchManager.Infrastructure.Shared.csproj" />
   </ItemGroup>
