@@ -1,7 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFramework>net5.0</TargetFramework>
+		<TargetFramework>net6.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -27,9 +28,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="CodeBoss" Version="0.1.21" />
-		<PackageReference Include="CodeBoss.AspNetCore" Version="0.1.21" />
-		<PackageReference Include="CodeBoss.MultiTenant" Version="0.1.21" />
+		<PackageReference Include="CodeBoss" Version="0.1.23" />
+		<PackageReference Include="CodeBoss.AspNetCore" Version="0.1.23" />
+		<PackageReference Include="CodeBoss.MultiTenant" Version="0.1.23" />
 	</ItemGroup>
 
 	<ItemGroup>
