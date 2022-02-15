@@ -12,32 +12,41 @@ namespace ChurchManager.Infrastructure.Shared.OpenTelemetry
     {
         public void InstallServices(IServiceCollection services, IConfiguration configuration, IHostEnvironment environment)
         {
-            // Configure
-            services.Configure<AspNetCoreInstrumentationOptions>(options =>
-            {
-                options.Filter = (httpContext) =>
-                {
-                    // only collect telemetry about the following requests
-                    var path = httpContext.Request.Path;
-                    return path.HasValue && (
-                        !path.Value.Contains("aspnetcore-browser-refresh") &&
-                        !path.Value.Contains("swagger") 
-                    );
-                };
-            });
+            // Options
+            var telemetryOptions = new OpenTelemetryOptions();
+            configuration.GetSection(nameof(OpenTelemetryOptions)).Bind(telemetryOptions);
+            services.AddSingleton<OpenTelemetryOptions>(telemetryOptions);
 
-            services.AddOpenTelemetryTracing(builder => builder
-                .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService("ChurchManager"))
-                .AddSource("ChurchManager.Application") // when we manually create activities, we need to setup the sources here
-                .AddAspNetCoreInstrumentation()
-                .AddEntityFrameworkCoreInstrumentation(options => options.SetDbStatementForText = true)
-                .AddJaegerExporter(options =>
+            if (telemetryOptions.Enabled)
+            {
+                // Configure
+                services.Configure<AspNetCoreInstrumentationOptions>(options =>
                 {
-                    // not needed, it's the default
-                    options.AgentHost = "192.168.5.54";
-                    //options.AgentPort = 6831;
-                })
-            );
+                    options.Filter = (httpContext) =>
+                    {
+                        // only collect telemetry about the following requests
+                        var path = httpContext.Request.Path;
+                        return path.HasValue && (
+                            !path.Value.Contains("aspnetcore-browser-refresh") &&
+                            !path.Value.Contains("swagger")
+                        );
+                    };
+                });
+
+                services.AddOpenTelemetryTracing(builder => builder
+                    .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService("ChurchManager"))
+                    .AddSource("ChurchManager.Application") // when we manually create activities, we need to setup the sources here
+                    .AddAspNetCoreInstrumentation()
+                    .AddEntityFrameworkCoreInstrumentation(options => options.SetDbStatementForText = true)
+                    .AddJaegerExporter(options =>
+                    {
+                        // default is "localhost"
+                        options.AgentHost = telemetryOptions.Host ?? "localhost";
+                        //options.AgentPort = 6831;
+                    })
+                );
+            }
+
         }
     }
 }
