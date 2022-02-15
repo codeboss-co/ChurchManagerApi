@@ -34,7 +34,7 @@ namespace ChurchManager.Infrastructure.Shared.OpenTelemetry
                 .AddJaegerExporter(options =>
                 {
                     // not needed, it's the default
-                    //options.AgentHost = "localhost";
+                    options.AgentHost = "192.168.5.54";
                     //options.AgentPort = 6831;
                 })
             );
