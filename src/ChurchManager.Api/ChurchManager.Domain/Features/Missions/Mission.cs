@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using ChurchManager.Domain.Common;
 using ChurchManager.Domain.Features.Churches;
 using ChurchManager.Domain.Features.Groups;
 using ChurchManager.Persistence.Shared;
@@ -55,6 +56,7 @@ namespace ChurchManager.Domain.Features.Missions
         public int? GroupId { get; set; }
 
         public Attendance Attendance { get; set; }
+        public Money Offering { get; set; }
 
         public string Notes { get; set; }
 

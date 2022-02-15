@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Diagnostics;
+using System.IO;
 using System.Reflection;
 
 namespace ChurchManager.Domain.Shared
@@ -37,6 +38,11 @@ namespace ChurchManager.Domain.Shared
                     public static string FollowUpTemplate = "FollowUpAssignment";
                 }
             }
+        }
+
+        public static class Telemetry
+        {
+            public static readonly ActivitySource ActivitySource = new("ChurchManager.Application");
         }
     }
 }
