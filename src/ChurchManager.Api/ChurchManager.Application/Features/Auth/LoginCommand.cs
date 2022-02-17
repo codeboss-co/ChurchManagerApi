@@ -31,8 +31,8 @@ namespace ChurchManager.Application.Features.Auth
 
         public async Task<TokenViewModel> Handle(LoginCommand request, CancellationToken ct)
         {
-            using var activity = DomainConstants.Telemetry.ActivitySource.StartActivity(nameof(LoginCommand));
-            activity?.SetTag("test.tag.username", request.Username);
+            //using var activity = DomainConstants.Telemetry.ActivitySource.StartActivity(nameof(LoginCommand));
+            //activity?.SetTag("test.tag.username", request.Username);
 
             // get account from database
             var user = await _dbContext.UserLogin
@@ -63,7 +63,7 @@ namespace ChurchManager.Application.Features.Auth
                 await _dbContext.SaveChangesAsync(ct);
 
 
-                activity?.Stop();
+                //activity?.Stop();
 
                 return new TokenViewModel(true, accessToken, refreshToken);
             }

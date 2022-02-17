@@ -1,4 +1,5 @@
 ﻿using CodeBoss.AspNetCore.DependencyInjection;
+using Convey;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -12,10 +13,10 @@ namespace ChurchManager.Infrastructure.Shared.OpenTelemetry
     {
         public void InstallServices(IServiceCollection services, IConfiguration configuration, IHostEnvironment environment)
         {
-            // Options
-            var telemetryOptions = new OpenTelemetryOptions();
-            configuration.GetSection(nameof(OpenTelemetryOptions)).Bind(telemetryOptions);
-            services.AddSingleton<OpenTelemetryOptions>(telemetryOptions);
+            // Get from configuration
+            var telemetryOptions = configuration.GetOptions<OpenTelemetryOptions>(nameof(OpenTelemetryOptions));
+            // Add to DI
+            services.Configure<OpenTelemetryOptions>(configuration.GetSection(nameof(OpenTelemetryOptions)));
 
             if (telemetryOptions.Enabled)
             {

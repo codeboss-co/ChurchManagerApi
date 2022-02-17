@@ -1,15 +1,14 @@
-﻿using System.Reflection;
-using ChurchManager.Application.Abstractions.Services;
+﻿using ChurchManager.Application.Abstractions.Services;
 using ChurchManager.Application.Behaviours;
 using ChurchManager.Application.Common;
 using ChurchManager.Application.Features.Communication.Services;
 using ChurchManager.Application.Features.Groups.Services;
 using ChurchManager.Application.Features.Profile.Services;
 using CodeBoss.AspNetCore;
-using Codeboss.Types;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
+using System.Reflection;
 
 namespace ChurchManager.Application
 {
@@ -21,6 +20,7 @@ namespace ChurchManager.Application
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
             services.AddMediatR(Assembly.GetExecutingAssembly());
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(OpenTelemetryBehavior<,>));
 
             #region Application Services
 

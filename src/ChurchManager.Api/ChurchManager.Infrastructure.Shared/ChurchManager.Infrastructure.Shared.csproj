@@ -9,6 +9,7 @@
 		<PackageReference Include="AWSSDK.SimpleEmailV2" Version="3.7.0.52" />
 		<PackageReference Include="CloudinaryDotNet" Version="1.15.2" />
 		<PackageReference Include="DotLiquid" Version="2.2.518" />
+		<PackageReference Include="Flagsmith" Version="3.0.0" />
 		<PackageReference Include="MassTransit" Version="7.0.0" />
 		<PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.7.1" />
 		<PackageReference Include="WebPush" Version="1.0.11" />
