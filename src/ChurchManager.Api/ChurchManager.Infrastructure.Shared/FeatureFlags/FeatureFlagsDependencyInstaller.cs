@@ -1,4 +1,5 @@
-﻿using CodeBoss.AspNetCore.DependencyInjection;
+﻿using ChurchManager.Infrastructure.Abstractions.FeatureFlags;
+using CodeBoss.AspNetCore.DependencyInjection;
 using Convey;
 using Flagsmith;
 using Microsoft.Extensions.Configuration;
@@ -25,6 +26,8 @@ namespace ChurchManager.Infrastructure.Shared.FeatureFlags
                 };
 
                 var client = new FlagsmithClient(config);
+
+                services.AddSingleton<IFeatureFlagClient, FlagsmithFeatureClient>();
             }
         }
     }
