@@ -4,10 +4,6 @@ using CodeBoss.AspNetCore.DependencyInjection;
 using MassTransit;
 using MassTransit.Definition;
 using MassTransit.SignalR;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using System;
 
 namespace ChurchManager.Api._DependencyInjection
 {
@@ -30,7 +26,7 @@ namespace ChurchManager.Api._DependencyInjection
                 {
                     cfg.Host(new Uri(connectionString), h => { });
 
-                    cfg.ConfigureEndpoints(provider, new SnakeCaseEndpointNameFormatter(true));
+                    cfg.ConfigureEndpoints(provider, new SnakeCaseEndpointNameFormatter(false));
                 }));
 
             });

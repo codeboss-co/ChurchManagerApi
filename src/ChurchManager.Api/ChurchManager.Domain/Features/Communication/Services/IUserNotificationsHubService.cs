@@ -1,4 +1,4 @@
-﻿using CodeBoss.MassTransit.Abstractions;
+﻿using ChurchManager.Infrastructure.Abstractions.MassTransit;
 
 namespace ChurchManager.Domain.Features.Communication.Services
 {
