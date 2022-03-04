@@ -30,7 +30,7 @@ namespace ChurchManager.Api._DependencyInjection
                 {
                     cfg.Host(new Uri(connectionString), h => { });
 
-                    cfg.ConfigureEndpoints(provider, new SnakeCaseEndpointNameFormatter(false));
+                    cfg.ConfigureEndpoints(provider, new SnakeCaseEndpointNameFormatter(true));
                 }));
 
             });
