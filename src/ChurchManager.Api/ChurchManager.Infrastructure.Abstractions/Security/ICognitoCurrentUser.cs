@@ -1,6 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-using Codeboss.Types;
+﻿using Codeboss.Types;
 
 namespace ChurchManager.Infrastructure.Abstractions.Security
 {

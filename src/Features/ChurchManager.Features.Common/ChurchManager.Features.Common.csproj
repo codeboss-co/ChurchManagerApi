@@ -1,0 +1,34 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<Import Project="..\..\Build\ChurchManager.Common.props" />
+
+
+	<ItemGroup>
+		<PackageReference Include="AutoMapper" Version="10.1.1" />
+		<PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
+		<PackageReference Include="BCrypt.Net-Next" Version="4.0.2" />
+		<PackageReference Include="CodeBoss.AspNetCore" Version="0.1.23" />
+		<PackageReference Include="FluentValidation" Version="9.5.1" />
+		<PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="9.5.1" />
+		<PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
+		<PackageReference Include="MediatR" Version="9.0.0" />
+	</ItemGroup>
+
+
+	<ItemGroup>
+		<PackageReference Include="CodeBoss" Version="0.1.23" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\..\ChurchManager.Api\ChurchManager.Application.Abstractions\ChurchManager.Application.Abstractions.csproj" />
+		<ProjectReference Include="..\..\ChurchManager.Api\ChurchManager.Application.ViewModels\ChurchManager.Application.ViewModels.csproj" />
+		<ProjectReference Include="..\..\ChurchManager.Api\ChurchManager.Domain.Shared\ChurchManager.Domain.Shared.csproj" />
+		<ProjectReference Include="..\..\ChurchManager.Api\ChurchManager.Domain\ChurchManager.Domain.csproj" />
+		<ProjectReference Include="..\..\ChurchManager.Api\ChurchManager.Infrastructure.Abstractions\ChurchManager.Infrastructure.Abstractions.csproj" />
+		<ProjectReference Include="..\..\ChurchManager.Api\ChurchManager.Infrastructure.Persistence\ChurchManager.Infrastructure.Persistence.csproj" />
+		<ProjectReference Include="..\..\ChurchManager.Api\ChurchManager.Infrastructure.Shared\ChurchManager.Infrastructure.Shared.csproj" />
+		<ProjectReference Include="..\..\Infrastructure\ChurchManager.Infrastructure\ChurchManager.Infrastructure.csproj" />
+		<ProjectReference Include="..\ChurchManager.Features.Communication\ChurchManager.Features.Communication.csproj" />
+	</ItemGroup>
+
+</Project>

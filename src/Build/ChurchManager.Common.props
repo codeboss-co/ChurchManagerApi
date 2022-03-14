@@ -6,6 +6,7 @@
 		<Nullable>enable</Nullable>
 	</PropertyGroup>
 
+	<!-- NuGet package info -->
 	<PropertyGroup>
 		<Copyright>Copyright © CodeBoss</Copyright>
 		<Authors>CodeBoss</Authors>
@@ -15,7 +16,8 @@
 		<RepositoryUrl>https://github.com/codeboss-co/ChurchManagerApi</RepositoryUrl>
 		<RepositoryType>Git</RepositoryType>
 	</PropertyGroup>
-	
+
+	<!-- Packages -->
 	<ItemGroup>
 		<Using Include="System"/>
 		<Using Include="System.Collections.Generic"/>

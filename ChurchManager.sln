@@ -62,7 +62,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{DE672912
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Features", "Features", "{4E57F1DC-B09A-46B9-81A2-D6325F089A7C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChurchManager.Features.Auth", "src\Features\ChurchManager.Features.Auth\ChurchManager.Features.Auth.csproj", "{862A83DC-38CA-477B-AE3D-CAF3B30B3C4F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChurchManager.Features.Auth", "src\Features\ChurchManager.Features.Auth\ChurchManager.Features.Auth.csproj", "{862A83DC-38CA-477B-AE3D-CAF3B30B3C4F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChurchManager.Features.Churches", "src\Features\ChurchManager.Features.Churches\ChurchManager.Features.Churches.csproj", "{DB2D1161-0888-413C-A67C-0941AE38C754}"
 EndProject
@@ -81,6 +81,12 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChurchManager.Features.UserLogins", "src\Features\ChurchManager.Features.UserLogins\ChurchManager.Features.UserLogins.csproj", "{F3AC98F0-CE11-4962-986D-C1E34FDBBD28}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChurchManager.Features.Communication", "src\Features\ChurchManager.Features.Communication\ChurchManager.Features.Communication.csproj", "{D872392A-578D-4057-9E10-901EDA5D4776}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChurchManager.Features.Common", "src\Features\ChurchManager.Features.Common\ChurchManager.Features.Common.csproj", "{EE65C9D9-6FAC-43FD-8AA5-10AF85D08DD3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChurchManager.SharedKernel", "src\Core\ChurchManager.SharedKernel\ChurchManager.SharedKernel.csproj", "{FA825976-F4AD-4A6A-84BF-8CEC79298FEC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChurchManager.Infrastructure", "src\Infrastructure\ChurchManager.Infrastructure\ChurchManager.Infrastructure.csproj", "{5D091260-C66B-4802-9AB0-F5ED423D149D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -188,6 +194,18 @@ Global
 		{D872392A-578D-4057-9E10-901EDA5D4776}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D872392A-578D-4057-9E10-901EDA5D4776}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D872392A-578D-4057-9E10-901EDA5D4776}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE65C9D9-6FAC-43FD-8AA5-10AF85D08DD3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE65C9D9-6FAC-43FD-8AA5-10AF85D08DD3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE65C9D9-6FAC-43FD-8AA5-10AF85D08DD3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE65C9D9-6FAC-43FD-8AA5-10AF85D08DD3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FA825976-F4AD-4A6A-84BF-8CEC79298FEC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA825976-F4AD-4A6A-84BF-8CEC79298FEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA825976-F4AD-4A6A-84BF-8CEC79298FEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA825976-F4AD-4A6A-84BF-8CEC79298FEC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5D091260-C66B-4802-9AB0-F5ED423D149D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D091260-C66B-4802-9AB0-F5ED423D149D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D091260-C66B-4802-9AB0-F5ED423D149D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D091260-C66B-4802-9AB0-F5ED423D149D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -218,6 +236,9 @@ Global
 		{9B5A5F01-1D0C-41C5-941C-BBD1536F16FD} = {4E57F1DC-B09A-46B9-81A2-D6325F089A7C}
 		{F3AC98F0-CE11-4962-986D-C1E34FDBBD28} = {4E57F1DC-B09A-46B9-81A2-D6325F089A7C}
 		{D872392A-578D-4057-9E10-901EDA5D4776} = {4E57F1DC-B09A-46B9-81A2-D6325F089A7C}
+		{EE65C9D9-6FAC-43FD-8AA5-10AF85D08DD3} = {4E57F1DC-B09A-46B9-81A2-D6325F089A7C}
+		{FA825976-F4AD-4A6A-84BF-8CEC79298FEC} = {61F45238-00AE-452D-98B9-A42DB00CC3F0}
+		{5D091260-C66B-4802-9AB0-F5ED423D149D} = {D4173B5E-3368-41B7-A208-72DD77CE12C5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FFB97C3E-0578-455B-ABD1-9C774B9BDEAC}
