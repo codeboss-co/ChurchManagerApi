@@ -17,7 +17,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChurchManager.Infrastructur
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChurchManager.Infrastructure.Shared", "src\ChurchManager.Api\ChurchManager.Infrastructure.Shared\ChurchManager.Infrastructure.Shared.csproj", "{D016FC76-9CB7-4482-8B3B-BEBDC47BF005}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Api", "Api", "{79158356-D075-4DE8-BE88-4B3EB8BECC23}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "API", "API", "{79158356-D075-4DE8-BE88-4B3EB8BECC23}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChurchManager.Persistence.Shared", "src\ChurchManager.Api\ChurchManager.Persistence.Shared\ChurchManager.Persistence.Shared.csproj", "{5586DECE-E9F6-4B8C-8A5F-6444958FFC91}"
 EndProject
@@ -40,7 +40,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Apps", "Apps", "{F839B0EA-9
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChurchManager.DataImporter", "ChurchManager.DataImporter\ChurchManager.DataImporter.csproj", "{0AB306C6-4AA1-4081-B17B-7A8015D92178}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{B40AA988-6333-4B1C-8C7C-3D8B140DBDE1}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{B40AA988-6333-4B1C-8C7C-3D8B140DBDE1}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChurchManager.Infrastructure.Tests", "test\ChurchManager.Infrastructure.Tests\ChurchManager.Infrastructure.Tests.csproj", "{B319AAC7-7C16-492E-AD07-E8EC02A7E91C}"
 EndProject
@@ -52,7 +52,35 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChurchManager.Application.V
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChurchManager.Domain.Shared", "src\ChurchManager.Api\ChurchManager.Domain.Shared\ChurchManager.Domain.Shared.csproj", "{0CF1407E-B07A-4B8F-B589-F51F413E031E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChurchManager.Application.Tests", "test\ChurchManager.Application.Tests\ChurchManager.Application.Tests.csproj", "{42A655EB-C616-469E-96F5-E849380A90F3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChurchManager.Application.Tests", "test\ChurchManager.Application.Tests\ChurchManager.Application.Tests.csproj", "{42A655EB-C616-469E-96F5-E849380A90F3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{DE672912-3A1D-4875-8B96-90AB924C8BA7}"
+	ProjectSection(SolutionItems) = preProject
+		src\Build\ChurchManager.Common.props = src\Build\ChurchManager.Common.props
+		src\Build\ChurchManager.Targets.props = src\Build\ChurchManager.Targets.props
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Features", "Features", "{4E57F1DC-B09A-46B9-81A2-D6325F089A7C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChurchManager.Features.Auth", "src\Features\ChurchManager.Features.Auth\ChurchManager.Features.Auth.csproj", "{862A83DC-38CA-477B-AE3D-CAF3B30B3C4F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChurchManager.Features.Churches", "src\Features\ChurchManager.Features.Churches\ChurchManager.Features.Churches.csproj", "{DB2D1161-0888-413C-A67C-0941AE38C754}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChurchManager.Features.Discipleship", "src\Features\ChurchManager.Features.Discipleship\ChurchManager.Features.Discipleship.csproj", "{EA4F02CC-296F-4142-8AC7-7F0284DB69C0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChurchManager.Features.FollowUp", "src\Features\ChurchManager.Features.FollowUp\ChurchManager.Features.FollowUp.csproj", "{D47C35E5-54B5-45F5-B972-4B0AC4A76C3B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChurchManager.Features.Groups", "src\Features\ChurchManager.Features.Groups\ChurchManager.Features.Groups.csproj", "{D8ED9164-C03D-444A-B60F-AB3DB9716111}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChurchManager.Features.Missions", "src\Features\ChurchManager.Features.Missions\ChurchManager.Features.Missions.csproj", "{6055FF72-0646-4D20-9A62-538361C63AAF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChurchManager.Features.People", "src\Features\ChurchManager.Features.People\ChurchManager.Features.People.csproj", "{AAE74C6F-5E20-4354-9B9E-725D1EE60B7C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChurchManager.Features.Profile", "src\Features\ChurchManager.Features.Profile\ChurchManager.Features.Profile.csproj", "{9B5A5F01-1D0C-41C5-941C-BBD1536F16FD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChurchManager.Features.UserLogins", "src\Features\ChurchManager.Features.UserLogins\ChurchManager.Features.UserLogins.csproj", "{F3AC98F0-CE11-4962-986D-C1E34FDBBD28}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChurchManager.Features.Communication", "src\Features\ChurchManager.Features.Communication\ChurchManager.Features.Communication.csproj", "{D872392A-578D-4057-9E10-901EDA5D4776}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -120,6 +148,46 @@ Global
 		{42A655EB-C616-469E-96F5-E849380A90F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{42A655EB-C616-469E-96F5-E849380A90F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{42A655EB-C616-469E-96F5-E849380A90F3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{862A83DC-38CA-477B-AE3D-CAF3B30B3C4F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{862A83DC-38CA-477B-AE3D-CAF3B30B3C4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{862A83DC-38CA-477B-AE3D-CAF3B30B3C4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{862A83DC-38CA-477B-AE3D-CAF3B30B3C4F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DB2D1161-0888-413C-A67C-0941AE38C754}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DB2D1161-0888-413C-A67C-0941AE38C754}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DB2D1161-0888-413C-A67C-0941AE38C754}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DB2D1161-0888-413C-A67C-0941AE38C754}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EA4F02CC-296F-4142-8AC7-7F0284DB69C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA4F02CC-296F-4142-8AC7-7F0284DB69C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA4F02CC-296F-4142-8AC7-7F0284DB69C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA4F02CC-296F-4142-8AC7-7F0284DB69C0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D47C35E5-54B5-45F5-B972-4B0AC4A76C3B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D47C35E5-54B5-45F5-B972-4B0AC4A76C3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D47C35E5-54B5-45F5-B972-4B0AC4A76C3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D47C35E5-54B5-45F5-B972-4B0AC4A76C3B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D8ED9164-C03D-444A-B60F-AB3DB9716111}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D8ED9164-C03D-444A-B60F-AB3DB9716111}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D8ED9164-C03D-444A-B60F-AB3DB9716111}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D8ED9164-C03D-444A-B60F-AB3DB9716111}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6055FF72-0646-4D20-9A62-538361C63AAF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6055FF72-0646-4D20-9A62-538361C63AAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6055FF72-0646-4D20-9A62-538361C63AAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6055FF72-0646-4D20-9A62-538361C63AAF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AAE74C6F-5E20-4354-9B9E-725D1EE60B7C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AAE74C6F-5E20-4354-9B9E-725D1EE60B7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AAE74C6F-5E20-4354-9B9E-725D1EE60B7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AAE74C6F-5E20-4354-9B9E-725D1EE60B7C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B5A5F01-1D0C-41C5-941C-BBD1536F16FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B5A5F01-1D0C-41C5-941C-BBD1536F16FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B5A5F01-1D0C-41C5-941C-BBD1536F16FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B5A5F01-1D0C-41C5-941C-BBD1536F16FD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F3AC98F0-CE11-4962-986D-C1E34FDBBD28}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F3AC98F0-CE11-4962-986D-C1E34FDBBD28}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F3AC98F0-CE11-4962-986D-C1E34FDBBD28}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F3AC98F0-CE11-4962-986D-C1E34FDBBD28}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D872392A-578D-4057-9E10-901EDA5D4776}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D872392A-578D-4057-9E10-901EDA5D4776}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D872392A-578D-4057-9E10-901EDA5D4776}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D872392A-578D-4057-9E10-901EDA5D4776}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -140,6 +208,16 @@ Global
 		{8E9D3C51-21BB-4430-9965-D82C89CB5BCC} = {61F45238-00AE-452D-98B9-A42DB00CC3F0}
 		{0CF1407E-B07A-4B8F-B589-F51F413E031E} = {61F45238-00AE-452D-98B9-A42DB00CC3F0}
 		{42A655EB-C616-469E-96F5-E849380A90F3} = {B40AA988-6333-4B1C-8C7C-3D8B140DBDE1}
+		{862A83DC-38CA-477B-AE3D-CAF3B30B3C4F} = {4E57F1DC-B09A-46B9-81A2-D6325F089A7C}
+		{DB2D1161-0888-413C-A67C-0941AE38C754} = {4E57F1DC-B09A-46B9-81A2-D6325F089A7C}
+		{EA4F02CC-296F-4142-8AC7-7F0284DB69C0} = {4E57F1DC-B09A-46B9-81A2-D6325F089A7C}
+		{D47C35E5-54B5-45F5-B972-4B0AC4A76C3B} = {4E57F1DC-B09A-46B9-81A2-D6325F089A7C}
+		{D8ED9164-C03D-444A-B60F-AB3DB9716111} = {4E57F1DC-B09A-46B9-81A2-D6325F089A7C}
+		{6055FF72-0646-4D20-9A62-538361C63AAF} = {4E57F1DC-B09A-46B9-81A2-D6325F089A7C}
+		{AAE74C6F-5E20-4354-9B9E-725D1EE60B7C} = {4E57F1DC-B09A-46B9-81A2-D6325F089A7C}
+		{9B5A5F01-1D0C-41C5-941C-BBD1536F16FD} = {4E57F1DC-B09A-46B9-81A2-D6325F089A7C}
+		{F3AC98F0-CE11-4962-986D-C1E34FDBBD28} = {4E57F1DC-B09A-46B9-81A2-D6325F089A7C}
+		{D872392A-578D-4057-9E10-901EDA5D4776} = {4E57F1DC-B09A-46B9-81A2-D6325F089A7C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FFB97C3E-0578-455B-ABD1-9C774B9BDEAC}
