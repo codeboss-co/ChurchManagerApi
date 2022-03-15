@@ -57,6 +57,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{DE672912-3A1D-4875-8B96-90AB924C8BA7}"
 	ProjectSection(SolutionItems) = preProject
 		src\Build\ChurchManager.Common.props = src\Build\ChurchManager.Common.props
+		src\Build\ChurchManager.Features.props = src\Build\ChurchManager.Features.props
 		src\Build\ChurchManager.Targets.props = src\Build\ChurchManager.Targets.props
 	EndProjectSection
 EndProject

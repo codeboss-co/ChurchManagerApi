@@ -2,6 +2,7 @@ using System.ComponentModel;
 using System.Globalization;
 using System.Security.Cryptography;
 using System.Text.RegularExpressions;
+using ChurchManager.SharedKernel.Exceptions;
 
 namespace ChurchManager.SharedKernel.Extensions
 {

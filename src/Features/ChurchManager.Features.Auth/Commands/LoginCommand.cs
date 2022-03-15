@@ -5,6 +5,7 @@ using ChurchManager.Infrastructure.Abstractions.Security;
 using ChurchManager.Infrastructure.Persistence.Contexts;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using BC = BCrypt.Net.BCrypt;
 
 namespace ChurchManager.Features.Auth.Commands
 {

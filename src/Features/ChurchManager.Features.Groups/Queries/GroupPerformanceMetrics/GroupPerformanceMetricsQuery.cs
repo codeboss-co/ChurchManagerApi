@@ -1,16 +1,13 @@
-﻿using ChurchManager.Application.Features.Groups.Queries.GroupMemberAttendance;
-using ChurchManager.Application.ViewModels;
-using ChurchManager.Application.Wrappers;
+﻿using ChurchManager.Application.ViewModels;
 using ChurchManager.Domain.Common;
 using ChurchManager.Domain.Features.Groups.Repositories;
 using ChurchManager.Domain.Features.Groups.Specifications;
+using ChurchManager.Features.Groups.Queries.GroupMemberAttendance;
+using ChurchManager.SharedKernel.Wrappers;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 
-namespace ChurchManager.Application.Features.Groups.Queries.GroupPerformanceMetrics
+namespace ChurchManager.Features.Groups.Queries.GroupPerformanceMetrics
 {
     public record GroupPerformanceMetricsQuery : IRequest<ApiResponse>
     {

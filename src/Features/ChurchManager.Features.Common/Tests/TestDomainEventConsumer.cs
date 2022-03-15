@@ -1,4 +1,6 @@
 ﻿using ChurchManager.Domain.Shared;
+using MassTransit;
+using Microsoft.Extensions.Logging;
 
 namespace ChurchManager.Features.Common.Tests
 {

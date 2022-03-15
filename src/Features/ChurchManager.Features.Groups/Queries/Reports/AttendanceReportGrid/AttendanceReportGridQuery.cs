@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
-using ChurchManager.Application.Wrappers;
-using ChurchManager.Domain.Features.Groups.Repositories;
+﻿using ChurchManager.Domain.Features.Groups.Repositories;
 using ChurchManager.Domain.Features.Groups.Specifications;
 using ChurchManager.Domain.Shared;
+using ChurchManager.SharedKernel.Wrappers;
 using MediatR;
 
-namespace ChurchManager.Application.Features.Groups.Queries.Reports.AttendanceReportGrid
+namespace ChurchManager.Features.Groups.Queries.Reports.AttendanceReportGrid
 {
     public record AttendanceReportGridQuery : IRequest<ApiResponse>
     {

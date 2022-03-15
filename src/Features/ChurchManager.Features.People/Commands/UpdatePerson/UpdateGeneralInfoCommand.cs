@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using ChurchManager.Domain.Features.People;
+﻿using ChurchManager.Domain.Features.People;
 using ChurchManager.Domain.Features.People.Repositories;
 using ChurchManager.Domain.Features.People.Specifications;
 using CodeBoss.Extensions;
 using MediatR;
-using BirthDate = ChurchManager.Application.Features.People.Commands.AddNewFamily.BirthDate;
+using BirthDate = ChurchManager.Features.People.Commands.AddNewFamily.BirthDate;
 
-namespace ChurchManager.Application.Features.People.Commands.UpdatePerson
+namespace ChurchManager.Features.People.Commands.UpdatePerson
 {
     public record UpdateGeneralInfoCommand : IRequest
     {

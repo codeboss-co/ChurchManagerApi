@@ -1,11 +1,8 @@
-﻿using System;
-using System.Threading;
-using System.Threading.Tasks;
-using ChurchManager.Domain.Features.People;
+﻿using ChurchManager.Domain.Features.People;
 using ChurchManager.Domain.Features.People.Repositories;
 using MediatR;
 
-namespace ChurchManager.Application.Features.People.Commands.UpdatePerson
+namespace ChurchManager.Features.People.Commands.UpdatePerson
 {
     public record UpdatePersonalInfoCommand : IRequest
     {

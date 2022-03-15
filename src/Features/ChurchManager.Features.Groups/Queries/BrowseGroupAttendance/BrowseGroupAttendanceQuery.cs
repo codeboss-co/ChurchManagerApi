@@ -1,8 +1,4 @@
-﻿using System;
-using System.Threading;
-using System.Threading.Tasks;
-using ChurchManager.Application.Wrappers;
-using ChurchManager.Domain.Features.Groups;
+﻿using ChurchManager.Domain.Features.Groups;
 using ChurchManager.Domain.Features.Groups.Repositories;
 using ChurchManager.Domain.Parameters;
 using ChurchManager.Domain.Shared;
@@ -10,7 +6,7 @@ using ChurchManager.Infrastructure.Abstractions.Persistence;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace ChurchManager.Application.Features.Groups.Queries.BrowseGroupAttendance
+namespace ChurchManager.Features.Groups.Queries.BrowseGroupAttendance
 {
     public record BrowseGroupAttendanceQuery
         : QueryParameter, IRequest<PagedResponse<GroupAttendanceViewModel>>

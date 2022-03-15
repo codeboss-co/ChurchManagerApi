@@ -1,9 +1,10 @@
 ﻿using System.Security.Claims;
 using ChurchManager.Application.Abstractions.Services;
 using ChurchManager.Application.ViewModels;
+using ChurchManager.SharedKernel.Common;
 using Codeboss.Types;
 
-namespace ChurchManager.Features.Common.Common
+namespace ChurchManager.Features.Common
 {
     public class CognitoCurrentUser : ICognitoCurrentUser
     {

@@ -1,15 +1,13 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using ChurchManager.Application.ViewModels;
-using ChurchManager.Application.Wrappers;
 using ChurchManager.Domain.Features.Groups.Repositories;
 using ChurchManager.Domain.Features.Groups.Specifications;
 using ChurchManager.Domain.Parameters;
+using ChurchManager.SharedKernel.Wrappers;
 using Convey.CQRS.Queries;
 using MediatR;
 
-namespace ChurchManager.Application.Features.Groups.Queries.BrowsePersonsGroups
+namespace ChurchManager.Features.Groups.Queries.BrowsePersonsGroups
 {
     public record BrowsePersonsGroupsQuery
         : SearchTermQueryParameter, IRequest<PagedResponse<GroupSummaryViewModel>>

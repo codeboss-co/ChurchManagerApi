@@ -1,14 +1,11 @@
-﻿using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using AutoMapper;
-using ChurchManager.Application.Wrappers;
+﻿using AutoMapper;
 using ChurchManager.Domain.Features.Groups.Repositories;
 using ChurchManager.Domain.Shared;
+using ChurchManager.SharedKernel.Wrappers;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace ChurchManager.Application.Features.Groups.Queries.GrroupsByGroupType
+namespace ChurchManager.Features.Groups.Queries.GrroupsByGroupType
 {
     public record GroupsByGroupTypeSelectItemQuery(int GroupTypeId) : IRequest<ApiResponse>;
 

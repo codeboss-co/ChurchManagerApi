@@ -1,12 +1,10 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using ChurchManager.Application.ViewModels;
 using ChurchManager.Domain.Features.Groups.Repositories;
 using ChurchManager.Domain.Features.Groups.Specifications;
 using MediatR;
 
-namespace ChurchManager.Application.Features.Groups.Queries.BrowseGroupAttendance
+namespace ChurchManager.Features.Groups.Queries.BrowseGroupAttendance
 {
     public record AttendanceRecordQuery(int AttendanceRecordId) : IRequest<GroupAttendanceDetailViewModel>
     {

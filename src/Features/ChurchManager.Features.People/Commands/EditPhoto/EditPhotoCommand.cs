@@ -1,15 +1,12 @@
-﻿using System;
-using System.Threading;
-using System.Threading.Tasks;
-using ChurchManager.Application.Extensions;
-using ChurchManager.Domain.Features.People.Repositories;
+﻿using ChurchManager.Domain.Features.People.Repositories;
 using ChurchManager.Domain.Features.People.Services;
+using ChurchManager.Features.People.Extensions;
 using CodeBoss.Extensions;
 using MediatR;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 
-namespace ChurchManager.Application.Features.People.Commands.EditPhoto
+namespace ChurchManager.Features.People.Commands.EditPhoto
 {
     public record EditPhotoCommand(int PersonId, IFormFile File) : IRequest;
 

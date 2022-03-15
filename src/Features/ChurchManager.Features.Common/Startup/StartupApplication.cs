@@ -1,7 +1,6 @@
 ﻿using ChurchManager.Features.Common.Behaviours;
-using ChurchManager.Features.Common.Common;
 using ChurchManager.Infrastructure;
-using ChurchManager.Infrastructure.Abstractions.Security;
+using ChurchManager.SharedKernel.Common;
 using CodeBoss.AspNetCore;
 using MediatR;
 using Microsoft.AspNetCore.Builder;

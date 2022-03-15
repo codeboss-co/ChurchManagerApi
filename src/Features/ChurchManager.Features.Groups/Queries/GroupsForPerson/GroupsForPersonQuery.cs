@@ -1,15 +1,12 @@
-﻿using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using ChurchManager.Application.ViewModels;
-using ChurchManager.Application.Wrappers;
 using ChurchManager.Domain.Common;
 using ChurchManager.Domain.Features.Groups.Repositories;
 using ChurchManager.Domain.Features.Groups.Specifications;
+using ChurchManager.SharedKernel.Wrappers;
 using MediatR;
 
-namespace ChurchManager.Application.Features.Groups.Queries.GroupsForPerson
+namespace ChurchManager.Features.Groups.Queries.GroupsForPerson
 {
     public record GroupsForPersonQuery(int PersonId) : IRequest<ApiResponse>;
 

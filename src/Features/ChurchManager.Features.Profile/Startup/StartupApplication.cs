@@ -1,5 +1,5 @@
 ﻿using ChurchManager.Application.Abstractions.Services;
-using ChurchManager.Application.Features.Profile.Services;
+using ChurchManager.Features.Profile.Services;
 using ChurchManager.Infrastructure;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;

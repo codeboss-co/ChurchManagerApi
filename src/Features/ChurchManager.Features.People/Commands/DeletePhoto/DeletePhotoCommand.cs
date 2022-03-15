@@ -1,13 +1,10 @@
-﻿using System;
-using System.Threading;
-using System.Threading.Tasks;
-using ChurchManager.Application.Extensions;
-using ChurchManager.Domain.Features.People.Repositories;
+﻿using ChurchManager.Domain.Features.People.Repositories;
 using ChurchManager.Domain.Features.People.Services;
+using ChurchManager.Features.People.Extensions;
 using CodeBoss.Extensions;
 using MediatR;
 
-namespace ChurchManager.Application.Features.People.Commands.DeletePhoto
+namespace ChurchManager.Features.People.Commands.DeletePhoto
 {
     public record DeletePhotoCommand(int PersonId) : IRequest;
 

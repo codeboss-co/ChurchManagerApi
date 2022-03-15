@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using ChurchManager.Application.Abstractions.Services;
+﻿using ChurchManager.Application.Abstractions.Services;
 using ChurchManager.Domain.Features.Communication;
 using ChurchManager.Domain.Features.Groups.Events;
 using ChurchManager.Domain.Features.Groups.Repositories;
@@ -7,7 +6,7 @@ using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
-namespace ChurchManager.Application.Features.Groups.Events.GroupAttendanceReviewed
+namespace ChurchManager.Features.Groups.Events.GroupAttendanceReviewed
 {
     public class GroupAttendanceReviewedConsumer : IConsumer<GroupAttendanceReviewedEvent>
     {

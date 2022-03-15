@@ -1,13 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.Threading;
-using System.Threading.Tasks;
-using ChurchManager.Application.Common;
 using ChurchManager.Domain.Features.Groups;
 using ChurchManager.Domain.Features.Groups.Events;
 using ChurchManager.Domain.Features.Groups.Repositories;
+using ChurchManager.SharedKernel.Common;
 using MediatR;
 
-namespace ChurchManager.Application.Features.Groups.Commands.GroupAttendanceFeedback
+namespace ChurchManager.Features.Groups.Commands.GroupAttendanceFeedback
 {
     public record SubmitGroupAttendanceFeedbackCommand : IRequest
     {

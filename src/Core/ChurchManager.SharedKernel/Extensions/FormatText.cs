@@ -1,4 +1,6 @@
-﻿namespace ChurchManager.SharedKernel.Extensions
+﻿using System.Net;
+
+namespace ChurchManager.SharedKernel.Extensions
 {
     public static class FormatText
     {

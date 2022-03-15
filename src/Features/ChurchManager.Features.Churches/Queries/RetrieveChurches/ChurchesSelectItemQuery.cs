@@ -1,15 +1,12 @@
-﻿using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using ChurchManager.Application.ViewModels;
-using ChurchManager.Application.Wrappers;
 using ChurchManager.Domain.Features.Churches;
 using ChurchManager.Infrastructure.Abstractions.Persistence;
+using ChurchManager.SharedKernel.Wrappers;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace ChurchManager.Application.Features.Churches.Queries.RetrieveChurches
+namespace ChurchManager.Features.Churches.Queries.RetrieveChurches
 {
     public class ChurchesQuery : IRequest<ApiResponse>
     {

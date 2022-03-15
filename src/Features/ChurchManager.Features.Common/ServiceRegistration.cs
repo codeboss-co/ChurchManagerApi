@@ -1,10 +1,10 @@
 ﻿using ChurchManager.Features.Common.Behaviours;
-using ChurchManager.Features.Common.Common;
 using CodeBoss.AspNetCore;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
+using ChurchManager.SharedKernel.Common;
 
 namespace ChurchManager.Features.Common
 {

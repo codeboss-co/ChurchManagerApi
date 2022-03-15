@@ -1,16 +1,13 @@
-﻿using System;
-using System.Threading;
-using System.Threading.Tasks;
-using AutoMapper;
-using ChurchManager.Application.Wrappers;
+﻿using AutoMapper;
 using ChurchManager.Domain;
 using ChurchManager.Domain.Features.Discipleship;
 using ChurchManager.Domain.Features.Discipleship.Specifications;
 using ChurchManager.Domain.Parameters;
 using ChurchManager.Infrastructure.Abstractions.Persistence;
+using ChurchManager.SharedKernel.Wrappers;
 using MediatR;
 
-namespace ChurchManager.Application.Features.Discipleship.Queries.DiscipleshipTypesAndStepDefinitions
+namespace ChurchManager.Features.Discipleship.Queries.DiscipleshipTypesAndStepDefinitions
 {
     public record BrowseDiscipleshipStepParticipantsQuery : SearchTermQueryParameter, IRequest<PagedResponse<DiscipleshipStepViewModel>>
     {

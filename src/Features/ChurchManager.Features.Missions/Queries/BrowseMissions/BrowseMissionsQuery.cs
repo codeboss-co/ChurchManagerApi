@@ -1,15 +1,13 @@
-﻿using System;
-using System.Threading;
-using System.Threading.Tasks;
-using ChurchManager.Application.Wrappers;
-using ChurchManager.Domain.Features.Missions;
+﻿using ChurchManager.Domain.Features.Missions;
 using ChurchManager.Domain.Features.Missions.Specifications;
 using ChurchManager.Domain.Parameters;
 using ChurchManager.Domain.Shared;
 using ChurchManager.Infrastructure.Abstractions.Persistence;
+using ChurchManager.SharedKernel.Wrappers;
 using MediatR;
 
-namespace ChurchManager.Application.Features.Missions.Queries.BrowseMissions
+
+namespace ChurchManager.Features.Missions.Queries.BrowseMissions
 {
     public record BrowseMissionsQuery : QueryParameter, IRequest<PagedResponse<MissionViewModel>>
     {

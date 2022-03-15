@@ -1,4 +1,4 @@
-﻿namespace ChurchManager.SharedKernel
+﻿namespace ChurchManager.SharedKernel.Exceptions
 {
     /// <summary>
     /// Represents errors that occur during application execution

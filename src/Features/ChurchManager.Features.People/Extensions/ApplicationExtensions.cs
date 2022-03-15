@@ -1,6 +1,6 @@
 ﻿using ChurchManager.Domain.Features.People;
 
-namespace ChurchManager.Features.Common.Extensions
+namespace ChurchManager.Features.People.Extensions
 {
     public static class ApplicationExtensions
     {

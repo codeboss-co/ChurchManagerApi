@@ -1,6 +1,4 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using ChurchManager.Application.Abstractions.Services;
 using ChurchManager.Application.ViewModels;
 using ChurchManager.Domain.Features.People.Queries;
@@ -8,7 +6,7 @@ using ChurchManager.Domain.Features.People.Repositories;
 using ChurchManager.Domain.Features.People.Specifications;
 using Convey.CQRS.Queries;
 
-namespace ChurchManager.Application.Features.Profile.Services
+namespace ChurchManager.Features.People.Services
 {
     public class PersonService : IPersonService
     {

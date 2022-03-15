@@ -1,12 +1,10 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
-using ChurchManager.Application.Wrappers;
-using ChurchManager.Domain.Features.People.Repositories;
+﻿using ChurchManager.Domain.Features.People.Repositories;
 using ChurchManager.Domain.Features.People.Specifications;
 using ChurchManager.Domain.Parameters;
+using ChurchManager.SharedKernel.Wrappers;
 using MediatR;
 
-namespace ChurchManager.Application.Features.People.Queries.PeopleAutocomplete
+namespace ChurchManager.Features.People.Queries.PeopleAutocomplete
 {
     public record PeopleAutocompleteQuery : SearchTermQueryParameter, IRequest<ApiResponse>;
 

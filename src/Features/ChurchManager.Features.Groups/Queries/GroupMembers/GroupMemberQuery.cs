@@ -1,12 +1,10 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
-using ChurchManager.Application.Wrappers;
-using ChurchManager.Domain.Features.Groups.Repositories;
+﻿using ChurchManager.Domain.Features.Groups.Repositories;
 using ChurchManager.Domain.Features.Groups.Specifications;
 using ChurchManager.Domain.Shared;
+using ChurchManager.SharedKernel.Wrappers;
 using MediatR;
 
-namespace ChurchManager.Application.Features.Groups.Queries.GroupMembers
+namespace ChurchManager.Features.Groups.Queries.GroupMembers
 {
     public record GroupMemberQuery(int GroupMemberId) : IRequest<ApiResponse>
     {

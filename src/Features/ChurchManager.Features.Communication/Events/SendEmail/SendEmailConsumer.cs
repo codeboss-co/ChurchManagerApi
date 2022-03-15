@@ -1,7 +1,4 @@
-﻿using System;
-using System.IO;
-using System.Threading.Tasks;
-using ChurchManager.Domain.Features.Communication.Events;
+﻿using ChurchManager.Domain.Features.Communication.Events;
 using ChurchManager.Domain.Features.Communication.Services;
 using ChurchManager.Domain.Features.People;
 using ChurchManager.Domain.Shared;
@@ -10,7 +7,7 @@ using MassTransit;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace ChurchManager.Application.Features.Communication.Events.SendEmail
+namespace ChurchManager.Features.Communication.Events.SendEmail
 {
     public class SendEmailConsumer : IConsumer<SendEmailEvent>
     {

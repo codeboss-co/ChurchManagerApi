@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using ChurchManager.SharedKernel;
+using ChurchManager.SharedKernel.Exceptions;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace ChurchManager.Infrastructure.Plugins

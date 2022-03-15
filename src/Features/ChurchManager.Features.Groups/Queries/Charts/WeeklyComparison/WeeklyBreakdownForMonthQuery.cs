@@ -1,11 +1,9 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
-using ChurchManager.Application.Wrappers;
-using ChurchManager.Domain.Common;
+﻿using ChurchManager.Domain.Common;
 using ChurchManager.Domain.Features.Groups.Repositories;
+using ChurchManager.SharedKernel.Wrappers;
 using MediatR;
 
-namespace ChurchManager.Application.Features.Groups.Queries.Charts.WeeklyComparison
+namespace ChurchManager.Features.Groups.Queries.Charts.WeeklyComparison
 {
     public record WeeklyBreakdownForMonthQuery : IRequest<ApiResponse>
     {

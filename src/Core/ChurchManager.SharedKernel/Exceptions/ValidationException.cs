@@ -1,6 +1,6 @@
 ﻿using FluentValidation.Results;
 
-namespace ChurchManager.Features.Common.Exceptions
+namespace ChurchManager.SharedKernel.Exceptions
 {
     public class ValidationException : Exception
     {

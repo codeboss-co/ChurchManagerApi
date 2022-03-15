@@ -1,15 +1,12 @@
-﻿using System;
-using System.Threading;
-using System.Threading.Tasks;
-using ChurchManager.Application.Common;
-using ChurchManager.Application.Wrappers;
-using ChurchManager.Domain.Features.Groups.Specifications;
+﻿using ChurchManager.Domain.Features.Groups.Specifications;
 using ChurchManager.Domain.Parameters;
 using ChurchManager.Domain.Shared;
 using ChurchManager.Infrastructure.Abstractions.Persistence;
+using ChurchManager.SharedKernel.Common;
+using ChurchManager.SharedKernel.Wrappers;
 using MediatR;
 
-namespace ChurchManager.Application.Features.FollowUp.Queries.BrowseFollowUp
+namespace ChurchManager.Features.FollowUp.Queries.BrowseFollowUp
 {
     public record BrowseFollowUpQuery
         : SearchTermQueryParameter, IRequest<PagedResponse<FollowUpViewModel>>

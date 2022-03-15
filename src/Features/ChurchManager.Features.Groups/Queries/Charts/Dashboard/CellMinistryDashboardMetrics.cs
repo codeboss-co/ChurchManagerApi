@@ -1,15 +1,11 @@
-﻿using ChurchManager.Application.Wrappers;
-using ChurchManager.Domain.Features.Groups;
+﻿using ChurchManager.Domain.Features.Groups;
 using ChurchManager.Domain.Features.Groups.Repositories;
 using ChurchManager.Infrastructure.Abstractions.Persistence;
+using ChurchManager.SharedKernel.Wrappers;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 
-namespace ChurchManager.Application.Features.Groups.Queries.Charts.Dashboard
+namespace ChurchManager.Features.Groups.Queries.Charts.Dashboard
 {
     public class CellMinistryDashboardMetrics : IRequest<ApiResponse>
     {

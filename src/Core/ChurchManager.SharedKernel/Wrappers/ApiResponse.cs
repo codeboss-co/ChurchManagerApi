@@ -1,4 +1,4 @@
-﻿namespace ChurchManager.Features.Common.Wrappers
+﻿namespace ChurchManager.SharedKernel.Wrappers
 {
     public class ApiResponse
     {

@@ -1,13 +1,10 @@
-﻿using System;
-using ChurchManager.Application.Wrappers;
-using ChurchManager.Domain.Features.People;
-using ChurchManager.Infrastructure.Abstractions.Persistence;
-using MediatR;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using ChurchManager.Domain.Features.People;
 using ChurchManager.Domain.Shared;
+using ChurchManager.Infrastructure.Abstractions.Persistence;
+using ChurchManager.SharedKernel.Wrappers;
+using MediatR;
 
-namespace ChurchManager.Application.Features.People.Queries.GetFamily
+namespace ChurchManager.Features.People.Queries.GetFamily
 {
     public record GetFamilyQuery(int FamilyId) : IRequest<ApiResponse>;
 

@@ -1,6 +1,6 @@
 ﻿using System.Globalization;
 
-namespace ChurchManager.Features.Common.Exceptions
+namespace ChurchManager.SharedKernel.Exceptions
 {
     public class ApiException : Exception
     {

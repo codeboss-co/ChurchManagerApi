@@ -1,7 +1,7 @@
-﻿using ChurchManager.Application.Wrappers;
+﻿using ChurchManager.SharedKernel.Wrappers;
 using MediatR;
 
-namespace ChurchManager.Application.Features.Missions.Queries.GetMission
+namespace ChurchManager.Features.Missions.Queries.GetMission
 {
     public record GetMissionQuery(int MissionId) : IRequest<ApiResponse>;
 }

@@ -1,14 +1,12 @@
-﻿using ChurchManager.Application.Wrappers;
-using ChurchManager.Domain.Features.People;
+﻿using ChurchManager.Domain.Features.People;
 using ChurchManager.Domain.Features.People.Specifications;
 using ChurchManager.Domain.Parameters;
 using ChurchManager.Domain.Shared;
 using ChurchManager.Infrastructure.Abstractions.Persistence;
+using ChurchManager.SharedKernel.Wrappers;
 using MediatR;
-using System.Threading;
-using System.Threading.Tasks;
 
-namespace ChurchManager.Application.Features.People.Queries.BrowseFamilies
+namespace ChurchManager.Features.People.Queries.BrowseFamilies
 {
     public record BrowseFamiliesQuery : QueryParameter, IRequest<PagedResponse<FamilyViewModel>>
     {

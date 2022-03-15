@@ -1,11 +1,9 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
-using AutoMapper;
-using ChurchManager.Application.Wrappers;
+﻿using AutoMapper;
 using ChurchManager.Domain.Features.Discipleship.Repositories;
+using ChurchManager.SharedKernel.Wrappers;
 using MediatR;
 
-namespace ChurchManager.Application.Features.Discipleship.Queries.DiscipleshipTypesAndStepDefinitions
+namespace ChurchManager.Features.Discipleship.Queries.DiscipleshipTypesAndStepDefinitions
 {
     public record DiscipleshipStepInfoForPersonQuery : IRequest<ApiResponse>
     {

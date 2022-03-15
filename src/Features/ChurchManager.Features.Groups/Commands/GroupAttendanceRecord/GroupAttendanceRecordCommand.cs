@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Threading;
-using System.Threading.Tasks;
-using ChurchManager.Application.Features.Groups.Services;
+﻿using System.ComponentModel.DataAnnotations;
+using ChurchManager.Features.Groups.Services;
 using MediatR;
 
-namespace ChurchManager.Application.Features.Groups.Commands.GroupAttendanceRecord
+namespace ChurchManager.Features.Groups.Commands.GroupAttendanceRecord
 {
     public record GroupAttendanceRecordCommand : IRequest
     {

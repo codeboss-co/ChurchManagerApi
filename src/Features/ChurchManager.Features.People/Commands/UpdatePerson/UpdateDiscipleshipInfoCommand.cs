@@ -1,15 +1,11 @@
-﻿using System;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using ChurchManager.Domain.Features.Discipleship;
+﻿using ChurchManager.Domain.Features.Discipleship;
 using ChurchManager.Domain.Features.People;
 using ChurchManager.Domain.Features.People.Repositories;
 using ChurchManager.Infrastructure.Abstractions.Persistence;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace ChurchManager.Application.Features.People.Commands.UpdatePerson
+namespace ChurchManager.Features.People.Commands.UpdatePerson
 {
     public record UpdateDiscipleshipInfoCommand : IRequest
     {

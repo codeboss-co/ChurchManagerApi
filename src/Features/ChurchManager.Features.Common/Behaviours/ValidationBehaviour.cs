@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 using MediatR;
-using ValidationException = ChurchManager.Features.Common.Exceptions.ValidationException;
+using ValidationException = ChurchManager.SharedKernel.Exceptions.ValidationException;
 
 namespace ChurchManager.Features.Common.Behaviours
 {

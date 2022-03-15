@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using ChurchManager.Domain.Common.Configuration;
+﻿using ChurchManager.Domain.Common.Configuration;
 using ChurchManager.Domain.Features.Communication.Events;
 using ChurchManager.Domain.Features.People.Events;
 using ChurchManager.Domain.Features.People.Repositories;
@@ -12,7 +9,7 @@ using MassTransit;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-namespace ChurchManager.Application.Features.People.Events.FollowUpAssigned
+namespace ChurchManager.Features.People.Events.FollowUpAssigned
 {
     public class FollowUpAssignedConsumer : IConsumer<FollowUpAssignedEvent>
     {

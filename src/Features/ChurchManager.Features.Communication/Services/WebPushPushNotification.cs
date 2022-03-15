@@ -1,14 +1,11 @@
-﻿using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using ChurchManager.Application.Abstractions.Services;
+﻿using ChurchManager.Application.Abstractions.Services;
 using ChurchManager.Domain.Features.Communication;
 using ChurchManager.Domain.Features.Communication.Services;
 using ChurchManager.Infrastructure.Abstractions.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
-namespace ChurchManager.Application.Features.Communication.Services
+namespace ChurchManager.Features.Communication.Services
 {
     public class WebPushPushNotification : IPushNotificationService
     {

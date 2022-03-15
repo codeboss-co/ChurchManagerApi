@@ -1,13 +1,10 @@
-﻿using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using ChurchManager.Application.Wrappers;
-using ChurchManager.Domain.Features.People.Queries;
+﻿using ChurchManager.Domain.Features.People.Queries;
 using ChurchManager.Domain.Features.People.Repositories;
 using ChurchManager.Domain.Features.People.Specifications;
+using ChurchManager.SharedKernel.Wrappers;
 using MediatR;
 
-namespace ChurchManager.Application.Features.People.Queries.FindDuplicates
+namespace ChurchManager.Features.People.Queries.FindDuplicates
 {
     public record FindPeopleDuplicatesQuery : IRequest<ApiResponse>
     {

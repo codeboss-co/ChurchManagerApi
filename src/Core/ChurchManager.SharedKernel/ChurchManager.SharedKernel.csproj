@@ -1,3 +1,11 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 	<Import Project="..\..\Build\ChurchManager.Common.props" />
+
+	<ItemGroup>
+	  <ProjectReference Include="..\..\ChurchManager.Api\ChurchManager.Application.ViewModels\ChurchManager.Application.ViewModels.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="FluentValidation" Version="10.4.0" />
+	</ItemGroup>
 </Project>

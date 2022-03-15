@@ -1,4 +1,6 @@
-﻿namespace ChurchManager.Features.Common.Wrappers
+﻿using Convey.CQRS.Queries;
+
+namespace ChurchManager.SharedKernel.Wrappers
 {
     public class PagedResponse<T> : ApiResponse
     {

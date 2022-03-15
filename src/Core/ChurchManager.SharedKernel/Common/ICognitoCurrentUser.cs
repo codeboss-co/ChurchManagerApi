@@ -1,7 +1,7 @@
 ﻿using ChurchManager.Application.ViewModels;
 using ChurchManager.Infrastructure.Abstractions.Security;
 
-namespace ChurchManager.Features.Common.Common
+namespace ChurchManager.SharedKernel.Common
 {
     // Marker for easy reference
     public interface ICognitoCurrentUser : ICognitoCurrentUser<PersonViewModel>

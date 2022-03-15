@@ -1,10 +1,8 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
-using ChurchManager.Application.Abstractions.Services;
+﻿using ChurchManager.Application.Abstractions.Services;
 using ChurchManager.Domain.Features.Communication;
 using MediatR;
 
-namespace ChurchManager.Application.Features.Communication.Commands
+namespace ChurchManager.Features.Communication.Commands
 {
     public record SendWebPushNotificationCommand(int PersonId, string Payload) : IRequest
     {

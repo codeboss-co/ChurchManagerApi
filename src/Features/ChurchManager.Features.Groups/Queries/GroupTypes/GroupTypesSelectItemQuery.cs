@@ -1,15 +1,12 @@
-﻿using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using AutoMapper;
-using ChurchManager.Application.Wrappers;
+﻿using AutoMapper;
 using ChurchManager.Domain.Features.Groups;
 using ChurchManager.Domain.Shared;
 using ChurchManager.Infrastructure.Abstractions.Persistence;
+using ChurchManager.SharedKernel.Wrappers;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace ChurchManager.Application.Features.Groups.Queries.GroupTypes
+namespace ChurchManager.Features.Groups.Queries.GroupTypes
 {
     public record GroupTypesQuery : IRequest<ApiResponse>
     {

@@ -1,16 +1,11 @@
-﻿using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using ChurchManager.Application.Abstractions.Services;
-using ChurchManager.Application.ViewModels;
-using ChurchManager.Application.Wrappers;
 using ChurchManager.Domain;
 using ChurchManager.Domain.Features.Discipleship.Repositories;
-using ChurchManager.Domain.Shared;
+using ChurchManager.SharedKernel.Wrappers;
 using MediatR;
 
-namespace ChurchManager.Application.Features.Profile.Queries.RetrieveProfile
+namespace ChurchManager.Features.Profile.Queries.RetrieveProfile
 {
     /// <summary>
     ///     ProfileByPersonIdQuery - handles media IRequest

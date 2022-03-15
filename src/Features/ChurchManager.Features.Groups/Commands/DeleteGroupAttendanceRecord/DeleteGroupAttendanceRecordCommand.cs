@@ -1,10 +1,8 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
-using ChurchManager.Application.Wrappers;
-using ChurchManager.Domain.Features.Groups.Repositories;
+﻿using ChurchManager.Domain.Features.Groups.Repositories;
+using ChurchManager.SharedKernel.Wrappers;
 using MediatR;
 
-namespace ChurchManager.Application.Features.Groups.Commands.DeleteGroupAttendanceRecord
+namespace ChurchManager.Features.Groups.Commands.DeleteGroupAttendanceRecord
 {
     public record DeleteGroupAttendanceRecordCommand(int GroupAttendanceRecordId) : IRequest<ApiResponse>;
 

@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
-using ChurchManager.Application.Wrappers;
-using ChurchManager.Domain.Common;
+﻿using ChurchManager.Domain.Common;
 using ChurchManager.Domain.Features.People.Repositories;
 using ChurchManager.Infrastructure.Abstractions.Persistence;
+using ChurchManager.SharedKernel.Wrappers;
 using DotLiquid.Util;
 using MediatR;
 using Microsoft.EntityFrameworkCore;

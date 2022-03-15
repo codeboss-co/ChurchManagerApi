@@ -1,7 +1,6 @@
-﻿using System;
-using ChurchManager.Domain.Shared;
+﻿using ChurchManager.Domain.Shared;
 
-namespace ChurchManager.Application.Features.People.Commands.AddNewFamily
+namespace ChurchManager.Features.People.Commands.AddNewFamily
 {
     public record BirthDate
     {

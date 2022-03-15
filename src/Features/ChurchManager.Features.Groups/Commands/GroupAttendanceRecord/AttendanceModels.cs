@@ -1,4 +1,4 @@
-﻿namespace ChurchManager.Application.Features.Groups.Commands.GroupAttendanceRecord
+﻿namespace ChurchManager.Features.Groups.Commands.GroupAttendanceRecord
 {
     public record AttendanceBase
     {

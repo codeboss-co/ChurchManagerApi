@@ -1,15 +1,12 @@
 ﻿using ChurchManager.Application.ViewModels;
-using ChurchManager.Application.Wrappers;
 using ChurchManager.Domain.Common;
 using ChurchManager.Domain.Features.Groups.Repositories;
 using ChurchManager.Domain.Features.Groups.Specifications;
 using ChurchManager.Domain.Shared;
+using ChurchManager.SharedKernel.Wrappers;
 using MediatR;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 
-namespace ChurchManager.Application.Features.Groups.Queries.GroupMemberAttendance
+namespace ChurchManager.Features.Groups.Queries.GroupMemberAttendance
 {
     public record GroupMembersAttendanceQuery(int GroupId, PeriodType Period) : IRequest<ApiResponse>;
 

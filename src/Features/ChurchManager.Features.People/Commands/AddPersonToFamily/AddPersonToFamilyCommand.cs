@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
-using ChurchManager.Application.Features.People.Commands.AddNewFamily;
-using ChurchManager.Domain.Features.People;
+﻿using ChurchManager.Domain.Features.People;
 using ChurchManager.Domain.Features.People.Repositories;
+using ChurchManager.Features.People.Commands.AddNewFamily;
 using CodeBoss.Extensions;
 using MediatR;
 
-namespace ChurchManager.Application.Features.People.Commands.AddPersonToFamily
+namespace ChurchManager.Features.People.Commands.AddPersonToFamily
 {
     public record AddPersonToFamilyCommand : IRequest
     {

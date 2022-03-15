@@ -1,16 +1,13 @@
-﻿using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using ChurchManager.Application.Wrappers;
-using ChurchManager.Domain;
+﻿using ChurchManager.Domain;
 using ChurchManager.Domain.Common;
 using ChurchManager.Domain.Features.Discipleship;
 using ChurchManager.Domain.Shared;
 using ChurchManager.Infrastructure.Abstractions.Persistence;
+using ChurchManager.SharedKernel.Wrappers;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace ChurchManager.Application.Features.Discipleship.Queries.DiscipleshipTypesAndStepDefinitions
+namespace ChurchManager.Features.Discipleship.Queries.DiscipleshipTypesAndStepDefinitions
 {
     public record DiscipleshipProgramsQuery : IRequest<ApiResponse>
     {

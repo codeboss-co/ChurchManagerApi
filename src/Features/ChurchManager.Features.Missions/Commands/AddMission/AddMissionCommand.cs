@@ -1,13 +1,10 @@
-﻿using ChurchManager.Domain.Features.Missions;
-using MediatR;
-using System;
-using System.ComponentModel.DataAnnotations;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 using ChurchManager.Domain.Common;
+using ChurchManager.Domain.Features.Missions;
 using ChurchManager.Infrastructure.Abstractions.Persistence;
+using MediatR;
 
-namespace ChurchManager.Application.Features.Missions.Commands.AddMission
+namespace ChurchManager.Features.Missions.Commands.AddMission
 {
     public record AddMissionCommand : IRequest
     {

@@ -1,16 +1,13 @@
-﻿using System;
-using System.Threading;
-using System.Threading.Tasks;
-using ChurchManager.Application.Wrappers;
-using ChurchManager.Domain.Features.People;
+﻿using ChurchManager.Domain.Features.People;
 using ChurchManager.Domain.Features.People.Repositories;
 using ChurchManager.Infrastructure.Abstractions.Persistence;
+using ChurchManager.SharedKernel.Wrappers;
 using CodeBoss.Extensions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
-namespace ChurchManager.Application.Features.People.Commands.DeletePerson
+namespace ChurchManager.Features.People.Commands.DeletePerson
 {
     /// <summary>
     /// This will hard delete person and also remove from all groups 

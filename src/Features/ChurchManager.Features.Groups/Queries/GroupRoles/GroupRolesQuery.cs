@@ -1,11 +1,9 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
-using ChurchManager.Application.Wrappers;
-using ChurchManager.Domain.Features.Groups.Repositories;
+﻿using ChurchManager.Domain.Features.Groups.Repositories;
+using ChurchManager.SharedKernel.Wrappers;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace ChurchManager.Application.Features.Groups.Queries.GroupRoles
+namespace ChurchManager.Features.Groups.Queries.GroupRoles
 {
     public record GroupRolesQuery(int GroupTypeId) : IRequest<ApiResponse>
     {

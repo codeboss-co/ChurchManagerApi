@@ -1,8 +1,6 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
-using ChurchManager.Application.Features.Groups.Commands.GroupAttendanceRecord;
+﻿using ChurchManager.Features.Groups.Commands.GroupAttendanceRecord;
 
-namespace ChurchManager.Application.Features.Groups.Services
+namespace ChurchManager.Features.Groups.Services
 {
     public interface IGroupAttendanceAppService
     {

@@ -1,13 +1,10 @@
-﻿using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using AutoMapper;
-using ChurchManager.Application.Wrappers;
+﻿using AutoMapper;
 using ChurchManager.Domain.Features.Groups.Repositories;
+using ChurchManager.SharedKernel.Wrappers;
 using CodeBoss.Extensions;
 using MediatR;
 
-namespace ChurchManager.Application.Features.Groups.Queries.GroupsWithChildren
+namespace ChurchManager.Features.Groups.Queries.GroupsWithChildren
 {
     public record GroupsWithChildrenQuery : IRequest<ApiResponse>
     {

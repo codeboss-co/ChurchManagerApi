@@ -1,11 +1,9 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
-using ChurchManager.Application.Common;
-using ChurchManager.Domain.Features.Communication;
+﻿using ChurchManager.Domain.Features.Communication;
 using ChurchManager.Domain.Features.Communication.Services;
+using ChurchManager.SharedKernel.Common;
 using MediatR;
 
-namespace ChurchManager.Application.Features.Communication.Commands
+namespace ChurchManager.Features.Communication.Commands
 {
     public record SubscribeToWebPushCommand(PushSubscription Subscription) : IRequest
     {

@@ -1,12 +1,9 @@
-﻿using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using ChurchManager.Application.Wrappers;
-using ChurchManager.Domain.Features.Groups.Repositories;
+﻿using ChurchManager.Domain.Features.Groups.Repositories;
+using ChurchManager.SharedKernel.Wrappers;
 using CodeBoss.Extensions;
 using MediatR;
 
-namespace ChurchManager.Application.Features.Groups.Queries.GroupsWithChildren
+namespace ChurchManager.Features.Groups.Queries.GroupsWithChildren
 {
     public record GroupWithChildrenQuery(int GroupId) : IRequest<ApiResponse>
     {

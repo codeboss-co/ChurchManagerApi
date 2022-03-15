@@ -1,19 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using ChurchManager.Application.Abstractions.Services;
-using ChurchManager.Application.Features.Groups.Commands.GroupAttendanceRecord;
+﻿using ChurchManager.Application.Abstractions.Services;
 using ChurchManager.Domain.Common;
 using ChurchManager.Domain.Features.Groups;
 using ChurchManager.Domain.Features.Groups.Repositories;
 using ChurchManager.Domain.Features.Groups.Specifications;
 using ChurchManager.Domain.Features.People;
+using ChurchManager.Features.Groups.Commands.GroupAttendanceRecord;
 using Microsoft.Extensions.Logging;
 using GroupMemberAttendance = ChurchManager.Domain.Features.Groups.GroupMemberAttendance;
 
-namespace ChurchManager.Application.Features.Groups.Services
+namespace ChurchManager.Features.Groups.Services
 {
     public class GroupAttendanceAppService : IGroupAttendanceAppService
     {

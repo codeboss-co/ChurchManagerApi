@@ -1,18 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using ChurchManager.Application.Common;
-using ChurchManager.Domain.Features.People;
+﻿using ChurchManager.Domain.Features.People;
 using ChurchManager.Domain.Features.People.Events;
 using ChurchManager.Domain.Features.People.Repositories;
 using ChurchManager.Infrastructure.Abstractions;
+using ChurchManager.SharedKernel.Common;
 using CodeBoss.Extensions;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
-namespace ChurchManager.Application.Features.People.Commands.AddNewFamily
+namespace ChurchManager.Features.People.Commands.AddNewFamily
 {
     public record AddNewFamilyCommand : IRequest
     {

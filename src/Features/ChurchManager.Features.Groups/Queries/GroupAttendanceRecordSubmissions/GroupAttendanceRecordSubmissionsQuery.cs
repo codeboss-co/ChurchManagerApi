@@ -1,20 +1,16 @@
-using ChurchManager.Application.Wrappers;
+using System.Diagnostics.CodeAnalysis;
 using ChurchManager.Domain.Common;
 using ChurchManager.Domain.Features.Groups;
 using ChurchManager.Domain.Features.Groups.Repositories;
 using ChurchManager.Domain.Features.Groups.Specifications;
 using ChurchManager.Infrastructure.Abstractions.Persistence;
 using ChurchManager.Infrastructure.Persistence.Contexts;
+using ChurchManager.SharedKernel.Wrappers;
 using CodeBoss.Extensions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 
-namespace ChurchManager.Application.Features.Groups.Queries.GroupAttendanceRecordSubmissions
+namespace ChurchManager.Features.Groups.Queries.GroupAttendanceRecordSubmissions
 {
     public record GroupAttendanceRecordSubmissionsQuery(int ChurchId, PeriodType PeriodType) : IRequest<ApiResponse>;
 

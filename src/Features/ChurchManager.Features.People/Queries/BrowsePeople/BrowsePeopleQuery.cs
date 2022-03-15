@@ -1,14 +1,12 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using ChurchManager.Application.Abstractions.Services;
 using ChurchManager.Application.ViewModels;
-using ChurchManager.Application.Wrappers;
 using ChurchManager.Domain.Features.People.Queries;
+using ChurchManager.SharedKernel.Wrappers;
 using Convey.CQRS.Queries;
 using MediatR;
 
-namespace ChurchManager.Application.Features.People.Queries.BrowsePeople
+namespace ChurchManager.Features.People.Queries.BrowsePeople
 {
     public record BrowsePeopleQuery : PeopleAdvancedSearchQuery, IRequest<PagedResponse<PersonViewModel>>
     {

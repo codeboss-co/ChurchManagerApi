@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using ChurchManager.Application.Wrappers;
-using ChurchManager.Domain.Features.Groups;
+﻿using ChurchManager.Domain.Features.Groups;
 using ChurchManager.Domain.Features.Groups.Repositories;
-using ChurchManager.Domain.Shared;
+using ChurchManager.SharedKernel.Wrappers;
 using Codeboss.Types;
 using Ical.Net;
 using Ical.Net.CalendarComponents;
@@ -15,7 +9,7 @@ using Ical.Net.Serialization;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace ChurchManager.Application.Features.Groups.Commands.NewGroup
+namespace ChurchManager.Features.Groups.Commands.NewGroup
 {
     public record EditGroupCommand : AddGroupCommand
     {

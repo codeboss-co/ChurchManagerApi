@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace ChurchManager.Features.Auth.Startup
+namespace ChurchManager.Features.Churches.Startup
 {
     public class StartupApplication : IStartupApplication
     {

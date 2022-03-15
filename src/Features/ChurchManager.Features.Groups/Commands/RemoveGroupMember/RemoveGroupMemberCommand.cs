@@ -1,12 +1,10 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
-using ChurchManager.Application.Wrappers;
-using ChurchManager.Domain.Features.Groups;
+﻿using ChurchManager.Domain.Features.Groups;
 using ChurchManager.Infrastructure.Abstractions.Persistence;
+using ChurchManager.SharedKernel.Wrappers;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace ChurchManager.Application.Features.Groups.Commands.RemoveGroupMember
+namespace ChurchManager.Features.Groups.Commands.RemoveGroupMember
 {
     public record RemoveGroupMemberCommand(int GroupId, int GroupMemberId) : IRequest<ApiResponse>
     {
