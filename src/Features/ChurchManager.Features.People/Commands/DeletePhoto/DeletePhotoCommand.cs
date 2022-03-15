@@ -1,6 +1,6 @@
 ﻿using ChurchManager.Domain.Features.People.Repositories;
 using ChurchManager.Domain.Features.People.Services;
-using ChurchManager.Features.People.Extensions;
+using ChurchManager.Features.People.Infrastructure.Extensions;
 using CodeBoss.Extensions;
 using MediatR;
 

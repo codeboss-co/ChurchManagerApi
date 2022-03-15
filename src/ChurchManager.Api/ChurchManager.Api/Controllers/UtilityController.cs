@@ -1,21 +1,16 @@
-﻿using ChurchManager.Application.Common;
-using ChurchManager.Application.Exceptions;
-using ChurchManager.Application.Features.Groups.Queries.GroupsForPerson;
-using ChurchManager.Application.Tests;
-using ChurchManager.Domain.Features.Communication.Services;
+﻿using ChurchManager.Domain.Features.Communication.Services;
+using ChurchManager.Features.Common.Tests;
+using ChurchManager.Features.Groups.Queries.GroupsForPerson;
 using ChurchManager.Infrastructure.Abstractions;
 using ChurchManager.Infrastructure.Abstractions.Persistence;
+using ChurchManager.SharedKernel.Common;
+using ChurchManager.SharedKernel.Exceptions;
 using Codeboss.Types;
 using MassTransit;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.SignalR.Protocol;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace ChurchManager.Api.Controllers
 {

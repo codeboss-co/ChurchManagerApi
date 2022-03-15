@@ -1,7 +1,5 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
-using ChurchManager.Application.Common;
-using ChurchManager.Application.Features.Churches.Queries.RetrieveChurches;
+﻿using ChurchManager.Features.Churches.Queries.RetrieveChurches;
+using ChurchManager.SharedKernel.Common;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

@@ -1,11 +1,9 @@
-﻿using ChurchManager.Application.Features.Groups.Commands.DeleteGroupAttendanceRecord;
-using ChurchManager.Application.Features.Groups.Queries.Reports.AttendanceReportGrid;
+﻿using ChurchManager.Features.Groups.Commands.DeleteGroupAttendanceRecord;
+using ChurchManager.Features.Groups.Queries.GroupAttendanceRecordSubmissions;
+using ChurchManager.Features.Groups.Queries.GroupMemberAttendance;
+using ChurchManager.Features.Groups.Queries.Reports.AttendanceReportGrid;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading;
-using System.Threading.Tasks;
-using ChurchManager.Application.Features.Groups.Queries.GroupAttendanceRecordSubmissions;
-using ChurchManager.Application.Features.Groups.Queries.GroupMemberAttendance;
 
 namespace ChurchManager.Api.Controllers.v1
 {

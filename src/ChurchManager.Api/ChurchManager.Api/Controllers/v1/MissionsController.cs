@@ -1,11 +1,9 @@
-﻿using ChurchManager.Application.Common;
-using ChurchManager.Application.Features.Missions.Queries.BrowseMissions;
-using ChurchManager.Application.Features.Missions.Queries.GetMission;
+﻿using ChurchManager.Features.Missions.Commands.AddMission;
+using ChurchManager.Features.Missions.Queries.BrowseMissions;
+using ChurchManager.Features.Missions.Queries.GetMission;
+using ChurchManager.SharedKernel.Common;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading;
-using System.Threading.Tasks;
-using ChurchManager.Application.Features.Missions.Commands.AddMission;
 
 namespace ChurchManager.Api.Controllers.v1
 {

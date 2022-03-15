@@ -1,14 +1,18 @@
-﻿using ChurchManager.Application.ViewModels;
+﻿using AutoMapper;
+using ChurchManager.Application.ViewModels;
 using ChurchManager.Domain.Common;
+using ChurchManager.Domain.Common.Extensions;
 using ChurchManager.Domain.Features.Groups;
 using ChurchManager.Domain.Shared;
+using ChurchManager.Infrastructure.Mapper;
+using Convey.CQRS.Queries;
 using GroupMemberViewModel = ChurchManager.Domain.Shared.GroupMemberViewModel;
 using GroupTypeViewModel = ChurchManager.Domain.Shared.GroupTypeViewModel;
 using GroupViewModel = ChurchManager.Domain.Shared.GroupViewModel;
 
-namespace ChurchManager.Features.Common.Mappings
+namespace ChurchManager.Features.Groups.Infrastructure.Mapper
 {
-    public class GroupsMappingProfile : Profile
+    public class GroupsMappingProfile : Profile, IAutoMapperProfile
     {
         public GroupsMappingProfile()
         {
@@ -54,5 +58,7 @@ namespace ChurchManager.Features.Common.Mappings
                 .ForMember(dest => dest.RecurrenceRule, opt => opt.MapFrom(src => src.WithInterval()))
                 ;
         }
+
+        public int Order => 1;
     }
 }

@@ -1,12 +1,15 @@
-﻿using ChurchManager.Application.ViewModels;
+﻿using AutoMapper;
+using ChurchManager.Application.ViewModels;
 using ChurchManager.Domain;
 using ChurchManager.Domain.Common;
 using ChurchManager.Domain.Features.People;
+using ChurchManager.Infrastructure.Mapper;
+using Convey.CQRS.Queries;
 using GroupMemberViewModel = ChurchManager.Domain.Shared.GroupMemberViewModel;
 
-namespace ChurchManager.Features.Common.Mappings
+namespace ChurchManager.Features.People.Infrastructure.Mapper
 {
-    public class PeopleMappingProfile : Profile
+    public class PeopleMappingProfile : Profile, IAutoMapperProfile
     {
         public PeopleMappingProfile()
         {
@@ -70,5 +73,6 @@ namespace ChurchManager.Features.Common.Mappings
                             .ToList()))
                 ;
         }
+        public int Order => 1;
     }
 }

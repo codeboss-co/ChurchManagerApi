@@ -1,18 +1,14 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
-using ChurchManager.Application.Common;
-using ChurchManager.Application.Features.People.Commands.AddNewFamily;
-using ChurchManager.Application.Features.People.Commands.DeletePerson;
-using ChurchManager.Application.Features.People.Commands.DeletePhoto;
-using ChurchManager.Application.Features.People.Commands.EditPhoto;
-using ChurchManager.Application.Features.People.Commands.UpdatePerson;
-using ChurchManager.Application.Features.People.Queries.BrowsePeople;
-using ChurchManager.Application.Features.People.Queries.FindDuplicates;
-using ChurchManager.Application.Features.People.Queries.PeopleAutocomplete;
+﻿using ChurchManager.Features.People.Commands.AddNewFamily;
+using ChurchManager.Features.People.Commands.DeletePerson;
+using ChurchManager.Features.People.Commands.DeletePhoto;
+using ChurchManager.Features.People.Commands.EditPhoto;
+using ChurchManager.Features.People.Commands.UpdatePerson;
+using ChurchManager.Features.People.Queries.BrowsePeople;
+using ChurchManager.Features.People.Queries.FindDuplicates;
+using ChurchManager.Features.People.Queries.PeopleAutocomplete;
+using ChurchManager.SharedKernel.Common;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 
 namespace ChurchManager.Api.Controllers.v1
 {

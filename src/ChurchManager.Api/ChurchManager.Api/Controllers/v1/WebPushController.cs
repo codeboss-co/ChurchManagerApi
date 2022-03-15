@@ -1,8 +1,6 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
-using ChurchManager.Application.Common;
-using ChurchManager.Application.Features.Communication.Commands;
+﻿using ChurchManager.Features.Communication.Commands;
 using ChurchManager.Infrastructure.Shared.WebPush;
+using ChurchManager.SharedKernel.Common;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;

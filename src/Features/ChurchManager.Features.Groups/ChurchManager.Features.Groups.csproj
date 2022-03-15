@@ -1,8 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<Import Project="..\..\Build\ChurchManager.Common.props" />
+
+	<ItemGroup>
+	  <PackageReference Include="CodeBoss.Extensions" Version="0.1.23" />
+	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\..\ChurchManager.Api\ChurchManager.Application.Abstractions\ChurchManager.Application.Abstractions.csproj" />
+		<ProjectReference Include="..\..\ChurchManager.Api\ChurchManager.Infrastructure.Persistence\ChurchManager.Infrastructure.Persistence.csproj" />
 		<ProjectReference Include="..\..\Infrastructure\ChurchManager.Infrastructure\ChurchManager.Infrastructure.csproj" />
 	</ItemGroup>
 </Project>

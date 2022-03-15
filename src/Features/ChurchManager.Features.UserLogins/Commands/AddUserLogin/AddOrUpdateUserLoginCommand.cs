@@ -6,7 +6,7 @@ using DotLiquid.Util;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace ChurchManager.Application.Features.UserLogins.Commands.AddUserLogin
+namespace ChurchManager.Features.UserLogins.Commands.AddUserLogin
 {
     public record AddOrUpdateUserLoginCommand : IRequest<ApiResponse>
     {

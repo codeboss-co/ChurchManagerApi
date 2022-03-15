@@ -1,6 +1,4 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
-using ChurchManager.Application.Features.FollowUp.Queries.BrowseFollowUp;
+﻿using ChurchManager.Features.FollowUp.Queries.BrowseFollowUp;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

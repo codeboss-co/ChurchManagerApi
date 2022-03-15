@@ -1,10 +1,7 @@
-﻿using ChurchManager.Application.Common;
-using ChurchManager.Application.Features.UserLogins.Commands.AddUserLogin;
+﻿using ChurchManager.Features.UserLogins.Commands.AddUserLogin;
+using ChurchManager.SharedKernel.Common;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace ChurchManager.Api.Controllers.v1
 {

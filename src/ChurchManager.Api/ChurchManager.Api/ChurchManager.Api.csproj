@@ -25,9 +25,17 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	</ItemGroup>
-
-	<ItemGroup>
+		<ProjectReference Include="..\..\Features\ChurchManager.Features.Auth\ChurchManager.Features.Auth.csproj" />
+		<ProjectReference Include="..\..\Features\ChurchManager.Features.Churches\ChurchManager.Features.Churches.csproj" />
+		<ProjectReference Include="..\..\Features\ChurchManager.Features.Common\ChurchManager.Features.Common.csproj" />
+		<ProjectReference Include="..\..\Features\ChurchManager.Features.Communication\ChurchManager.Features.Communication.csproj" />
+		<ProjectReference Include="..\..\Features\ChurchManager.Features.Discipleship\ChurchManager.Features.Discipleship.csproj" />
+		<ProjectReference Include="..\..\Features\ChurchManager.Features.FollowUp\ChurchManager.Features.FollowUp.csproj" />
+		<ProjectReference Include="..\..\Features\ChurchManager.Features.Groups\ChurchManager.Features.Groups.csproj" />
+		<ProjectReference Include="..\..\Features\ChurchManager.Features.Missions\ChurchManager.Features.Missions.csproj" />
+		<ProjectReference Include="..\..\Features\ChurchManager.Features.People\ChurchManager.Features.People.csproj" />
+		<ProjectReference Include="..\..\Features\ChurchManager.Features.Profile\ChurchManager.Features.Profile.csproj" />
+		<ProjectReference Include="..\..\Features\ChurchManager.Features.UserLogins\ChurchManager.Features.UserLogins.csproj" />
 		<ProjectReference Include="..\ChurchManager.Application\ChurchManager.Application.csproj" />
 		<ProjectReference Include="..\ChurchManager.Infrastructure.Persistence\ChurchManager.Infrastructure.Persistence.csproj" />
 	</ItemGroup>

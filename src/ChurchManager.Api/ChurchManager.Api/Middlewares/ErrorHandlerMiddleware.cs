@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Bugsnag;
+using ChurchManager.Domain.Common.Configuration;
+using Microsoft.Extensions.Options;
 using System.Net;
 using System.Text.Json;
-using System.Threading.Tasks;
-using Bugsnag;
-using ChurchManager.Application.Common;
-using ChurchManager.Application.Exceptions;
-using ChurchManager.Application.Wrappers;
-using ChurchManager.Domain.Common.Configuration;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
+using ChurchManager.SharedKernel.Common;
+using ChurchManager.SharedKernel.Exceptions;
+using ChurchManager.SharedKernel.Wrappers;
 
 namespace ChurchManager.Api.Middlewares
 {

@@ -1,11 +1,8 @@
-﻿using ChurchManager.Application.Features.Missions.Queries.GetMission;
-using ChurchManager.Application.Features.People.Queries.BrowseFamilies;
+﻿using ChurchManager.Features.People.Commands.AddPersonToFamily;
+using ChurchManager.Features.People.Queries.BrowseFamilies;
+using ChurchManager.Features.People.Queries.GetFamily;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading;
-using System.Threading.Tasks;
-using ChurchManager.Application.Features.People.Commands.AddPersonToFamily;
-using ChurchManager.Application.Features.People.Queries.GetFamily;
 
 namespace ChurchManager.Api.Controllers.v1
 {

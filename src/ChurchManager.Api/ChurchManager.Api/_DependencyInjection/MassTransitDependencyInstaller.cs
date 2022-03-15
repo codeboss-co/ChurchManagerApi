@@ -1,4 +1,4 @@
-﻿using ChurchManager.Application.Tests;
+﻿using ChurchManager.Features.Common.Tests;
 using ChurchManager.Infrastructure.Shared.SignalR.Hubs;
 using CodeBoss.AspNetCore.DependencyInjection;
 using MassTransit;
