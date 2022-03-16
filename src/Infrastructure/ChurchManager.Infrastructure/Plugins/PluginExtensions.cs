@@ -1,6 +1,5 @@
 using System.Text.Json;
 using ChurchManager.SharedKernel.Extensions;
-using Grand.Infrastructure.Plugins;
 
 namespace ChurchManager.Infrastructure.Plugins
 {

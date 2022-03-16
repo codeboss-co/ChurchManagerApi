@@ -1,16 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc.ApplicationParts;
-using Microsoft.Extensions.DependencyInjection;
-using Serilog;
-using System.Reflection;
+﻿using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.Loader;
 using System.Text.RegularExpressions;
-using ChurchManager.Infrastructure;
 using ChurchManager.Infrastructure.Configuration;
-using ChurchManager.Infrastructure.Plugins;
 using ChurchManager.SharedKernel.Extensions;
+using Microsoft.AspNetCore.Mvc.ApplicationParts;
+using Microsoft.Extensions.DependencyInjection;
+using Serilog;
 
-namespace Grand.Infrastructure.Plugins
+namespace ChurchManager.Infrastructure.Plugins
 {
     /// <summary>
     /// Plugin manager

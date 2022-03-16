@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel;
 using ChurchManager.Infrastructure.TypeConverters.Converter;
-using Grand.Infrastructure.TypeConverters.Converter;
 
 namespace ChurchManager.Infrastructure.TypeConverters
 {

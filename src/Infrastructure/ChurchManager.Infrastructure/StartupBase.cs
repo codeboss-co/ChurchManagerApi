@@ -8,8 +8,6 @@ using ChurchManager.Infrastructure.TypeSearcher;
 using ChurchManager.SharedKernel;
 using ChurchManager.SharedKernel.Extensions;
 using FluentValidation.AspNetCore;
-using Grand.Infrastructure.Plugins;
-using Grand.Infrastructure.TypeSearchers;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -190,7 +188,7 @@ namespace ChurchManager.Infrastructure
             //add api configuration parameters
             //services.StartupConfig<ApiConfig>(configuration.GetSection("Api"));
             //add grand.web api token config
-            services.StartupConfig<WebApiConfig>(configuration.GetSection("GrandWebApi"));
+            services.StartupConfig<WebApiConfig>(configuration.GetSection("WebApiConfig"));
             //add litedb configuration parameters
             //services.StartupConfig<LiteDbConfig>(configuration.GetSection("LiteDb"));
 

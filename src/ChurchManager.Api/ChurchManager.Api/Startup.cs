@@ -31,9 +31,11 @@ namespace ChurchManager.Api
         {
             services.AddPersistenceInfrastructure(Configuration, Environment);
             services.AddSharedInfrastructure(Configuration, Environment);
-            services.AddApplicationLayer();
+            //services.AddApplicationLayer();
 
-            services.InstallServicesInAssemblies(Configuration, Environment, typeof(Startup).Assembly);
+            //services.InstallServicesInAssemblies(Configuration, Environment, typeof(Startup).Assembly);
+
+            Infrastructure.StartupBase.ConfigureServices(services, Configuration);
 
             // Add detection services container and device resolver service.
             services.AddDetection();

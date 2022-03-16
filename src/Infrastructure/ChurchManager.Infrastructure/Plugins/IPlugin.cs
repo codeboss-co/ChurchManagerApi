@@ -1,6 +1,4 @@
-﻿using Grand.Infrastructure.Plugins;
-
-namespace ChurchManager.Infrastructure.Plugins
+﻿namespace ChurchManager.Infrastructure.Plugins
 {
     /// <summary>
     /// Interface for Plugin

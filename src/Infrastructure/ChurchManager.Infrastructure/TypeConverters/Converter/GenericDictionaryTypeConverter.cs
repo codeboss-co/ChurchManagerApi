@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Globalization;
 
-namespace Grand.Infrastructure.TypeConverters.Converter
+namespace ChurchManager.Infrastructure.TypeConverters.Converter
 {
     /// <summary>
     /// Generic Dictionary type converted

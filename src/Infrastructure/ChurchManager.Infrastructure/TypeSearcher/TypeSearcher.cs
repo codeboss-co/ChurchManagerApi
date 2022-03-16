@@ -1,9 +1,8 @@
 ﻿using System.Diagnostics;
 using System.Reflection;
 using ChurchManager.Infrastructure.Roslyn;
-using ChurchManager.Infrastructure.TypeSearcher;
 
-namespace Grand.Infrastructure.TypeSearchers
+namespace ChurchManager.Infrastructure.TypeSearcher
 {
     /// <summary>
     /// A class that finds types needed by looping assemblies in the 
