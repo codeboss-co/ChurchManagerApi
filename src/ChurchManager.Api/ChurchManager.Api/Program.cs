@@ -1,10 +1,6 @@
-using System;
 using Amazon.Runtime;
 using Convey;
 using Convey.Logging;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Hosting;
 
 namespace ChurchManager.Api
 {

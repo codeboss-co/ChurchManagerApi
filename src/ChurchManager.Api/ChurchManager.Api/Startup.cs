@@ -33,15 +33,12 @@ namespace ChurchManager.Api
             services.AddSharedInfrastructure(Configuration, Environment);
             //services.AddApplicationLayer();
 
-            //services.InstallServicesInAssemblies(Configuration, Environment, typeof(Startup).Assembly);
+            services.InstallServicesInAssemblies(Configuration, Environment, typeof(Startup).Assembly);
 
             Infrastructure.StartupBase.ConfigureServices(services, Configuration);
 
             // Add detection services container and device resolver service.
             services.AddDetection();
-
-
-          
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
