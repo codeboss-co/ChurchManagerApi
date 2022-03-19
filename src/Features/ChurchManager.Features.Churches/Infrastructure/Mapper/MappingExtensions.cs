@@ -10,5 +10,10 @@ namespace ChurchManager.Features.Churches.Infrastructure.Mapper
         {
             return entity.MapTo<Church, ChurchViewModel>();
         }
+
+        public static IQueryable<ChurchViewModel> ToProjection(this IQueryable<Church> source)
+        {
+            return source.MapTo<Church, ChurchViewModel>();
+        }
     }
 }

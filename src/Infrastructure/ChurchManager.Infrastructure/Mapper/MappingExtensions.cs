@@ -11,5 +11,10 @@
         {
             return AutoMapperConfig.Mapper.Map(source, destination);
         }
+
+        public static IQueryable<TDestination> MapTo<TSource, TDestination>(this IQueryable<TSource> source)
+        {
+            return AutoMapperConfig.Mapper.ProjectTo<TDestination>(source);
+        }
     }
 }

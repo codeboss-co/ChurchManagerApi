@@ -52,7 +52,6 @@ namespace ChurchManager.Infrastructure
 
             //register automapper
             AutoMapperConfig.Init(config);
-
         }
 
         /// <summary>
@@ -88,7 +87,9 @@ namespace ChurchManager.Infrastructure
                 .OrderBy(converter => converter.Order);
 
             foreach (var item in instances)
+            {
                 item.Register();
+            }
         }
 
         private static T StartupConfig<T>(this IServiceCollection services, IConfiguration configuration) where T : class, new()
@@ -199,7 +200,9 @@ namespace ChurchManager.Infrastructure
             var hostingEnvironment = provider.GetRequiredService<IWebHostEnvironment>();
             var param = configuration["Directory"];
             if (!string.IsNullOrEmpty(param))
+            {
                 CommonPath.Param = param;
+            }
 
             CommonPath.WebHostEnvironment = hostingEnvironment.WebRootPath;
             CommonPath.BaseDirectory = hostingEnvironment.ContentRootPath;
@@ -248,7 +251,9 @@ namespace ChurchManager.Infrastructure
 
             //configure services
             foreach (var instance in instancesBefore)
+            {
                 instance.ConfigureServices(services, configuration);
+            }
 
             //register mapper configurations
             InitAutoMapper(typeSearcher);
@@ -278,7 +283,9 @@ namespace ChurchManager.Infrastructure
 
             //configure services
             foreach (var instance in instancesAfter)
+            {
                 instance.ConfigureServices(services, configuration);
+            }
 
             //Execute startupbase interface
             ExecuteStartupBase(typeSearcher);
@@ -303,7 +310,9 @@ namespace ChurchManager.Infrastructure
 
             //configure request pipeline
             foreach (var instance in instances)
+            {
                 instance.Configure(application, webHostEnvironment);
+            }
         }
 
         private static void ExecuteStartupBase(AppTypeSearcher typeSearcher)
@@ -317,7 +326,9 @@ namespace ChurchManager.Infrastructure
 
             //execute
             foreach (var instance in instances)
+            {
                 instance.Execute();
+            }
         }
 
         #endregion
