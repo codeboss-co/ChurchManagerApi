@@ -1,9 +1,6 @@
 ﻿using ChurchManager.Api.Extensions;
 using ChurchManager.Api.Middlewares;
 using CodeBoss.AspNetCore.DependencyInjection;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 
 namespace ChurchManager.Api._DependencyInjection
 {

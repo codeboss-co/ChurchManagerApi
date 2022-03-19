@@ -1,17 +1,11 @@
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using AutoMapper;
-using ChurchManager.Application.Features.Groups.Services;
-using ChurchManager.Application.Mappings;
 using ChurchManager.Domain.Features.Groups;
+using ChurchManager.Features.Groups.Infrastructure.Mapper;
+using ChurchManager.Features.Groups.Services;
 using ChurchManager.Infrastructure.Persistence.Contexts;
 using ChurchManager.Infrastructure.Persistence.Repositories;
 using ChurchManager.Infrastructure.Persistence.Tests.Helpers;
-using Codeboss.Types;
-using CodeBoss.AspNetCore.CbDateTime;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging.Abstractions;
 using Xunit;
 using Xunit.Abstractions;
 

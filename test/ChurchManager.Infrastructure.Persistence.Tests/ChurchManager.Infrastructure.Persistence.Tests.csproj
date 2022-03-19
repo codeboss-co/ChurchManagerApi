@@ -24,6 +24,7 @@
 	<ItemGroup>
 		<ProjectReference Include="..\..\src\ChurchManager.Api\ChurchManager.Application\ChurchManager.Application.csproj" />
 		<ProjectReference Include="..\..\src\ChurchManager.Api\ChurchManager.Infrastructure.Persistence\ChurchManager.Infrastructure.Persistence.csproj" />
+		<ProjectReference Include="..\..\src\Features\ChurchManager.Features.Groups\ChurchManager.Features.Groups.csproj" />
 	</ItemGroup>
 
 </Project>

@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -26,6 +26,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\ChurchManager.Api\ChurchManager.Application\ChurchManager.Application.csproj" />
     <ProjectReference Include="..\..\src\ChurchManager.Api\ChurchManager.Infrastructure.Persistence\ChurchManager.Infrastructure.Persistence.csproj" />
+    <ProjectReference Include="..\..\src\Features\ChurchManager.Features.People\ChurchManager.Features.People.csproj" />
   </ItemGroup>
 
   <ItemGroup>

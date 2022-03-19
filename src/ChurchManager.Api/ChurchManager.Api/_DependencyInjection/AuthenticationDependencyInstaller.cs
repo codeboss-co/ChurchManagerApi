@@ -1,14 +1,8 @@
-﻿using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ChurchManager.Api.Models;
+﻿using ChurchManager.Infrastructure.Configuration;
 using CodeBoss.AspNetCore.DependencyInjection;
 using CodeBoss.Extensions;
 using Convey;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 
 namespace ChurchManager.Api._DependencyInjection
@@ -17,7 +11,7 @@ namespace ChurchManager.Api._DependencyInjection
     {
         public void InstallServices(IServiceCollection services, IConfiguration configuration, IHostEnvironment environment)
         {
-            var jwtSettings = configuration.GetOptions<JwtSettings>(nameof(JwtSettings));
+            var config = configuration.GetOptions<WebApiConfig>(nameof(WebApiConfig));
 
             services.AddAuthentication(opt =>
                 {
@@ -32,10 +26,11 @@ namespace ChurchManager.Api._DependencyInjection
                         ValidateAudience = true,
                         ValidateLifetime = true,
                         ValidateIssuerSigningKey = true,
+                        ClockSkew = TimeSpan.Zero,
 
-                        ValidIssuer = "http://codeboss.tech",
-                        ValidAudience = "http://codeboss.tech",
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey@345"))
+                        ValidIssuer = config.ValidIssuer,
+                        ValidAudience = config.ValidAudience,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config.SecretKey))
                     };
 
                     // We have to hook the OnMessageReceived event in order to

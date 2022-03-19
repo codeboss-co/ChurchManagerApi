@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Reflection;
+using AutoMapper;
 using ChurchManager.Infrastructure.Configuration;
 using ChurchManager.Infrastructure.Mapper;
 using ChurchManager.Infrastructure.Plugins;
@@ -51,6 +52,7 @@ namespace ChurchManager.Infrastructure
 
             //register automapper
             AutoMapperConfig.Init(config);
+
         }
 
         /// <summary>
@@ -188,7 +190,7 @@ namespace ChurchManager.Infrastructure
             //add api configuration parameters
             //services.StartupConfig<ApiConfig>(configuration.GetSection("Api"));
             //add grand.web api token config
-            services.StartupConfig<WebApiConfig>(configuration.GetSection("WebApiConfig"));
+            services.Configure<WebApiConfig>(configuration.GetSection(nameof(WebApiConfig)));
             //add litedb configuration parameters
             //services.StartupConfig<LiteDbConfig>(configuration.GetSection("LiteDb"));
 
@@ -250,6 +252,7 @@ namespace ChurchManager.Infrastructure
 
             //register mapper configurations
             InitAutoMapper(typeSearcher);
+            services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
             //add fluenvalidation
             AddFluentValidation(mvcBuilder, typeSearcher);

@@ -1,24 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using ChurchManager.Infrastructure.Abstractions.Security;
+using ChurchManager.Infrastructure.Configuration;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
-using ChurchManager.Infrastructure.Abstractions.Security;
-using Microsoft.IdentityModel.Tokens;
 
 namespace ChurchManager.Infrastructure.Shared
 {
     public class TokenService : ITokenService
     {
+        private readonly WebApiConfig _options;
+
+        public TokenService(IOptions<WebApiConfig> options)
+        {
+            _options = options.Value;
+        }
+
         public string GenerateAccessToken(IEnumerable<Claim> claims)
         {
-            var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey@345"));
+            var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_options.SecretKey));
             var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
 
             var tokenOptions = new JwtSecurityToken(
-                issuer: "http://codeboss.tech",
-                audience: "http://codeboss.tech",
+                issuer: _options.ValidIssuer,
+                audience: _options.ValidAudience,
                 claims: claims,
                 expires: DateTime.Now.AddMinutes(60),
                 signingCredentials: signinCredentials
@@ -45,7 +52,7 @@ namespace ChurchManager.Infrastructure.Shared
                 ValidateAudience = false, //you might want to validate the audience and issuer depending on your use case
                 ValidateIssuer = true,
                 ValidateIssuerSigningKey = true,
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey@345")),
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_options.SecretKey)),
                 ValidateLifetime = false //here we are saying that we don't care about the token's expiration date
             };
 

@@ -34,6 +34,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\..\Infrastructure\ChurchManager.Infrastructure\ChurchManager.Infrastructure.csproj" />
 		<ProjectReference Include="..\ChurchManager.Domain\ChurchManager.Domain.csproj" />
 	</ItemGroup>
 
