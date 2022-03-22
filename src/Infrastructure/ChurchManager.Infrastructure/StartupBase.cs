@@ -30,7 +30,7 @@ namespace ChurchManager.Infrastructure
         /// Register and init AutoMapper
         /// </summary>
         /// <param name="typeSearcher">Type finder</param>
-        private static void InitAutoMapper(ITypeSearcher typeSearcher)
+        private static void InitAutoMapper(IServiceCollection services, ITypeSearcher typeSearcher)
         {
             //find mapper configurations provided by other assemblies
             var mapperConfigurations = typeSearcher.ClassesOfType<IAutoMapperProfile>();
@@ -49,6 +49,9 @@ namespace ChurchManager.Infrastructure
                     cfg.AddProfile(instance.GetType());
                 }
             });
+
+
+            services.AddTransient<IMapper>(_ => config.CreateMapper());
 
             //register automapper
             AutoMapperConfig.Init(config);
@@ -256,7 +259,7 @@ namespace ChurchManager.Infrastructure
             }
 
             //register mapper configurations
-            InitAutoMapper(typeSearcher);
+            InitAutoMapper(services, typeSearcher);
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
             //add fluenvalidation
