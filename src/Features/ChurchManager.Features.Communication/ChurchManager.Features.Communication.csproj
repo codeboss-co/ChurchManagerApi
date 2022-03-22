@@ -4,7 +4,7 @@
 
 
 	<ItemGroup>
-	  <ProjectReference Include="..\..\ChurchManager.Api\ChurchManager.Application.Abstractions\ChurchManager.Application.Abstractions.csproj" />
+	  <ProjectReference Include="..\..\Core\ChurchManager.Application.Abstractions\ChurchManager.Application.Abstractions.csproj" />
 	  <ProjectReference Include="..\..\Infrastructure\ChurchManager.Infrastructure\ChurchManager.Infrastructure.csproj" />
 
 	</ItemGroup>

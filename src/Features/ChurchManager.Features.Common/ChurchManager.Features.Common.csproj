@@ -14,9 +14,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\..\ChurchManager.Api\ChurchManager.Application.Abstractions\ChurchManager.Application.Abstractions.csproj" />
-		<ProjectReference Include="..\..\ChurchManager.Api\ChurchManager.Infrastructure.Abstractions\ChurchManager.Infrastructure.Abstractions.csproj" />
-		<ProjectReference Include="..\..\ChurchManager.Api\ChurchManager.Infrastructure.Shared\ChurchManager.Infrastructure.Shared.csproj" />
+		<ProjectReference Include="..\..\Core\ChurchManager.Application.Abstractions\ChurchManager.Application.Abstractions.csproj" />
+		<ProjectReference Include="..\..\Infrastructure\ChurchManager.Infrastructure.Shared\ChurchManager.Infrastructure.Shared.csproj" />
 		<ProjectReference Include="..\..\Infrastructure\ChurchManager.Infrastructure\ChurchManager.Infrastructure.csproj" />
 	</ItemGroup>
 

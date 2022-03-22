@@ -16,7 +16,6 @@
 
 
 	<ItemGroup>
-		<ProjectReference Include="..\..\ChurchManager.Api\ChurchManager.Domain\ChurchManager.Domain.csproj" />
 		<ProjectReference Include="..\..\Core\ChurchManager.SharedKernel\ChurchManager.SharedKernel.csproj" />
 	</ItemGroup>
 </Project>

@@ -2,10 +2,11 @@
 	<Import Project="..\..\Build\ChurchManager.Common.props" />
 
 	<ItemGroup>
-	  <ProjectReference Include="..\..\ChurchManager.Api\ChurchManager.Application.ViewModels\ChurchManager.Application.ViewModels.csproj" />
+		<PackageReference Include="Convey.CQRS.Queries" Version="1.0.531" />
+		<PackageReference Include="FluentValidation" Version="10.4.0" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="FluentValidation" Version="10.4.0" />
+	  <ProjectReference Include="..\ChurchManager.Application.ViewModels\ChurchManager.Application.ViewModels.csproj" />
 	</ItemGroup>
 </Project>

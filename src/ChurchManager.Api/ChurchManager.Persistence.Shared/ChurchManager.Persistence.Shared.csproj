@@ -14,8 +14,4 @@
 		<PackageReference Include="LinqKit.Microsoft.EntityFrameworkCore" Version="6.1.0" />
 	</ItemGroup>
 
-	<ItemGroup>
-		<ProjectReference Include="..\ChurchManager.Domain.Shared\ChurchManager.Domain.Shared.csproj" />
-	</ItemGroup>
-
 </Project>
