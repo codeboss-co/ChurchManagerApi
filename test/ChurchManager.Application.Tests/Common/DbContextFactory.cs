@@ -16,8 +16,6 @@ namespace ChurchManager.Application.Tests.Common
 
             context.Database.EnsureCreated();
 
-            
-
             context.SaveChanges();
 
             return context;
