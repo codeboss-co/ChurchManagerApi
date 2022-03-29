@@ -23,7 +23,8 @@ namespace ChurchManager.Domain.Features.Groups
 
         public DateTime? FirstVisitDate { get; set; }
 
-        public ArchiveStatus ArchiveStatus { get; set; }
+        [Required]
+        public ArchiveStatus ArchiveStatus { get; set; } = new ();
 
         /// <summary>
         /// Gets or sets the communication preference.

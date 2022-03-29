@@ -36,6 +36,10 @@ namespace ChurchManager.Api.Middlewares
 
                 switch(error)
                 {
+                    // Skip: see https://github.com/dotnet/aspnetcore/issues/23949
+                    case BadHttpRequestException e:
+                        _logger.LogWarning(e, "BadHttpRequestException skipped");
+                        return;
                     case ApiException e:
                         // custom application error
                         response.StatusCode = (int)HttpStatusCode.BadRequest;

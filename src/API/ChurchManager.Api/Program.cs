@@ -45,6 +45,9 @@ namespace ChurchManager.Api
                             awsOptions: awsOptions,
                             reloadAfter: TimeSpan.FromMinutes(5));
                     }
+
+                    // https://github.com/npgsql/efcore.pg/issues/2000
+                    AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
                 })
                 .UseLogging();
     }

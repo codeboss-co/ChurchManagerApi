@@ -1,25 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel.DataAnnotations.Schema;
-using ChurchManager.Domain.Common;
+﻿using ChurchManager.Domain.Common;
 using ChurchManager.Domain.Features.Churches;
 using ChurchManager.Domain.Features.People.Notes;
 using ChurchManager.Persistence.Shared;
 using Codeboss.Types;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ChurchManager.Domain.Features.People
 {
     [Table("Person")]
     public class Person : Entity<int>, IAggregateRoot<int>
     {
-        public FullName FullName { get; set; }
+        [Required] public FullName FullName { get; set; }
         public ConnectionStatus ConnectionStatus { get; set; }
-        public DeceasedStatus DeceasedStatus { get; set; }
+        [Required] public DeceasedStatus DeceasedStatus { get; set; }
         public AgeClassification AgeClassification { get; set; }
         public Gender Gender { get; set; }
-        public BirthDate BirthDate { get; set; }
+        [Required] public BirthDate BirthDate { get; set; }
 
         /// <summary>
         /// Where this person came from e.g. Cell, Outreach, Church, Online etc
@@ -27,12 +26,12 @@ namespace ChurchManager.Domain.Features.People
         public string Source { get; set; }
         public DateTime? FirstVisitDate { get; set; }
 
-        public Baptism BaptismStatus { get; set; }
+        [Required] public Baptism BaptismStatus { get; set; }
 
         public string MaritalStatus { get; set; }
         public DateTime? AnniversaryDate { get; set; }
 
-        public Email Email { get; set; }
+        [Required] public Email Email { get; set; }
         public ICollection<PhoneNumber> PhoneNumbers { get; set; } = new Collection<PhoneNumber>();
         public CommunicationType CommunicationPreference { get; set; }
 

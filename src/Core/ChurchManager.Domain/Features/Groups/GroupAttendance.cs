@@ -40,7 +40,8 @@ namespace ChurchManager.Domain.Features.Groups
         /// <summary>
         /// Gets or sets the <see cref="AttendanceReview"/> or feedback for this attendance records
         /// </summary>
-        public AttendanceReview AttendanceReview { get; set; }
+        [Required]
+        public AttendanceReview AttendanceReview { get; set; } = new();
 
         #region Navigation
 
