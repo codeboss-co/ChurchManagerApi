@@ -13,7 +13,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\src\ChurchManager.Api\ChurchManager.Infrastructure.Persistence\ChurchManager.Infrastructure.Persistence.csproj" />
+	  <ProjectReference Include="..\src\Core\ChurchManager.Domain\ChurchManager.Domain.csproj" />
+	  <ProjectReference Include="..\src\Infrastructure\ChurchManager.Infrastructure.Persistence\ChurchManager.Infrastructure.Persistence.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

@@ -55,7 +55,6 @@ namespace ChurchManager.Infrastructure.Persistence.Tests
                 Value = new DateTime(2021, 03, 16)
             };
 
-            var myList = await dbContext.Database.SqlQuery<GroupAttendanceRollUp>(sql, start, end).ToListAsync();
         }
     }
 

@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using ChurchManager.Application.Mappings;
+using ChurchManager.Features.People.Infrastructure.Mapper;
 using ChurchManager.Infrastructure.Persistence.Contexts;
 using System;
 using Xunit;
