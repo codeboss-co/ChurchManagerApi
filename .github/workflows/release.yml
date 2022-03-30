@@ -42,7 +42,7 @@ jobs:
           run: |
               printf '{"version":"%s"}' $VERSION > ./buildinfo.json
               cat ./buildinfo.json # just some logging
-          working-directory: ./src/ChurchManager.Api/ChurchManager.Api
+          working-directory: ./src/API/ChurchManager.Api/ChurchManager.Api
                     
         - name: 🛠️ Login to Docker Hub
           uses: docker/login-action@v1
