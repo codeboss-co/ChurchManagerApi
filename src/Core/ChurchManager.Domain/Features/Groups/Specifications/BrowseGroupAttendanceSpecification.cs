@@ -44,7 +44,7 @@ namespace ChurchManager.Domain.Features.Groups.Specifications
             }
             else
             {
-                Query.Where(g => g.AttendanceReview == null || g.AttendanceReview.IsReviewed == false);
+                Query.Where(g => g.AttendanceReview != null || g.AttendanceReview.IsReviewed == false);
             }
 
             // Date Filters

@@ -27,7 +27,7 @@ namespace ChurchManager.Infrastructure.Shared
                 issuer: _options.ValidIssuer,
                 audience: _options.ValidAudience,
                 claims: claims,
-                expires: DateTime.Now.AddMinutes(60),
+                expires: DateTime.UtcNow.AddMinutes(60),
                 signingCredentials: signinCredentials
             );
 

@@ -5,10 +5,6 @@ using CodeBoss.AspNetCore.Startup;
 using Ical.Net.Serialization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ChurchManager.Infrastructure.Persistence.Seeding.Development
 {

@@ -66,7 +66,7 @@ namespace ChurchManager.Infrastructure.Persistence.Seeding.Development
         {
             var attendance = new
             {
-                attendancedate = faker.Date.Between(new DateTime(DateTime.Now.Year, DateTime.Now.Month, 01), DateTime.Now),
+                attendancedate = faker.Date.Between(new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, 01), DateTime.UtcNow),
                 members = random.Next(1, 100),
                 firsttimers = random.Next(1, 50),
             };
@@ -95,7 +95,7 @@ namespace ChurchManager.Infrastructure.Persistence.Seeding.Development
         {
             var attendance = new
             {
-                attendancedate = faker.Date.Between(new DateTime(DateTime.Now.Year, DateTime.Now.Month, 01), DateTime.Now),
+                attendancedate = faker.Date.Between(new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, 01), DateTime.UtcNow),
                 members = random.Next(1, 100),
                 firsttimers = random.Next(1, 50),
             };

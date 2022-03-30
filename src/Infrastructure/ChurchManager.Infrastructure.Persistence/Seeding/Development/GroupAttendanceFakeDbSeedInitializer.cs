@@ -39,7 +39,7 @@ namespace ChurchManager.Infrastructure.Persistence.Seeding.Development
                     {
                         var attendance = new
                         {
-                            attendancedate = faker.Date.Between(new DateTime(2020, 01, 01), DateTime.Now),
+                            attendancedate = faker.Date.Between(new DateTime(2020, 01, 01), DateTime.UtcNow),
                             members = random.Next(0, 10),
                             firsttimers = random.Next(1, 5),
                         };

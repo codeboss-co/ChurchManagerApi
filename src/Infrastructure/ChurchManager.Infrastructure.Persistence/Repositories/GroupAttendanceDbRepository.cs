@@ -44,15 +44,15 @@ namespace ChurchManager.Infrastructure.Persistence.Repositories
             switch (reportPeriod)
             {
                 case ReportPeriod.Month:
-                    var monthAgo = DateTime.Now.AddMonths(-1);
-                    var now = DateTime.Now;
+                    var monthAgo = DateTime.UtcNow.AddMonths(-1);
+                    var now = DateTime.UtcNow;
                     queryable = queryable.Where(x => 
                         x.AttendanceDate >= monthAgo &&
                         x.AttendanceDate <= now);
                     break;
 
                 default:
-                    var sixMonthsAgo = DateTime.Now.AddMonths(-6);
+                    var sixMonthsAgo = DateTime.UtcNow.AddMonths(-6);
                     queryable = queryable.Where(x =>
                         x.AttendanceDate >= sixMonthsAgo);
                     break;
