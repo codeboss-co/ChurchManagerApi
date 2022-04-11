@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<Import Project="..\..\Build\ChurchManager.Common.props" />
+	<Import Project="..\..\Build\ChurchManager.Features.props" />
+	<ItemGroup>
+	  <Compile Remove="Extensions\**" />
+	  <EmbeddedResource Remove="Extensions\**" />
+	  <None Remove="Extensions\**" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="CodeBoss" Version="0.1.23" />
+		<PackageReference Include="CodeBoss.AspNetCore" Version="0.1.23" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\..\Core\ChurchManager.Application.Abstractions\ChurchManager.Application.Abstractions.csproj" />
+		<ProjectReference Include="..\..\Infrastructure\ChurchManager.Infrastructure.Shared\ChurchManager.Infrastructure.Shared.csproj" />
+		<ProjectReference Include="..\..\Infrastructure\ChurchManager.Infrastructure\ChurchManager.Infrastructure.csproj" />
+	</ItemGroup>
+
+</Project>

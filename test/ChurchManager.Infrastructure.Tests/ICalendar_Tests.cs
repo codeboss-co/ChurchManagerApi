@@ -18,7 +18,7 @@ namespace ChurchManager.Infrastructure.Tests
 {
     public class ICalendar_Tests
     {
-        private static readonly DateTime Now = DateTime.Now;
+        private static readonly DateTime Now = DateTime.UtcNow;
         private static readonly DateTime Later = Now.AddHours(2);
 
         private static readonly CalendarSerializer CalendarSerializer = new();
@@ -45,7 +45,7 @@ namespace ChurchManager.Infrastructure.Tests
             var serializer = new CalendarSerializer();
             var serializedCalendar = serializer.SerializeToString(calendar);
 
-            var dayAfterTomorrow = DateTime.Now.AddDays(+2);
+            var dayAfterTomorrow = DateTime.UtcNow.AddDays(+2);
             var occurrences = calendar.GetOccurrences(Now, dayAfterTomorrow);
 
             Assert.Equal(1, calendar.Children.Count);
@@ -56,8 +56,8 @@ namespace ChurchManager.Infrastructure.Tests
         [Fact]
         public void Schedule_Basic_Test()
         {
-            var today = DateTime.Now;
-            var nextMonth = DateTime.Now.AddMonths(1).Month;
+            var today = DateTime.UtcNow;
+            var nextMonth = DateTime.UtcNow.AddMonths(1).Month;
 
             var specificDates = new List<DateTime>
             {
@@ -106,7 +106,7 @@ namespace ChurchManager.Infrastructure.Tests
             var startDateTime = Now.AddHours(-2);
             var calendar = InetCalendarHelper.CalendarWithWeeklyRecurrence(startDateTime);
 
-            var nextWeekTomorrow = DateTime.Now.AddDays(+8);
+            var nextWeekTomorrow = DateTime.UtcNow.AddDays(+8);
             var occurrences = calendar.GetOccurrences(Now, nextWeekTomorrow);
 
             var schedule = new Schedule

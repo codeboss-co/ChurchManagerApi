@@ -1,0 +1,30 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
+
+	<!-- NuGet package info -->
+	<PropertyGroup>
+		<Copyright>Copyright © CodeBoss</Copyright>
+		<Authors>CodeBoss</Authors>
+		<Company>CodeBoss</Company>
+		<Product>ChurchManager</Product>	
+		<PackageProjectUrl>https://churchmanager.co.za/</PackageProjectUrl>   
+		<RepositoryUrl>https://github.com/codeboss-co/ChurchManagerApi</RepositoryUrl>
+		<RepositoryType>Git</RepositoryType>
+	</PropertyGroup>
+
+	<!-- Packages -->
+	<ItemGroup>
+		<Using Include="System"/>
+		<Using Include="System.Collections.Generic"/>
+		<Using Include="System.IO"/>
+		<Using Include="System.Text"/>
+		<Using Include="System.Linq"/>
+		<Using Include="System.Threading"/>
+		<Using Include="System.Threading.Tasks"/>
+	</ItemGroup>
+</Project>

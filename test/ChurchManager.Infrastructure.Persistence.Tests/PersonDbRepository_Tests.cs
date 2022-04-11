@@ -1,8 +1,3 @@
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using ChurchManager.Application.Features.Groups.Services;
-using ChurchManager.Domain.Features.Groups;
 using ChurchManager.Domain.Features.People.Queries;
 using ChurchManager.Infrastructure.Persistence.Contexts;
 using ChurchManager.Infrastructure.Persistence.Repositories;

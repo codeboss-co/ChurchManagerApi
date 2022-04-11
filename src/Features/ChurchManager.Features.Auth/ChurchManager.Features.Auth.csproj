@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<Import Project="..\..\Build\ChurchManager.Common.props" />
+	<!--<Import Project="..\..\Build\ChurchManager.Features.props" />-->
+
+
+	<ItemGroup>
+		<ProjectReference Include="..\..\Infrastructure\ChurchManager.Infrastructure.Persistence\ChurchManager.Infrastructure.Persistence.csproj" />
+		<ProjectReference Include="..\..\Infrastructure\ChurchManager.Infrastructure\ChurchManager.Infrastructure.csproj" />
+	</ItemGroup>
+
+</Project>
