@@ -21,7 +21,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="CodeBoss.AspNetCore" Version="0.1.23" />
+		<PackageReference Include="CodeBoss.AspNetCore" Version="0.1.25" />
 	</ItemGroup>
 
 	<ItemGroup>
