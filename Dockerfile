@@ -6,10 +6,11 @@ FROM mcr.microsoft.com/dotnet/sdk:6.0-bullseye-slim AS build
 COPY ChurchManager.sln .
 # RUN dotnet restore "ChurchManager.Api.csproj"
 COPY . .
-RUN dotnet build -c Release -o /app/build
+RUN dotnet restore
+RUN dotnet build --no-restore -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish -c Release -o /app/publish
+RUN dotnet publish --no-restore -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
