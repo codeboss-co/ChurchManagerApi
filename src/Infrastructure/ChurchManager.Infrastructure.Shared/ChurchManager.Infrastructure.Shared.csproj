@@ -15,8 +15,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="MassTransit.RabbitMQ" Version="7.2.4" />
-		<PackageReference Include="MassTransit.SignalR" Version="7.2.4" />
+		<PackageReference Include="MassTransit.RabbitMQ" Version="7.3.1" />
+		<PackageReference Include="MassTransit.SignalR" Version="7.3.1" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -28,9 +28,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="CodeBoss" Version="0.1.23" />
-		<PackageReference Include="CodeBoss.AspNetCore" Version="0.1.23" />
-		<PackageReference Include="CodeBoss.MultiTenant" Version="0.1.23" />
+		<PackageReference Include="CodeBoss" Version="0.1.25" />
+		<PackageReference Include="CodeBoss.AspNetCore" Version="0.1.25" />
+		<PackageReference Include="CodeBoss.MultiTenant" Version="0.1.25" />
 	</ItemGroup>
 
 	<ItemGroup>

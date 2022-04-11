@@ -17,8 +17,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="CodeBoss.Extensions" Version="0.1.23" />
-		<PackageReference Include="CodeBoss.MultiTenant" Version="0.1.23" />
+		<PackageReference Include="CodeBoss.Extensions" Version="0.1.25" />
+		<PackageReference Include="CodeBoss.MultiTenant" Version="0.1.25" />
 	</ItemGroup>
 
 	<ItemGroup>
