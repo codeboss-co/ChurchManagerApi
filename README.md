@@ -11,7 +11,16 @@
 
 ### Prerequisites
 
-1. Run all the docker commands in the `docker containers` file in the root directory.
+1. Set AWS Keys
+
+> set AWS_ACCESS_KEY_ID =hello
+
+> set AWS_SECRET_ACCESS_KEY =hello
+
+> set AWS_REGION=us-east-1
+
+
+2. Run all the docker commands in the `docker containers` file in the root directory.
 
 > docker compose -f docker-compose.dependencies.yml up
 
