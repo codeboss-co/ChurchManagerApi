@@ -1,6 +1,4 @@
-﻿using System.IO;
-using System.Threading.Tasks;
-using ChurchManager.Infrastructure.Shared.Email;
+﻿using ChurchManager.Infrastructure.Shared.Email;
 using ChurchManager.Infrastructure.Shared.Templating;
 using ChurchManager.Infrastructure.Tests.Templates;
 using Newtonsoft.Json;
@@ -10,8 +8,8 @@ namespace ChurchManager.Infrastructure.Tests
 {
     public class EmailSender_Tests
     {
-        private string _awsAccessKeyId = "AKIA6HLAUN2QAA2ZQ5W3";
-        private string _awsSecretAccessKey = "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";
+        private string _awsAccessKeyId = "[INSERT ACCESS KEY]";
+        private string _awsSecretAccessKey = "[INSERT SECRET KEY]";
         private string _toEmailAddress = "dillancagnetta@yahoo.com";
 
         private string _templateFilePath = "./Templates/ExampleTemplate.liquid";
