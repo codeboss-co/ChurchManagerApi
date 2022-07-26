@@ -1,11 +1,14 @@
-﻿using ChurchManager.Features.Common.Tests;
-using ChurchManager.Infrastructure.Shared.SignalR.Hubs;
+﻿using ChurchManager.Infrastructure.Shared.SignalR.Hubs;
+using ChurchManager.Infrastructure.Shared.Tests;
 using CodeBoss.AspNetCore.DependencyInjection;
 using MassTransit;
 using MassTransit.Definition;
 using MassTransit.SignalR;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
-namespace ChurchManager.Api._DependencyInjection
+namespace ChurchManager.Infrastructure.Shared._DependencyInjection
 {
     public class MassTransitDependencyInstaller : IDependencyInstaller
     {

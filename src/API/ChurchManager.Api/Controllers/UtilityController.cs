@@ -1,8 +1,8 @@
 ﻿using ChurchManager.Domain.Features.Communication.Services;
-using ChurchManager.Features.Common.Tests;
 using ChurchManager.Features.Groups.Queries.GroupsForPerson;
 using ChurchManager.Infrastructure.Abstractions;
 using ChurchManager.Infrastructure.Abstractions.Persistence;
+using ChurchManager.Infrastructure.Shared.Tests;
 using ChurchManager.SharedKernel.Common;
 using ChurchManager.SharedKernel.Exceptions;
 using Codeboss.Types;

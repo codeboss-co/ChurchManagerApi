@@ -1,8 +1,8 @@
 ﻿using Bugsnag;
-using ChurchManager.Domain.Common.Configuration;
 using Microsoft.Extensions.Options;
 using System.Net;
 using System.Text.Json;
+using ChurchManager.Infrastructure.Shared.Bugsnag;
 using ChurchManager.SharedKernel.Common;
 using ChurchManager.SharedKernel.Exceptions;
 using ChurchManager.SharedKernel.Wrappers;

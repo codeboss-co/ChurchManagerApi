@@ -2,7 +2,7 @@
 using MassTransit;
 using Microsoft.Extensions.Logging;
 
-namespace ChurchManager.Features.Common.Tests
+namespace ChurchManager.Infrastructure.Shared.Tests
 {
     public class TestDomainEventConsumer : IConsumer<TestDomainEvent>
     {

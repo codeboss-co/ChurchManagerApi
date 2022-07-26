@@ -1,9 +1,9 @@
-﻿using ChurchManager.Domain.Common.Configuration;
-using ChurchManager.Domain.Features.Communication.Events;
+﻿using ChurchManager.Domain.Features.Communication.Events;
 using ChurchManager.Domain.Features.People.Events;
 using ChurchManager.Domain.Features.People.Repositories;
 using ChurchManager.Domain.Shared;
 using ChurchManager.Infrastructure.Abstractions.Persistence;
+using ChurchManager.Infrastructure.Shared.Bugsnag;
 using Codeboss.Types;
 using MassTransit;
 using Microsoft.Extensions.Logging;

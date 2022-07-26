@@ -1,12 +1,15 @@
 ﻿using Bugsnag;
 using Bugsnag.AspNet.Core;
-using ChurchManager.Domain.Common.Configuration;
+using ChurchManager.Infrastructure.Shared.Bugsnag;
 using CodeBoss.AspNetCore;
 using CodeBoss.AspNetCore.DependencyInjection;
 using Convey;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
 
-namespace ChurchManager.Api._DependencyInjection
+namespace ChurchManager.Infrastructure.Shared._DependencyInjection
 {
     public class BugsnagDependencyInstaller : IDependencyInstaller
     {
