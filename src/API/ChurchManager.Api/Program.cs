@@ -29,10 +29,10 @@ namespace ChurchManager.Api
                 .ConfigureAppConfiguration((context, config) =>
                 {
                     var environmentName = context.HostingEnvironment.EnvironmentName;
-                    Console.WriteLine($"** Environment: [{environmentName}], " +
-                                      $"ASPNETCORE_ENVIRONMENT: [{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")}] **" +
-                                      $"AWS_ACCESS_KEY : [{Environment.GetEnvironmentVariable("AWS_ACCESS_KEY_ID")}] **"
-                    );
+                   
+                    // Validate Environment Variables Needed
+                    ValidateEnvironmentVariables(environmentName);
+
                     // Pull settings from AWS parameter store
                     ConfigureAwsParameterStore(config, environmentName);
 
@@ -64,6 +64,20 @@ namespace ChurchManager.Api
                     reloadAfter: TimeSpan.FromMinutes(5));
             }
 
+            void ValidateEnvironmentVariables(string environment)
+            {
+                Console.WriteLine($"** Environment: [{environment}], " +
+                                  $"ASPNETCORE_ENVIRONMENT: [{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")}]  " +
+                                  $"AWS_ACCESS_KEY : [{Environment.GetEnvironmentVariable("AWS_ACCESS_KEY_ID")}]  " +
+                                  $"AWS_REGION  : [{Environment.GetEnvironmentVariable("AWS_REGION")}]  "
+                );
+
+                _ = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? throw new ArgumentNullException("ASPNETCORE_ENVIRONMENT");
+                _ = Environment.GetEnvironmentVariable("AWS_ACCESS_KEY") ?? throw new ArgumentNullException("AWS_ACCESS_KEY");
+                _ = Environment.GetEnvironmentVariable("AWS_ACCESS_KEY_ID") ?? throw new ArgumentNullException("AWS_ACCESS_KEY_ID");
+                _ = Environment.GetEnvironmentVariable("AWS_REGION ") ?? throw new ArgumentNullException("AWS_REGION ");
+
+            }
         }
     }
 }
