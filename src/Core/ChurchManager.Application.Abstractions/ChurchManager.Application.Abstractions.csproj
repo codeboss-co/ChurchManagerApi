@@ -6,10 +6,6 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Convey.CQRS.Queries" Version="1.0.531" />
-	</ItemGroup>
-
-	<ItemGroup>
 		<ProjectReference Include="..\..\Core\ChurchManager.Application.ViewModels\ChurchManager.Application.ViewModels.csproj" />
 		<ProjectReference Include="..\ChurchManager.Domain\ChurchManager.Domain.csproj" />
 	</ItemGroup>

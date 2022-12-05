@@ -2,12 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using ChurchManager.Domain.Features.Groups;
-using CodeBoss.AspNetCore.CbDateTime;
 using Ical.Net;
 using Ical.Net.CalendarComponents;
 using Ical.Net.DataTypes;
 using Ical.Net.Serialization;
-using Microsoft.Extensions.Logging.Abstractions;
 using Xunit;
 
 /// <summary>

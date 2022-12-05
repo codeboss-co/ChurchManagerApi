@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Bogus;
+﻿using Bogus;
 using ChurchManager.Domain.Features.Churches;
 using ChurchManager.Infrastructure.Persistence.Contexts;
-using CodeBoss.AspNetCore.Startup;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace ChurchManager.Infrastructure.Persistence.Seeding.Development
 {
-    public class ChurchAttendanceFakeDbInitializer : IInitializer
+    public class ChurchAttendanceFakeDbInitializer : CodeBoss.AspNetCore.Startup.IInitializer
     {
         public int OrderNumber => 5;
 

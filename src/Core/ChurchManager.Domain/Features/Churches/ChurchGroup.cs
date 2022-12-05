@@ -1,9 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using ChurchManager.Domain.Features.People;
+using ChurchManager.Persistence.Shared;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using ChurchManager.Domain.Features.People;
-using ChurchManager.Persistence.Shared;
 
 namespace ChurchManager.Domain.Features.Churches
 {

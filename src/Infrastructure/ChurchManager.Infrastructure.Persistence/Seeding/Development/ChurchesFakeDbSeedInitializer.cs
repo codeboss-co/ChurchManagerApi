@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using Bogus;
+﻿using Bogus;
 using ChurchManager.Domain.Features.Churches;
 using ChurchManager.Infrastructure.Persistence.Contexts;
 using CodeBoss.AspNetCore.Startup;

@@ -1,6 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using ChurchManager.Persistence.Shared;
 using System.ComponentModel.DataAnnotations.Schema;
-using ChurchManager.Persistence.Shared;
 
 namespace ChurchManager.Domain.Features.Groups
 {

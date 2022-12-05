@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using ChurchManager.Domain.Features.Churches;
+using ChurchManager.Persistence.Shared;
+using Codeboss.Types;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using ChurchManager.Domain.Features.Churches;
-using ChurchManager.Persistence.Shared;
-using Codeboss.Types;
 
 namespace ChurchManager.Domain.Features.Groups
 {
