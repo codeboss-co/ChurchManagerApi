@@ -1,8 +1,9 @@
-﻿using ChurchManager.Persistence.Shared;
-using Codeboss.Types;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using ChurchManager.Persistence.Shared;
+using Codeboss.Types;
 
 namespace ChurchManager.Domain.Features.Discipleship
 {

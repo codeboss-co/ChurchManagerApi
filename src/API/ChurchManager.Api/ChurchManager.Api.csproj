@@ -8,7 +8,9 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<PackageReference Include="MassTransit.AspNetCore" Version="7.3.1" />
 		<PackageReference Include="MassTransit.Extensions.DependencyInjection" Version="7.3.1" />
+		<PackageReference Include="MassTransit.RabbitMQ" Version="7.3.1" />
 		<!-- FIX: System.IO.FileNotFoundException: Could not load file or assembly 'Newtonsoft.Json 12.0.0 -->
 		<!--<PackageReference Include="Newtonsoft.Json" Version="12.0.3" />-->
 	</ItemGroup>
@@ -28,6 +30,7 @@
 	<ItemGroup>
 		<ProjectReference Include="..\..\Features\ChurchManager.Features.Auth\ChurchManager.Features.Auth.csproj" />
 		<ProjectReference Include="..\..\Features\ChurchManager.Features.Churches\ChurchManager.Features.Churches.csproj" />
+		<ProjectReference Include="..\..\Features\ChurchManager.Features.Common\ChurchManager.Features.Common.csproj" />
 		<ProjectReference Include="..\..\Features\ChurchManager.Features.Communication\ChurchManager.Features.Communication.csproj" />
 		<ProjectReference Include="..\..\Features\ChurchManager.Features.Discipleship\ChurchManager.Features.Discipleship.csproj" />
 		<ProjectReference Include="..\..\Features\ChurchManager.Features.FollowUp\ChurchManager.Features.FollowUp.csproj" />
@@ -36,6 +39,7 @@
 		<ProjectReference Include="..\..\Features\ChurchManager.Features.People\ChurchManager.Features.People.csproj" />
 		<ProjectReference Include="..\..\Features\ChurchManager.Features.Profile\ChurchManager.Features.Profile.csproj" />
 		<ProjectReference Include="..\..\Features\ChurchManager.Features.UserLogins\ChurchManager.Features.UserLogins.csproj" />
+		<ProjectReference Include="..\..\Core\ChurchManager.Application\ChurchManager.Application.csproj" />
 		<ProjectReference Include="..\..\Infrastructure\ChurchManager.Infrastructure.Persistence\ChurchManager.Infrastructure.Persistence.csproj" />
 	</ItemGroup>
 

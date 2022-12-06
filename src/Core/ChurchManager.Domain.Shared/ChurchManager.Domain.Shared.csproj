@@ -5,5 +5,8 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 	</PropertyGroup>
 
+	<ItemGroup>
+		<PackageReference Include="Convey.CQRS.Queries" Version="1.0.531" />
+	</ItemGroup>
 
 </Project>
