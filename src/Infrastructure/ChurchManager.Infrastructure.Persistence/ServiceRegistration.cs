@@ -53,9 +53,18 @@ namespace ChurchManager.Infrastructure.Persistence
 
                 if(environment.IsProduction())
                 {
-                    services.AddInitializer<ChurchesDbSeedInitializer>();
+                    // SMALL DATA SET
+                    /*services.AddInitializer<ChurchesDbSeedInitializer>();
                     services.AddInitializer<PeopleDbSeedInitializer>();
-                    services.AddInitializer<GroupsDbSeedInitializer>();
+                    services.AddInitializer<GroupsDbSeedInitializer>();*/
+
+                    // FAKE DATA
+                    services.AddInitializer<ChurchesFakeDbSeedInitializer>();
+                    services.AddInitializer<PeopleFakeDbSeedInitializer>();
+                    services.AddInitializer<GroupsFakeDbSeedInitializer>();
+                    services.AddInitializer<ChurchAttendanceFakeDbInitializer>();
+                    services.AddInitializer<GroupAttendanceFakeDbSeedInitializer>();
+                    services.AddInitializer<MissionsFakeDbSeedInitializer>();
                 }
                 // Development / Test -  Seeding
                 else
