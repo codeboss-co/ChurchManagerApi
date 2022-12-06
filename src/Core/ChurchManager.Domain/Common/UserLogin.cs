@@ -1,8 +1,10 @@
-﻿using ChurchManager.Domain.Features.People;
-using ChurchManager.Persistence.Shared;
-using Codeboss.Types;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using ChurchManager.Domain.Features.People;
+using ChurchManager.Persistence.Shared;
+using Codeboss.Types;
 
 namespace ChurchManager.Domain.Common
 {

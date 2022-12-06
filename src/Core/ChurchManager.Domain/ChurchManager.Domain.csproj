@@ -6,7 +6,13 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<None Remove="Features\Groups\Specifications\GroupAttendanceSpecification.cs~RF7d7b0.TMP" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Convey.CQRS.Queries" Version="1.0.531" />
 		<PackageReference Include="Ical.Net" Version="4.2.0" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.1" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -15,7 +21,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\..\Infrastructure\ChurchManager.Persistence.Shared\ChurchManager.Persistence.Shared.csproj" />
 		<ProjectReference Include="..\ChurchManager.Domain.Shared\ChurchManager.Domain.Shared.csproj" />
 		<ProjectReference Include="..\..\Infrastructure\ChurchManager.Infrastructure.Abstractions\ChurchManager.Infrastructure.Abstractions.csproj" />
 	</ItemGroup>
